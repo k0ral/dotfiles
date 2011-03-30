@@ -1,0 +1,2 @@
+#text/html; w3m -dump %s; copiousoutput; nametemplate=%s.html
+text/html; lynx -dump -force_html  %s;  needsterminal; copiousoutput
