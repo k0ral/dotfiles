@@ -1,0 +1,330 @@
+set nocompatible    " Less vi-compatible => more convenient (must be at the very beginning)
+let mapleader = ","
+
+" Syntax highlighting {{{
+if has("syntax")
+  syntax on
+endif
+" }}}
+
+" Colors {{{
+"set background=dark
+"colorscheme asu1dark
+
+highlight Pmenu ctermbg=black ctermfg=green cterm=bold
+highlight PmenuSel ctermbg=darkblue ctermfg=yellow gui=bold
+"highlight LineNr cterm=bold ctermfg=blue ctermbg=NONE
+highlight Folded cterm=bold ctermbg=NONE ctermfg=yellow
+highlight CursorLine cterm=NONE ctermbg=black
+highlight Search ctermfg=yellow ctermbg=darkblue
+" }}}
+
+" Encoding {{{
+set encoding=utf-8
+set fileencoding=utf-8
+" }}}
+
+" Searching {{{
+set hlsearch                                    " Highlight search results
+set incsearch                                   " Incremental search
+set sm                                          " Jump to matches during entering the pattern
+set ignorecase                                  " Do case insensitive matching first
+set smartcase                                   " But enable case sensitivity if explicit capital letters are used
+set gdefault                                    " Add "g" as default option when searching/replacing
+
+nmap <leader>h :noh<cr>
+" }}}
+
+" Indentation {{{
+if has("autocmd")
+  filetype plugin indent on
+endif
+
+set autoindent                                  " Automatic indentation if no specific rules for current filetype
+"set copyindent
+"set cindent                                     " redundant with filetype plugin indent
+"set smartindent                                " Clever autoindenting (also redundant)
+
+set preserveindent                              " ???
+set expandtab                                   " Never use <TAB>, only spaces
+set nolist
+set listchars=tab:▸\ ,eol:¬,trail:·,nbsp:¤,extends:>,precedes:<      " show invisible characters
+set shiftround                                  " Rounds indent value
+set shiftwidth=4                                " Spaces for an indent
+"set smarttab                                    " A <tab> in an indent insets 'shiftwidth' spaces (not tabstop)
+set softtabstop=4                               " Number of spaces for a <TAB>
+set tabstop=4                                   " Number of spaces for a <TAB>
+
+nmap <leader>l :set nolist!<CR>
+" }}}
+
+" Scrolling {{{
+set scrolloff=10
+set sidescrolloff=10                            " Keep 5 lines at the size
+set ruler                                       " Show the cursor position
+set number                                      " Display line numbers
+"set relativenumber
+" }}}
+
+" Bells {{{
+set noerrorbells                                " don't make noise
+set novisualbell                                " don't blink
+" }}}
+
+" Folding {{{
+set foldenable                                  " enable folding
+set foldmethod=marker                           " use explicit markers {{{ … }}}
+" }}}
+
+" Spell checking {{{
+set nospell                                     " No spell checking by default
+
+"augroup filetypedetect
+"  au BufNewFile,BufRead *.txt setlocal spell spelllang=en_us
+"  au BufNewFile,BufRead *.tex setlocal spell spelllang=en_us
+"augroup END
+
+nmap <silent> <leader>s :set spell!<CR>
+" }}}
+
+" Others {{{
+set autoread                                    " Auto read a file changed from the outside
+set autowrite                                   " Automatically save before commands like :next and :make
+"set backspace=2                                " Allow backspacing over everything in insert mode
+set backspace=indent,eol,start                  " make backspace a more flexible
+set cursorline                                  " highlight current line
+set hidden                                      " Hide buffers when they are abandoned
+set nojoinspaces                                " Improve the behavior of J key
+set report=0                                    " Print total modifications for next command
+set shell=zsh
+set shortmess=atI                               " Stifle many interruptive prompts
+set showcmd                                     " Show (partial) command in status line.
+set showmatch                                   " Show matching brackets.
+"set undofile
+"set wrapscan                                   " begin search at top when EOF reached
+
+" !!! turn off the fucking :s///gc toggling
+" "set noedcompatible
+" }}}
+
+" Status bar {{{
+set laststatus=2
+set statusline=%a\ %t%1*%m%*%10l/%2*%L%*%6c%V
+set statusline=
+set statusline+=%-3.3n\                      " buffer number
+set statusline+=%f\                          " filename
+set statusline+=%h%m%r%w                     " status flags
+set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type
+set statusline+=%=                           " right align remainder
+set statusline+=0x%-8B                       " character value
+set statusline+=%-14(%l,%c%V%)               " line, character
+set statusline+=%<%P                         " file position
+
+highlight User1 cterm=inverse,bold ctermfg=red
+highlight User2 ctermbg=blue ctermfg=red
+
+highlight StatusLine term=bold cterm=bold ctermbg=4
+highlight StatusLineNC term=none cterm=none ctermfg=4
+" }}}
+
+" {{{ Key bindings
+set pastetoggle=<leader>p
+
+" Get rid of that stupid goddamned help key that I will invaribly hit constantly while aiming for escape
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+nnoremap <space> za                 " Folding
+cmap w!! %!sudo tee > /dev/null %   " Forgot to tell "sudo" ?
+" }}}
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" Clean text {{{
+fun CleanText()
+    let curcol = col(".")
+    let curline = line(".")
+    exe ":retab"
+$//ge"xe ":%s/
+/ /ge"xe ":%s/
+    exe ":%s/ \\+$//e"
+    call cursor(curline, curcol)
+endfun
+nmap <leader>k :call CleanText()<CR>
+" }}}
+
+" {{{ ctags
+set wildmenu                                    " Display auto-completion menu
+set wildmode=list:longest,list:full             " Display all possibilities
+set wildignore=*.o,*.r,*.so,*.sl,*.tar,*.tgz    " Ignore some include files based on their endname
+set nocp
+
+let g:acp_mappingDriven = 1
+au FileType * setl fo-=cro      " Disable completion on comments
+
+"   Build tags of your own project
+noremap <leader>g :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
+" }}}
+
+" {{{ CLang complete
+let g:clang_complete_auto     = 1
+let g:clang_complete_copen    = 0
+let g:clang_hl_errors         = 1
+let g:clang_periodic_quickfix = 1
+let g:clang_snippets          = 1
+" }}}
+
+"   Automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
+
+
+" MiniBufExplorer {{{
+"let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplMapWindowNavArrows = 1
+"let g:miniBufExplMapCTabSwitchBufs = 1
+"let g:miniBufExplModSelTarget = 1
+
+nmap >   :bn<cr>
+nmap <   :bN<cr>
+" }}}
+
+"   PHP related
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+"let php_sql_query = 1 "Coloration des requetes SQL
+let php_htmlInStrings = 1 "Coloration des balises html
+
+
+" Autocompile C++ files each time they are modified
+"augroup c++
+"    autocmd BufWritePost *.{hpp,cpp}
+"                \ silent execute ":!make > ~/.vim/cpperrors 2>&1 &" |
+"                \ redraw! |
+"                \ cgetfile ~/.vim/cpperrors
+"augroup END
+
+
+" {{{ Mouse management
+"set mouse=a                                     " Enable mouse usage (all modes)
+nnoremap <leader>m :call ToggleMouse()<CR>
+function! ToggleMouse()
+    if &mouse == 'a'
+        set mouse=
+        echo "Mouse usage disabled"
+    else
+        set mouse=a
+        echo "Mouse usage enabled"
+    endif
+endfunction
+" }}}
+
+" Enhanced commentify {{{
+"let g:EnhCommentifyUseAltKeys = 'Yes'
+let g:EnhCommentifyRespectIndent = 'No'
+let g:EnhCommentifyUserBindings = 'Yes'
+let g:EnhCommentifyMultiPartBlocks = 'Yes'
+let g:EnhCommentifyAlignRight = 'Yes'
+
+imap <leader>c <Esc><Plug>Traditionalji
+vmap <leader>c <Esc><Plug>VisualFirstLine
+" }}}
+
+" NERD tree {{{
+map <leader>e :NERDTreeToggle<CR>
+" }}}
+
+" Taglist {{{
+nnoremap <silent> <leader>t :TlistToggle<CR>
+
+let Tlist_Use_Right_Window = 1
+let Tlist_GainFocus_On_ToggleOpen = 0
+let Tlist_Close_On_Select = 0
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_Use_SingleClick = 1
+let TlistHighlightTag = 1
+let Tlist_Process_File_Always = 0
+let Tlist_Show_One_File = 1
+let Tlist_File_Fold_Auto_Close = 1
+let Tlist_WinWidth = 40
+let Tlist_Enable_Fold_Column = 0
+let Tlist_Display_Prototype = 1
+" }}}
+
+" Vim-latex {{{
+let g:tex_flavor = "latex"
+let g:Tex_Menus = 0
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_MultipleCompileFormats = 'pdf'
+let g:Tex_ViewRule_pdf = 'epdfview'
+let g:Tex_CompileRule_pdf = 'pdflatex --interaction=nonstopmode $*'
+let g:Imap_UsePlaceHolders = 0
+let g:Tex_EnvironmentMaps = 0
+let g:Tex_EnvironmentMenus = 0
+let g:Tex_FontMaps = 0
+let g:Tex_FontMenus = 0
+let g:Tex_SectionMaps = 0
+let g:Tex_SectionMenus = 0
+let g:Tex_FoldedSections=""
+let g:Tex_FoldedEnvironments=""
+let g:Tex_FoldedMisc=""
+
+set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
+
+nmap <F7> <leader>ll
+" }}}
+
+" {{{ NeoComplCache
+let g:acp_enableAtStartup = 0
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_smart_case = 0
+let g:neocomplcache_enable_camel_case_completion = 1 
+let g:neocomplcache_enable_underbar_completion = 1 
+let g:neocomplcache_min_syntax_length = 3 
+let g:neocomplcache_enable_auto_select = 0
+
+" Define dictionary. 
+
+" Plugin key-mappings. 
+"imap <C-k>     <Plug>(neocomplcache_snippets_expand) 
+"smap <C-k>     <Plug>(neocomplcache_snippets_expand) 
+"inoremap <expr><C-g>     neocomplcache#undo_completion() 
+"inoremap <expr><C-l>     neocomplcache#complete_common_string() 
+
+" SuperTab like snippets behavior. 
+imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>" 
+
+" Recommended key-mappings. 
+" <CR>: close popup and save indent. 
+"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>" 
+"" <TAB>: completion. 
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>" 
+"" <C-h>, <BS>: close popup and delete backword char. 
+"inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>" 
+"inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>" 
+"inoremap <expr><C-y>  neocomplcache#close_popup() 
+"inoremap <expr><C-e>  neocomplcache#cancel_popup() 
+
+" Enable omni completion. 
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete 
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
+
+" Enable heavy omni completion. 
+if !exists('g:neocomplcache_omni_patterns') 
+let g:neocomplcache_omni_patterns = {} 
+endif 
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::' 
+"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete 
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+" }}}
+
+" Jump to the last position when reopening a file {{{
+"if has("autocmd")
+"  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+"endif }}}
