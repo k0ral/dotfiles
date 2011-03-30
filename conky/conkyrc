@@ -1,0 +1,210 @@
+# Position {{{
+alignment top_left
+gap_x 10
+gap_y 30
+# }}}
+
+# Process {{{
+background yes              # Run as daemon
+total_run_times 0           # Exit after some times; 0 = never
+# }}}
+
+# Window {{{
+own_window yes
+#own_window_transparent yes
+own_window_argb_visual yes
+own_window_argb_value 128
+own_window_type desktop        # normal|desktop|override
+own_window_colour 000011
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+out_to_console no
+#minimum_size 1340,800
+#maximum_width 1366
+#maximum_height 800
+# }}}
+
+# Borders {{{
+draw_borders no
+draw_graph_borders yes
+#border_margin 0         
+#border_width 0
+# }}}
+
+# cpu_avg_samples 2 
+# net_avg_samples 2 : Nombre d'échantillons pour faire la moyenne de l'utilisation réseau
+
+# Colors {{{
+default_color ccccff
+default_shade_color 000000
+default_outline_color 000033
+color1 8b0000
+#color2 483d8b
+color2 483d8b
+color3 c8c8ff
+# }}}
+
+
+# Default sizes
+default_bar_size 100 5
+
+
+# Font {{{
+use_xft yes                 # Utiliser Xft (polices lissées etc)
+xftalpha 0                  # Transparece de la police Xft. Valeurs entre 0 et 1 inclus.
+xftfont inconsolata:size=10:style=bold
+#font 7x12
+#font 6x10
+#font 7x13
+#font 8x13
+#font 7x12
+#font *mintsmild.se*
+#font -*-*-*-*-*-*-34-*-*-*-*-*-*-*
+#font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1
+draw_shades yes
+draw_outline no
+# }}}
+
+# Buffer {{{
+double_buffer yes
+no_buffers yes
+#text_buffer_size 1024
+# }}}
+
+# MPD {{{
+# mpd_host
+# mpd_port
+# mpd_password
+# }}}
+
+
+override_utf8_locale
+short_units yes
+pad_percents 1              # Pad percentages to this many decimals (0 = no padding)
+stippled_borders : 20       # Bordure en pointillés (en pixel)
+update_interval 2           # Intervalle de rafraîchessement (en seconde)
+update_interval_on_battery 5
+uppercase no
+use_spacer none             # Ajoute des espaces après certains objets afin de les faire arrêter de bouger un peu n'importe comment. need une police monospace.
+format_human_readable yes
+
+
+# boinc (seti) dir
+# seti_dir /opt/seti
+
+#$alignr${color2}MB = $color${i2c 9191-0290 temp 1}C
+
+
+TEXT
+${color2}  HOST: $color3$nodename ($machine)
+${color2}KERNEL: $color3$kernel
+${color2}UPTIME: $color3$uptime
+
+${color2}  TEMP: ${if_match $acpitemp <= 50}${color 00ff00}$else${if_match $acpitemp >= 70}${color ff0000}$else${color aaaa00}$endif$endif${acpitemp}°C
+#
+#
+#${color2}   BAT: ${if_match $battery == "charged"}${color 00ff00}$else${color3}$endif${if_match $battery == "AC"}$battery$else$battery${battery_bar 5,140}$endif
+#
+#
+# CPU
+${voffset -75} #
+${goto 200}${color2}1: ${if_match ${cpu cpu1} <= 50}${color 00ff00}$else${if_match ${cpu cpu1} >= 80}${color ff0000}$else${color aaaa00}$endif$endif${freq_g cpu1}G | ${cpu cpu1}% 
+${goto 200}${color2}2: ${if_match ${cpu cpu2} <= 50}${color 00ff00}$else${if_match ${cpu cpu2} >= 80}${color ff0000}$else${color aaaa00}$endif$endif${freq_g cpu2}G | ${cpu cpu2}% 
+${goto 200}${color2}3: ${if_match ${cpu cpu3} <= 50}${color 00ff00}$else${if_match ${cpu cpu3} >= 80}${color ff0000}$else${color aaaa00}$endif$endif${freq_g cpu3}G | ${cpu cpu3}% 
+${goto 200}${color2}4: ${if_match ${cpu cpu4} <= 50}${color 00ff00}$else${if_match ${cpu cpu4} >= 80}${color ff0000}$else${color aaaa00}$endif$endif${freq_g cpu4}G | ${cpu cpu4}% 
+${goto 250}${color2}PROC: ${color}$running_processes/$processes
+#
+#
+# ${goto 200}${color2}PID                 ${goto 250}NAME             ${goto 330}  CPU%           ${goto 370}  MEM%
+# ${goto 200}${color ff0000}${top pid 1}  ${goto 250}${top name 1}    ${goto 330}${top cpu 1}     ${goto 370}${top mem 1}
+# ${goto 200}${color cc7690}${top pid 2}  ${goto 250}${top name 2}    ${goto 330}${top cpu 2}     ${goto 370}${top mem 2}
+# ${goto 200}${color aaaa00}${top pid 3}  ${goto 250}${top name 3}    ${goto 330}${top cpu 3}     ${goto 370}${top mem 3}
+# ${goto 200}${color 77cc00}${top pid 4}  ${goto 250}${top name 4}    ${goto 330}${top cpu 4}     ${goto 370}${top mem 4}
+# ${goto 200}${color2}${cpubar cpu10 1,200}
+#
+#
+# MEMORY
+${voffset -75} #
+${goto 400}${color2}ROOT: #
+${if_match ${fs_free_perc /} <= 10}${color ff0000}$else${if_match ${fs_free_perc /} >= 50}${color 00ff00}$else${color aaaa00}$endif$endif#
+${fs_free /} $color3(${fs_type /})
+#
+${goto 400}${color2}HOME: #
+${if_match ${fs_free_perc /home} <= 10}${color ff0000}$else${if_match ${fs_free_perc /home} >= 50}${color 00ff00}$else${color aaaa00}$endif$endif#
+${fs_free /home} $color3(${fs_type /home})
+#
+${goto 400}$color2 RAM: #
+${if_match $memperc >= 90}${color ff0000}$else${if_match $memperc <= 50}${color 00ff00}$else${color aaaa00}$endif$endif#
+$memfree
+#
+${goto 400}${color2}SWAP: #
+${if_match $swapperc >= 90}${color ff0000}$else${if_match $swapperc <= 50}${color 00ff00}$else${color aaaa00}$endif$endif#
+$swapfree
+#
+${goto 400}${color2}READ: $color3$diskio_read   ${goto 480}${color2}WRITE: $color3$diskio_write
+#
+#
+# ${goto 420}${color2} PID    ${goto 470}NAME                 ${goto 550}  CPU%               ${goto 590}  MEM%
+# ${color ff0000} #
+# ${goto 420}${top_mem pid 1} ${goto 470}${top_mem name 1}    ${goto 550}${top_mem cpu 1}     ${goto 590}${top_mem mem 1}
+# ${color cc7690} #
+# ${goto 420}${top_mem pid 2} ${goto 470}${top_mem name 2}    ${goto 550}${top_mem cpu 2}     ${goto 590}${top_mem mem 2}
+# ${color aaaa00} #
+# ${goto 420}${top_mem pid 3} ${goto 470}${top_mem name 3}    ${goto 550}${top_mem cpu 3}     ${goto 590}${top_mem mem 3}
+# ${color 77cc00} #
+# ${goto 420}${top_mem pid 4} ${goto 470}${top_mem name 4}    ${goto 550}${top_mem cpu 4}     ${goto 590}${top_mem mem 4}
+# ${goto 420}${color2}${cpubar cpu10 1,200}
+#
+#
+# NETWORK
+${voffset -75} #
+${if_up wlan0} #
+${goto 600}${color2}PUBLIC IP:$color3${execi 1789 ~/prog/scripts/public_ip.sh}
+${goto 600}${color2}  REAL IP: $color3${addr wlan0}
+${if_gw}${goto 600}${color2}  GATEWAY: $color3$gw_ip ($gw_iface)$endif
+${goto 600}${color2}    ESSID: ${if_match ${wireless_link_qual_perc wlan0} >= 50}${color 00ff00}$else${if_match ${wireless_link_qual_perc wlan0} <= 30}${color ff0000}$else${color aaaa00}$endif$endif${wireless_essid wlan0} (${wireless_link_qual_perc wlan0}%) #
+$else${if_up eth0} #
+${goto 600}${color2}PUBLIC IP:$color3${execi 1789 ~/prog/scripts/public_ip.sh}
+${goto 600}${color2}  REAL IP: $color3${addr eth0}
+${if_gw}${goto 600}${color2}  GATEWAY: $color3$gw_ip ($gw_iface)$endif
+$endif$endif #
+
+#
+#
+${voffset -75}
+${color2}${goto 860}IFACE       ${goto 910}DOWN                                                         ${goto 1010}UP${color}
+${goto 860}eth0                 ${goto 910}${color 00ff00}${downspeedf eth0}k (${totaldown eth0})       ${goto 1010}${color ff0000}${upspeedf eth0}k (${totalup eth0})$color
+${goto 860}wlan0                ${goto 910}${color 00ff00}${downspeedf wlan0}k (${totaldown wlan0})     ${goto 1010}${color ff0000}${upspeedf wlan0}k (${totalup wlan0})
+
+${voffset -75}
+${goto 1130}$user_names
+${goto 1130}$user_number
+${goto 1130}$user_terms
+${goto 1130}$user_times
+
+#
+#
+#
+#${voffset -156} #
+# ${goto 860}${color2}Inbound connection (${tcp_portmon 1 32767 count})       ${goto 1100}Local Service/Port$color3
+# ${goto 860}${tcp_portmon 1 32767 rhost 0}                                   ${goto 1100}${tcp_portmon 1 32767 lservice 0}/${tcp_portmon 1 32767 lport 0}
+# ${goto 860}${tcp_portmon 1 32767 rhost 1}                                   ${goto 1100}${tcp_portmon 1 32767 lservice 1}/${tcp_portmon 1 32767 lport 1}
+# ${goto 860}${tcp_portmon 1 32767 rhost 2}                                   ${goto 1100}${tcp_portmon 1 32767 lservice 2}/${tcp_portmon 1 32767 lport 2}
+# ${goto 860}${tcp_portmon 1 32767 rhost 3}                                   ${goto 1100}${tcp_portmon 1 32767 lservice 3}/${tcp_portmon 1 32767 lport 3}
+# ${goto 860}${color2}${cpubar cpu10 1,200}
+# ${goto 860}${color2}Outbound connection (${tcp_portmon 32768 61000 count})  ${goto 1100}Remote Service/Port$color3
+# ${goto 860}${tcp_portmon 32768 61000 rhost 0}                               ${goto 1100}${tcp_portmon 32768 61000 rservice 0}/${tcp_portmon 1 32767 rport 0}
+# ${goto 860}${tcp_portmon 32768 61000 rhost 1}                               ${goto 1100}${tcp_portmon 32768 61000 rservice 1}/${tcp_portmon 1 32767 rport 1}
+# ${goto 860}${tcp_portmon 32768 61000 rhost 2}                               ${goto 1100}${tcp_portmon 32768 61000 rservice 2}/${tcp_portmon 1 32767 rport 2}
+# ${goto 860}${tcp_portmon 32768 61000 rhost 3}                               ${goto 1100}${tcp_portmon 32768 61000 rservice 3}/${tcp_portmon 1 32767 rport 3}
+# ${goto 860}${color2}${cpubar cpu10 1,200}
+#
+### DELIMITER
+#${if_running mpd} #
+#${color2}MPD: ${if_match $mpd_status == "Playing"}${color 00ff00}$mpd_artist - $mpd_title$else${color ff0000}Stopped$endif
+#${mpd_bar 5,150}
+#$endif
+#
+#${color3}${execi 300 fortune}
+#
+#${font LCDMono:size=19}${color2}${pre_exec ~/prog/scripts/conky/calendar.sh week}
+#${color 888888}${pre_exec ~/prog/scripts/conky/calendar.sh past}${color2}${pre_exec ~/prog/scripts/conky/calendar.sh today}${color 888888}${pre_exec ~/prog/scripts/conky/calendar.sh future}${font}
