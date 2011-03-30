@@ -1,0 +1,405 @@
+# Global Order: zshenv, zprofile, zshrc, zlogin
+
+READNULLCMD=${PAGER:-/usr/bin/pager}
+
+# Locales {{{
+export LANG=en_US.utf8
+export LANGUAGE=en_US.utf8
+export LC_ADDRESS=en_US.utf8
+export LC_ALL=en_US.utf8
+export LC_COLLATE=en_US.utf8
+export LC_IDENTIFICATION=en_US.utf8
+export LC_MESSAGES=en_US.utf8
+export LC_MEASUREMENT=en_US.utf8
+export LC_MONETARY=en_US.utf8
+export LC_NAME=en_US.utf8
+export LC_NUMERIC=en_US.utf8
+export LC_PAPER=en_US.utf8
+export LC_TELEPHONE=en_US.utf8
+export LC_TIME=en_US.utf8
+export LC_TYPE=en_US.utf8
+
+#unicode_start
+# }}}
+
+# Constants {{{
+export BROWSER="uzbl-browser"
+export CC="colorgcc"
+export COLORTERM="yes"
+export EDITOR="/usr/bin/vim"
+export GREP_COLOR=31
+export HISTFILE=$HOME/.config/zsh/history
+export HISTORY=1000
+export MAIL=${HOME}/mail
+export MAILCHECK=1
+export PAGER="/usr/bin/vimpager"
+export PATH=/usr/share/perl5/vendor_perl/auto/share/dist/Cope:/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:${PATH}
+export SAVEHIST=1000
+export XTERM="urxvt"
+export http_proxy="http://localhost:8123"
+export HTTP_PROXY=$http_proxy
+export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' 
+export JAVA_FONTS=/usr/share/fonts/TTF
+export GDK_USE_XFT=1    #   For old gtk applications
+export QT_XFT=true      #   For old qt applicatios
+# }}}
+
+eval `dircolors -b`
+
+# Keybindings {{{
+if [[ "$TERM" != emacs ]]; then
+[[ -z "$terminfo[kdch1]" ]] || bindkey -M emacs "$terminfo[kdch1]" delete-char
+[[ -z "$terminfo[khome]" ]] || bindkey -M emacs "$terminfo[khome]" beginning-of-line
+[[ -z "$terminfo[kend]" ]] || bindkey -M emacs "$terminfo[kend]" end-of-line
+[[ -z "$terminfo[kich1]" ]] || bindkey -M emacs "$terminfo[kich1]" overwrite-mode
+[[ -z "$terminfo[kdch1]" ]] || bindkey -M vicmd "$terminfo[kdch1]" vi-delete-char
+[[ -z "$terminfo[khome]" ]] || bindkey -M vicmd "$terminfo[khome]" vi-beginning-of-line
+[[ -z "$terminfo[kend]" ]] || bindkey -M vicmd "$terminfo[kend]" vi-end-of-line
+[[ -z "$terminfo[kich1]" ]] || bindkey -M vicmd "$terminfo[kich1]" overwrite-mode
+
+[[ -z "$terminfo[cuu1]" ]] || bindkey -M viins "$terminfo[cuu1]" vi-up-line-or-history
+[[ -z "$terminfo[cuf1]" ]] || bindkey -M viins "$terminfo[cuf1]" vi-forward-char
+[[ -z "$terminfo[kcuu1]" ]] || bindkey -M viins "$terminfo[kcuu1]" vi-up-line-or-history
+[[ -z "$terminfo[kcud1]" ]] || bindkey -M viins "$terminfo[kcud1]" vi-down-line-or-history
+[[ -z "$terminfo[kcuf1]" ]] || bindkey -M viins "$terminfo[kcuf1]" vi-forward-char
+[[ -z "$terminfo[kcub1]" ]] || bindkey -M viins "$terminfo[kcub1]" vi-backward-char
+
+# ncurses fogyatekos
+[[ "$terminfo[kcuu1]" == "O"* ]] && bindkey -M viins "${terminfo[kcuu1]/O/[}" vi-up-line-or-history
+[[ "$terminfo[kcud1]" == "O"* ]] && bindkey -M viins "${terminfo[kcud1]/O/[}" vi-down-line-or-history
+[[ "$terminfo[kcuf1]" == "O"* ]] && bindkey -M viins "${terminfo[kcuf1]/O/[}" vi-forward-char
+[[ "$terminfo[kcub1]" == "O"* ]] && bindkey -M viins "${terminfo[kcub1]/O/[}" vi-backward-char
+[[ "$terminfo[khome]" == "O"* ]] && bindkey -M viins "${terminfo[khome]/O/[}" beginning-of-line
+[[ "$terminfo[kend]" == "O"* ]] && bindkey -M viins "${terminfo[kend]/O/[}" end-of-line
+[[ "$terminfo[khome]" == "O"* ]] && bindkey -M emacs "${terminfo[khome]/O/[}" beginning-of-line
+[[ "$terminfo[kend]" == "O"* ]] && bindkey -M emacs "${terminfo[kend]/O/[}" end-of-line
+fi
+
+bindkey -e
+
+bindkey "\e[1~" beginning-of-line # Home
+bindkey "\e[4~" end-of-line # End
+bindkey "\e[5~" beginning-of-history # PageUp
+bindkey "\e[6~" end-of-history # PageDown
+bindkey "\e[2~" quoted-insert # Ins
+bindkey "\e[3~" delete-char # Del
+bindkey "\e[5C" forward-word
+bindkey "\eOc" emacs-forward-word
+bindkey "\e[5D" backward-word
+bindkey "\eOd" emacs-backward-word
+bindkey "\e\e[C" forward-word
+bindkey "\e\e[D" backward-word
+# for rxvt
+bindkey "\e[7~" beginning-of-line # Home
+bindkey "\e[8~" end-of-line # End
+# for non RH/Debian xterm, can't hurt for RH/Debian xterm
+bindkey "\eOH" beginning-of-line
+bindkey "\eOF" end-of-line
+# for freebsd console
+bindkey "\e[H" beginning-of-line
+bindkey "\e[F" end-of-line
+
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
+# }}}
+
+# Completion {{{
+autoload -U compinit; compinit
+
+zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
+zstyle ':completion:*:warnings' format '%BSorry, no result for : %d%b'
+zstyle ':completion:*' menu select=2
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+
+# Remove trailing slashes
+zstyle ':completion:*' squeeze-slashes true
+
+# Use cache
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh_cache
+
+# Prevent CVS files/directories from being completed
+zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)CVS'
+zstyle ':completion:*:cd:*' ignored-patterns '(*/)#CVS'
+
+# Allow mistakes
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+#zstyle ':completion:*:approximate:*' max-errors 1 numeric
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
+
+# [?] Ignore completion functions for commands you don’t have
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+# Colors
+# You can also add different colours to the completion list - as displayed in the screenshot below. To be more specific, we'll use the same colours that GNU ls shows with the --color option
+zmodload zsh/complist
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# Do not show already selected elements
+zstyle ':completion:*:rm:*' ignore-line yes
+zstyle ':completion:*:mv:*' ignore-line yes
+zstyle ':completion:*:cp:*' ignore-line yes
+
+#   Sudo completion
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
+    /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
+
+# PID completion
+zstyle ':completion:*:*:kill:*:processes'   list-colors "=(#b) #([0-9]#)*=36=31"
+zstyle ':completion:*:*:kill:*'             menu yes select
+zstyle ':completion:*:kill:*'               force-list always
+zstyle ':completion:*:*:killall:*'          menu yes select
+zstyle ':completion:*:killall:*'            force-list always
+zstyle ':completion:*:processes'            command "ps -au$USER"
+
+# Don't select parent directory on cd
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
+# xdvi completion
+zstyle ':completion:*:*:xdvi:*' menu yes select
+zstyle ':completion:*:*:xdvi:*' file-sort time
+
+#   Support des fonctions de complétion de bash
+autoload -U bashcompinit; bashcompinit
+# }}}
+
+# Prompts {{{
+
+# Enable preconfigured prompts
+#autoload -U promptinit
+#promptinit
+#prompt adam2
+
+BLACK="%{"$'\033[01;30m'"%}"
+RED="%{"$'\033[01;31m'"%}"
+GREEN="%{"$'\033[01;32m'"%}"
+YELLOW="%{"$'\033[01;33m'"%}"
+BLUE="%{"$'\033[01;34m'"%}"
+MAGENTA="%{"$'\033[01;35m'"%}"
+CYAN="%{"$'\033[01;36m'"%}"
+BOLD="%{"$'\033[01;39m'"%}"
+NORM="%{"$'\033[00m'"%}"
+
+export PS1="[%T] ${RED}%n${NORM}@${BLUE}%m${NORM}:${YELLOW}%~${NORM} %#>"
+# }}}
+
+# Aliases {{{
+alias cp='gcp'
+alias df='df -hT'
+#alias df="cdf -h"
+#alias du='du -chs'
+alias diff="colordiff"
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias gcc="colorgcc"
+alias grep='grep --color=auto'
+alias la='ls -a'
+alias ll='ls -l'
+alias lla='ls -la'
+alias ls='ls --tabsize=0 --literal --color=auto --show-control-chars --human-readable --group-directories-first -X'
+alias mkdir='mkdir -p -v'
+alias more='less'
+alias mv='mv -v'
+alias o='xdg-open'
+alias startx='startx & vlock'
+alias top="htop"
+alias my_indent='indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -ncs -di4 -fca -hnl -i4 -ip4 -l120 -lp -nlps -npcs -nprs -npsl -saf -sai -saw -sbi4 -sc -nsob -ss -ts4 -nut '
+#alias make="colormake"
+alias octave="octave -q"
+alias gdb="cgdb -q"
+alias http-on="sudo /etc/rc.d/lighttpd start"
+alias http-off="sudo /etc/rc.d/lighttpd stop"
+alias mysql-on="sudo /etc/rc.d/mysqld start"
+alias mysql-off="sudo /etc/rc.d/mysqld stop"
+alias bluetooth-on="sudo /etc/rc.d/bluetooth start"
+alias bluetooth-off="sudo /etc/rc.d/bluetooth stop"
+alias mpd-on="sudo /etc/rc.d/mpd start"
+alias mpd-off="sudo /etc/rc.d/mpd stop"
+alias wifi-on="sudo /etc/rc.d/net-auto-wireless start"
+alias wifi-off="sudo /etc/rc.d/net-auto-wireless stop"
+alias cups-on="sudo /etc/rc.d/cups start"
+alias cups-off="sudo /etc/rc.d/cups stop"
+alias openports='netstat --all --numeric --programs --inet'
+alias wifiselect='sudo wifi-select wlan0'
+alias uzbl='uzbl-browser'
+alias mutt='mutt -y'
+alias pingg='ping www.google.fr'
+alias suvim='sudo vim'
+alias volume='alsamixer -c 0'
+
+#alias -g ...='../..'
+#alias -g ....='../../..'
+#alias -g .....='../../../..'
+
+if [ $UID -ne 0 ]; then
+    alias reboot='sudo reboot'
+    alias halt='sudo halt'
+    alias upgrade='pak -Syu --aur && sudo diffpac'
+    alias remove='pak -R'
+    alias netcfg='sudo netcfg2'
+fi
+
+# File extension => application
+alias -s tex=vim
+alias -s pdf=epdfview
+alias -s html=uzbl-browser
+
+# Aliases for directories
+# Example: hash -d down=~/Desktop/Downloads
+
+#alias acpi
+#alias arp
+#cc
+#df
+#dprofpp
+#fdisk
+#free
+#g++
+#gcc
+#id
+#ifconfig
+#ls
+#lspci
+#lsusb
+#make
+#md5sum
+#netstat
+#nm
+#nmap
+#nocope
+#ping
+#pm
+# }}}
+
+# Helpers {{{
+lsmount() { (echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | column -t; }
+wiki() { dig +short txt $1.wp.dg.cx; }
+
+function maketex() {
+    if [ "$1" == "" ]; then
+        FILE="paper";
+    else
+        FILE=`echo $1 | sed -e 's/..*//'`;
+    fi
+    if [ -f $FILE.tex ]; then
+        pdflatex $FILE.tex;
+        bibtex $FILE.aux;
+        makeindex $FILE;
+        pdflatex $FILE.tex;
+        bibtex $FILE.aux;
+        makeindex $FILE;
+        #latex $FILE.tex && dvipdf $FILE.dvi;
+        #latex $FILE.tex && dvips -Ppdf -G0 $FILE.dvi -o $FILE.ps && ps2pdf14 $FILE.ps;
+    fi
+}
+
+xdvi() { command xdvi ${*:-*.dvi(om[1])} }
+# }}}
+
+# Options {{{
+setopt auto_cd  
+setopt hist_ignore_all_dups     #   Anti-doublon dans l'historique
+setopt hist_ignore_space        #   Do not save commands that start with a space
+setopt inc_append_history
+#setopt correctall              #   Correction of writing errors (ex: sl => ls)
+setopt autopushd pushdminus pushdsilent pushdtohome
+setopt cdablevars
+#setopt ignoreeof               #   Prevent from using Ctrl + d
+setopt interactivecomments
+#setopt nobanghist
+setopt noclobber
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
+setopt SH_WORD_SPLIT
+setopt nohup
+setopt chase_links              #   Traite les liens symboliques comme il faut
+
+#   Quand l'utilisateur commence sa commande par '!' pour faire de la
+#   complétion historique, il n'exécute pas la commande immédiatement
+#   mais il écrit la commande dans le prompt
+setopt hist_verify
+
+setopt extendedglob             #   Use regexp in commands (ex : cp ^*.(tar|bz2|gz))
+
+#   No beeps at all !
+unsetopt beep
+unsetopt hist_beep
+unsetopt list_beep
+
+#   Si on utilise des jokers dans une liste d'arguments, retire les jokers
+#   qui ne correspondent à rien au lieu de donner une erreur
+setopt nullglob
+
+
+
+unalias run-help
+autoload run-help
+
+
+#   Inline completion
+set always_to_end
+# }}}
+
+# Extract function {{{
+extract () {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)  tar xvjf $1     ;;
+            *.tbz2)     tar xvjf $1     ;;
+            *.tar.gz)   tar xvzf $1     ;;
+            *.tgz)      tar xvzf $1     ;;
+            *.tar.xz)   tar xvJf $1     ;;
+            *.txz)      tar xvJf $1     ;;
+            *.tar)      tar xvf $1      ;;
+            *.cbt)      tar xvf $1      ;;
+            *.zip)      unzip $1        ;;
+            *.cbz)      unzip $1        ;;
+            *.rar)      unrar x $1      ;;
+            *.cbr)      unrar x $1      ;;
+            *.bz2)      bunzip2 $1      ;;
+            *.xz)       unxz $1         ;;
+            *.gz)       gunzip $1       ;;
+            *.Z)        uncompress $1   ;;
+            *.7z)       7z x $1         ;;
+            *.exe)      cabextract $1   ;;
+            *.lzma)     lzmadec $1      ;;
+            *)           echo "\`$1': unrecognized file compression" ;;
+        esac
+  else
+      echo "\`$1' is not a valid file"
+  fi
+}
+# }}}
+
+# Sleep mode {{{
+sleep-on () {
+    sudo /etc/rc.d/fcron stop
+    sudo /etc/rc.d/sshd stop
+    sudo /etc/rc.d/ntpd stop
+    sudo /etc/rc.d/denyhosts stop
+    sudo /etc/rc.d/fail2ban stop
+    sudo /etc/rc.d/dnsmasq stop
+    sudo /etc/rc.d/net-auto-wired stop
+    sudo /etc/rc.d/avahi-daemon stop
+
+    wifi-off
+    http-off
+    mysql-off
+
+    killall volumeicon
+}
+# }}}
+
+# Support for ..../ {{{
+rationalise-dot() {
+    if [[ $LBUFFER = *.. ]]; then
+        LBUFFER+=/..
+    else
+        LBUFFER+=.
+    fi
+}
+
+zle -N rationalise-dot
+bindkey . rationalise-dot
+# }}}
