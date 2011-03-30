@@ -1,0 +1,84 @@
+! [urxvt] Colors
+!URxvt.background:           rgba:0000/0000/1111/dddd
+URxvt.background:           #000011
+URxvt.foreground:           #bbbbbb
+URxvt.underlineColor:       yellow
+urxvt*depth:                32
+!URxvt.inheritPixmap:        true
+URxvt.cursorColor:          #ff0000
+URxvt.colorBD:              #ffffff
+
+! [urxvt] Pseudo-transparency
+URxvt.transparent:          true
+URxvt.fading:               50%
+URxvt.shading:              20
+URxvt.tintColor:            blue
+!URxvt.blurRadius:           10
+
+! [urxvt] Font
+!URxvt.font:                 xft:Terminus:pixelsize=14
+!URxvt.boldFont:             xft:Terminus:bold:pixelsize=14
+URxvt.font:                 xft:Inconsolata:pixelsize=12
+URxvt.boldFont:             xft:Inconsolata:bold:pixelsize=12
+!URxvt.font:                 xft:Dejavu Sans Mono:pixelsize=10
+!URxvt.boldFont:             xft:Dejavu Sans Mono:bold:pixelsize=10
+!URxvt.font:                 xft:Lucida Typewriter:pixelsize=10
+!URxvt.boldFont:             xft:Lucida Typewriter:bold:pixelsize=10
+!URxvt.font:                 xft:Monospace-8
+!URxvt.boldFont:             xft:Monospace-8:bold
+!URxvt.xftAntialias:         true
+
+
+URxvt.buffered:             true
+URxvt.urlLauncher:          /usr/bin/uzbl-browser
+URxvt.multichar_encoding:   utf-8
+URxvt.perl-ext-common:      default,matcher
+URxvt.matcher.button:       2     
+! (1 = left click, 2 = wheel click, 3 = right click)
+URxvt.urgentOnBell:         true
+URxvt.cursorBlink:          true
+
+!URxvt.geometry:              80x25
+!URxvt.reverseVideo:          false
+
+! [urxvt] Scrollbar
+URxvt.scrollBar:            false
+!URxvt.scrollBar_floating:    true
+!URxvt.scrollBar_right:       true
+!URxvt.scrollColor:           black
+!URxvt.scrollstyle:           xterm
+urxvt.scrollTtyOutput:      0
+urxvt.scrollTtyKeypress:    1
+urxvt.saveLines:            10000
+
+!URxvt*borderLess:               true
+urxvt.internalBorder: 5
+
+
+! [Xcursor]
+!Xcursor.size: 16
+!Xcursor.theme: blueillusion
+Xcursor.theme: chromeglass
+!Xcursor.theme: Pulse-Glass
+
+
+
+! colors (low-contrast by AddiKT1ve)
+!*foreground: #ababab
+!*background: #292929
+!*color0: #1b1b1b
+!*color1: #ff6b6b
+!*color2: #a3d46e
+!*color3: #eaca75
+!*color4: #435e87
+!*color5: #cf8243
+!*color6: #789ec6
+!*color7: #ababab
+!*color8: #555753
+!*color9: #ff8d8d
+!*color10: #c8e7a8
+!*color11: #ffd155
+!*color12: #587aa4
+!*color13: #f6a24f
+!*color14: #46a4ff
+!*color15: #ababab

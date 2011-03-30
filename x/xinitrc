@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# For QGTKStyle to work
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+
+urxvtd -q -f -o
+
+
+# Disable beep sound
+/usr/bin/xset b off
+
+# D-bus
+if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+    eval `dbus-launch --sh-syntax --exit-with-session`
+fi
+
+start-pulseaudio-x11 &
+bluetooth-applet &
+#batterymon &
+#xscreensaver -nosplash &
+volumeicon &
+#xcompmgr -c -f &
+#conky &
+#cairo-compmgr &
+xbindkeys &
+
+exec ck-launch-session awesome
