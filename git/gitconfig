@@ -1,0 +1,7 @@
+[user]
+	name = koral
+	email = koral@mailoo.org
+[color]
+	diff = false
+	status = auto
+	branch = auto
