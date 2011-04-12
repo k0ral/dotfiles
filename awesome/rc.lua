@@ -3,28 +3,28 @@ require("awful.autofocus")
 require("awful.rules")
 require("beautiful")        -- Theme handling library
 require("eminent")          -- Dynamic tagging
---require("naughty")        -- Notification library
+require("naughty")          -- Notification library
 require("scratch")          -- Drop-down app
 require("vicious")          -- Modular widget library
 --require("wicked")         -- Widget library
 
 -- {{{ Naughty configuration
---naughty.config.timeout          = 5
---naughty.config.screen           = 1
---naughty.config.position         = "top_right"
---naughty.config.margin           = 4
---naughty.config.height           = 16
---naughty.config.width            = 300
---naughty.config.gap              = 1
---naughty.config.ontop            = true
+naughty.config.timeout          = 5
+naughty.config.screen           = 1
+naughty.config.position         = "top_right"
+naughty.config.margin           = 4
+naughty.config.height           = 16
+naughty.config.width            = 300
+naughty.config.gap              = 1
+naughty.config.ontop            = true
 --naughty.config.font             = beautiful.font or "Verdana 8"
---naughty.config.icon             = nil
---naughty.config.icon_size        = 16
+naughty.config.icon             = nil
+naughty.config.icon_size        = 16
 --naughty.config.fg               = beautiful.fg_focus or '#ffffff'
 --naughty.config.bg               = beautiful.bg_focus or '#535d6c'
 --naughty.config.presets.normal.border_color     = beautiful.border_focus or '#535d6c'
---naughty.config.border_width     = 1
---naughty.config.hover_timeout    = nil
+naughty.config.border_width     = 1
+naughty.config.hover_timeout    = nil
 -- }}}
 
 -- {{{ Variable definitions
