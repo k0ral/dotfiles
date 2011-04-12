@@ -1,7 +1,7 @@
 ! [urxvt] Colors
 !URxvt.background:           rgba:0000/0000/1111/dddd
 URxvt.background:           #000011
-URxvt.foreground:           #bbbbbb
+URxvt.foreground:           #cccccc
 URxvt.underlineColor:       yellow
 urxvt*depth:                32
 !URxvt.inheritPixmap:        true
