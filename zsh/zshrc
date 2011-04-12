@@ -235,8 +235,8 @@ alias volume='alsamixer -c 0'
 if [ $UID -ne 0 ]; then
     alias reboot='sudo reboot'
     alias halt='sudo halt'
-    alias upgrade='pak -Syu --aur && sudo diffpac'
-    alias remove='pak -R'
+    alias upgrade='sudo clyde -Syu && sudo diffpac'
+    alias remove='sudo clyde -R'
     alias netcfg='sudo netcfg2'
 fi
 
@@ -380,10 +380,9 @@ sleep-on () {
     sudo /etc/rc.d/denyhosts stop
     sudo /etc/rc.d/fail2ban stop
     sudo /etc/rc.d/dnsmasq stop
-    sudo /etc/rc.d/net-auto-wired stop
     sudo /etc/rc.d/avahi-daemon stop
+    sudo /etc/rc.d/wicd stop
 
-    wifi-off
     http-off
     mysql-off
 
@@ -403,3 +402,12 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 # }}}
+
+# {{{ List/delete empty folders
+ls-empty() {
+    find . -type d -empty -print0 | xargs --null ls
+}
+
+rm-empty() {
+    find . -type d -empty -print0 | xargs --null rmdir
+}
