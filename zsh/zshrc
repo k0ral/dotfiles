@@ -185,7 +185,7 @@ export PS1="[%T] ${RED}%n${NORM}@${BLUE}%m${NORM}:${YELLOW}%~${NORM} %#>"
 # }}}
 
 # Aliases {{{
-alias cp='gcp'
+#alias cp='gcp'
 alias df='df -hT'
 #alias df="cdf -h"
 #alias du='du -chs'
