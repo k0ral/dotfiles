@@ -23,5 +23,6 @@ volumeicon &
 #conky &
 #cairo-compmgr &
 xbindkeys &
+wmname LG3D &
 
 exec ck-launch-session awesome
