@@ -14,7 +14,7 @@ if [ $? -gt 0 ]; then
     aria2c -D -c \
         -d $target \
         -U $useragent \
-        --enable-xml-rpc \
+        --enable-rpc \
 
         #>/dev/null 2>&1
 
