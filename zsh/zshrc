@@ -36,8 +36,8 @@ export PAGER="/usr/bin/vimpager"
 export PATH=/usr/share/perl5/vendor_perl/auto/share/dist/Cope:/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:${PATH}
 export SAVEHIST=1000
 export XTERM="urxvt"
-export http_proxy="http://localhost:8123"
-export HTTP_PROXY=$http_proxy
+#export http_proxy="http://localhost:8123"
+#export HTTP_PROXY=$http_proxy
 export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' 
 export JAVA_FONTS=/usr/share/fonts/TTF
 export GDK_USE_XFT=1    #   For old gtk applications
@@ -220,7 +220,7 @@ alias wifi-on="sudo /etc/rc.d/net-auto-wireless start"
 alias wifi-off="sudo /etc/rc.d/net-auto-wireless stop"
 alias cups-on="sudo /etc/rc.d/cups start"
 alias cups-off="sudo /etc/rc.d/cups stop"
-alias openports='netstat --all --numeric --programs --inet'
+alias openports='sudo netstat --all --numeric --programs --inet'
 alias wifiselect='sudo wifi-select wlan0'
 alias uzbl='uzbl-browser'
 alias mutt='mutt -y'
@@ -297,11 +297,18 @@ function maketex() {
 xdvi() { command xdvi ${*:-*.dvi(om[1])} }
 # }}}
 
+# {{{ History
+setopt hist_ignore_all_dups     # No dupes
+setopt hist_ignore_space        # Do not save commands that start with a space
+setopt inc_append_history
+setopt histappend               # Common history for all shells
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
+setopt hist_verify              # Using '!', the command isn't immediately executed
+# }}}
+
 # Options {{{
 setopt auto_cd  
-setopt hist_ignore_all_dups     #   Anti-doublon dans l'historique
-setopt hist_ignore_space        #   Do not save commands that start with a space
-setopt inc_append_history
 #setopt correctall              #   Correction of writing errors (ex: sl => ls)
 setopt autopushd pushdminus pushdsilent pushdtohome
 setopt cdablevars
@@ -309,16 +316,10 @@ setopt cdablevars
 setopt interactivecomments
 #setopt nobanghist
 setopt noclobber
-setopt HIST_REDUCE_BLANKS
-setopt HIST_IGNORE_SPACE
 setopt SH_WORD_SPLIT
 setopt nohup
 setopt chase_links              #   Traite les liens symboliques comme il faut
 
-#   Quand l'utilisateur commence sa commande par '!' pour faire de la
-#   complétion historique, il n'exécute pas la commande immédiatement
-#   mais il écrit la commande dans le prompt
-setopt hist_verify
 
 setopt extendedglob             #   Use regexp in commands (ex : cp ^*.(tar|bz2|gz))
 
@@ -341,37 +342,6 @@ autoload run-help
 set always_to_end
 # }}}
 
-# Extract function {{{
-extract () {
-    if [ -f $1 ] ; then
-        case $1 in
-            *.tar.bz2)  tar xvjf $1     ;;
-            *.tbz2)     tar xvjf $1     ;;
-            *.tar.gz)   tar xvzf $1     ;;
-            *.tgz)      tar xvzf $1     ;;
-            *.tar.xz)   tar xvJf $1     ;;
-            *.txz)      tar xvJf $1     ;;
-            *.tar)      tar xvf $1      ;;
-            *.cbt)      tar xvf $1      ;;
-            *.zip)      unzip $1        ;;
-            *.cbz)      unzip $1        ;;
-            *.rar)      unrar x $1      ;;
-            *.cbr)      unrar x $1      ;;
-            *.bz2)      bunzip2 $1      ;;
-            *.xz)       unxz $1         ;;
-            *.gz)       gunzip $1       ;;
-            *.Z)        uncompress $1   ;;
-            *.7z)       7z x $1         ;;
-            *.exe)      cabextract $1   ;;
-            *.lzma)     lzmadec $1      ;;
-            *)           echo "\`$1': unrecognized file compression" ;;
-        esac
-  else
-      echo "\`$1' is not a valid file"
-  fi
-}
-# }}}
-
 # Sleep mode {{{
 sleep-on () {
     sudo /etc/rc.d/fcron stop
@@ -383,14 +353,11 @@ sleep-on () {
     sudo /etc/rc.d/avahi-daemon stop
     sudo /etc/rc.d/wicd stop
 
-    http-off
-    mysql-off
-
     killall volumeicon
 }
 # }}}
 
-# Support for ..../ {{{
+# {{{ Support for ..../ 
 rationalise-dot() {
     if [[ $LBUFFER = *.. ]]; then
         LBUFFER+=/..
@@ -411,3 +378,4 @@ ls-empty() {
 rm-empty() {
     find . -type d -empty -print0 | xargs --null rmdir
 }
+# }}}
