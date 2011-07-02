@@ -1,28 +1,34 @@
 #!/bin/sh
 
+xrdb -merge ~/.config/x/Xresources &
+xsetroot -cursor_name left_ptr &
+xsetroot -solid black &
+xset b off     # Disable beep sound
+xset +fp /usr/share/fonts/local
+xset fp rehash
+#xbindkeys
+
 # For QGTKStyle to work
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
-urxvtd -q -f -o
-
-
-# Disable beep sound
-/usr/bin/xset b off
-
-# D-bus
 if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
     eval `dbus-launch --sh-syntax --exit-with-session`
 fi
 
-start-pulseaudio-x11 &
-bluetooth-applet &
+urxvtd -q -f -o &
+#bluetooth-applet &
 #batterymon &
 #xscreensaver -nosplash &
-volumeicon &
-#xcompmgr -c -f &
+#volumeicon &
+#xcompmgr -c -f -F -D 5 &
 #conky &
 #cairo-compmgr &
-xbindkeys &
 wmname LG3D &
+#unclutter &
+gtk-redshift &
+trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x0077 --height 20 --widthtype request &
+~/prog/scripts/dzen2/dzen.sh &
+parcellite -d &
 
 exec ck-launch-session awesome
+#exec ck-launch-session xmonad
