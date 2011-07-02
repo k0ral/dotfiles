@@ -36,24 +36,24 @@
 
 
 #Next song
-"mpc next"
-    m:0x0 + c:171
-    XF86AudioNext 
+# "mpc next"
+#     m:0x0 + c:171
+#     XF86AudioNext 
 
-#Previous song
-"mpc prev"
-    m:0x0 + c:173
-    XF86AudioPrev 
+# #Previous song
+# "mpc prev"
+#     m:0x0 + c:173
+#     XF86AudioPrev 
 
-#Stop playing song
-"mpc stop"
-    m:0x0 + c:174
-    XF86AudioStop 
+# #Stop playing song
+# "mpc stop"
+#     m:0x0 + c:174
+#     XF86AudioStop 
 
-#Play/pause song
-"mpc toggle"
-    m:0x0 + c:172
-    XF86AudioPlay 
+# #Play/pause song
+# "mpc toggle"
+#     m:0x0 + c:172
+#     XF86AudioPlay 
 
 #
 # End of xbindkeys configuration
