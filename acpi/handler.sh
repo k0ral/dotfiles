@@ -83,6 +83,20 @@ case "$1" in
                         amixer -c 0 set Master mute; 
                        fi
                     ;;
+
+                    00000040)
+                        mpc prev
+                    ;;
+                    00000041)
+                        mpc next
+                    ;;
+                    00000043)
+                        mpc stop
+                    ;;
+                    00000045)
+                        mpc toggle
+                    ;;
+
                     0000005c)
                        if [ -z "$(lsmod |grep acpi_cpufreq)" ]; then
                         modprobe acpi_cpufreq
