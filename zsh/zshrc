@@ -36,8 +36,9 @@ export PAGER="/usr/bin/vimpager"
 export PATH=/usr/share/perl5/vendor_perl/auto/share/dist/Cope:/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:${PATH}
 export SAVEHIST=1000
 export XTERM="urxvt"
-#export http_proxy="http://localhost:8123"
-#export HTTP_PROXY=$http_proxy
+export TERM="rxvt-unicode"
+export http_proxy="http://localhost:8118"
+export HTTP_PROXY=$http_proxy
 export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' 
 export JAVA_FONTS=/usr/share/fonts/TTF
 export GDK_USE_XFT=1    #   For old gtk applications
@@ -193,7 +194,8 @@ alias diff="colordiff"
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias gcc="colorgcc"
-alias grep='grep --color=auto'
+#alias grep='grep --color=auto'
+alias -g grep='ack'
 alias la='ls -a'
 alias ll='ls -l'
 alias lla='ls -la'
@@ -202,7 +204,7 @@ alias mkdir='mkdir -p -v'
 alias more='less'
 alias mv='mv -v'
 alias o='xdg-open'
-alias startx='startx & vlock'
+#alias startx='startx & vlock'
 alias top="htop"
 alias my_indent='indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -ncs -di4 -fca -hnl -i4 -ip4 -l120 -lp -nlps -npcs -nprs -npsl -saf -sai -saw -sbi4 -sc -nsob -ss -ts4 -nut '
 #alias make="colormake"
@@ -227,10 +229,6 @@ alias mutt='mutt -y'
 alias pingg='ping www.google.fr'
 alias suvim='sudo vim'
 alias volume='alsamixer -c 0'
-
-#alias -g ...='../..'
-#alias -g ....='../../..'
-#alias -g .....='../../../..'
 
 if [ $UID -ne 0 ]; then
     alias reboot='sudo reboot'
@@ -352,8 +350,7 @@ sleep-on () {
     sudo /etc/rc.d/dnsmasq stop
     sudo /etc/rc.d/avahi-daemon stop
     sudo /etc/rc.d/wicd stop
-
-    killall volumeicon
+    sudo /etc/rc.d/privoxy stop
 }
 # }}}
 
