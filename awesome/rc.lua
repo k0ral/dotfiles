@@ -447,6 +447,7 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return",  function () awful.util.spawn(terminal) end),
     awful.key({ modkey,           }, "t",       function () awful.util.spawn("uzbl-browser") end),
+    awful.key({ modkey,           }, "y",       function () awful.util.spawn("hbro") end),
     awful.key({ },                   "Print",   function () awful.util.spawn("scrot -e 'mv $f ~/ 2>/dev/null'") end),
     awful.key({ modkey,           }, "F5", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
@@ -470,7 +471,8 @@ globalkeys = awful.util.table.join(
     --awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
     --awful.key({ modkey },            "r",     function () awful.util.spawn("$(dmenu_path | dmenu -b -nb '#000022' -nf '#FFFFFF' -sb '#000077' -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso8859-*' -p 'Launch: ')") end),
     awful.key({modkey  }, "r", function()
-        awful.util.spawn_with_shell( "exe=`dmenu_run -b -nf '#ffffff' -nb '#000022' -sf '#ffff00' -sb '#000077' -p 'Launch: '` && exec $exe")
+        --awful.util.spawn_with_shell( "exe=`dmenu_run -b -nf '#ffffff' -nb '#000022' -sf '#ffff00' -sb '#000077' -p 'Launch: '` && exec $exe")
+        awful.util.spawn_with_shell( "exec gmrun")
     end),
 
     awful.key({ modkey },            "x",     function ()
@@ -481,7 +483,7 @@ globalkeys = awful.util.table.join(
     end),
 
     -- Scratch drop
-    awful.key({ modkey }, "BackSpace", function () scratch.drop("urxvt", "bottom", "center", 0.9, 0.4, true) end)
+    awful.key({ modkey }, "BackSpace", function () scratch.drop("urxvtc", "bottom", "center", 0.9, 0.4, true) end)
 )
 -- }}}
 
@@ -625,7 +627,7 @@ clock_timer:start()
 -- Autorun programs {{{
 autorun = true
 autorunApps = { 
-   "urxvt"
+   "urxvtc"
 }
 
 if autorun then
