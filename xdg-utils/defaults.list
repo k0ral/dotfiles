@@ -9,3 +9,4 @@ application/vnd.ms-excel=gnumeric.desktop;
 video/x-msvideo=smplayer_enqueue.desktop;
 application/vnd.oasis.opendocument.spreadsheet=calc.desktop;
 image/png=mirage.desktop;
+application/rtf=abiword.desktop;
