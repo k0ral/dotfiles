@@ -9,7 +9,7 @@ set cache_home  = @(echo $XDG_CACHE_HOME)@
 # Interface paths.
 set fifo_dir    = /tmp
 set socket_dir  = /tmp
-set useragent   = Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET CLR 1.1.4322; Tablet PC 2.0; OfficeLiveConnector.1.3; OfficeLivePatch.1.3; MS-RTC LM 8; InfoPath.3)
+set useragent   = 
 set shell_cmd   = sh -c
 
 # === General config aliases =================================================
@@ -66,6 +66,7 @@ set download_handler       = sync_spawn @scripts_dir/my_download.sh
 # Load commit handlers
 #@on_event   LOAD_COMMIT    @set_status <span foreground="gold">RECV</span>
 @on_event   LOAD_COMMIT    set progress_style = foreground="#ffff00"
+#@on_event   LOAD_COMMIT    set stylesheet_uri = file:///home/chahine/.config/hbro/default.css
 
 # add some javascript to the page for other 'js' and 'script' commands to access later.
 @on_event   LOAD_COMMIT    js uzbl = {};
@@ -73,7 +74,7 @@ set download_handler       = sync_spawn @scripts_dir/my_download.sh
 
 # Custom scripts
 #@on_event   LOAD_COMMIT    script @scripts_dir/flashblock.js
-#@on_event   LOAD_COMMIT    script @scripts_dir/dark_inputs.js
+@on_event   LOAD_COMMIT    script @scripts_dir/dark_inputs.js
 #@on_event   LOAD_COMMIT    script @scripts_dir/smooth_scroll.js
 
 # Userscripts/per-site-settings. See the script and the example configuration for details
@@ -94,7 +95,7 @@ set download_handler       = sync_spawn @scripts_dir/my_download.sh
 #@on_event  CONFIG_CHANGED print Config changed: %1 = %2
 
 # Scroll percentage calculation
-@on_event   SCROLL_VERT    set scroll_message = \@<(function(){var p='--';if(%3!=%2){p=(%1/(%3-%4));p=Math.round(10000*p)/100;};return p+'%';})()>\@
+@on_event   SCROLL_VERT    set scroll_message = \@<(function(){var p='--';if(%3>%4){p=(%1/(%3-%4));p=Math.round(10000*p)/100;};return p+'%';})()>\@
 
 
 # === Behaviour and appearance ===============================================
@@ -148,6 +149,7 @@ set progress.format     = %c
 @modmap <ISO_Left_Tab>  <Shift-Tab>
 @modmap <space>         <Space>
 @modmap <KP_Enter>      <Enter>
+@modmap <Mod1>          <Alt>
 
 #modkey_addition <Key1>  <Key2>    <Result>
 @modkey_addition <Shift> <Ctrl>    <Meta>
@@ -209,7 +211,7 @@ set ebind = @mode_bind global,-insert
 # --- Mouse bindings ---------------------------------------------------------
 
 # Middle click open in new window
-@bind  <Button2>  = sh 'if [ "$1" ]; then echo "event REQ_NEW_WINDOW $1" > "$UZBL_FIFO"; else echo "uri $(xclip -o | sed s/\\\@/%40/g)" > "$UZBL_FIFO"; fi' '\@SELECTED_URI'
+@bind  <Button2>  = sh 'if [ "+-u "$1"" ]; then echo "event REQ_NEW_WINDOW $1" > "$UZBL_FIFO"; else echo "uri $(xclip -o | sed s/\\\@/%40/g)" > "$UZBL_FIFO"; fi' '\@SELECTED_URI'
 
 # --- Keyboard bindings ------------------------------------------------------
 
@@ -218,7 +220,7 @@ set ebind = @mode_bind global,-insert
 @cbind    :_        = %s
 
 # open a new window or a new tab (see the on_event NEW_WINDOW settings above)
-@cbind  w            = event REQ_NEW_WINDOW
+#@cbind  w            = event REQ_NEW_WINDOW
 
 # Page movement binds
 #@cbind  j            = scroll vertical 20
@@ -279,8 +281,8 @@ set ebind = @mode_bind global,-insert
 
 # Use socat to directly inject commands into uzbl-core and view events
 # raised by uzbl-core:
-@cbind  <Ctrl><Alt>t  = sh 'xterm -e "socat unix-connect:\"$UZBL_SOCKET\" -"'
-#@cbind  <Ctrl><Alt>t  = sh 'urxvt -e socat unix-connect:"$UZBL_SOCKET" -'
+#@cbind  <Ctrl><Alt>t  = sh 'xterm -e "socat unix-connect:\"$UZBL_SOCKET\" -"'
+@cbind  <Ctrl><Alt>t  = sh 'urxvt -e "socat unix-connect:\"$UZBL_SOCKET\" -"'
 
 # Uri opening prompts
 @cbind  o<URI:>_       = uri %s
@@ -293,7 +295,7 @@ set ebind = @mode_bind global,-insert
 
 # Yanking & pasting binds
 @cbind  yy  = sh 'echo -n "$UZBL_URI" | xclip'
-@cbind  yU  = sh 'echo -n "$1" | xclip' \@SELECTED_URI
+@cbind  yU  = sh 'echo -n "+-u "$1"" | xclip' \@SELECTED_URI
 @cbind  yt  = sh 'echo -n "$UZBL_TITLE" | xclip'
 
 # Clone current window
@@ -392,13 +394,14 @@ sync_spawn_exec @scripts_dir/load_cookies.sh
 sync_spawn_exec @scripts_dir/load_cookies.sh @data_home/uzbl/session-cookies.txt
 
 # Set the "home" page.
-set uri = yooook.net/site/seeks/websearch-hp
 #set uri = https://duckduckgo.com?kp=-1&kl=wt-wt&kh=1&kj=r&kw=w&kv=1
+set uri = https://www.google.com
 
 # Web searching binds
-#@cbind  gg<Google:>_         = uri http://www.google.com/search?q=\@<encodeURIComponent(%r)>\@
+@cbind  gg<Google:>_         = uri https://www.google.com/search?q=\@<encodeURIComponent(%r)>\@
 #@cbind  gg<DuckDuckGo:>_    = uri https://duckduckgo.com/?q=%s&kp=-1&kl=wt-wt&kh=1&kj=r&kw=w&kv=1
-@cbind  gg<Seeks:>_          = uri https://yooook.net/site/seeks/search?q=\@<encodeURIComponent(%r)>\@&expansion=1&action=expand
+#@cbind  gg<Seeks:>_          = uri https://yooook.net/site/seeks/search?q=\@<encodeURIComponent(%r)>\@&expansion=1&action=expand
+#@cbind  gg<Seeks:>_          = uri https://www.seeks-project.info/search_exp.php/search?q=\@<encodeURIComponent(%r)>\@&expansion=1&action=expand
 
 # Surfraw
 @cbind sr<Surfraw:>_ = sh 'echo "set uri = $(surfraw -print %s)" > $4'
@@ -409,5 +412,5 @@ set uri = yooook.net/site/seeks/websearch-hp
 set icon = @prefix/share/uzbl/examples/data/uzbl.png
 
 # Proxy
-# set proxy_url = http://localhost:8123
+# set proxy_url = http://127.0.0.1:8118
 # vim: set fdm=syntax:
