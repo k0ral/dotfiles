@@ -1,0 +1,107 @@
+! [URxvt] Misc
+URxvt*cursorBlink:          true
+!URxvt*termName:             URxvt
+URxvt*termName:             rxvt
+URxvt*buffered:             true
+URxvt*urlLauncher:          /usr/local/bin/hbro
+URxvt*multichar_encoding:   utf-8
+URxvt*perl-ext-common:      default,matcher
+URxvt*matcher.button:       2     
+! (1 = left click, 2 = wheel click, 3 = right click)
+URxvt*urgentOnBell:         true
+
+
+! [URxvt] Colors
+!URxvt*background:           rgba:0000/0000/1111/dddd
+URxvt*background:           #000011
+URxvt*foreground:           #cccccc
+URxvt*underlineColor:       yellow
+URxvt*depth:                32
+!URxvt*inheritPixmap:        true
+URxvt*cursorColor:          #ff0000
+URxvt*colorBD:              #ffffff
+URxvt*color4:               RoyalBlue
+URxvt*color12:              RoyalBlue
+
+! [URxvt] Pseudo-transparency
+URxvt*transparent:          true
+URxvt*fading:               50%
+!URxvt*shading:              50
+URxvt*tintColor:            darkblue
+URxvt*blurRadius:           0
+
+! [URxvt] Font
+URxvt*allow_bold:           true
+!URxvt*font:                 xft:Terminus:pixelsize=14
+!URxvt*boldFont:             xft:Terminus:bold:pixelsize=14
+URxvt*font:                 xft:Inconsolata:pixelsize=12:antialias=false
+URxvt*boldFont:             xft:Inconsolata:bold:pixelsize=12
+URxvt*italicFont:           xft:Inconsolata:italic:pixelsize=12
+!URxvt*font:                 xft:Dejavu Sans Mono:pixelsize=10
+!URxvt*boldFont:             xft:Dejavu Sans Mono:bold:pixelsize=10
+!URxvt*font:                 xft:Lucida Typewriter:pixelsize=10
+!URxvt*boldFont:             xft:Lucida Typewriter:bold:pixelsize=10
+!URxvt*font:                 xft:Monospace-8
+!URxvt*boldFont:             xft:Monospace-8:bold
+!URxvt*xftAntialias:         true
+
+!URxvt*geometry:              80x25
+!URxvt*reverseVideo:          false
+
+! [URxvt] Scrollbar
+URxvt*scrollBar:            false
+!URxvt*scrollBar_floating:    true
+!URxvt*scrollBar_right:       true
+!URxvt*scrollColor:           black
+!URxvt*scrollstyle:           xterm
+URxvt*scrollTtyOutput:      0
+URxvt*scrollTtyKeypress:    1
+URxvt*saveLines:            10000
+
+!URxvt*borderLess:               true
+URxvt*internalBorder: 5
+
+
+! [Xcursor]
+!Xcursor.size: 16
+!Xcursor.theme: blueillusion
+Xcursor.theme: chromeglass
+!Xcursor.theme: Pulse-Glass
+
+
+! General colors
+*color0: black
+*color1: red3
+*color2: green3
+*color3: yellow3
+*color4: blue2
+*color5: magenta3
+*color6: cyan3
+*color7: gray90
+*color8: gray50
+*color9: red
+*color10: green
+*color11: yellow
+*color12: rgb:5c/5c/ff
+*color13: magenta
+*color14: cyan
+*color15: white
+! colors (low-contrast by AddiKT1ve)
+!*foreground: #ababab
+!*background: #292929
+!*color0: #1b1b1b
+!*color1: #ff6b6b
+!*color2: #a3d46e
+!*color3: #eaca75
+!*color4: #435e87
+!*color5: #cf8243
+!*color6: #789ec6
+!*color7: #ababab
+!*color8: #555753
+!*color9: #ff8d8d
+!*color10: #c8e7a8
+!*color11: #ffd155
+!*color12: #587aa4
+!*color13: #f6a24f
+!*color14: #46a4ff
+!*color15: #ababab
