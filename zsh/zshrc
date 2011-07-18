@@ -35,8 +35,8 @@ export MAILCHECK=1
 export PAGER="/usr/bin/vimpager"
 export PATH=/usr/share/perl5/vendor_perl/auto/share/dist/Cope:/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:${PATH}
 export SAVEHIST=1000
-export XTERM="urxvt"
-export TERM="rxvt-unicode"
+#export XTERM="urxvt"
+#export TERM="rxvt-unicode"
 export http_proxy="http://localhost:8118"
 export HTTP_PROXY=$http_proxy
 export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' 
@@ -204,6 +204,7 @@ alias mkdir='mkdir -p -v'
 alias more='less'
 alias mv='mv -v'
 alias o='xdg-open'
+alias rm='safe-rm'
 #alias startx='startx & vlock'
 alias top="htop"
 alias my_indent='indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -ncs -di4 -fca -hnl -i4 -ip4 -l120 -lp -nlps -npcs -nprs -npsl -saf -sai -saw -sbi4 -sc -nsob -ss -ts4 -nut '
@@ -229,6 +230,8 @@ alias mutt='mutt -y'
 alias pingg='ping www.google.fr'
 alias suvim='sudo vim'
 alias volume='alsamixer -c 0'
+alias wtf='dmesg'
+alias rtfm='man'
 
 if [ $UID -ne 0 ]; then
     alias reboot='sudo reboot'
