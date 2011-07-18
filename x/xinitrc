@@ -15,7 +15,10 @@ if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
     eval `dbus-launch --sh-syntax --exit-with-session`
 fi
 
-urxvtd -q -f -o &
+if [ -z $(pidof urxvtd) ]; then
+    urxvtd -q -f -o &
+fi
+
 #bluetooth-applet &
 #batterymon &
 #xscreensaver -nosplash &
@@ -30,5 +33,5 @@ trayer --edge top --align right --SetDockType true --SetPartialStrut true --expa
 ~/prog/scripts/dzen2/dzen.sh &
 parcellite -d &
 
-exec ck-launch-session awesome
-#exec ck-launch-session xmonad
+#exec ck-launch-session awesome
+exec ck-launch-session xmonad
