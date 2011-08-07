@@ -1,7 +1,3 @@
-# Global Order: zshenv, zprofile, zshrc, zlogin
-
-READNULLCMD=${PAGER:-/usr/bin/pager}
-
 # Locales {{{
 export LANG=en_US.utf8
 export LANGUAGE=en_US.utf8
@@ -22,21 +18,22 @@ export LC_TYPE=en_US.utf8
 #unicode_start
 # }}}
 
-# Constants {{{
-export BROWSER="uzbl-browser"
-export CC="colorgcc"
-export COLORTERM="yes"
+# {{{ Default applications
+export BROWSER="/usr/bin/uzbl-browser"
+export CC="/usr/bin/colorgcc"
 export EDITOR="/usr/bin/vim"
+export PAGER="/usr/bin/vimpager"
+export READNULLCMD=${PAGER:-/usr/bin/pager}
+export TERM="rxvt-unicode"
+#export XTERM="urxvt"
+# }}}
+
+# Misc constants {{{
+export COLORTERM="yes"
 export GREP_COLOR=31
-export HISTFILE=$HOME/.config/zsh/history
-export HISTORY=1000
 export MAIL=${HOME}/mail
 export MAILCHECK=1
-export PAGER="/usr/bin/vimpager"
 export PATH=/usr/share/perl5/vendor_perl/auto/share/dist/Cope:/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:${PATH}
-export SAVEHIST=1000
-#export XTERM="urxvt"
-#export TERM="rxvt-unicode"
 export http_proxy="http://localhost:8118"
 export HTTP_PROXY=$http_proxy
 export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' 
@@ -105,7 +102,11 @@ bindkey "^[[B" history-search-forward
 # }}}
 
 # Completion {{{
+setopt complete_in_word
+setopt always_to_end
+
 autoload -U compinit; compinit
+zmodload -i zsh/complist
 
 zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
 zstyle ':completion:*:warnings' format '%BSorry, no result for : %d%b'
@@ -117,7 +118,7 @@ zstyle ':completion:*' squeeze-slashes true
 
 # Use cache
 zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh_cache
+zstyle ':completion:*' cache-path ~/.config/zsh/cache
 
 # Prevent CVS files/directories from being completed
 zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)CVS'
@@ -133,8 +134,6 @@ zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX
 zstyle ':completion:*:functions' ignored-patterns '_*'
 
 # Colors
-# You can also add different colours to the completion list - as displayed in the screenshot below. To be more specific, we'll use the same colours that GNU ls shows with the --color option
-zmodload zsh/complist
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # Do not show already selected elements
@@ -142,32 +141,45 @@ zstyle ':completion:*:rm:*' ignore-line yes
 zstyle ':completion:*:mv:*' ignore-line yes
 zstyle ':completion:*:cp:*' ignore-line yes
 
-#   Sudo completion
-zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
-    /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
+# Sudo completion
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
 
 # PID completion
-zstyle ':completion:*:*:kill:*:processes'   list-colors "=(#b) #([0-9]#)*=36=31"
+zstyle ':completion:*:*:kill:*:processes'   list-colors "=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01"
 zstyle ':completion:*:*:kill:*'             menu yes select
 zstyle ':completion:*:kill:*'               force-list always
 zstyle ':completion:*:*:killall:*'          menu yes select
 zstyle ':completion:*:killall:*'            force-list always
-zstyle ':completion:*:processes'            command "ps -au$USER"
+#zstyle ':completion:*:processes'            command "ps -au$USER"
+zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
 
 # Don't select parent directory on cd
-zstyle ':completion:*:cd:*' ignore-parents parent pwd
+#zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
 
 # xdvi completion
 zstyle ':completion:*:*:xdvi:*' menu yes select
 zstyle ':completion:*:*:xdvi:*' file-sort time
 
-#   Support des fonctions de complétion de bash
+# hosts completion
+[ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
+hosts=(
+  "$_ssh_hosts[@]"
+  `hostname`
+  localhost
+)
+zstyle ':completion:*:hosts' hosts $hosts
+
+# Users completion : don't complete uninteresting users, unless we really want to
+zstyle ':completion:*:*:*:users' ignored-patterns adm amanda apache aurbuild avahi beaglidx bin cacti canna clamav courier cron daemon dbus distcache dovecot fax fetchmail ftp games gdm gkrellmd gopher hacluster hal halt hsqldb http ident junkbust ldap lp mail mailman mailnull mldonkey mpd mysql nagios named netdump news nfsnobody nobody nscd ntp nut nx openvpn operator pcap polipo postfix postgres privoxy pulse pvm quagga radvd rpc rpcuser rpm rtkit shutdown squid sshd sync usbmux uucp vcsa xfs
+zstyle '*' single-ignored show
+
+# Support for bash completion
 autoload -U bashcompinit; bashcompinit
 # }}}
 
 # Prompts {{{
-
-# Enable preconfigured prompts
+# Preconfigured prompts
 #autoload -U promptinit
 #promptinit
 #prompt adam2
@@ -182,7 +194,8 @@ CYAN="%{"$'\033[01;36m'"%}"
 BOLD="%{"$'\033[01;39m'"%}"
 NORM="%{"$'\033[00m'"%}"
 
-export PS1="[%T] ${RED}%n${NORM}@${BLUE}%m${NORM}:${YELLOW}%~${NORM} %#>"
+export PROMPT="${RED}%n${NORM}@${BLUE}%m${NORM}:${YELLOW}%~${NORM} %#>"
+export RPROMPT='[%T]'
 # }}}
 
 # Aliases {{{
@@ -211,6 +224,7 @@ alias my_indent='indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -
 #alias make="colormake"
 alias octave="octave -q"
 alias gdb="cgdb -q"
+alias _="sudo"
 alias http-on="sudo /etc/rc.d/lighttpd start"
 alias http-off="sudo /etc/rc.d/lighttpd stop"
 alias mysql-on="sudo /etc/rc.d/mysqld start"
@@ -248,29 +262,6 @@ alias -s html=uzbl-browser
 
 # Aliases for directories
 # Example: hash -d down=~/Desktop/Downloads
-
-#alias acpi
-#alias arp
-#cc
-#df
-#dprofpp
-#fdisk
-#free
-#g++
-#gcc
-#id
-#ifconfig
-#ls
-#lspci
-#lsusb
-#make
-#md5sum
-#netstat
-#nm
-#nmap
-#nocope
-#ping
-#pm
 # }}}
 
 # Helpers {{{
@@ -299,19 +290,24 @@ xdvi() { command xdvi ${*:-*.dvi(om[1])} }
 # }}}
 
 # {{{ History
-setopt hist_ignore_all_dups     # No dupes
+export HISTFILE=$HOME/.config/zsh/history
+export HISTORY=1000
+export SAVEHIST=1000
+
+setopt append_history           # Shared history for all shells
+unsetopt extended_history       # Do not save extra information like timestamp
+setopt hist_ignore_dups
 setopt hist_ignore_space        # Do not save commands that start with a space
 setopt inc_append_history
-setopt histappend               # Common history for all shells
-setopt HIST_REDUCE_BLANKS
-setopt HIST_IGNORE_SPACE
+setopt hist_reduce_blanks
 setopt hist_verify              # Using '!', the command isn't immediately executed
+setopt share_history
 # }}}
 
 # Options {{{
 setopt auto_cd  
-#setopt correctall              #   Correction of writing errors (ex: sl => ls)
-setopt autopushd pushdminus pushdsilent pushdtohome
+#setopt correctall              # Correction of writing errors (ex: sl => ls)
+setopt auto_pushd pushd_minus pushd_silent pushd_to_home pushd_ignore_dups
 setopt cdablevars
 #setopt ignoreeof               #   Prevent from using Ctrl + d
 setopt interactivecomments
@@ -321,39 +317,27 @@ setopt SH_WORD_SPLIT
 setopt nohup
 setopt chase_links              #   Traite les liens symboliques comme il faut
 
-
 setopt extendedglob             #   Use regexp in commands (ex : cp ^*.(tar|bz2|gz))
 
-#   No beeps at all !
+# No beeps at all !
 unsetopt beep
 unsetopt hist_beep
 unsetopt list_beep
 
-#   Si on utilise des jokers dans une liste d'arguments, retire les jokers
-#   qui ne correspondent à rien au lieu de donner une erreur
+# Si on utilise des jokers dans une liste d'arguments, retire les jokers
+# qui ne correspondent à rien au lieu de donner une erreur
 setopt nullglob
-
-
 
 unalias run-help
 autoload run-help
 
-
-#   Inline completion
-set always_to_end
+# Inline completion
 # }}}
 
 # Sleep mode {{{
 sleep-on () {
     sudo /etc/rc.d/fcron stop
-    sudo /etc/rc.d/sshd stop
-    sudo /etc/rc.d/ntpd stop
-    sudo /etc/rc.d/denyhosts stop
-    sudo /etc/rc.d/fail2ban stop
-    sudo /etc/rc.d/dnsmasq stop
-    sudo /etc/rc.d/avahi-daemon stop
     sudo /etc/rc.d/wicd stop
-    sudo /etc/rc.d/privoxy stop
 }
 # }}}
 
