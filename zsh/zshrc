@@ -217,6 +217,7 @@ alias mkdir='mkdir -p -v'
 alias more='less'
 alias mv='mv -v'
 alias o='xdg-open'
+alias reco='sudo dhclient eth0'
 alias rm='safe-rm'
 #alias startx='startx & vlock'
 alias top="htop"
