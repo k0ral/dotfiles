@@ -66,7 +66,7 @@ set download_handler       = sync_spawn @scripts_dir/my_download.sh
 # Load commit handlers
 #@on_event   LOAD_COMMIT    @set_status <span foreground="gold">RECV</span>
 @on_event   LOAD_COMMIT    set progress_style = foreground="#ffff00"
-#@on_event   LOAD_COMMIT    set stylesheet_uri = file:///home/chahine/.config/hbro/default.css
+#@on_event   LOAD_COMMIT    set stylesheet_uri = file:///@config_home/uzbl/default.css
 
 # add some javascript to the page for other 'js' and 'script' commands to access later.
 @on_event   LOAD_COMMIT    js uzbl = {};
@@ -75,6 +75,7 @@ set download_handler       = sync_spawn @scripts_dir/my_download.sh
 # Custom scripts
 #@on_event   LOAD_COMMIT    script @scripts_dir/flashblock.js
 @on_event   LOAD_COMMIT    script @scripts_dir/dark_inputs.js
+@on_event   LOAD_COMMIT    script @scripts_dir/follow.js
 #@on_event   LOAD_COMMIT    script @scripts_dir/smooth_scroll.js
 
 # Userscripts/per-site-settings. See the script and the example configuration for details
@@ -99,6 +100,9 @@ set download_handler       = sync_spawn @scripts_dir/my_download.sh
 
 
 # === Behaviour and appearance ===============================================
+
+# Custom CSS can be defined here, including link follower hint styles
+set stylesheet_uri = file://@config_home/uzbl/style.css
 
 set show_status       = 1
 set status_top        = 0
@@ -181,6 +185,7 @@ set ebind = @mode_bind global,-insert
 # Resets keycmd and returns to default mode.
 @on_event  ESCAPE    @set_mode
 @on_event  ESCAPE    event KEYCMD_CLEAR
+@on_event  ESCAPE    js uzbl.follow.clearHints()
 @bind   <Escape>     = event ESCAPE
 @bind   <Ctrl>[      = event ESCAPE
 
@@ -325,7 +330,8 @@ set follow_hint_keys = 0123456789
 #set follow_hint_keys = qwerty
 #set follow_hint_keys = asdfghjkl;
 #set follow_hint_keys = thsnd-rcgmvwb/;789aefijkopquxyz234
-@cbind  fl*  = spawn @scripts_dir/follow.sh "%s"
+@cbind  fl*  = spawn @scripts_dir/follow.sh \@< uzbl.follow("\@follow_hint_keys", "%s", 0) >\@
+@cbind  Fl*  = spawn @scripts_dir/follow.sh \@< uzbl.follow("\@follow_hint_keys", "%s", 1) >\@
 @cbind  gi   = spawn @scripts_dir/go_input.sh
 
 # Form filler binds
