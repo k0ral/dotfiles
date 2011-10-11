@@ -1,0 +1,11 @@
+# Operate on all files, regardless of type (but still skip directories like blib, CVS, etc.)
+#-a
+
+# Color to be used for filenames
+--color-filename=bold red
+
+# Color to be used for line numbers
+--color-lineno=bold magenta
+
+# Color to be used for filenames
+--color-match=bold yellow on_black
