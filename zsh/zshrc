@@ -1,7 +1,5 @@
 #unicode_start
 
-eval `dircolors -b`
-
 # Keybindings {{{
 if [[ "$TERM" != emacs ]]; then
 [[ -z "$terminfo[kdch1]" ]] || bindkey -M emacs "$terminfo[kdch1]" delete-char
@@ -66,41 +64,47 @@ setopt always_to_end
 autoload -U compinit; compinit
 zmodload -i zsh/complist
 
-zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
-zstyle ':completion:*:warnings' format '%BSorry, no result for : %d%b'
-zstyle ':completion:*' menu select=2
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*'                      use-perl=1
+zstyle ':completion:*'                      menu select=2
+
+# If case sensitive fails, try case insensitive
+zstyle ':completion:*'                      matcher-list 'm:{a-z}={A-Z}'
+
+# Have all different types of matches displayed separately
+zstyle ':completion:*'                      group-name ''
+
+# Ignore completion functions for commands you don’t have
+zstyle ':completion:*:functions'            ignored-patterns '_*'
+
+# Description text
+zstyle ':completion:*'                      select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*:descriptions'         format $'%{- \e[38;5;137;1m\e[48;5;234m%}%B%d%b%{\e[m%}'
+zstyle ':completion:*:warnings'             format $'%{No match for \e[38;5;240;1m%}%d%{\e[m%}'
 
 # Remove trailing slashes
-zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*'                      squeeze-slashes true
 
 # Use cache
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.config/zsh/cache
+zstyle ':completion:*'                      use-cache on
+zstyle ':completion:*'                      cache-path ~/.config/zsh/cache
 
 # Prevent CVS files/directories from being completed
-zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)CVS'
-zstyle ':completion:*:cd:*' ignored-patterns '(*/)#CVS'
+zstyle ':completion:*:(all-|)files'         ignored-patterns '(|*/)CVS'
 
 # Allow mistakes
-zstyle ':completion:*' completer _complete _match _approximate
-zstyle ':completion:*:match:*' original only
-#zstyle ':completion:*:approximate:*' max-errors 1 numeric
-zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
-
-# [?] Ignore completion functions for commands you don’t have
-zstyle ':completion:*:functions' ignored-patterns '_*'
+zstyle ':completion:*'                      completer _complete _match _approximate
+zstyle ':completion:*:match:*'              original only
+#zstyle ':completion:*:approximate:*'       max-errors 1 numeric
+zstyle -e ':completion:*:approximate:*'     max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
+zstyle ':completion:*'                      accept-exact '*(N)'     # Take the first part of the path to be exact
 
 # Colors
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*'                      list-colors ${(s.:.)LS_COLORS}
 
 # Do not show already selected elements
 zstyle ':completion:*:rm:*' ignore-line yes
 zstyle ':completion:*:mv:*' ignore-line yes
 zstyle ':completion:*:cp:*' ignore-line yes
-
-# Sudo completion
-zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
 
 # PID completion
 zstyle ':completion:*:*:kill:*:processes'   list-colors "=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01"
@@ -108,16 +112,37 @@ zstyle ':completion:*:*:kill:*'             menu yes select
 zstyle ':completion:*:kill:*'               force-list always
 zstyle ':completion:*:*:killall:*'          menu yes select
 zstyle ':completion:*:killall:*'            force-list always
-#zstyle ':completion:*:processes'            command "ps -au$USER"
-zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
+zstyle ':completion:*:*:*:*:processes'      command "ps -u `whoami` -o pid,user,comm -w -w"
+zstyle ':completion:*:processes-names'      command 'ps -awxho command'
 
-# Don't select parent directory on cd
-#zstyle ':completion:*:cd:*' ignore-parents parent pwd
-zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
+# cd completion
+#zstyle ':completion:*:cd:*'                ignore-parents parent pwd
+zstyle ':completion:*:cd:*'                 tag-order local-directories directory-stack path-directories
+zstyle ':completion:*:cd:*'                 ignored-patterns '(*/)#CVS'
+
+# ssh completion
+zstyle ':completion:*:scp:*'                group-order users files all-files hosts-domain hosts-host hosts-ipaddr
+zstyle ':completion:*:ssh:*'                tag-order users 'hosts:-host hosts:-domain:domain hosts:-ipaddr:IP\ address *'
+zstyle ':completion:*:ssh:*'                group-order hosts-domain hosts-host users hosts-ipaddr
+zstyle ':completion:*:(ssh|scp):*:hosts-host'   ignored-patterns '*.*' loopback localhost
+zstyle ':completion:*:(ssh|scp):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^*.*' '*@*'
+zstyle ':completion:*:(ssh|scp):*:hosts-ipaddr' ignored-patterns '^<->.<->.<->.<->' '127.0.0.<->'
+
+# sudo completion
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
 
 # xdvi completion
-zstyle ':completion:*:*:xdvi:*' menu yes select
-zstyle ':completion:*:*:xdvi:*' file-sort time
+zstyle ':completion:*:*:xdvi:*'             menu yes select
+zstyle ':completion:*:*:xdvi:*'             file-sort time
+
+# apvlv completion
+zstyle ':completion:*:*:apvlv:*'            file-patterns '*.pdf'
+
+# mplayer completion
+zstyle ':completion:*:*:mplayer:*'          tag-order files
+zstyle ':completion:*:*:mplayer:*'          file-patterns   \
+    '*.(rmvb|mkv|mpg|wmv|mpeg|avi|flv|mp3|mp4|flac|ogg):video' \
+    '*:all-files' '*(-/):directories'
 
 # hosts completion
 [ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
@@ -128,8 +153,8 @@ hosts=(
 )
 zstyle ':completion:*:hosts' hosts $hosts
 
-# Users completion : don't complete uninteresting users, unless we really want to
-zstyle ':completion:*:*:*:users' ignored-patterns adm amanda apache aurbuild avahi beaglidx bin cacti canna clamav courier cron daemon dbus distcache dovecot fax fetchmail ftp games gdm gkrellmd gopher hacluster hal halt hsqldb http ident junkbust ldap lp mail mailman mailnull mldonkey mpd mysql nagios named netdump news nfsnobody nobody nscd ntp nut nx openvpn operator pcap polipo postfix postgres privoxy pulse pvm quagga radvd rpc rpcuser rpm rtkit shutdown squid sshd sync usbmux uucp vcsa xfs
+# Users completion: don't complete uninteresting users, unless we really want to
+zstyle ':completion:*:*:*:users' ignored-patterns adm amanda apache aurbuild avahi beaglidx bin cacti canna clamav courier cron daemon dbus distcache dnsmasq dovecot fax fetchmail ftp games gdm gkrellmd gopher hacluster hal halt hsqldb http ident junkbust ldap lp mail mailman mailnull mldonkey mpd mysql nagios named netdump news nfsnobody nobody nscd ntp nut nx openvpn operator pcap polipo postfix postgres privoxy pulse pvm quagga radvd rpc rpcuser rpm rtkit shutdown squid sshd sync usbmux uucp vcsa xfs
 zstyle '*' single-ignored show
 
 # Support for bash completion
@@ -137,34 +162,45 @@ autoload -U bashcompinit; bashcompinit
 # }}}
 
 # Aliases {{{
-#alias cp='gcp'
-alias df='df -hT'
-#alias df="cdf -h"
-#alias du='du -chs'
-alias diff="colordiff"
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias gcc="colorgcc"
-#alias grep='grep --color=auto'
-alias -g grep='ack'
+alias cp='cp -v'
+alias mkdir='mkdir -p -v'
+alias mv='mv -v'
+alias rm='safe-rm -v'
+
 alias l='ls -l'
 alias la='ls -a'
 alias ll='ls -l'
 alias lla='ls -la'
 alias ls='ls --tabsize=0 --literal --color=auto --show-control-chars --human-readable --group-directories-first -X'
-alias mkdir='mkdir -p -v'
-alias more='less'
-alias mv='mv -v'
-alias o='xdg-open'
-alias reco='sudo dhclient eth0'
-alias rm='safe-rm'
-#alias startx='startx & vlock'
-alias top="htop"
-alias my_indent='indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -ncs -di4 -fca -hnl -i4 -ip4 -l120 -lp -nlps -npcs -nprs -npsl -saf -sai -saw -sbi4 -sc -nsob -ss -ts4 -nut '
+
+alias df='df -hT'
+#alias df="cdf -h"
+#alias du='du -chs'
+
+alias diff="colordiff"
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias gcc="colorgcc"
+#alias grep='grep --color=auto'
 #alias make="colormake"
-alias octave="octave -q"
+
 alias gdb="cgdb -q"
+alias mutt='mutt -y'
+alias octave="octave -q"
+
+alias -g grep='ack'
+alias more='vimpager'
+alias less='vimpager'
+alias top="htop"
+
+alias o='xdg-open'
+
+alias reco='sudo dhclient eth0'
+#alias startx='startx & vlock'
+alias my_indent='indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -ncs -di4 -fca -hnl -i4 -ip4 -l120 -lp -nlps -npcs -nprs -npsl -saf -sai -saw -sbi4 -sc -nsob -ss -ts4 -nut '
+
 alias _="sudo"
+
 alias http-on="sudo /etc/rc.d/lighttpd start"
 alias http-off="sudo /etc/rc.d/lighttpd stop"
 alias mysql-on="sudo /etc/rc.d/mysqld start"
@@ -177,15 +213,16 @@ alias wifi-on="sudo /etc/rc.d/net-auto-wireless start"
 alias wifi-off="sudo /etc/rc.d/net-auto-wireless stop"
 alias cups-on="sudo /etc/rc.d/cupsd start"
 alias cups-off="sudo /etc/rc.d/cupsd stop"
+
 alias openports='sudo netstat --all --numeric --programs --inet'
 alias wifiselect='sudo wifi-select wlan0'
 alias uzbl='uzbl-browser'
-alias mutt='mutt -y'
 alias pingg='ping www.google.fr'
-alias suvim='sudo vim'
 alias volume='alsamixer -c 0'
+
 alias wtf='dmesg'
 alias rtfm='man'
+alias :q='exit'
 
 if [ $UID -ne 0 ]; then
     alias reboot='sudo reboot'
@@ -194,14 +231,6 @@ if [ $UID -ne 0 ]; then
     alias remove='sudo pacman-color -Rs'
     alias netcfg='sudo netcfg2'
 fi
-
-# File extension => application
-alias -s tex=vim
-alias -s pdf=epdfview
-alias -s html=uzbl-browser
-
-# Aliases for directories
-# Example: hash -d down=~/Desktop/Downloads
 # }}}
 
 # Helpers {{{

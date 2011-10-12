@@ -41,6 +41,9 @@ export JAVA_FONTS=/usr/share/fonts/TTF
 export GDK_USE_XFT=1    #   For old gtk applications
 export QT_XFT=true      #   For old qt applicatios
 
+# LS colors
+eval `dircolors -b`
+
 
 # Prompts
 # Preconfigured prompts
