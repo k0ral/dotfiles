@@ -29,7 +29,6 @@ export HISTFILE=$HOME/.config/zsh/history
 export HISTORY=1000
 export SAVEHIST=1000
 
-
 # Misc
 export COLORTERM="yes"
 export MAIL=${HOME}/mail
@@ -133,5 +132,5 @@ On_IPurple='\e[10;95m'  # Purple
 On_ICyan='\e[0;106m'    # Cyan
 On_IWhite='\e[0;107m'   # White]'
 
-export PROMPT="${CYAN}%n ${RED}%#>${NORM}"
-export RPROMPT="${WHITE}[${BLUE}%m${NORM}:${YELLOW}%~${WHITE}] ${MAGENTA}%T${NORM}"
+export PROMPT="%{$CYAN%}%n %{$RED%}%#>%{$NORM%}"
+export RPROMPT="%{$WHITE%}[%{$BLUE%}%m%{$NORM%}:%{$YELLOW%}%~%{$WHITE%}] %{$MAGENTA%}%T%{$NORM%}"
