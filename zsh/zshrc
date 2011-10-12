@@ -1,5 +1,7 @@
 #unicode_start
 
+
+
 # Keybindings {{{
 if [[ "$TERM" != emacs ]]; then
 [[ -z "$terminfo[kdch1]" ]] || bindkey -M emacs "$terminfo[kdch1]" delete-char
@@ -61,7 +63,8 @@ bindkey "^[[B" history-search-forward
 setopt complete_in_word
 setopt always_to_end
 
-autoload -U compinit; compinit
+autoload -U compinit && compinit
+#autoload -U bashcompinit; bashcompinit  # Support for bash completion
 zmodload -i zsh/complist
 
 zstyle ':completion:*'                      use-perl=1
@@ -157,8 +160,6 @@ zstyle ':completion:*:hosts' hosts $hosts
 zstyle ':completion:*:*:*:users' ignored-patterns adm amanda apache aurbuild avahi beaglidx bin cacti canna clamav courier cron daemon dbus distcache dnsmasq dovecot fax fetchmail ftp games gdm gkrellmd gopher hacluster hal halt hsqldb http ident junkbust ldap lp mail mailman mailnull mldonkey mpd mysql nagios named netdump news nfsnobody nobody nscd ntp nut nx openvpn operator pcap polipo postfix postgres privoxy pulse pvm quagga radvd rpc rpcuser rpm rtkit shutdown squid sshd sync usbmux uucp vcsa xfs
 zstyle '*' single-ignored show
 
-# Support for bash completion
-autoload -U bashcompinit; bashcompinit
 # }}}
 
 # Aliases {{{
