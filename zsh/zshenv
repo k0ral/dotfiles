@@ -1,4 +1,6 @@
 autoload -U colors && colors
+#autoload -Uz vcs_info
+#autoload -Uz promptinit
 
 # Locales
 export LANG=en_US.utf8
@@ -36,7 +38,7 @@ export SAVEHIST=1000
 export COLORTERM="yes"
 export MAIL=${HOME}/mail
 export MAILCHECK=1
-export PATH=/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:${PATH}
+export PATH="/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:${PATH}"
 export http_proxy="http://localhost:8118"
 export HTTP_PROXY=$http_proxy
 export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' 
@@ -47,10 +49,6 @@ export QT_XFT=true      #   For old qt applicatios
 # LS colors
 eval `dircolors -b`
 
-
 # Prompts
-#autoload -U promptinit     # Preconfigured prompts
-#promptinit
-#prompt adam2
 export PROMPT="%{$fg_bold[cyan]%}%n %{$fg[red]%}%#>%{$reset_color%}"
 export RPROMPT="%{$fg_bold[white]%}[%{$fg[blue]%}%m%{$reset_color%}:%{$fg_bold[yellow]%}%~%{$fg[white]%}] %{$fg[magenta]%}%T%{$reset_color%}"

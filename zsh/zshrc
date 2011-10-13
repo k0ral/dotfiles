@@ -1,74 +1,50 @@
 #unicode_start
 
-
-
 # Keybindings {{{
-if [[ "$TERM" != emacs ]]; then
-[[ -z "$terminfo[kdch1]" ]] || bindkey -M emacs "$terminfo[kdch1]" delete-char
-[[ -z "$terminfo[khome]" ]] || bindkey -M emacs "$terminfo[khome]" beginning-of-line
-[[ -z "$terminfo[kend]" ]] || bindkey -M emacs "$terminfo[kend]" end-of-line
-[[ -z "$terminfo[kich1]" ]] || bindkey -M emacs "$terminfo[kich1]" overwrite-mode
-[[ -z "$terminfo[kdch1]" ]] || bindkey -M vicmd "$terminfo[kdch1]" vi-delete-char
-[[ -z "$terminfo[khome]" ]] || bindkey -M vicmd "$terminfo[khome]" vi-beginning-of-line
-[[ -z "$terminfo[kend]" ]] || bindkey -M vicmd "$terminfo[kend]" vi-end-of-line
-[[ -z "$terminfo[kich1]" ]] || bindkey -M vicmd "$terminfo[kich1]" overwrite-mode
+autoload zkbd
+unsetopt MULTIBYTE
 
-[[ -z "$terminfo[cuu1]" ]] || bindkey -M viins "$terminfo[cuu1]" vi-up-line-or-history
-[[ -z "$terminfo[cuf1]" ]] || bindkey -M viins "$terminfo[cuf1]" vi-forward-char
-[[ -z "$terminfo[kcuu1]" ]] || bindkey -M viins "$terminfo[kcuu1]" vi-up-line-or-history
-[[ -z "$terminfo[kcud1]" ]] || bindkey -M viins "$terminfo[kcud1]" vi-down-line-or-history
-[[ -z "$terminfo[kcuf1]" ]] || bindkey -M viins "$terminfo[kcuf1]" vi-forward-char
-[[ -z "$terminfo[kcub1]" ]] || bindkey -M viins "$terminfo[kcub1]" vi-backward-char
+function zkbd_file() {
+    [[ -f ~/.zkbd/${TERM}-${VENDOR}-${OSTYPE} ]] && printf '%s' ~/".zkbd/${TERM}-${VENDOR}-${OSTYPE}" && return 0
+    [[ -f ~/.zkbd/${TERM}-${DISPLAY}          ]] && printf '%s' ~/".zkbd/${TERM}-${DISPLAY}"          && return 0
+    return 1
+}
 
-# ncurses fogyatekos
-[[ "$terminfo[kcuu1]" == "O"* ]] && bindkey -M viins "${terminfo[kcuu1]/O/[}" vi-up-line-or-history
-[[ "$terminfo[kcud1]" == "O"* ]] && bindkey -M viins "${terminfo[kcud1]/O/[}" vi-down-line-or-history
-[[ "$terminfo[kcuf1]" == "O"* ]] && bindkey -M viins "${terminfo[kcuf1]/O/[}" vi-forward-char
-[[ "$terminfo[kcub1]" == "O"* ]] && bindkey -M viins "${terminfo[kcub1]/O/[}" vi-backward-char
-[[ "$terminfo[khome]" == "O"* ]] && bindkey -M viins "${terminfo[khome]/O/[}" beginning-of-line
-[[ "$terminfo[kend]" == "O"* ]] && bindkey -M viins "${terminfo[kend]/O/[}" end-of-line
-[[ "$terminfo[khome]" == "O"* ]] && bindkey -M emacs "${terminfo[khome]/O/[}" beginning-of-line
-[[ "$terminfo[kend]" == "O"* ]] && bindkey -M emacs "${terminfo[kend]/O/[}" end-of-line
+[[ ! -d ~/.zkbd ]] && mkdir ~/.zkbd
+keyfile=$(zkbd_file)
+ret=$?
+if [[ ${ret} -ne 0 ]]; then
+    zkbd
+    keyfile=$(zkbd_file)
+    ret=$?
 fi
+if [[ ${ret} -eq 0 ]] ; then
+    source "${keyfile}"
+else
+    printf 'Failed to setup keys using zkbd.\n'
+fi
+unfunction zkbd_file; unset keyfile ret
 
-bindkey -e
-
-bindkey "\e[1~" beginning-of-line # Home
-bindkey "\e[4~" end-of-line # End
-bindkey "\e[5~" beginning-of-history # PageUp
-bindkey "\e[6~" end-of-history # PageDown
-bindkey "\e[2~" quoted-insert # Ins
-bindkey "\e[3~" delete-char # Del
-bindkey "\e[5C" forward-word
-bindkey "\eOc" emacs-forward-word
-bindkey "\e[5D" backward-word
-bindkey "\eOd" emacs-backward-word
-bindkey "\e\e[C" forward-word
-bindkey "\e\e[D" backward-word
-# for rxvt
-bindkey "\e[7~" beginning-of-line # Home
-bindkey "\e[8~" end-of-line # End
-# for non RH/Debian xterm, can't hurt for RH/Debian xterm
-bindkey "\eOH" beginning-of-line
-bindkey "\eOF" end-of-line
-# for freebsd console
-bindkey "\e[H" beginning-of-line
-bindkey "\e[F" end-of-line
-
-bindkey "^[[A" history-search-backward
-bindkey "^[[B" history-search-forward
+# Setup key accordingly
+[[ -n "${key[Home]}"    ]]  && bindkey  "${key[Home]}"    beginning-of-line
+[[ -n "${key[End]}"     ]]  && bindkey  "${key[End]}"     end-of-line
+[[ -n "${key[Insert]}"  ]]  && bindkey  "${key[Insert]}"  overwrite-mode
+[[ -n "${key[Delete]}"  ]]  && bindkey  "${key[Delete]}"  delete-char
+[[ -n "${key[Up]}"      ]]  && bindkey  "${key[Up]}"      up-line-or-history
+[[ -n "${key[Down]}"    ]]  && bindkey  "${key[Down]}"    down-line-or-history
+[[ -n "${key[Left]}"    ]]  && bindkey  "${key[Left]}"    backward-char
+[[ -n "${key[Right]}"   ]]  && bindkey  "${key[Right]}"   forward-char
 # }}}
 
 # Completion {{{
-setopt complete_in_word
-setopt always_to_end
-
 autoload -U compinit && compinit
 #autoload -U bashcompinit; bashcompinit  # Support for bash completion
+
 zmodload -i zsh/complist
 
 zstyle ':completion:*'                      use-perl=1
 zstyle ':completion:*'                      menu select=2
+zstyle ':completion:*'                      verbose yes
 
 # If case sensitive fails, try case insensitive
 zstyle ':completion:*'                      matcher-list 'm:{a-z}={A-Z}'
@@ -80,9 +56,11 @@ zstyle ':completion:*'                      group-name ''
 zstyle ':completion:*:functions'            ignored-patterns '_*'
 
 # Description text
-zstyle ':completion:*'                      select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*:descriptions'         format $'%{- \e[38;5;137;1m\e[48;5;234m%}%B%d%b%{\e[m%}'
-zstyle ':completion:*:warnings'             format $'%{No match for \e[38;5;240;1m%}%d%{\e[m%}'
+# zstyle ':completion:*'                      select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*:descriptions'         format "%{$fg_bold[yellow]%}   == %{$fg_bold[white]%}%d%{$reset_color%}"
+zstyle ':completion:*:corrections'          format "%{$c3%}%d%{$reset_color%}"
+zstyle ':completion:*:messages'             format "%{$c1%}%d%{$reset_color%}"
+zstyle ':completion:*:warnings'             format "%{$fg_bold[red]%}No match for %{$fg[yellow]%}%d%{$reset_color%}"
 
 # Remove trailing slashes
 zstyle ':completion:*'                      squeeze-slashes true
@@ -110,7 +88,7 @@ zstyle ':completion:*:mv:*' ignore-line yes
 zstyle ':completion:*:cp:*' ignore-line yes
 
 # PID completion
-zstyle ':completion:*:*:kill:*:processes'   list-colors "=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01"
+zstyle ':completion:*:*:kill:*:processes'   list-colors "=(#b) #([0-9]#) ([0-9a-z-]#)*=$color[bold];$color[green]=$color[magenta]=$color[cyan]"
 zstyle ':completion:*:*:kill:*'             menu yes select
 zstyle ':completion:*:kill:*'               force-list always
 zstyle ':completion:*:*:killall:*'          menu yes select
@@ -147,25 +125,29 @@ zstyle ':completion:*:*:mplayer:*'          file-patterns   \
     '*.(rmvb|mkv|mpg|wmv|mpeg|avi|flv|mp3|mp4|flac|ogg):video' \
     '*:all-files' '*(-/):directories'
 
-# hosts completion
+# Hosts completion
 [ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
 hosts=(
   "$_ssh_hosts[@]"
   `hostname`
   localhost
 )
-zstyle ':completion:*:hosts' hosts $hosts
+zstyle ':completion:*:hosts'        hosts $hosts
+zstyle ':completion:*:*:*:*:hosts'  list-colors '=*=30;41'
 
 # Users completion: don't complete uninteresting users, unless we really want to
 zstyle ':completion:*:*:*:users' ignored-patterns adm amanda apache aurbuild avahi beaglidx bin cacti canna clamav courier cron daemon dbus distcache dnsmasq dovecot fax fetchmail ftp games gdm gkrellmd gopher hacluster hal halt hsqldb http ident junkbust ldap lp mail mailman mailnull mldonkey mpd mysql nagios named netdump news nfsnobody nobody nscd ntp nut nx openvpn operator pcap polipo postfix postgres privoxy pulse pvm quagga radvd rpc rpcuser rpm rtkit shutdown squid sshd sync usbmux uucp vcsa xfs
+zstyle ':completion:*:*:*:*:users' list-colors "=*=$color[bold];$color[cyan]=$color[red]"
 zstyle '*' single-ignored show
 
 # }}}
 
 # Aliases {{{
+alias chmod="chmod -v"
 alias cp='cp -v'
 alias mkdir='mkdir -p -v'
 alias mv='mv -v'
+alias rename="rename -v"
 alias rm='safe-rm -v'
 
 alias l='ls -l'
@@ -186,8 +168,11 @@ alias gcc="colorgcc"
 #alias make="colormake"
 
 alias gdb="cgdb -q"
+alias locate="locate -e"
+alias mplayer="mplayer -msgcolor"
 alias mutt='mutt -y'
 alias octave="octave -q"
+alias wget="wget -c"
 
 alias -g grep='ack'
 alias more='vimpager'
@@ -218,7 +203,7 @@ alias cups-off="sudo /etc/rc.d/cupsd stop"
 alias openports='sudo netstat --all --numeric --programs --inet'
 alias wifiselect='sudo wifi-select wlan0'
 alias uzbl='uzbl-browser'
-alias pingg='ping www.google.fr'
+alias pg='ping www.google.fr'
 alias volume='alsamixer -c 0'
 
 alias wtf='dmesg'
@@ -259,22 +244,9 @@ function maketex() {
 xdvi() { command xdvi ${*:-*.dvi(om[1])} }
 # }}}
 
-# {{{ History
-setopt append_history           # Shared history for all shells
-unsetopt extended_history       # Do not save extra information like timestamp
-setopt hist_ignore_dups
-setopt hist_ignore_space        # Do not save commands that start with a space
-setopt inc_append_history
-setopt hist_reduce_blanks
-setopt hist_verify              # Using '!', the command isn't immediately executed
-setopt share_history
-# }}}
-
 # Options {{{
-setopt auto_cd  
+setopt auto_remove_slash        # No unnecessary slashes
 #setopt correctall              # Correction of writing errors (ex: sl => ls)
-setopt auto_pushd pushd_minus pushd_silent pushd_to_home pushd_ignore_dups
-unsetopt cdablevars
 #setopt ignoreeof               #   Prevent from using Ctrl + d
 setopt interactivecomments
 #setopt nobanghist
@@ -282,22 +254,46 @@ setopt noclobber
 setopt SH_WORD_SPLIT
 setopt nohup
 setopt chase_links              #   Traite les liens symboliques comme il faut
+setopt rm_star_wait             # Careful with rm
 
-setopt extendedglob             #   Use regexp in commands (ex : cp ^*.(tar|bz2|gz))
 
 # No beeps at all !
-unsetopt beep
-unsetopt hist_beep
-unsetopt list_beep
-
-# Si on utilise des jokers dans une liste d'arguments, retire les jokers
-# qui ne correspondent à rien au lieu de donner une erreur
-setopt nullglob
+setopt no_beep
+setopt no_list_beep
 
 unalias run-help
 autoload run-help
 
-# Inline completion
+
+# 01 -> changing directories:
+setopt autocd                   # Why type cd dir if you can just type dir 
+setopt autopushd
+setopt no_cdablevars
+setopt chase_links
+setopt pushd_ignore_dups
+setopt pushd_minus
+setopt pushd_silent
+setopt pushd_to_home
+# 02 -> completion:
+setopt always_to_end
+setopt auto_list
+setopt auto_menu
+setopt complete_in_word
+setopt glob_complete        # Expand glob when possible
+# 03 -> expansion and globbing:
+setopt extendedglob
+setopt nullglob
+setopt numericglobsort
+# 04 -> history:
+setopt append_history           # Shared history for all shells
+setopt no_extended_history       # Do not save extra information like timestamp
+setopt no_hist_beep
+setopt hist_ignore_dups
+setopt hist_ignore_space        # Do not save commands that start with a space
+setopt hist_reduce_blanks
+setopt hist_verify              # Using '!', the command isn't immediately executed
+setopt inc_append_history
+setopt share_history
 # }}}
 
 # Sleep mode {{{
@@ -328,4 +324,8 @@ ls-empty() {
 rm-empty() {
     find . -type d -empty -print0 | xargs --null rmdir
 }
+# }}}
+
+# {{{ Highlight style 
+source /usr/share/zsh/plugins/zsh-syntax-highlight/zsh-syntax-highlighting.zsh
 # }}}
