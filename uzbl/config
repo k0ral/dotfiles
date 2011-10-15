@@ -1,7 +1,8 @@
 # === Core settings ==========================================================
 
 # common directory locations
-set prefix      = @(echo $PREFIX)@
+#set prefix      = @(echo $PREFIX)@
+set prefix      = /usr
 set data_home   = @(echo $XDG_DATA_HOME)@
 set config_home = @(echo $XDG_CONFIG_HOME)@
 set cache_home  = @(echo $XDG_CACHE_HOME)@
@@ -419,4 +420,7 @@ set icon = @prefix/share/uzbl/examples/data/uzbl.png
 
 # Proxy
 # set proxy_url = http://127.0.0.1:8118
+
+# Plugins
+set enable_plugins = 1
 # vim: set fdm=syntax:

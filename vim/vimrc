@@ -19,6 +19,13 @@ highlight CursorLine cterm=NONE ctermbg=black
 highlight Search ctermfg=yellow ctermbg=darkblue
 " }}}
 
+" {{{ Invisible characters
+set listchars=tab:▸\ ,eol:¶,trail:·,nbsp:¤,extends:>,precedes:<      " show invisible characters
+
+highlight NonText cterm=bold ctermfg=darkgrey
+highlight SpecialKey cterm=bold ctermfg=darkgrey
+" }}}
+
 " Encoding {{{
 set encoding=utf-8
 set fileencoding=utf-8
@@ -48,7 +55,6 @@ set smartindent                                 " Clever autoindenting (also red
 set preserveindent                              " ???
 set expandtab                                   " Never use <TAB>, only spaces
 set nolist
-set listchars=tab:▸\ ,eol:¬,trail:·,nbsp:¤,extends:>,precedes:<      " show invisible characters
 set shiftround                                  " Rounds indent value
 set shiftwidth=4                                " Spaces for an indent
 "set smarttab                                    " A <tab> in an indent insets 'shiftwidth' spaces (not tabstop)
@@ -93,6 +99,7 @@ set autowrite                                   " Automatically save before comm
 "set backspace=2                                " Allow backspacing over everything in insert mode
 set backspace=indent,eol,start                  " make backspace a more flexible
 set cursorline                                  " highlight current line
+set grepprg=ack                                 " grep program
 set hidden                                      " Hide buffers when they are abandoned
 set nojoinspaces                                " Improve the behavior of J key
 set report=0                                    " Print total modifications for next command
@@ -191,7 +198,16 @@ set completeopt=menuone,menu,longest,preview
 
 nmap >   :bn<cr>
 nmap <   :bN<cr>
+
+map <C-PageDown> :bN<cr>
+map <C-PageUp>   :bn<cr>
 " }}}
+
+" Gestion des fenêtres
+map <M-Up> :wincmd k<cr>
+map <M-Down> :wincmd j<cr>
+map <M-Left> :wincmd h<cr>
+map <M-Right> :wincmd l<cr>
 
 "   PHP related
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP

@@ -25,7 +25,7 @@ export CC="/usr/bin/colorgcc"
 export EDITOR="/usr/bin/vim"
 export PAGER="/usr/bin/vimpager"
 export READNULLCMD=${PAGER:-/usr/bin/pager}
-export TERM="rxvt-unicode"
+#export TERM="rxvt-unicode"
 #export XTERM="urxvt"
 
 # History

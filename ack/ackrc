@@ -1,6 +1,9 @@
 # Operate on all files, regardless of type (but still skip directories like blib, CVS, etc.)
 #-a
 
+# Process *.chs files
+--type-add=haskell=.chs
+
 # Color to be used for filenames
 --color-filename=bold red
 

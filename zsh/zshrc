@@ -2,7 +2,7 @@
 
 # Keybindings {{{
 autoload zkbd
-unsetopt MULTIBYTE
+unsetopt multibyte
 
 function zkbd_file() {
     [[ -f ~/.zkbd/${TERM}-${VENDOR}-${OSTYPE} ]] && printf '%s' ~/".zkbd/${TERM}-${VENDOR}-${OSTYPE}" && return 0
@@ -139,7 +139,6 @@ zstyle ':completion:*:*:*:*:hosts'  list-colors '=*=30;41'
 zstyle ':completion:*:*:*:users' ignored-patterns adm amanda apache aurbuild avahi beaglidx bin cacti canna clamav courier cron daemon dbus distcache dnsmasq dovecot fax fetchmail ftp games gdm gkrellmd gopher hacluster hal halt hsqldb http ident junkbust ldap lp mail mailman mailnull mldonkey mpd mysql nagios named netdump news nfsnobody nobody nscd ntp nut nx openvpn operator pcap polipo postfix postgres privoxy pulse pvm quagga radvd rpc rpcuser rpm rtkit shutdown squid sshd sync usbmux uucp vcsa xfs
 zstyle ':completion:*:*:*:*:users' list-colors "=*=$color[bold];$color[cyan]=$color[red]"
 zstyle '*' single-ignored show
-
 # }}}
 
 # Aliases {{{
@@ -179,12 +178,15 @@ alias more='vimpager'
 alias less='vimpager'
 alias top="htop"
 
-alias o='xdg-open'
-
-alias reco='sudo dhclient eth0'
-#alias startx='startx & vlock'
 alias my_indent='indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -ncs -di4 -fca -hnl -i4 -ip4 -l120 -lp -nlps -npcs -nprs -npsl -saf -sai -saw -sbi4 -sc -nsob -ss -ts4 -nut '
-
+alias o='xdg-open'
+#alias openports='sudo netstat --all --numeric --programs --inet'
+alias openports='sudo iptstate -o'
+alias pg='ping www.google.fr'
+alias reco='sudo dhclient eth0'
+alias uzbl='uzbl-browser'
+alias volume='alsamixer -c 0'
+alias wifiselect='sudo wifi-select wlan0'
 alias _="sudo"
 
 alias http-on="sudo /etc/rc.d/lighttpd start"
@@ -199,12 +201,6 @@ alias wifi-on="sudo /etc/rc.d/net-auto-wireless start"
 alias wifi-off="sudo /etc/rc.d/net-auto-wireless stop"
 alias cups-on="sudo /etc/rc.d/cupsd start"
 alias cups-off="sudo /etc/rc.d/cupsd stop"
-
-alias openports='sudo netstat --all --numeric --programs --inet'
-alias wifiselect='sudo wifi-select wlan0'
-alias uzbl='uzbl-browser'
-alias pg='ping www.google.fr'
-alias volume='alsamixer -c 0'
 
 alias wtf='dmesg'
 alias rtfm='man'
@@ -221,7 +217,6 @@ fi
 
 # Helpers {{{
 lsmount() { (echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | column -t; }
-wiki() { dig +short txt $1.wp.dg.cx; }
 
 function maketex() {
     if [ "$1" == "" ]; then

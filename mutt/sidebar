@@ -8,12 +8,12 @@ set sidebar_sort=yes
 #   Color of folders with new mail
 color sidebar_new yellow default
 
-bind index ^<Up>       sidebar-prev
-bind index ^<Down>     sidebar-next
-bind index ^<Return>   sidebar-open
-bind pager ^<Up>       sidebar-prev
-bind pager ^<Down>     sidebar-next
-bind pager ^<Return>   sidebar-open
+bind index \C<up>       sidebar-prev
+bind index \C<down>     sidebar-next
+bind index \C<return>   sidebar-open
+bind pager \C<up>       sidebar-prev
+bind pager \C<down>     sidebar-next
+bind pager \C<return>   sidebar-open
 
 # I don't need these.  just for documentation purposes.  See below.
 # sidebar-scroll-up
