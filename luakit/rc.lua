@@ -40,6 +40,9 @@ require "window"
 -- Load users webview class
 -- ("$XDG_CONFIG_HOME/luakit/webview.lua" or "/etc/xdg/luakit/webview.lua")
 require "webview"
+webview.init_funcs.set_win_trans = function (view, w) -- show GTK the background color
+    view:set_property("transparent", true)
+end
 
 -- Load users mode configuration
 -- ("$XDG_CONFIG_HOME/luakit/modes.lua" or "/etc/xdg/luakit/modes.lua")
@@ -93,6 +96,17 @@ require "bookmarks"
 -- Add download support
 require "downloads"
 require "downloads_chrome"
+downloads.default_dir = os.getenv("HOME") 
+
+downloads.add_signal("download-location", function (uri, file)
+    if not file or file == "" then
+        file = (string.match(uri, "/([^/]+)$") 
+        or string.match(uri, "^%w+://(.+)") 
+        or string.gsub(uri, "/", "_")
+        or "untitled")
+    end 
+    return downloads.default_dir .. "/" .. file
+end) 
 
 -- Add vimperator-like link hinting & following
 -- (depends on downloads)
