@@ -37,7 +37,7 @@ import System.IO
 -- }}}
 
 myTerminal           = "urxvtc"
-myBrowser            = "hbro"
+myBrowser            = "luakit"
 myWorkspaces         = ["1","web"] ++ map show [3..9]
 
 myBorderWidth        = 1
@@ -76,7 +76,7 @@ myKeys = \c -> azertyKeys c `M.union` generalKeys c
 generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     -- Spawn programs
     ((modm,                 xK_Return),     spawn $ XMonad.terminal conf),
-    --((modm,                 xK_t),          spawn myBrowser),
+    ((modm,                 xK_t),          spawn myBrowser),
     ((modm,                 xK_BackSpace),  scratchpadSpawnActionTerminal myTerminal),
     --((modm,                 xK_r),          spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     ((modm,                 xK_r),          spawn "gmrun"),
@@ -108,7 +108,7 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm,                 xK_Up),         sendMessage Expand),
 
     -- Push window back into tiling
-    ((modm,                 xK_t),          withFocused $ windows . W.sink),
+    ((modm .|. shiftMask,   xK_t),          withFocused $ windows . W.sink),
 
     -- Number of windows in the master area
     ((modm .|. shiftMask,   xK_greater),    sendMessage (IncMasterN 1)),
@@ -270,6 +270,7 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook { args = ["-bg", "darkgreen", "-
 -- {{{ Entry point
 main = do
     dzenPipe <- spawnPipe "dzen2 -fg \"#7777aa\" -bg \"#000033\" -fn \"Inconsolata:pixelsize=16\" -ta \"l\" -expand \"r\""
+    _ <- spawn myTerminal
     xmonad $ myUrgencyHook $ defaults dzenPipe
 
 -- A structure containing your configuration settings, overriding
