@@ -13,7 +13,7 @@ function zkbd_file() {
 [[ ! -d ~/.zkbd ]] && mkdir ~/.zkbd
 keyfile=$(zkbd_file)
 ret=$?
-if [[ ${ret} -ne 0 ]]; then
+if [[ ${ret} -ne 0 && ${TERM} != "linux" ]]; then
     zkbd
     keyfile=$(zkbd_file)
     ret=$?
@@ -169,6 +169,7 @@ alias gcc="colorgcc"
 #alias grep='grep --color=auto'
 #alias make="colormake"
 
+alias emacs='emacs -nw'
 alias gdb="cgdb -q"
 alias locate="locate -e"
 alias mplayer="mplayer -msgcolor"

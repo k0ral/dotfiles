@@ -20,9 +20,9 @@ export LC_TIME=en_US.utf8
 export LC_TYPE=en_US.utf8
 
 # Default applications
-export BROWSER="/usr/bin/uzbl-browser"
+export BROWSER="/usr/bin/luakit"
 export CC="/usr/bin/colorgcc"
-export EDITOR="/usr/bin/vim"
+export EDITOR="/usr/bin/emacs -nw"
 export PAGER="/usr/bin/vimpager"
 export READNULLCMD=${PAGER:-/usr/bin/pager}
 #export TERM="rxvt-unicode"
