@@ -1,0 +1,107 @@
+(set-language-environment "UTF-8")
+(setq ring-bell-function 'ignore)
+;(global-hl-line-mode 1)
+(setq inhibit-startup-message t)
+(setq show-trailing-whitespace t)
+(show-paren-mode 1)
+
+; Syntax highlighting
+(global-font-lock-mode 1)
+(setq font-lock-maximum-decoration t)
+
+; {{{ Line numbers
+(require 'linum)
+(global-linum-mode 1)
+(setq linum-format "%d ")
+; }}}
+
+; {{{ CUA mode
+(cua-mode t)
+(setq cua-auto-tabify-rectangles nil)   ;; Don't tabify after rectangle commands
+(transient-mark-mode 1)                 ;; No region when it is not highlighted
+(setq cua-keep-region-after-copy t)     ;; Standard Windows behaviour 
+; }}}
+
+; {{{ Keys
+(global-set-key (kbd "C-d")         'kill-whole-line)
+(global-set-key (kbd "C-p")         'yank)
+
+(global-set-key (kbd "C-q")         'save-buffers-kill-emacs)
+(global-set-key (kbd "C-s")         'save-buffer)
+(global-set-key (kbd "<escape>")    'keyboard-quit)
+(global-set-key (kbd "C-<home>")    'beginning-of-buffer)
+(global-set-key (kbd "C-<end>")     'end-of-buffer)
+(global-set-key (kbd "C-w")         'kill-buffer)
+(global-set-key (kbd "C-l")         'goto-line)
+
+(global-set-key (kbd "M-RET")       'cua-set-rectangle-mark)
+(global-set-key (kbd "C-b")         'comment-or-uncomment-region)
+
+(global-set-key (kbd "C-f")         'isearch-forward)
+(global-set-key (kbd "M-f")         'isearch-backward)
+(global-set-key (kbd "C-R")         'replace-string)
+(global-set-key (kbd "C-r")         'query-replace)
+; }}}
+
+; {{{ Interface
+(menu-bar-mode -1)
+;(tool-bar-mode -1)
+;(scroll-bar-mode -1)
+; }}}
+
+; {{{ Mode line
+(line-number-mode 1)
+(column-number-mode 1)
+; }}}
+
+; {{{ Tabs and indentation
+(setq-default standard-indent 4)
+(setq-default indent-tabs-mode nil)     ; Replace tabs with spaces
+; }}}
+
+; {{{ Search/replace
+(setq search-highlight t)               ; Highlight search object 
+(setq query-replace-highlight t)        ; Highlight query object 
+; }}}
+
+; {{{ Haskell mode
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+
+(setq auto-mode-alist
+    (append auto-mode-alist '(
+        ("\\.[hg]s$"  . haskell-mode)
+        ("\\.hic?$"   . haskell-mode)
+        ("\\.hsc$"    . haskell-mode)
+        ("\\.chs$"    . haskell-mode)
+        ("\\.l[hg]s$" . literate-haskell-mode)
+    ))
+)
+(autoload 'haskell-mode "haskell-mode" "Major mode for editing Haskell scripts." t)
+(autoload 'literate-haskell-mode "haskell-mode" "Major mode for editing literate Haskell scripts." t)
+
+;; ========== Line by line scrolling ========== 
+;; This makes the buffer scroll by only a single line when the up or
+;; down cursor keys push the cursor (tool-bar-mode) outside the
+;; buffer. The standard emacs behaviour is to reposition the cursor in
+;; the center of the screen, but this can make the scrolling confusing
+(setq scroll-step 1)
+
+(mouse-wheel-mode t) ; Support Wheel Mouse Scrolling
+
+; {{{ Backup files
+(setq make-backup-files t)
+(setq version-control t)
+(setq backup-directory-alist         `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+; }}}
+
+; {{{ Colors
+;(set-cursor-color "red")
+;(set-mouse-color "goldenrod")
+;(set-face-background 'hl-line "gray13") 
+;(set-face-background 'region "blue")   ; Set region background colour
+;(set-background-color "black")')
+; }}}
