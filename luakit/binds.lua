@@ -161,11 +161,11 @@ add_binds("normal", {
                                     end),
 
     -- Clipboard
-    key({},          "p",           function (w)
+    key({"Control"}, "p",           function (w)
                                         local uri = luakit.selection.primary
                                         if uri then w:navigate(w:search_open(uri)) else w:error("Empty selection.") end
                                     end),
-    key({},          "P",           function (w, m)
+    key({"Control"}, "P",           function (w, m)
                                         local uri = luakit.selection.primary
                                         if not uri then w:error("Empty selection.") return end
                                         for i = 1, m.count do w:new_tab(w:search_open(uri)) end
