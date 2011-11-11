@@ -1,0 +1,20 @@
+# 
+# /etc/fstab: static file system information
+#
+# <file system>         <dir>         <type>    <options>          <dump> <pass>
+devpts                  /dev/pts      devpts    defaults            0      0
+#shm                    /dev/shm      tmpfs     nodev,nosuid        0      0
+tmpfs		            /tmp	         tmpfs	   nodev,nosuid	        0	  0
+
+#/dev/cdrom             /media/cd   auto    ro,user,noauto,unhide   0      0
+#/dev/dvd               /media/dvd  auto    ro,user,noauto,unhide   0      0
+#/dev/fd0               /media/fl   auto    user,noauto             0      0
+
+/dev/mapper/VolGroup00-lvolhome /home ext4 defaults 0 1
+/dev/mapper/VolGroup00-lvolroot / ext4 defaults 0 1
+/dev/mapper/VolGroup00-lvolswap swap swap defaults 0 0
+UUID=89c23522-cd37-4341-9960-41b79ec58190 /boot ext3 defaults 0 1
+#debugfs                 /sys/kernel/debug   debugfs defaults    0 0
+twyk.org:/        /home/adama nfs4        defaults            0       0
+/home/.ecryptfs/chahine/.Private /home/chahine ecryptfs rw,user,noauto,exec,ecryptfs_sig=72bb903a46d149ef,ecryptfs_cipher=aes,ecryptfs_key_bytes=32,ecryptfs_passthrough,ecryptfs_fnek_sig=72bb903a46d149ef,ecryptfs_unlink_sigs 0 0
+/etc                    /home/chahine/.config/etc none bind,ro        0       0
