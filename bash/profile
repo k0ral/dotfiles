@@ -1,0 +1,59 @@
+# Locales
+export LANG=en_US.utf8
+export LANGUAGE=en_US.utf8
+export LC_ADDRESS=en_US.utf8
+export LC_ALL=en_US.utf8
+export LC_COLLATE=en_US.utf8
+export LC_IDENTIFICATION=en_US.utf8
+export LC_MESSAGES=en_US.utf8
+export LC_MEASUREMENT=en_US.utf8
+export LC_MONETARY=en_US.utf8
+export LC_NAME=en_US.utf8
+export LC_NUMERIC=en_US.utf8
+export LC_PAPER=en_US.utf8
+export LC_TELEPHONE=en_US.utf8
+export LC_TIME=en_US.utf8
+export LC_TYPE=en_US.utf8
+
+# Default applications
+export BROWSER="/usr/bin/luakit"
+export CC="/usr/bin/colorgcc"
+export EDITOR="/usr/bin/emacs -nw"
+export PAGER="/usr/bin/less"
+export READNULLCMD=${PAGER:-/usr/bin/pager}
+#export TERM="rxvt-unicode"
+#export XTERM="urxvt"
+
+# History
+export HISTCONTROL=ignoreboth
+export HISTFILE=$HOME/.config/bash/history
+export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*"
+export HISTORY=1000
+export SAVEHIST=1000
+
+# Misc
+export COLORTERM="yes"
+export MAIL=${HOME}/mail
+export MAILCHECK=1
+export PATH="/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:${PATH}"
+export http_proxy="http://localhost:8118"
+export HTTP_PROXY=$http_proxy
+export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' 
+export JAVA_FONTS=/usr/share/fonts/TTF
+export GDK_USE_XFT=1    #   For old gtk applications
+export QT_XFT=true      #   For old qt applicatios
+
+# LS colors
+eval `dircolors -b`
+
+# Prompts
+#export PROMPT="%{$fg_bold[cyan]%}%n %{$fg[red]%}%#>%{$reset_color%}"
+#export RPROMPT="%{$fg_bold[white]%}[%{$fg[blue]%}%m%{$reset_color%}:%{$fg_bold[yellow]%}%~%{$fg[white]%}] %{$fg[magenta]%}%T%{$reset_color%}"
+
+#
+if [ -r "${HOME}/.ecryptfs/auto-mount" ]; then
+    grep -qs "${HOME} ecryptfs" /proc/mounts
+    if [ $? -ne 0 ]; then
+        mount -i "${HOME}" ; cd "${HOME}"
+    fi
+fi
