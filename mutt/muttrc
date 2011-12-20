@@ -1,16 +1,19 @@
-# Paths {{{
+# {{{ Paths
 set folder=~/mail                   # Mailboxes folder (must be set _before_ any other path)
 set alias_file=~/.config/mutt/aliases
 set header_cache=~/mutt/.hcache
 set mailcap_path="~/.mutt/mailcap:/usr/local/share/mailcap"
 #set mbox="~/Maildir/Inbox/"
 #set mbox_type=Maildir
-set postponed=+postponed            # Postponed messages
+set postponed=+postponed
 set record=+outbox                  # Outgoing mail
 set spoolfile=+Inbox/               # Location for new mails
 # }}}
 
-# Sources {{{
+# Commands
+set sendmail="/usr/bin/msmtp --read-envelope-from"
+
+# {{{ Sources
 source ~/.config/mutt/abook
 source ~/.config/mutt/alternates
 #source ~/.config/mutt/aliases
@@ -22,130 +25,76 @@ source ~/.config/mutt/mailing_lists
 source ~/.config/mutt/sidebar
 # }}}
 
-# Charset and locale {{{
+# Charset and locale
 set charset="utf-8"
 set send_charset="utf-8"
 set locale="fr_FR.UTF-8"            # locale to use for printing time
-# }}}
 
 # {{{ Other
-set abort_unmodified=yes            # automatically abort replies if I don't change the message
 unset allow_8bit                    # never do Q-P encoding on legal 8-bit chars
 unset arrow_cursor
-#set ascii_chars                    # use ASCII instead of ACS chars for threads
-#set askbcc
-#set askcc
 set autoedit                        # go to the editor right away when composing
-#set auto_tag                       # always operate on tagged messages
 set beep=no
 unset confirmappend                 # don't ask me if i want to append to mailboxes
-#set confirmcreate                  # prompt when creating new files
 set copy=yes                        # always save a copy of outgoing messages
 set delete=yes                      # purge deleted messages without asking
 set edit_headers                    # edit headers when writing a new mail
-#set editor="emacs -nw"             # editor to use when composing messages
-#set bounce=yes                     # don't ask about bouncing messages, just do it
-set fast_reply                      # skip initial prompts when replying
 unset fcc_attach                    # keep attachments in copies of sent messages?
-#set force_name                     # fcc by recipient, create if mailbox doesn't exist
-#set forward_decode                 # weed and MIME decode forwaded messages
 set forward_quote                   # quote the header and body of forward msgs
-#set header                         # include message header when replying
 set help                            # show the help lines
-set hidden_host                     # Hide host details.
-#set history=20         # number of lines of history to remember
-set honor_followup_to               # take into account "Mail-Followup-To" field
-#set hostname="mutt.org"    # my DNS domain
+set hidden_host                     # Hide host details
 set include                         # always include messages when replying
-#set indent_string="> " # how to quote replied text
-set nomark_old                      # i don't care about whether a message is old
-set mail_check=3                    # how often to poll for new mail
-unset markers                       # no markers for wrapped lines
-#set menu_scroll        # no implicit next-page/prev-page
-#set metoo              # remove my address when replying
-set mime_forward                    # use message/rfc822 type to forward messages
+#unset markers                      # no markers for wrapped lines
 set move=yes                        # don't ask about moving messages, just do it
-#set pager=less         # some people prefer an external pager
-set pager_context=3                 # no. of lines of context to give when scrolling
+#set pager=less                     # some people prefer an external pager
+set pager_context=4                 # no. of lines of context to give when scrolling
 set pager_index_lines=6             # how many index lines to show in the pager
 set pager_stop                      # don't move to the next message on next-page
-#set post_indent_string='---end quoted text---'
-#set print=ask-yes      # ask me if I really want to print messages
-set print_command="/usr/bin/muttprint %s -p {PrinterName}"
-set noprompt_after                  # ask me for a command after the external pager exits
-#set quote_regexp="^ *[a-zA-Z]*[>:#}]"	# how to catch quoted text
-set read_inc=25         # show progress when reading a mailbox
-#set recall             # prompt to recall postponed messages
-set reply_to            # always use reply-to if present
-#set reply_regexp="^(re:[ \t]*)+"# how to identify replies in the subject:
-#set resolve            # move to the next message when an action is performed
+#set reply_to                       # always use reply-to if present
+#set resolve                        # move to the next message when an action is performed
 set reverse_alias                   # attempt to look up my names for people
 set reverse_name                    # use my address as it appears in the message I am replying to
-set reverse_realname
-set nosave_empty        # remove files when no messages are left
-#set save_name          # save outgoing messages by recipient, if the
-set sendmail="/usr/bin/msmtp --read-envelope-from"
-set shell="/bin/zsh"    # program to use for shell escapes
-#set signature="~/.signature"	# file which contains my signature
-#set status_on_top      # some people prefer the status bar on top
-set strict_threads      # don't thread by subject, but by "In-Reply-To"
-set tilde               # virtual lines to pad blank lines in the pager
-#set timeout=0          # timeout for prompt in the index menu
-#set tmpdir=~/tmp       # where to store temp files
-#set to_chars=" +TCF"
-#set use_8bitmime       # enable the -B8BITMIME sendmail flag
-set nouse_domain        # don't qualify local addresses with $domain
-#set use_from           # always generate the `From:' header field
-#set visual=vim         # editor invoked by ~v in the builtin editor
-#set nowait_key         # prompt when a pipe returns normal status
-set write_inc=25        # show progress while writing mailboxes
+unset save_empty                    # remove files when no messages are left
+set strict_threads                  # don't thread by subject, but by "In-Reply-To"
+set tilde                           # virtual lines to pad blank lines in the pager
+unset use_domain                    # don't qualify local addresses with $domain
+unset user_agent
 # }}} 
 
-# HTML mails {{{
+# Print messages
+set print=ask-yes                   # ask me if I really want to print messages
+set print_command="/usr/bin/muttprint %s -p {PrinterName}"
+
+# HTML mails
 set implicit_autoview   # pager shows parts having a mailcap viewer
 auto_view text/html  application/x-pgp-message
 set mailcap_path=""
-# }}}
 
-# Automatically use entries from ~/.mailcap to view these MIME types
-auto_view application/x-gunzip
-auto_view application/x-gzip
-
-
-# Sorting {{{
-set sort=threads        # primary sorting method
-set sort_aux=date       # secondary sorting method
-#set sort_aux=reverse-date-received # how to sort subthreads
-#set sort_aux=last-date		# date of the last message in thread
-#set sort_aux = date-sent>--->---# Logique de tri secondaire
+# Sorting
+set sort=threads                # primary sorting method
+set sort_aux=reverse-date       # secondary sorting method
 set sort_browser=reverse-date   # how to sort files in the dir browser
-
 folder-hook "outbox" set sort=date
-# }}}
 
 # Format {{{
 set attribution="*** %n <%a> [%{%Y-%m-%d %H:%M:%S %Z}] ***"
-#set status_format="-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?  %l]---(%s)-%>-(%P)---"
-#set pager_format="%-10.10i %[!%a %b %d %R]"
-set pager_format="-%S- %-20.20f %s"    # format of the pager status bar
+set compose_format="New mail | Size: %l | Host: %h | Atts: %a %>-"
 set date_format="!%H:%M %a %d %b     "
 #set date_format="%A %d %b %Y à %H:%M:%S (%Z)"
-set index_format="%4C %Z %{%m/%d/%g}  %-15.15F  %s"
-set indent_str="> "
-set folder_format="%15d %N %f"
+set index_format="%4C  %Z  %{%m/%d/%g %H:%M}  %-15.15n  %s"
+set status_format=" Host: %h | Box: %f %r | Msgs: %?M?%M/?%m %?n?| New: %n? %?d?| Del: %d? %?F?| Flag: %F? %?t?| Tag: %t? %?p?| Post: %p? %?b?| Inc: %b?| Size: %l | Sort: %s/%S %> %P "
+#set pager_format="%-10.10i %[!%a %b %d %R]"
+set pager_format="-%S- %-20.20f %s"
+set folder_format="%N %f %>  %15d %s"
 set forward_format="[Fwd %a: %s]"
 # }}}
 
-
-# only enable the following IFF you have sendmail 8.8.x or you will not
-# be able to send mail!!!
-#set dsn_notify='failure,delay'	# when to return an error message
-#set dsn_return=hdrs		# what to return in the error message
-
-
 # {{{ GPG
-#set pgp_strict_enc     # use Q-P encoding when needed for PGP
-set pgp_verify_sig=yes  # automatically verify message signatures
+set pgp_autosign=yes
+set pgp_good_sign="^gpg: good signature from"
+set pgp_replyencrypt=yes
+set pgp_timeout=600
+
 set pgp_decode_command="gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
 set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
 set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
@@ -158,11 +107,6 @@ set pgp_export_command="gpg --no-verbose --export --armor %r"
 set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
 set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r"
 set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
-set pgp_autosign=yes
-#set pgp_sign_as=0x2EA32E78
-set pgp_replyencrypt=yes
-set pgp_timeout=1800
-set pgp_good_sign="^gpg: good signature from"
 # }}}
 
 # {{{ Key bindings
