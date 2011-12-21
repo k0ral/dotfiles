@@ -6,7 +6,8 @@ set mailcap_path="~/.mutt/mailcap:/usr/local/share/mailcap"
 #set mbox="~/Maildir/Inbox/"
 #set mbox_type=Maildir
 set postponed=+postponed
-set record=+outbox                  # Outgoing mail
+#set record=+outbox                  # Outgoing mail
+set record=!
 set spoolfile=+Inbox/               # Location for new mails
 # }}}
 
