@@ -1,19 +1,95 @@
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/emhacks")
+
+
 (set-language-environment "UTF-8")
 (setq ring-bell-function 'ignore)
 ;(global-hl-line-mode 1)
 (setq inhibit-startup-message t)
 (setq show-trailing-whitespace t)
 (show-paren-mode 1)
+(setq x-select-enable-clipboard t)
+(setq vc-follow-symlinks t)
+(fset 'yes-or-no-p 'y-or-n-p)
+
+; Interface
+(menu-bar-mode nil)
+;(tool-bar-mode -1)
+;(scroll-bar-mode -1)
+
+; Scrolling
+(setq scroll-step 1)
+(mouse-wheel-mode t)
+
+; Search/replace
+(setq search-highlight t)               ; Highlight search object 
+(setq query-replace-highlight t)        ; Highlight query object 
 
 ; Syntax highlighting
 (global-font-lock-mode 1)
 (setq font-lock-maximum-decoration t)
 
-; {{{ Line numbers
+; Mode line
+(line-number-mode 1)
+(column-number-mode 1)
+
+; Tabs and indentation
+(setq-default standard-indent 4)
+(setq-default indent-tabs-mode nil)     ; Replace tabs with spaces
+
+; linum
 (require 'linum)
 (global-linum-mode 1)
 (setq linum-format "%d ")
+
+; {{{ yasnippets
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/yas")
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "/usr/share/emacs/site-lisp/yas/snippets")
 ; }}}
+
+; {{{ iswitchb
+(iswitchb-mode 1)
+(setq iswitchb-buffer-ignore '("^ " "*Messages*" "*Completion*" "*scratch*" "*Help*"))
+(defun iswitchb-local-keys ()
+  (mapc (lambda (K) 
+    (let* ((key (car K)) (fun (cdr K)))
+      (define-key iswitchb-mode-map (edmacro-parse-keys key) fun)))
+        '(("<right>" . iswitchb-next-match)
+          ("<left>"  . iswitchb-prev-match)
+          ("<up>"    . ignore             )
+          ("<down>"  . ignore             ))))
+(add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
+; }}}
+
+; {{{ ido
+(require 'ido) 
+(ido-mode 'both) ;; for buffers and files
+(setq 
+    ido-save-directory-list-file "~/.config/emacs/ido.last"
+    ido-ignore-buffers           '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*")
+    ido-work-directory-list      '("~/")
+    ido-case-fold                t      ; be case-insensitive
+    ido-enable-last-directory-history t ; remember last used dirs
+    ido-max-work-directory-list  30
+    ido-max-work-file-list       50
+    ido-use-filename-at-point    nil
+    ido-use-url-at-point         nil
+    ido-enable-flex-matching     nil    ; don't try to be too smart
+    ido-max-prospects            8
+    ido-confirm-unique-completion t  ; wait for RET, even with unique completion
+    confirm-nonexistent-file-or-buffer nil ;; when using ido, the confirmation is rather annoying...
+)
+; }}}
+
+; Folding
+;(load "folding" 'nomessage 'noerror)
+;(folding-mode-add-find-file-hook)
+;(folding-add-to-marks-list 'ruby-mode "#{{{" "#}}}" nil t)
+;(folding-add-to-marks-list 'haskell-mode "--{{{" "--}}}" nil t)
+
+
+
 
 ; {{{ CUA mode
 (cua-mode t)
@@ -22,47 +98,6 @@
 (setq cua-keep-region-after-copy t)     ;; Standard Windows behaviour 
 ; }}}
 
-; {{{ Keys
-(global-set-key (kbd "C-d")         'kill-whole-line)
-(global-set-key (kbd "C-p")         'yank)
-
-(global-set-key (kbd "C-q")         'save-buffers-kill-emacs)
-(global-set-key (kbd "C-s")         'save-buffer)
-(global-set-key (kbd "<escape>")    'keyboard-quit)
-(global-set-key (kbd "C-<home>")    'beginning-of-buffer)
-(global-set-key (kbd "C-<end>")     'end-of-buffer)
-(global-set-key (kbd "C-w")         'kill-buffer)
-(global-set-key (kbd "C-l")         'goto-line)
-
-(global-set-key (kbd "M-RET")       'cua-set-rectangle-mark)
-(global-set-key (kbd "C-b")         'comment-or-uncomment-region)
-
-(global-set-key (kbd "C-f")         'isearch-forward)
-(global-set-key (kbd "M-f")         'isearch-backward)
-(global-set-key (kbd "C-R")         'replace-string)
-(global-set-key (kbd "C-r")         'query-replace)
-; }}}
-
-; {{{ Interface
-(menu-bar-mode -1)
-;(tool-bar-mode -1)
-;(scroll-bar-mode -1)
-; }}}
-
-; {{{ Mode line
-(line-number-mode 1)
-(column-number-mode 1)
-; }}}
-
-; {{{ Tabs and indentation
-(setq-default standard-indent 4)
-(setq-default indent-tabs-mode nil)     ; Replace tabs with spaces
-; }}}
-
-; {{{ Search/replace
-(setq search-highlight t)               ; Highlight search object 
-(setq query-replace-highlight t)        ; Highlight query object 
-; }}}
 
 ; {{{ Haskell mode
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
@@ -82,15 +117,6 @@
 (autoload 'haskell-mode "haskell-mode" "Major mode for editing Haskell scripts." t)
 (autoload 'literate-haskell-mode "haskell-mode" "Major mode for editing literate Haskell scripts." t)
 
-;; ========== Line by line scrolling ========== 
-;; This makes the buffer scroll by only a single line when the up or
-;; down cursor keys push the cursor (tool-bar-mode) outside the
-;; buffer. The standard emacs behaviour is to reposition the cursor in
-;; the center of the screen, but this can make the scrolling confusing
-(setq scroll-step 1)
-
-(mouse-wheel-mode t) ; Support Wheel Mouse Scrolling
-
 ; {{{ Backup files
 (setq make-backup-files t)
 (setq version-control t)
@@ -105,3 +131,74 @@
 ;(set-face-background 'region "blue")   ; Set region background colour
 ;(set-background-color "black")')
 ; }}}
+
+; {{{ Keys
+(global-set-key (kbd "M-<delete>")  'kill-whole-line)
+(global-set-key (kbd "C-p")         'yank)
+
+(global-set-key (kbd "C-q")         'save-buffers-kill-emacs)
+(global-set-key (kbd "C-s")         'save-buffer)
+(global-set-key (kbd "<escape>")    'keyboard-quit)
+(global-set-key (kbd "C-<home>")    'beginning-of-buffer)
+(global-set-key (kbd "C-<end>")     'end-of-buffer)
+(global-set-key (kbd "C-w")         'kill-buffer)
+(global-set-key (kbd "C-l")         'goto-line)
+
+(global-set-key (kbd "M-SPC")       'cua-set-rectangle-mark)
+(global-set-key (kbd "C-b")         'comment-or-uncomment-region)
+
+(global-set-key (kbd "C-f")         'isearch-forward)
+(global-set-key (kbd "M-f")         'isearch-backward)
+(global-set-key (kbd "C-R")         'replace-string)
+(global-set-key (kbd "C-r")         'query-replace)
+
+(global-set-key (kbd "C-e")         'find-file)
+(global-set-key (kbd "C-<prior>")   'tabbar-backward)
+(global-set-key (kbd "C-<next>")    'tabbar-forward)
+;(global-set-key (kbd "M-TAB")       'iswitchb-buffer)
+(global-set-key (kbd "M-TAB")       'other-window)
+; }}}
+
+; Buffer tabs
+(require 'tabbar)
+(tabbar-mode)
+
+(setq tabbar-buffer-groups-function 'tabbar-buffer-ignore-groups)
+(defun tabbar-buffer-ignore-groups (buffer)
+;;Return only one group for each buffer."
+  (with-current-buffer (get-buffer buffer)
+    (cond
+     ((or (get-buffer-process (current-buffer))
+          (memq major-mode
+                '(comint-mode compilation-mode)))
+      '("Process")
+      )
+     ((member (buffer-name)
+              '("scratch" "Messages"))
+      '("Common")
+      )
+     ((eq major-mode 'dired-mode)
+      '("Dired")
+      )
+     ((memq major-mode
+            '(help-mode apropos-mode Info-mode Man-mode))
+      '("Help")
+      )
+     ((memq major-mode
+            '(rmail-mode
+              rmail-edit-mode vm-summary-mode vm-mode mail-mode
+              mh-letter-mode mh-show-mode mh-folder-mode
+              gnus-summary-mode message-mode gnus-group-mode
+              gnus-article-mode score-mode gnus-browse-killed-mode))
+      '("Mail")
+      )
+     (t
+      (list
+       "default"  ;; no-grouping
+       (if (and (stringp mode-name) (string-match "[^ ]" mode-name))
+           mode-name
+         (symbol-name major-mode)))
+      )
+     )
+   )
+)
