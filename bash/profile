@@ -19,7 +19,7 @@ export LC_TYPE=en_US.utf8
 export BROWSER="/usr/bin/luakit"
 export CC="/usr/bin/colorgcc"
 export EDITOR="/usr/bin/emacs -nw"
-export PAGER="/usr/bin/less"
+export PAGER="/bin/less"
 export READNULLCMD=${PAGER:-/usr/bin/pager}
 #export TERM="rxvt-unicode"
 #export XTERM="urxvt"
@@ -49,6 +49,8 @@ eval `dircolors -b`
 # Prompts
 #export PROMPT="%{$fg_bold[cyan]%}%n %{$fg[red]%}%#>%{$reset_color%}"
 #export RPROMPT="%{$fg_bold[white]%}[%{$fg[blue]%}%m%{$reset_color%}:%{$fg_bold[yellow]%}%~%{$fg[white]%}] %{$fg[magenta]%}%T%{$reset_color%}"
+
+source ~/.bashrc
 
 #
 if [ -r "${HOME}/.ecryptfs/auto-mount" ]; then
