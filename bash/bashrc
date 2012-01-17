@@ -72,7 +72,7 @@ On_IPurple='\e[10;95m'  # Purple
 On_ICyan='\e[0;106m'    # Cyan
 On_IWhite='\e[0;107m'   # White
 
-PS1="\[$BIRed\]\u@\[$BIBlue\]\h:\[$IPurple\]\W\r\n\[$IBCyan\]> \[$Color_Off\]"
+PS1="\[$BIRed\]\u@\[$BIBlue\]\h:\[$IPurple\]\w\r\n\[$IBCyan\]> \[$Color_Off\]"
 
 # }}}
 
@@ -86,7 +86,6 @@ alias rm='safe-rm -v'
 
 alias l='ls -l'
 alias la='ls -a'
-alias ll='ls -l'
 alias lla='ls -la'
 alias ls='ls --tabsize=0 --literal --color=auto --show-control-chars --human-readable --group-directories-first -X'
 
@@ -112,6 +111,7 @@ alias wget="wget -c"
 #alias -p grep='ack'
 #alias more='vimpager'
 #alias less='vimpager'
+alias ping='mtr'
 alias top="htop"
 alias vim="emacs"
 
@@ -119,8 +119,9 @@ alias my_indent='indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -
 alias e='emacs'
 alias o='xdg-open'
 #alias openports='sudo netstat --all --numeric --programs --inet'
+alias listening-ports='sudo netstat -tlnp'
 alias openports='sudo iptstate -o'
-alias pg='ping www.google.fr'
+alias pg='mtr www.google.fr'
 alias reco='sudo dhclient eth0'
 alias volume='alsamixer -c 0'
 alias dlpage='wget -nd -pHEKk'
@@ -162,5 +163,22 @@ lsmount()  { (echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | colum
 sleep-on() { sudo rc.d stop fcron wicd; }
 ls-empty() { find . -type d -empty -print0 | xargs --null ls; }
 rm-empty() { find . -type d -empty -print0 | xargs --null rmdir; }
+
+proxy-on() {
+    export http_proxy="http://localhost:8118/"
+    export https_proxy="http://localhost:8118/"
+    #export ftp_proxy="http://$username:$password@proxyserver:8080/"
+    #export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
+    echo -e "\nProxy environment variable set."
+}
+proxy-off() {
+    unset HTTP_PROXY
+    unset http_proxy
+    unset HTTPS_PROXY
+    unset https_proxy
+    unset FTP_PROXY
+    unset ftp_proxy
+    echo -e "\nProxy environment variable removed."
+} 
 # }}}
 
