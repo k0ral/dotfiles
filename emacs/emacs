@@ -1,84 +1,216 @@
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/emhacks")
+; {{{ Util
+(defun reload-configuration () 
+    "Runs load-file on ~/.emacs" 
+    (interactive)
+    (load-file "~/.emacs"))
 
+(defun server-shutdown ()
+    "Save buffers, Quit, and Shutdown (kill) server"
+    (interactive)
+    (save-some-buffers)
+    (kill-emacs))
 
-(set-language-environment "UTF-8")
-(setq ring-bell-function 'ignore)
-;(global-hl-line-mode 1)
-(setq inhibit-startup-message t)
-(setq show-trailing-whitespace t)
-(show-paren-mode 1)
-(setq x-select-enable-clipboard t)
+(defmacro require-maybe (feature &optional file)
+    "*Try to require FEATURE, but don't signal an error if `require' fails."
+    `(require ,feature ,file 'noerror))
+
+(defmacro when-available (func foo)
+    "*Do something if FUNCTION is available."
+    `(when (fboundp ,func) ,foo))
+
+(defun kill-current-buffer ()
+    (interactive)
+    (kill-buffer (current-buffer)))
+
+(defadvice kill-line (before check-position activate)
+    (if (and (eolp) (not (bolp)))
+        (progn (forward-char 1)
+               (just-one-space 0)
+               (backward-char 1))))
+; }}}
+
+; Font
+(add-to-list 'default-frame-alist '(font . "Consolas-10"))
+
+; Appearance
+(setq-default show-trailing-whitespace t)
+(setq show-paren-style 'mixed)
+
+; Misc
+;(setq x-select-enable-clipboard t)
 (setq vc-follow-symlinks t)
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq require-final-newline t)
+(setq ring-bell-function 'ignore)
 
-; Interface
-(menu-bar-mode nil)
-;(tool-bar-mode -1)
-;(scroll-bar-mode -1)
+; Start-up
+(setq inhibit-splash-screen t)
+(setq inhibit-startup-message t)
+(setq inhibit-startup-echo-area-message t)
+
+; {{{ Minor modes
+(column-number-mode 1)
+(delete-selection-mode 1)
+(file-name-shadow-mode 1)
+(global-font-lock-mode 1)
+(global-hl-line-mode 1)
+(icomplete-mode 1)
+(line-number-mode 1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(show-paren-mode 1)
+(size-indication-mode t)
+(tool-bar-mode -1)
+(which-func-mode 1)
+
+(add-hook 'emacs-lisp-mode-hook       'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'ielm-mode-hook             'turn-on-eldoc-mode)
+; }}}
+
+; {{{ Colors
+(require 'color-theme)
+(color-theme-initialize)
+(load-file "~/.config/emacs/theme")
+(color-theme-blackboard)
+
+(defun apply-color-theme (frame)
+  (select-frame frame)
+  (if (window-system frame) (color-theme-blackboard) (color-theme-tty-dark)))
+
+(add-hook 'after-make-frame-functions 'apply-color-theme)
+
+
+
+;(setq frame-background-mode nil)
+;(invert-face 'default)
+
+(set-frame-parameter (selected-frame) 'alpha '(85 50))
+(add-to-list 'default-frame-alist '(alpha 85 50))
+; }}}
 
 ; Scrolling
 (setq scroll-step 1)
-(mouse-wheel-mode t)
+(setq scroll-margin 0)
+(setq scroll-conservatively 100000)
+(setq scroll-up-aggressively 0)
+(setq scroll-down-aggressively 0)
+(setq scroll-preserve-screen-position t)
 
 ; Search/replace
-(setq search-highlight t)               ; Highlight search object 
-(setq query-replace-highlight t)        ; Highlight query object 
+(setq search-highlight t)
+(setq query-replace-highlight t)
 
-; Syntax highlighting
-(global-font-lock-mode 1)
+; Syntax highlight
 (setq font-lock-maximum-decoration t)
 
-; Mode line
-(line-number-mode 1)
-(column-number-mode 1)
-
 ; Tabs and indentation
+(setq-default tab-width 4)
 (setq-default standard-indent 4)
 (setq-default indent-tabs-mode nil)     ; Replace tabs with spaces
 
+; Completion
+(setq completion-ignore-case t)
+(setq read-file-name-completion-ignore-case t)
+
+; Backup files
+(setq make-backup-files t)
+(setq backup-directory-alist         `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+
+; Diff
+(global-highlight-changes-mode t)
+(setq highlight-changes-visibility-initial-state nil)
+
+(set-face-foreground 'highlight-changes nil)
+(set-face-background 'highlight-changes "#007700")
+(set-face-foreground 'highlight-changes-delete nil)
+(set-face-background 'highlight-changes-delete "#770000")
+
+(global-set-key (kbd "C-d")       'highlight-changes-visible-mode)
+(global-set-key (kbd "M-<next>")  'highlight-changes-next-change)
+(global-set-key (kbd "M-<prior>") 'highlight-changes-previous-change)
+
 ; linum
-(require 'linum)
-(global-linum-mode 1)
-(setq linum-format "%d ")
+(when (require-maybe 'linum)
+  (global-linum-mode 1)
+  (setq linum-format "%d "))
+
+; uniquify
+(when (require-maybe 'uniquify)
+  (setq uniquify-separator ":"))
+
+; saveplace
+(when (require-maybe 'saveplace)
+  (setq save-place-file "~/.config/emacs/saveplace")
+  (setq-default save-place t))
+
+; smex
+(autoload 'smex "smex" "Advanced M-x" t)
+(eval-after-load "smex" '(progn
+    (setq smex-save-file "~/.config/emacs/smex.save")
+    (smex-initialize)))
+
+(global-set-key (kbd "M-x") 'smex)
+
+; erc
+(autoload 'erc "erc" "IRC client" t)
+(eval-after-load "erc" '(progn
+    (require 'erc-match)
+
+    (erc-autojoin-mode t)
+    (setq erc-autojoin-channels-alist '((".*\\.freenode.net" "#emacs" "#haskell" "#haskell-fr")))
+
+    (setq erc-server         "irc.freenode.net")
+    (setq erc-port           6667)
+    (setq erc-nick           "k0ral")
+    (setq erc-user-full-name "k0ral")
+    ;(setq erc-email-userid   "userid"    ; for when ident is not activated
+    (setq erc-prompt-for-password t)
+
+    (setq erc-keywords '("hbro" "koral" "k0ral"))
+
+    (erc-track-mode t)
+    (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE" "324" "329" "332" "333" "353" "477"))
+    (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))))
 
 ; {{{ yasnippets
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/yas")
-(require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "/usr/share/emacs/site-lisp/yas/snippets")
+;(add-to-list 'load-path "/usr/share/emacs/site-lisp/yas")
+(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-bundle-0.6.1")
+(require 'yasnippet-bundle)
+;(yas/initialize)
+;(yas/load-directory "/usr/share/emacs/site-lisp/yas/snippets"))
 ; }}}
 
-; {{{ iswitchb
-(iswitchb-mode 1)
-(setq iswitchb-buffer-ignore '("^ " "*Messages*" "*Completion*" "*scratch*" "*Help*"))
-(defun iswitchb-local-keys ()
-  (mapc (lambda (K) 
-    (let* ((key (car K)) (fun (cdr K)))
-      (define-key iswitchb-mode-map (edmacro-parse-keys key) fun)))
-        '(("<right>" . iswitchb-next-match)
-          ("<left>"  . iswitchb-prev-match)
-          ("<up>"    . ignore             )
-          ("<down>"  . ignore             ))))
-(add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
-; }}}
+; CUA mode, only for rectangles
+(setq cua-enable-cua-keys nil)
+(cua-mode t)
 
 ; {{{ ido
-(require 'ido) 
-(ido-mode 'both) ;; for buffers and files
-(setq 
-    ido-save-directory-list-file "~/.config/emacs/ido.last"
-    ido-ignore-buffers           '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*")
-    ido-work-directory-list      '("~/")
-    ido-case-fold                t      ; be case-insensitive
-    ido-enable-last-directory-history t ; remember last used dirs
-    ido-max-work-directory-list  30
-    ido-max-work-file-list       50
-    ido-use-filename-at-point    nil
-    ido-use-url-at-point         nil
-    ido-enable-flex-matching     nil    ; don't try to be too smart
-    ido-max-prospects            8
-    ido-confirm-unique-completion t  ; wait for RET, even with unique completion
-    confirm-nonexistent-file-or-buffer nil ;; when using ido, the confirmation is rather annoying...
+(when (require-maybe 'ido)
+    (ido-mode 'both)
+    (ido-everywhere 1)
+
+    (setq ido-create-new-buffer 'never)
+    (setq ido-enable-tramp-completion nil)
+
+    (setq ido-enable-last-directory-history t)
+    (setq ido-max-work-directory-list  30)
+    (setq ido-max-work-file-list       50)
+    (setq ido-save-directory-list-file "~/.config/emacs/ido.last")
+
+    ;(setq ido-ignore-extensions t)
+    ;(setq ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
+
+    (setq ido-work-directory-list '("~/"))
+
+    (setq ido-case-fold             t)
+    (setq ido-use-filename-at-point nil)
+    (setq ido-use-url-at-point      nil)
+    (setq ido-enable-flex-matching  t)
+    (setq ido-max-prospects         8)
+    (setq ido-confirm-unique-completion t)
+    (setq confirm-nonexistent-file-or-buffer nil)
 )
 ; }}}
 
@@ -88,18 +220,33 @@
 ;(folding-add-to-marks-list 'ruby-mode "#{{{" "#}}}" nil t)
 ;(folding-add-to-marks-list 'haskell-mode "--{{{" "--}}}" nil t)
 
+; Whole line or region
+(defadvice kill-ring-save (around slick-copy activate)
+  "When called interactively with no active region, copy a single line instead."
+  (if (or (use-region-p) (not (called-interactively-p)))
+      ad-do-it
+    (kill-new (buffer-substring (line-beginning-position)
+                                (line-beginning-position 2))
+              nil '(yank-line))
+    (message "Copied line")))
 
+(defadvice kill-region (around slick-copy activate)
+  "When called interactively with no active region, kill a single line instead."
+  (if (or (use-region-p) (not (called-interactively-p)))
+      ad-do-it
+    (kill-new (filter-buffer-substring (line-beginning-position)
+                                       (line-beginning-position 2) t)
+              nil '(yank-line))))
 
+(defun yank-line (string)
+  "Insert STRING above the current line."
+  (beginning-of-line)
+  (unless (= (elt string (1- (length string))) ?\n)
+    (save-excursion (insert "\n")))
+  (insert string))
 
-; {{{ CUA mode
-(cua-mode t)
-(setq cua-auto-tabify-rectangles nil)   ;; Don't tabify after rectangle commands
-(transient-mark-mode 1)                 ;; No region when it is not highlighted
-(setq cua-keep-region-after-copy t)     ;; Standard Windows behaviour 
-; }}}
-
-
-; {{{ Haskell mode
+; {{{ Language-based modes
+; Haskell
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
@@ -117,88 +264,142 @@
 (autoload 'haskell-mode "haskell-mode" "Major mode for editing Haskell scripts." t)
 (autoload 'literate-haskell-mode "haskell-mode" "Major mode for editing literate Haskell scripts." t)
 
-; {{{ Backup files
-(setq make-backup-files t)
-(setq version-control t)
-(setq backup-directory-alist         `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+; PKGBUILD
+(autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
+(setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
+
+; Python
+(autoload 'python-mode "python-mode.el" "Python mode." t)
+(setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
+
+; C/C++/Java
+(setq c-default-style '(
+    (java-mode . "java")
+    (awk-mode .  "awk")
+    (other .     "linux")
+))
+
+;(setq         c-indent-level 4)             ; TAB = 4 spaces
+;(setq-default c-basic-offset 4)             ; Indentation unit
+(setq-default c-toggle-electric-flag nil)
+
+(add-hook 'c-mode-common-hook
+  (lambda ()
+    (font-lock-add-keywords nil
+      '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t))
+)))
 ; }}}
 
-; {{{ Colors
-;(set-cursor-color "red")
-;(set-mouse-color "goldenrod")
-;(set-face-background 'hl-line "gray13") 
-;(set-face-background 'region "blue")   ; Set region background colour
-;(set-background-color "black")')
+; {{{ Term mode
+;(require 'cl)
+;(require 'term)
+(autoload 'multi-term "multi-term" nil t)
+
+(setq multi-term-program "/bin/bash"
+      multi-term-scroll-to-bottom-on-output "this")
+
+(add-hook 'term-mode-hook
+  (lambda ()
+     (hl-line-mode nil)
+     (linum-mode nil)
+))
 ; }}}
+
+; Windows movement
+(when (require-maybe 'windmove)
+    (windmove-default-keybindings 'meta))
+
 
 ; {{{ Keys
-(global-set-key (kbd "M-<delete>")  'kill-whole-line)
-(global-set-key (kbd "C-p")         'yank)
+;(global-set-key (kbd "M-<right>")   'forward-sentence)
+;(global-set-key (kbd "M-<left>")    'backward-sentence)
 
-(global-set-key (kbd "C-q")         'save-buffers-kill-emacs)
+(global-set-key (kbd "<delete>")    'delete-char)
+(global-set-key (kbd "C-M-<delete>") 'kill-line)
+(global-set-key (kbd "M-<delete>")  'kill-whole-line)
+(global-set-key (kbd "C-v")         'yank)
+(global-set-key (kbd "M-v")         'yank-pop)
+(global-set-key (kbd "C-c")         'kill-ring-save)
+
+(global-set-key (kbd "C-z")         'undo)
+(global-set-key (kbd "C-q")         'save-buffers-kill-terminal)
+;(global-set-key (kbd "C-q")         'kill-current-buffer)
+(global-set-key (kbd "M-<f4>")      'kill-emacs)
 (global-set-key (kbd "C-s")         'save-buffer)
-(global-set-key (kbd "<escape>")    'keyboard-quit)
+(global-set-key (kbd "C-S-s")       'write-file)
+(global-set-key (kbd "M-s")         'ido-write-file)
+;(global-set-key (kbd "<escape>")    'keyboard-quit)
+
 (global-set-key (kbd "C-<home>")    'beginning-of-buffer)
 (global-set-key (kbd "C-<end>")     'end-of-buffer)
-(global-set-key (kbd "C-w")         'kill-buffer)
-(global-set-key (kbd "C-l")         'goto-line)
+(global-set-key (kbd "C-g")         'goto-line)
 
 (global-set-key (kbd "M-SPC")       'cua-set-rectangle-mark)
-(global-set-key (kbd "C-b")         'comment-or-uncomment-region)
+(global-set-key (kbd "C-a")         'mark-whole-buffer)
+(global-set-key (kbd "M-c")         'comment-or-uncomment-region)
 
-(global-set-key (kbd "C-f")         'isearch-forward)
-(global-set-key (kbd "M-f")         'isearch-backward)
-(global-set-key (kbd "C-R")         'replace-string)
+;(global-set-key (kbd "C-f")         'isearch-forward)
+;(global-set-key (kbd "C-S-f")       'isearch-backward)
+
+(global-set-key (kbd "C-f")         'occur)
+(global-set-key (kbd "M-f")         'multi-occur)
+(global-set-key (kbd "C-n")         'next-error)
+(global-set-key (kbd "C-p")         'previous-error)
+
 (global-set-key (kbd "C-r")         'query-replace)
+(global-set-key (kbd "M-r")         'replace-string)
 
-(global-set-key (kbd "C-e")         'find-file)
-(global-set-key (kbd "C-<prior>")   'tabbar-backward)
-(global-set-key (kbd "C-<next>")    'tabbar-forward)
-;(global-set-key (kbd "M-TAB")       'iswitchb-buffer)
-(global-set-key (kbd "M-TAB")       'other-window)
+(global-set-key (kbd "C-t")         'find-file)
+(global-set-key (kbd "C-<prior>")   'bs-cycle-previous)
+(global-set-key (kbd "C-<next>")    'bs-cycle-next)
+(global-set-key (kbd "C-b")         'bs-show)
+;(global-set-key (kbd "C-w")         'ido-kill-buffer)
+
+;(global-set-key (kbd "M-<tab>")     'other-window)
+;(global-set-key (kbd "C-w")         'delete-other-windows)
+;(global-set-key (kbd "C-e")         'other-window)
+
+(global-set-key (kbd "C-l")         'linum-mode)
+
+(global-set-key (kbd "<f11>")       'compile)
+(global-set-key (kbd "<f12>")       'multi-term)
+
+(define-key isearch-mode-map (kbd "C-f")   'isearch-repeat-forward)
+(define-key isearch-mode-map (kbd "C-S-f") 'isearch-repeat-backward)
+(define-key isearch-mode-map (kbd "C-s")   'save-buffer)
+(define-key isearch-mode-map (kbd "C-S-s") 'write-file)
 ; }}}
 
-; Buffer tabs
-(require 'tabbar)
-(tabbar-mode)
+; {{{ ELPA
+;;; This was installed by package-install.el.
+;;; Move this code earlier if you want to reference
+;;; packages in your .emacs.
+(when
+    (load
+     (expand-file-name "~/.emacs.d/elpa/package.el"))
+  (package-initialize))
 
-(setq tabbar-buffer-groups-function 'tabbar-buffer-ignore-groups)
-(defun tabbar-buffer-ignore-groups (buffer)
-;;Return only one group for each buffer."
-  (with-current-buffer (get-buffer buffer)
-    (cond
-     ((or (get-buffer-process (current-buffer))
-          (memq major-mode
-                '(comint-mode compilation-mode)))
-      '("Process")
-      )
-     ((member (buffer-name)
-              '("scratch" "Messages"))
-      '("Common")
-      )
-     ((eq major-mode 'dired-mode)
-      '("Dired")
-      )
-     ((memq major-mode
-            '(help-mode apropos-mode Info-mode Man-mode))
-      '("Help")
-      )
-     ((memq major-mode
-            '(rmail-mode
-              rmail-edit-mode vm-summary-mode vm-mode mail-mode
-              mh-letter-mode mh-show-mode mh-folder-mode
-              gnus-summary-mode message-mode gnus-group-mode
-              gnus-article-mode score-mode gnus-browse-killed-mode))
-      '("Mail")
-      )
-     (t
-      (list
-       "default"  ;; no-grouping
-       (if (and (stringp mode-name) (string-match "[^ ]" mode-name))
-           mode-name
-         (symbol-name major-mode)))
-      )
-     )
-   )
-)
+(setq package-archives '(
+    ("ELPA" . "http://tromey.com/elpa/") 
+    ("gnu" . "http://elpa.gnu.org/packages/")
+    ("marmalade" . "http://marmalade-repo.org/packages/")))
+; }}}
+
+; {{{ Wanderlust
+(autoload 'wl                    "wl" "Wanderlust" t)
+(autoload 'wl-other-frame        "wl" "Wanderlust on new frame." t)
+(autoload 'wl-draft              "wl-draft" "Write draft with Wanderlust." t)
+(autoload 'wl-user-agent-compose "wl-draft" nil t)
+
+(if (boundp 'mail-user-agent)
+    (setq mail-user-agent 'wl-user-agent))
+(if (fboundp 'define-mail-user-agent)
+    (define-mail-user-agent
+      'wl-user-agent
+      'wl-user-agent-compose
+      'wl-draft-send
+      'wl-draft-kill
+      'mail-send-hook))
+
+(setq wl-init-file      "~/.config/emacs/wanderlust/wl")
+; }}}
