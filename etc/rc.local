@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# /etc/rc.local: Local multi-user startup script.
+#
+
+/usr/share/acpi_call/test_off.sh > /dev/null 2>&1
+#ip link set wlan0 down
+rfkill block 0
