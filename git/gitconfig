@@ -2,6 +2,6 @@
 	name = koral
 	email = koral att mailoo dott org
 [color]
-	diff = false
+	diff = true
 	status = auto
 	branch = auto
