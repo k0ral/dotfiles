@@ -100,7 +100,7 @@ alias gcc="colorgcc"
 #alias grep='grep --color=auto'
 #alias make="colormake"
 
-alias emacs='emacs -nw'
+alias emacs='emacsclient -c -n -a ""'
 alias gdb="cgdb -q"
 alias locate="locate -e"
 alias mplayer="mplayer -msgcolor"
@@ -111,12 +111,16 @@ alias wget="wget -c"
 #alias -p grep='ack'
 #alias more='vimpager'
 #alias less='vimpager'
+alias pacman='pacman-color'
 alias ping='mtr'
 alias top="htop"
 alias vim="emacs"
 
 alias my_indent='indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -ncs -di4 -fca -hnl -i4 -ip4 -l120 -lp -nlps -npcs -nprs -npsl -saf -sai -saw -sbi4 -sc -nsob -ss -ts4 -nut '
 alias e='emacs'
+alias E='SUDO_EDITOR="emacs" sudoedit' 
+
+alias m='mutt'
 alias o='xdg-open'
 #alias openports='sudo netstat --all --numeric --programs --inet'
 alias listening-ports='sudo netstat -tlnp'
@@ -163,6 +167,8 @@ lsmount()  { (echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | colum
 sleep-on() { sudo rc.d stop fcron wicd; }
 ls-empty() { find . -type d -empty -print0 | xargs --null ls; }
 rm-empty() { find . -type d -empty -print0 | xargs --null rmdir; }
+u()        { wget $(perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' `xclip -o`); }
+
 
 proxy-on() {
     export http_proxy="http://localhost:8118/"
@@ -181,4 +187,3 @@ proxy-off() {
     echo -e "\nProxy environment variable removed."
 } 
 # }}}
-
