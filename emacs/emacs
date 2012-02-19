@@ -1,86 +1,109 @@
 ; {{{ Util
-(defun reload-configuration () 
-    "Runs load-file on ~/.emacs" 
-    (interactive)
-    (load-file "~/.emacs"))
-
 (defun server-shutdown ()
     "Save buffers, Quit, and Shutdown (kill) server"
     (interactive)
     (save-some-buffers)
     (kill-emacs))
 
-(defmacro require-maybe (feature &optional file)
-    "*Try to require FEATURE, but don't signal an error if `require' fails."
-    `(require ,feature ,file 'noerror))
-
-(defmacro when-available (func foo)
-    "*Do something if FUNCTION is available."
-    `(when (fboundp ,func) ,foo))
-
 (defun kill-current-buffer ()
     (interactive)
     (kill-buffer (current-buffer)))
 
-(defadvice kill-line (before check-position activate)
-    (if (and (eolp) (not (bolp)))
-        (progn (forward-char 1)
-               (just-one-space 0)
-               (backward-char 1))))
+(defun clean ()
+  "Clean and indent whole buffer"
+  (interactive)
+  (delete-trailing-whitespace)
+  ;(indent-region (point-min) (point-max) nil)
+  (untabify (point-min) (point-max)))
+; }}}
+
+; ELPA
+(eval-after-load "packages" '(progn
+    (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+    (setq package-enable-at-startup nil)))
+
+; Mutt
+(add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
+
+; Dired
+(add-hook 'dired-load-hook (function (lambda nil (load "dired-x"))))
+
+(eval-after-load "dired" '(progn
+    (defun dired-execute nil
+        "Try to execute file at point."
+        (interactive)
+        (shell-command (dired-get-filename)))
+
+    (setq dired-listing-switches "-lh --group-directories-first")
+    (put 'dired-find-alternate-file 'disabled nil)
+
+    (define-key dired-mode-map (kbd "<return>")    'dired-find-alternate-file)
+    (define-key dired-mode-map (kbd "r")           'dired-do-rename)
+    (define-key dired-mode-map (kbd "x")           'dired-execute)
+    (define-key dired-mode-map (kbd "X")           'dired-do-flagged-delete)
+    (define-key dired-mode-map (kbd "<backspace>") 'dired-up-directory)))
+
+
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
+
+; {{{ Server
+(add-hook 'server-done-hook 'delete-frame)
+;(add-hook 'server-done-hook (lambda nil (kill-buffer nil)))
 ; }}}
 
 ; Font
 (add-to-list 'default-frame-alist '(font . "Consolas-10"))
 
-; Appearance
-(setq-default show-trailing-whitespace t)
-(setq show-paren-style 'mixed)
+; {{{ Minor modes
+; Trailing whitespaces
+(add-hook 'emacs-lisp-mode-hook (lambda nil (setq show-trailing-whitespace t)))
+
+; Highlight parenthesis
+(add-to-list 'load-path "~/.emacs.d/elpa/rainbow-delimiters-1.3.3")
+(when (require 'rainbow-delimiters nil 'noerror)
+    (global-rainbow-delimiters-mode 1))
+(show-paren-mode 1)
 
 ; Misc
-;(setq x-select-enable-clipboard t)
 (setq vc-follow-symlinks t)
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq require-final-newline t)
-(setq ring-bell-function 'ignore)
-
-; Start-up
-(setq inhibit-splash-screen t)
-(setq inhibit-startup-message t)
-(setq inhibit-startup-echo-area-message t)
+;(setq ring-bell-function 'ignore)
+(setq inhibit-startup-screen t)
 
 ; {{{ Minor modes
 (column-number-mode 1)
 (delete-selection-mode 1)
 (file-name-shadow-mode 1)
-(global-font-lock-mode 1)
-(global-hl-line-mode 1)
-(icomplete-mode 1)
+;(global-font-lock-mode 1)
+;(global-hl-line-mode 1)
+;(icomplete-mode 1)
 (line-number-mode 1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-(show-paren-mode 1)
+(savehist-mode 1)
 (size-indication-mode t)
 (tool-bar-mode -1)
-(which-func-mode 1)
+(which-function-mode 1)
 
+; Eldoc
 (add-hook 'emacs-lisp-mode-hook       'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook             'turn-on-eldoc-mode)
-; }}}
 
 ; {{{ Colors
+(add-to-list 'load-path "~/.emacs.d/elpa/color-theme-6.6.1")
 (require 'color-theme)
-(color-theme-initialize)
-(load-file "~/.config/emacs/theme")
+(load "~/.emacs.d/elpa/color-theme-blackboard-0.0.2/color-theme-blackboard.el")
+
+;(setq color-theme-is-global nil)
 (color-theme-blackboard)
 
-(defun apply-color-theme (frame)
-  (select-frame frame)
-  (if (window-system frame) (color-theme-blackboard) (color-theme-tty-dark)))
-
-(add-hook 'after-make-frame-functions 'apply-color-theme)
-
-
+;(defun apply-color-theme (frame)
+;    (select-frame frame)
+;    (if (display-graphic-p frame) (color-theme-blackboard) (color-theme-tty-dark)))
+;(add-hook 'after-make-frame-functions 'color-theme-blackboard)
 
 ;(setq frame-background-mode nil)
 ;(invert-face 'default)
@@ -89,97 +112,99 @@
 (add-to-list 'default-frame-alist '(alpha 85 50))
 ; }}}
 
+; Clipboard
+;(setq x-select-enable-clipboard t)
+;(global-set-key (kbd "S-<insert>") 'mouse-yank-primary)
+
 ; Scrolling
 (setq scroll-step 1)
-(setq scroll-margin 0)
-(setq scroll-conservatively 100000)
-(setq scroll-up-aggressively 0)
-(setq scroll-down-aggressively 0)
+(setq scroll-margin 4)
+;(setq scroll-conservatively 100000)
 (setq scroll-preserve-screen-position t)
 
-; Search/replace
+(add-hook 'eshell-mode-hook (lambda nil (setq scroll-margin 0)))
+
+; {{{ Search/replace
 (setq search-highlight t)
 (setq query-replace-highlight t)
 
+;(global-set-key (kbd "C-f")         'isearch-forward)
+;(global-set-key (kbd "C-S-f")       'isearch-backward)
+
+(global-set-key (kbd "C-f")         'anything-occur)
+(global-set-key (kbd "M-f")         'multi-occur)
+(global-set-key (kbd "C-n")         'next-error)
+(global-set-key (kbd "C-p")         'previous-error)
+; }}}
+
 ; Syntax highlight
-(setq font-lock-maximum-decoration t)
+;(setq font-lock-maximum-decoration t)
 
 ; Tabs and indentation
 (setq-default tab-width 4)
-(setq-default standard-indent 4)
-(setq-default indent-tabs-mode nil)     ; Replace tabs with spaces
+;(setq-default standard-indent 4)
+(setq-default indent-tabs-mode nil)
 
 ; Completion
-(setq completion-ignore-case t)
-(setq read-file-name-completion-ignore-case t)
+;(setq completion-cycle-threshold t)
+;(setq completion-ignore-case t)
+;(setq read-file-name-completion-ignore-case t)
 
 ; Backup files
-(setq make-backup-files t)
-(setq backup-directory-alist         `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+;(setq make-backup-files t)
+;(setq backup-directory-alist         `((".*" . ,temporary-file-directory)))
+;(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
 ; Diff
-(global-highlight-changes-mode t)
-(setq highlight-changes-visibility-initial-state nil)
+;(global-highlight-changes-mode t)
+;(setq highlight-changes-visibility-initial-state nil)
 
-(set-face-foreground 'highlight-changes nil)
-(set-face-background 'highlight-changes "#007700")
-(set-face-foreground 'highlight-changes-delete nil)
-(set-face-background 'highlight-changes-delete "#770000")
+;(set-face-foreground 'highlight-changes nil)
+;(set-face-background 'highlight-changes "#007700")
+;(set-face-foreground 'highlight-changes-delete nil)
+;(set-face-background 'highlight-changes-delete "#770000")
+;
+;(global-set-key (kbd "C-d")       'highlight-changes-visible-mode)
+;(global-set-key (kbd "M-<next>")  'highlight-changes-next-change)
+;(global-set-key (kbd "M-<prior>") 'highlight-changes-previous-change)
 
-(global-set-key (kbd "C-d")       'highlight-changes-visible-mode)
-(global-set-key (kbd "M-<next>")  'highlight-changes-next-change)
-(global-set-key (kbd "M-<prior>") 'highlight-changes-previous-change)
+; Spell checking
+(setq ispell-program-name "aspell")
+(setq ispell-extra-args '("--sug-mode=ultra"))
+
+(add-hook 'org-mode-hook (lambda nil (flyspell-mode 1)))
 
 ; linum
-(when (require-maybe 'linum)
-  (global-linum-mode 1)
-  (setq linum-format "%d "))
+(when (require 'linum nil 'noerror)
+;    (global-linum-mode 1)
+    (setq linum-format "%d "))
 
 ; uniquify
-(when (require-maybe 'uniquify)
-  (setq uniquify-separator ":"))
+(when (require 'uniquify nil 'noerror)
+    (setq uniquify-separator ":"))
 
 ; saveplace
-(when (require-maybe 'saveplace)
-  (setq save-place-file "~/.config/emacs/saveplace")
-  (setq-default save-place t))
+(when (require 'saveplace nil 'noerror)
+    (setq save-place-file "~/.config/emacs/saveplace")
+    (setq-default save-place t))
 
-; smex
-(autoload 'smex "smex" "Advanced M-x" t)
-(eval-after-load "smex" '(progn
-    (setq smex-save-file "~/.config/emacs/smex.save")
-    (smex-initialize)))
-
-(global-set-key (kbd "M-x") 'smex)
-
-; erc
-(autoload 'erc "erc" "IRC client" t)
-(eval-after-load "erc" '(progn
-    (require 'erc-match)
-
-    (erc-autojoin-mode t)
-    (setq erc-autojoin-channels-alist '((".*\\.freenode.net" "#emacs" "#haskell" "#haskell-fr")))
-
-    (setq erc-server         "irc.freenode.net")
-    (setq erc-port           6667)
-    (setq erc-nick           "k0ral")
-    (setq erc-user-full-name "k0ral")
-    ;(setq erc-email-userid   "userid"    ; for when ident is not activated
-    (setq erc-prompt-for-password t)
-
-    (setq erc-keywords '("hbro" "koral" "k0ral"))
-
-    (erc-track-mode t)
-    (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE" "324" "329" "332" "333" "353" "477"))
-    (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))))
+; whole line or region
+(add-to-list 'load-path "~/.emacs.d/elpa/whole-line-or-region-1.3.1")
+(when (require 'whole-line-or-region nil 'noerror)
+    (whole-line-or-region-mode 1))
 
 ; {{{ yasnippets
-;(add-to-list 'load-path "/usr/share/emacs/site-lisp/yas")
-(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-bundle-0.6.1")
-(require 'yasnippet-bundle)
-;(yas/initialize)
-;(yas/load-directory "/usr/share/emacs/site-lisp/yas/snippets"))
+(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.6.1")
+(autoload 'yas/expand "yasnippet" "Completion snippets" t)
+(eval-after-load "yasnippet" '(progn
+    (yas/load-directory "~/.emacs.d/elpa/yasnippet-0.6.1/snippets")
+    (yas/global-mode 1)))
+
+(global-set-key (kbd "<tab>") 'yas/expand)
+; }}}
+
+; {{{ Autopair
+(electric-pair-mode 1)
 ; }}}
 
 ; CUA mode, only for rectangles
@@ -187,7 +212,7 @@
 (cua-mode t)
 
 ; {{{ ido
-(when (require-maybe 'ido)
+(when (require 'ido nil 'noerror)
     (ido-mode 'both)
     (ido-everywhere 1)
 
@@ -210,8 +235,10 @@
     (setq ido-enable-flex-matching  t)
     (setq ido-max-prospects         8)
     (setq ido-confirm-unique-completion t)
-    (setq confirm-nonexistent-file-or-buffer nil)
-)
+    (setq confirm-nonexistent-file-or-buffer nil))
+
+(global-set-key (kbd "C-o") 'find-file)
+;(global-set-key (kbd "C-w") 'ido-kill-buffer)
 ; }}}
 
 ; Folding
@@ -220,31 +247,6 @@
 ;(folding-add-to-marks-list 'ruby-mode "#{{{" "#}}}" nil t)
 ;(folding-add-to-marks-list 'haskell-mode "--{{{" "--}}}" nil t)
 
-; Whole line or region
-(defadvice kill-ring-save (around slick-copy activate)
-  "When called interactively with no active region, copy a single line instead."
-  (if (or (use-region-p) (not (called-interactively-p)))
-      ad-do-it
-    (kill-new (buffer-substring (line-beginning-position)
-                                (line-beginning-position 2))
-              nil '(yank-line))
-    (message "Copied line")))
-
-(defadvice kill-region (around slick-copy activate)
-  "When called interactively with no active region, kill a single line instead."
-  (if (or (use-region-p) (not (called-interactively-p)))
-      ad-do-it
-    (kill-new (filter-buffer-substring (line-beginning-position)
-                                       (line-beginning-position 2) t)
-              nil '(yank-line))))
-
-(defun yank-line (string)
-  "Insert STRING above the current line."
-  (beginning-of-line)
-  (unless (= (elt string (1- (length string))) ?\n)
-    (save-excursion (insert "\n")))
-  (insert string))
-
 ; {{{ Language-based modes
 ; Haskell
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
@@ -252,15 +254,12 @@
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
-(setq auto-mode-alist
-    (append auto-mode-alist '(
-        ("\\.[hg]s$"  . haskell-mode)
-        ("\\.hic?$"   . haskell-mode)
-        ("\\.hsc$"    . haskell-mode)
-        ("\\.chs$"    . haskell-mode)
-        ("\\.l[hg]s$" . literate-haskell-mode)
-    ))
-)
+(setq auto-mode-alist (append auto-mode-alist '(
+    ("\\.[hg]s$"  . haskell-mode)
+    ("\\.hic?$"   . haskell-mode)
+    ("\\.hsc$"    . haskell-mode)
+    ("\\.chs$"    . haskell-mode)
+    ("\\.l[hg]s$" . literate-haskell-mode))))
 (autoload 'haskell-mode "haskell-mode" "Major mode for editing Haskell scripts." t)
 (autoload 'literate-haskell-mode "haskell-mode" "Major mode for editing literate Haskell scripts." t)
 
@@ -269,46 +268,104 @@
 (setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
 
 ; Python
-(autoload 'python-mode "python-mode.el" "Python mode." t)
-(setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
+;(autoload 'python-mode "python-mode.el" "Python mode." t)
+;(setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
 
 ; C/C++/Java
-(setq c-default-style '(
-    (java-mode . "java")
-    (awk-mode .  "awk")
-    (other .     "linux")
-))
+;(setq c-default-style '(
+;    (java-mode . "java")
+;    (awk-mode .  "awk")
+;    (other .     "linux")))
 
 ;(setq         c-indent-level 4)             ; TAB = 4 spaces
 ;(setq-default c-basic-offset 4)             ; Indentation unit
-(setq-default c-toggle-electric-flag nil)
+;(setq-default c-toggle-electric-flag nil)
 
-(add-hook 'c-mode-common-hook
-  (lambda ()
-    (font-lock-add-keywords nil
-      '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t))
-)))
+(add-hook 'c-mode-common-hook (lambda ()
+    (font-lock-add-keywords nil '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
 ; }}}
 
 ; {{{ Term mode
 ;(require 'cl)
 ;(require 'term)
+(add-to-list 'load-path "/home/chahine/.emacs.d/elpa/multi-term-0.8.8")
 (autoload 'multi-term "multi-term" nil t)
+(eval-after-load "multi-term" '(progn
+    (setq multi-term-program "/bin/bash")
+    (setq multi-term-scroll-to-bottom-on-output "this")))
 
-(setq multi-term-program "/bin/bash"
-      multi-term-scroll-to-bottom-on-output "this")
-
-(add-hook 'term-mode-hook
-  (lambda ()
-     (hl-line-mode nil)
-     (linum-mode nil)
-))
+;(add-hook 'term-mode-hook (lambda ()
+;    (hl-line-mode nil)
+;    (linum-mode nil)))
 ; }}}
 
 ; Windows movement
-(when (require-maybe 'windmove)
+(when (require 'windmove nil 'noerror)
     (windmove-default-keybindings 'meta))
 
+; Undo
+(add-to-list 'load-path "~/.emacs.d/elpa/undo-tree-0.3.3")
+(when (require 'undo-tree nil 'noerror)
+    (global-undo-tree-mode 1)
+    (global-set-key (kbd "C-z")   'undo-tree-undo)
+    (global-set-key (kbd "C-S-z") 'undo-tree-redo)
+    (global-set-key (kbd "M-z")   'undo-tree-visualize))
+
+; Modeline
+(set-face-background 'modeline "#000033")
+(set-face-foreground 'modeline "#aaaaff")
+(setq-default mode-line-format (list
+    ;; insert vs overwrite mode, input-method in a tooltip
+    " " '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
+            'face 'font-lock-preprocessor-face
+            'help-echo (concat "Buffer is in " (if overwrite-mode "overwrite" "insert") " mode")))
+
+    ;; was this buffer modified since the last save?
+    '(:eval (when (buffer-modified-p)
+              (concat ","  (propertize "Mod" 'face 'font-lock-warning-face))))
+
+    ;; is this buffer read-only?
+    '(:eval (when buffer-read-only
+              (concat ","  (propertize "RO" 'face 'font-lock-type-face))))
+
+    ; the buffer name; the file name as a tool tip
+    " | " (propertize "%b " 'face 'font-lock-keyword-face)
+
+    ; line and column
+    " | " (propertize "%04l" 'face 'font-lock-type-face)
+    "," (propertize "%03c" 'face 'font-lock-type-face)
+
+    ; relative position, size of file
+    " | " (propertize "%p" 'face 'font-lock-type-face)
+    "/" (propertize "%I" 'face 'font-lock-constant-face)
+
+    ; the current major mode for the buffer.
+    " | " (propertize "%m" 'face 'font-lock-string-face)
+    " /" minor-mode-alist
+
+    " | %Z %e %[ %-"))
+
+; {{{ Anything
+(add-to-list 'load-path "~/.emacs.d/elpa/anything-1.287")
+(add-to-list 'load-path "~/.emacs.d/elpa/anything-config-0.4.1")
+(when (require 'anything-config nil 'noerror)
+    (outline-minor-mode 1))
+
+; smex
+;(add-to-list 'load-path "~/.emacs.d/elpa/smex-1.1.2")
+;(autoload 'smex "smex" "Advanced M-x" t)
+;(eval-after-load "smex" '(progn
+;    (setq smex-save-file "~/.config/emacs/smex.save")
+;    (smex-initialize)))
+;
+;(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-x") 'anything-M-x)
+
+; Buffers navigation
+(global-set-key (kbd "C-<prior>")   'bs-cycle-previous)
+(global-set-key (kbd "C-<next>")    'bs-cycle-next)
+;(global-set-key (kbd "C-b")         'bs-show)
+(global-set-key (kbd "C-b")         'anything-buffers+)
 
 ; {{{ Keys
 ;(global-set-key (kbd "M-<right>")   'forward-sentence)
@@ -321,7 +378,8 @@
 (global-set-key (kbd "M-v")         'yank-pop)
 (global-set-key (kbd "C-c")         'kill-ring-save)
 
-(global-set-key (kbd "C-z")         'undo)
+
+
 (global-set-key (kbd "C-q")         'save-buffers-kill-terminal)
 ;(global-set-key (kbd "C-q")         'kill-current-buffer)
 (global-set-key (kbd "M-<f4>")      'kill-emacs)
@@ -338,22 +396,8 @@
 (global-set-key (kbd "C-a")         'mark-whole-buffer)
 (global-set-key (kbd "M-c")         'comment-or-uncomment-region)
 
-;(global-set-key (kbd "C-f")         'isearch-forward)
-;(global-set-key (kbd "C-S-f")       'isearch-backward)
-
-(global-set-key (kbd "C-f")         'occur)
-(global-set-key (kbd "M-f")         'multi-occur)
-(global-set-key (kbd "C-n")         'next-error)
-(global-set-key (kbd "C-p")         'previous-error)
-
 (global-set-key (kbd "C-r")         'query-replace)
 (global-set-key (kbd "M-r")         'replace-string)
-
-(global-set-key (kbd "C-t")         'find-file)
-(global-set-key (kbd "C-<prior>")   'bs-cycle-previous)
-(global-set-key (kbd "C-<next>")    'bs-cycle-next)
-(global-set-key (kbd "C-b")         'bs-show)
-;(global-set-key (kbd "C-w")         'ido-kill-buffer)
 
 ;(global-set-key (kbd "M-<tab>")     'other-window)
 ;(global-set-key (kbd "C-w")         'delete-other-windows)
@@ -370,36 +414,43 @@
 (define-key isearch-mode-map (kbd "C-S-s") 'write-file)
 ; }}}
 
-; {{{ ELPA
-;;; This was installed by package-install.el.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
-(when
-    (load
-     (expand-file-name "~/.emacs.d/elpa/package.el"))
-  (package-initialize))
-
-(setq package-archives '(
-    ("ELPA" . "http://tromey.com/elpa/") 
-    ("gnu" . "http://elpa.gnu.org/packages/")
-    ("marmalade" . "http://marmalade-repo.org/packages/")))
+; {{{ Wanderlust
+;(autoload 'wl                    "wl" "Wanderlust" t)
+;(autoload 'wl-other-frame        "wl" "Wanderlust on new frame." t)
+;(autoload 'wl-draft              "wl-draft" "Write draft with Wanderlust." t)
+;(autoload 'wl-user-agent-compose "wl-draft" nil t)
+;
+;(if (boundp 'mail-user-agent)
+;    (setq mail-user-agent 'wl-user-agent))
+;(if (fboundp 'define-mail-user-agent)
+;    (define-mail-user-agent
+;      'wl-user-agent
+;      'wl-user-agent-compose
+;      'wl-draft-send
+;      'wl-draft-kill
+;      'mail-send-hook))
+;
+;(setq wl-init-file "~/.config/emacs/wanderlust/wl")
 ; }}}
 
-; {{{ Wanderlust
-(autoload 'wl                    "wl" "Wanderlust" t)
-(autoload 'wl-other-frame        "wl" "Wanderlust on new frame." t)
-(autoload 'wl-draft              "wl-draft" "Write draft with Wanderlust." t)
-(autoload 'wl-user-agent-compose "wl-draft" nil t)
-
-(if (boundp 'mail-user-agent)
-    (setq mail-user-agent 'wl-user-agent))
-(if (fboundp 'define-mail-user-agent)
-    (define-mail-user-agent
-      'wl-user-agent
-      'wl-user-agent-compose
-      'wl-draft-send
-      'wl-draft-kill
-      'mail-send-hook))
-
-(setq wl-init-file      "~/.config/emacs/wanderlust/wl")
+; {{{ ERC
+;(autoload 'erc "erc" "IRC client" t)
+;(eval-after-load "erc" '(progn
+;    (require 'erc-match)
+;
+;    (erc-autojoin-mode t)
+;    (setq erc-autojoin-channels-alist '((".*\\.freenode.net" "#emacs" "#haskell" "#haskell-fr")))
+;
+;    (setq erc-server         "irc.freenode.net")
+;    (setq erc-port           6667)
+;    (setq erc-nick           "k0ral")
+;    (setq erc-user-full-name "k0ral")
+;    ;(setq erc-email-userid   "userid"    ; for when ident is not activated
+;    (setq erc-prompt-for-password t)
+;
+;    (setq erc-keywords '("hbro" "koral" "k0ral"))
+;
+;    (erc-track-mode t)
+;    (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE" "324" "329" "332" "333" "353" "477"))
+;    (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))))
 ; }}}
