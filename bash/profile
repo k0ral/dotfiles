@@ -18,7 +18,7 @@ export LC_TYPE=en_US.utf8
 # Default applications
 export BROWSER="/usr/bin/luakit"
 export CC="/usr/bin/colorgcc"
-export EDITOR="/usr/bin/emacsclient -c -a ''"
+export EDITOR='/usr/bin/emacsclient -t -a ""'
 export PAGER="/usr/bin/less"
 export READNULLCMD=${PAGER:-/usr/bin/pager}
 #export TERM="rxvt-unicode"

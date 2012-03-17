@@ -100,7 +100,7 @@ alias gcc="colorgcc"
 #alias grep='grep --color=auto'
 #alias make="colormake"
 
-alias emacs='emacsclient -c -n -a ""'
+#alias emacs='emacsclient -c -n -a ""'
 alias gdb="cgdb -q"
 alias locate="locate -e"
 alias mplayer="mplayer -msgcolor"
@@ -117,8 +117,8 @@ alias top="htop"
 alias vim="emacs"
 
 alias my_indent='indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -ncs -di4 -fca -hnl -i4 -ip4 -l120 -lp -nlps -npcs -nprs -npsl -saf -sai -saw -sbi4 -sc -nsob -ss -ts4 -nut '
-alias e='emacs'
-alias E='SUDO_EDITOR="emacs" sudoedit' 
+alias e='emacsclient -t -a ""'
+alias E='SUDO_EDITOR="emacsclient -t" sudoedit' 
 
 alias m='mutt'
 alias o='xdg-open'
@@ -151,6 +151,7 @@ alias rtfm='man'
 if [ $UID -ne 0 ]; then
     alias reboot='sudo reboot'
     alias halt='sudo halt'
+    alias up='sudo pacman-color -Syu && sudo diffpac'
     alias upgrade='sudo pacman-color -Syu && sudo diffpac'
     alias remove='sudo pacman-color -Rs'
     alias netcfg='sudo netcfg2'
@@ -187,3 +188,5 @@ proxy-off() {
     echo -e "\nProxy environment variable removed."
 } 
 # }}}
+
+stty -ixon
