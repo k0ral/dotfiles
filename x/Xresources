@@ -1,7 +1,33 @@
+! {{{ urxvt
+URxvt.depth: 32
+URxvt.background: Black
+URxvt.foreground: #dddddd
+
+URxvt*saveLines: 12000
+URxvt.cursorBlink: true
+
+URxvt.transparent: true
+URxvt.shading: 50
+URxvt.fading: 50%
+URxvt.tintColor: #0000ff
+URxvt.scrollBar: off
+
+URxvt.font: xft:Inconsolata:size=10:antialias=true:hinting=true
+URxvt.boldFont: xft:Inconsolata:bold:size=10:antialias=true:hinting=true
+URxvt.italicFont: xft:Inconsolata:italic:size=10:antialias=true:autohint=true
+URxvt.boldItalicFont: xft:Inconsolata:bold:italic:size=10:antialias=true:autohint=true
+URxvt.letterSpace: -1
+URxvt.lineSpace: 0
+URxvt.meta8: false
+
+URxvt.perl-ext:
+URxvt.perl-ext-common:
+! }}}
+
 ! [Xcursor]
 !Xcursor.size: 16
 !Xcursor.theme: blueillusion
-Xcursor.theme: chromeglass
+!Xcursor.theme: chromeglass
 !Xcursor.theme: Pulse-Glass
 
 
