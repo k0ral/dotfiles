@@ -1,7 +1,7 @@
 ! {{{ urxvt
 URxvt.depth: 32
 URxvt.background: Black
-URxvt.foreground: #dddddd
+URxvt.foreground: #555555
 
 URxvt*saveLines: 12000
 URxvt.cursorBlink: true
@@ -12,10 +12,10 @@ URxvt.fading: 50%
 URxvt.tintColor: #0000ff
 URxvt.scrollBar: off
 
-URxvt.font: xft:Inconsolata:size=10:antialias=true:hinting=true
-URxvt.boldFont: xft:Inconsolata:bold:size=10:antialias=true:hinting=true
-URxvt.italicFont: xft:Inconsolata:italic:size=10:antialias=true:autohint=true
-URxvt.boldItalicFont: xft:Inconsolata:bold:italic:size=10:antialias=true:autohint=true
+URxvt.font:           xft:Consolas:style=Regular
+URxvt.boldFont:       xft:Consolas:style=Bold
+URxvt.italicFont:     xft:Consolas:style=Italic
+URxvt.boldItalicFont: xft:Consolas:style=Bold Italic
 URxvt.letterSpace: -1
 URxvt.lineSpace: 0
 URxvt.meta8: false
@@ -48,22 +48,3 @@ URxvt.perl-ext-common:
 *color13: magenta
 *color14: cyan
 *color15: white
-! colors (low-contrast by AddiKT1ve)
-!*foreground: #ababab
-!*background: #292929
-!*color0: #1b1b1b
-!*color1: #ff6b6b
-!*color2: #a3d46e
-!*color3: #eaca75
-!*color4: #435e87
-!*color5: #cf8243
-!*color6: #789ec6
-!*color7: #ababab
-!*color8: #555753
-!*color9: #ff8d8d
-!*color10: #c8e7a8
-!*color11: #ffd155
-!*color12: #587aa4
-!*color13: #f6a24f
-!*color14: #46a4ff
-!*color15: #ababab
