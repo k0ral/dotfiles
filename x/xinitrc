@@ -26,7 +26,7 @@ urxvtd -q -f -o
 #cairo-compmgr &
 wmname LG3D &
 #unclutter &
-gtk-redshift &
+# gtk-redshift &
 #wicd-gtk &
 trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x0077 --height 20 --widthtype request &
 ~/prog/scripts/dzen2/dzen.sh &
