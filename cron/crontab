@@ -1,0 +1,20 @@
+*/7  * * * * /usr/bin/offlineimap
+*/11 * * * * cd ${HOME}/images/wallpapers && /usr/bin/hsetroot -fill "`ls * | sort -R | head -1`"
+@weekly      /bin/chmod 600 ${HOME}/.config/msmtp/*
+@weekly      /bin/chmod -R go-rwx ${HOME}/mail
+@weekly      /bin/chmod -R go-rwx ${HOME}/papers
+@weekly      /bin/chmod -R go-rwx ${HOME}/server
+@weekly      cd ${HOME}/server/config; git pull; cd gitosis; git pull
+@weekly      /bin/mkdir -p ${HOME}/server/backup/; rsync -rvzh --chmod=go-rwx --del --force homeserver:/home/koral/backup/ ${HOME}/server/backup/
+@weekly      /bin/mkdir -p ${HOME}/server/script/; rsync -rvzh --chmod=go-rwx --del --force homeserver:/home/koral/script/ ${HOME}/server/script/
+@weekly      cd ${HOME}/.config; git push; cd ${HOME}/prog/scripts; git push
+@weekly      cd ${HOME}/prog/aur; git push
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/mail    homeserver:/home/koral/laedra/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/prog    homeserver:/home/koral/laedra/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/.config homeserver:/home/koral/laedra/
+@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/doc     homeserver:/home/koral/laedra/
+@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/images  homeserver:/home/koral/laedra/
+@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/papers  homeserver:/home/koral/laedra/
+@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/reading homeserver:/home/koral/laedra/
+@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/sound   homeserver:/home/koral/laedra/
+@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/studies homeserver:/home/koral/laedra/

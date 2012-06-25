@@ -1,4 +1,0 @@
-DISPLAY=:0.0
-@erroronlymail 5 /usr/bin/offlineimap
-@erroronlymail 10 cd ${HOME}/images/wallpapers && /usr/bin/hsetroot -fill "`ls * | sort -R | head -1`"
-@erroronlymail 2d ${HOME}/prog/scripts/cron/weekly.sh
