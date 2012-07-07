@@ -1,0 +1,58 @@
+# Key bindings
+macro index,pager <Tab> "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
+bind browser <Tab> exit
+
+
+#       alias       alias menu
+#       attach      attachment menu
+#       browser     directory browser
+macro   browser q       '<exit><quit>'
+#       compose     compose menu
+#       index       message index
+bind    index   s           save-message
+bind    index   \t          next-unread
+bind    index   b           bounce-message
+macro   index   q           '<change-folder>?<toggle-mailboxes>'
+#       pgp         pgp menu
+#       postpone    postponed message recall menu
+#       generic     generic keymap for all of the above
+bind generic    \eOH        first-entry
+bind generic    \eOF        last-entry
+bind generic    <up>        previous-entry
+bind generic    <down>      next-entry
+bind generic    <pageup>    previous-page
+bind generic    <pagedown>  next-page
+bind generic    {           top-page
+bind generic    }           bottom-page
+#macro   generic \cb     <pipe-entry>'urlview'<enter> 'Follow links with urlview'
+
+#       editor      line editor
+#       pager       text viewer
+bind pager      e           exit
+bind pager      s           save-message
+bind pager      \t          next-unread
+bind pager      b           bounce-message
+bind pager      \eOH        top
+bind pager      \eOF        bottom
+bind pager      n           search-next
+bind pager      <up>        previous-line
+bind pager      <down>      next-line
+bind pager      <left>      previous-entry
+bind pager      <right>     next-entry
+macro   pager \cb       <pipe-entry>'urlview'<enter> 'Follow links with urlview'
+
+
+#   Examples
+#macro  index S "<save-message>+spam<Enter>"
+#macro  pager S "<save-message>+spam<Enter>"
+#macro  index \#	"<search>bug<Enter>"	# search for bugs
+#macro  index "\""	"<enter-command> set realname=\"real hairy macro\" ?realname<Enter>" # and a comment to boot!
+#macro  index f1	"<enter-command>woohoo!"
+#bind   pager G bottom # just like vi and less
+#macro  pager   \Ck     "<pipe-message> pgp -kaf<Enter>"    # a comment is valid here
+#macro  pager X "<pipe-message> morepgp<Enter>"	            # pipe PGP message to a script
+#bind editor \cy eol	# make ^Y jump to the end of the line
+
+#   Launch fetchmail
+#macro index G "!fetchmail -m 'procmail -d %T'\r"
+#macro pager G "!fetchmail -m 'procmail -d %T'\r"

@@ -7,12 +7,12 @@ unignore    Cc:
 unignore    Bcc:
 unignore    Subject:
 unignore    Date:
+unignore    Organization:
+unignore    Mail-followup-to:
 #unignore    X-Mailer:
 #unignore    X-Url:
 #unignore    X-Mailer:
-unignore    Organization:
 #unignore    User-Agent:
-unignore    Mail-followup-to:
 #unignore    Message-ID:
 
 unhdr_order *

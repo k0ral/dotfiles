@@ -18,16 +18,17 @@ set sendmail="/usr/bin/msmtp --read-envelope-from"
 source ~/.config/mutt/abook
 source ~/.config/mutt/alternates
 #source ~/.config/mutt/aliases
+source ~/.config/mutt/bindings
 source ~/.config/mutt/colors
 source ~/.config/mutt/headers
 source ~/.config/mutt/hooks
 source ~/.config/mutt/mailboxes
 source ~/.config/mutt/mailing_lists
+source ~/.config/mutt/pgp
 source ~/.config/mutt/sidebar
 # }}}
 
 # Charset and locale
-set charset="utf-8"
 set send_charset="utf-8"
 set locale="fr_FR.UTF-8"            # locale to use for printing time
 
@@ -35,17 +36,16 @@ set locale="fr_FR.UTF-8"            # locale to use for printing time
 unset allow_8bit                    # never do Q-P encoding on legal 8-bit chars
 unset arrow_cursor
 set autoedit                        # go to the editor right away when composing
-set beep=no
-unset confirmappend                 # don't ask me if i want to append to mailboxes
+unset beep
+#unset confirmappend                 # don't ask me if i want to append to mailboxes
 set copy=yes                        # always save a copy of outgoing messages
 set delete=yes                      # purge deleted messages without asking
-set edit_headers                    # edit headers when writing a new mail
+set edit_headers
 unset fcc_attach                    # keep attachments in copies of sent messages?
-set forward_quote                   # quote the header and body of forward msgs
-set help                            # show the help lines
+set forward_quote
+set help
 set hidden_host                     # Hide host details
 set include                         # always include messages when replying
-#unset markers                      # no markers for wrapped lines
 set move=yes                        # don't ask about moving messages, just do it
 #set pager=less                     # some people prefer an external pager
 set pager_context=4                 # no. of lines of context to give when scrolling
@@ -78,93 +78,16 @@ set sort_browser=reverse-date   # how to sort files in the dir browser
 folder-hook "outbox" set sort=date
 
 # Format {{{
+set attach_format="%4n %u%D%I %t %T %8s  %.40d%> %.7m/%.10M %10C"
 set attribution="*** %n <%a> [%{%Y-%m-%d %H:%M:%S %Z}] ***"
-set compose_format="New mail | Size: %l | Host: %h | Atts: %a %>-"
-set date_format="!%H:%M %a %d %b     "
-#set date_format="%A %d %b %Y à %H:%M:%S (%Z)"
-set index_format="%4C  %Z  %{%m/%d/%g %H:%M}  %-15.15n  %s"
+set compose_format="New mail | Size: %l | Host: %h | Attachments: %a %>-"
+set index_format="%4C  %Z  %[%m/%d/%g %H:%M]  %-15.15n  %s"
 set status_format=" Host: %h | Box: %f %r | Msgs: %?M?%M/?%m %?n?| New: %n? %?d?| Del: %d? %?F?| Flag: %F? %?t?| Tag: %t? %?p?| Post: %p? %?b?| Inc: %b?| Size: %l | Sort: %s/%S %> %P "
 #set pager_format="%-10.10i %[!%a %b %d %R]"
 set pager_format="-%S- %-20.20f %s"
-set folder_format="%N %f %>  %15d %s"
-set forward_format="[Fwd %a: %s]"
+set folder_format="%N %t %f %> %15d"
 # }}}
 
-# {{{ GPG
-set pgp_autosign=yes
-set pgp_good_sign="^gpg: good signature from"
-set pgp_replyencrypt=yes
-set pgp_timeout=600
-
-set pgp_decode_command="gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
-set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
-set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
-set pgp_sign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
-set pgp_clearsign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
-set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust --encrypt-to 0x2EA32E78 -- -r %r -- %f"
-set pgp_encrypt_sign_command="pgpewrap gpg --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust --encrypt-to 0x2EA32E78 -- -r %r -- %f"
-set pgp_import_command="gpg --no-verbose --import -v %f"
-set pgp_export_command="gpg --no-verbose --export --armor %r"
-set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
-set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r"
-set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
-# }}}
-
-# {{{ Key bindings
-#       alias       alias menu
-#       attach      attachment menu
-#       browser     directory browser
-macro   browser q       '<exit><quit>'
-#       compose     compose menu
-#       index       message index
-bind    index   s           save-message
-bind    index   \t          next-unread
-bind    index   b           bounce-message
-macro   index   q           '<change-folder>?<toggle-mailboxes>'
-#       pgp         pgp menu
-#       postpone    postponed message recall menu
-#       generic     generic keymap for all of the above
-bind generic    \eOH        first-entry
-bind generic    \eOF        last-entry
-bind generic    <up>        previous-entry
-bind generic    <down>      next-entry
-bind generic    <pageup>    previous-page
-bind generic    <pagedown>  next-page
-bind generic    {           top-page
-bind generic    }           bottom-page
-#macro   generic \cb     <pipe-entry>'urlview'<enter> 'Follow links with urlview'
-
-#       editor      line editor
-#       pager       text viewer
-bind pager      e           exit
-bind pager      s           save-message
-bind pager      \t          next-unread
-bind pager      b           bounce-message
-bind pager      \eOH        top
-bind pager      \eOF        bottom
-bind pager      n           search-next
-bind pager      <up>        previous-line
-bind pager      <down>      next-line
-bind pager      <left>      previous-entry
-bind pager      <right>     next-entry
-macro   pager \cb       <pipe-entry>'urlview'<enter> 'Follow links with urlview'
-
-
-#   Examples
-#macro  index S "<save-message>+spam<Enter>"
-#macro  pager S "<save-message>+spam<Enter>"
-#macro  index \#	"<search>bug<Enter>"	# search for bugs
-#macro  index "\""	"<enter-command> set realname=\"real hairy macro\" ?realname<Enter>" # and a comment to boot!
-#macro  index f1	"<enter-command>woohoo!"
-#bind   pager G bottom # just like vi and less
-#macro  pager   \Ck     "<pipe-message> pgp -kaf<Enter>"    # a comment is valid here
-#macro  pager X "<pipe-message> morepgp<Enter>"	            # pipe PGP message to a script
-#bind editor \cy eol	# make ^Y jump to the end of the line
-
-#   Launch fetchmail
-#macro index G "!fetchmail -m 'procmail -d %T'\r"
-#macro pager G "!fetchmail -m 'procmail -d %T'\r"
-# }}}
 
 #   Mailboxes
 mailboxes =outbox

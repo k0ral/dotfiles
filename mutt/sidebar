@@ -2,18 +2,15 @@
 set sidebar_width=24
 set sidebar_visible=yes
 set sidebar_delim=' | '
-set sidebar_sort=yes
+#set sidebar_sort=yes
 
 
 #   Color of folders with new mail
 color sidebar_new yellow default
 
-bind index \C<up>       sidebar-prev
-bind index \C<down>     sidebar-next
-bind index \C<return>   sidebar-open
-bind pager \C<up>       sidebar-prev
-bind pager \C<down>     sidebar-next
-bind pager \C<return>   sidebar-open
+bind index,pager z sidebar-prev
+bind index,pager s sidebar-next
+bind index,pager H sidebar-open
 
 # I don't need these.  just for documentation purposes.  See below.
 # sidebar-scroll-up
