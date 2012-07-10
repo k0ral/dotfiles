@@ -2,7 +2,7 @@
 set folder=~/mail                   # Mailboxes folder (must be set _before_ any other path)
 set alias_file=~/.config/mutt/aliases
 set header_cache=~/mutt/.hcache
-set mailcap_path="~/.mutt/mailcap:/usr/local/share/mailcap"
+#set mailcap_path="~/.mutt/mailcap:/usr/local/share/mailcap"
 #set mbox="~/Maildir/Inbox/"
 #set mbox_type=Maildir
 set postponed=+postponed
@@ -13,6 +13,9 @@ set spoolfile=+Inbox/               # Location for new mails
 
 # Commands
 set sendmail="/usr/bin/msmtp --read-envelope-from"
+
+auto_view text/html
+alternative_order text/plain text/html
 
 # {{{ Sources
 source ~/.config/mutt/abook
@@ -69,7 +72,6 @@ set print_command="/usr/bin/muttprint %s -p {PrinterName}"
 # HTML mails
 set implicit_autoview   # pager shows parts having a mailcap viewer
 auto_view text/html  application/x-pgp-message
-set mailcap_path=""
 
 # Sorting
 set sort=threads                # primary sorting method

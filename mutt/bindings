@@ -1,6 +1,6 @@
 # Key bindings
-macro index,pager <Tab> "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
-bind browser <Tab> exit
+macro index,pager y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
+bind browser y exit
 
 
 #       alias       alias menu

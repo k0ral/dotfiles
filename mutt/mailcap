@@ -1,2 +1,8 @@
-#text/html; w3m -dump %s; copiousoutput; nametemplate=%s.html
-text/html; lynx -dump -force_html  %s;  needsterminal; copiousoutput
+#text/html; pandoc -f html -t markdown; copiousoutput
+#text/html; lynx -stdin -dump -force_html -assume_charset=%{charset} -display_charset=UTF-8; copiousoutput
+#text/html; w3m -dump -T text/html -cols 70 -O utf-8 -I %{charset}; copiousoutput
+#text/html; html2text -ascii -width 70; copiousoutput
+text/html; elinks -dump -dump-color-mode 1 -dump-charset utf-8 -default-mime-type text/html %s; copiousoutput;
+
+video/*;        mplayer %s > /dev/null
+image/*;        sxiv %s > /dev/null
