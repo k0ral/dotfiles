@@ -34,7 +34,7 @@ case $(id -u) in
         ;;
 esac
 
-PS1="\[$BlackBG$STARTCOLOR\]\u@\[$LightBlue\]\h \[$NC$BlackBG\]| \[$Purple\]\w \[$NC$BlackBG\]| \$(/bin/ls --group-directories-first --color=always -m | head -1) \r\n\[$Cyan\]> \[$NC\]"
+PS1="\[$STARTCOLOR\]\u@\[$LightBlue\]\h\[$NC\]:\[$Purple\]\w \[$NC\]\r\n\[$Cyan\]> \[$NC\]"
 PS2="\[$Cyan\]> \[$NC\]"
 # }}}
 
@@ -99,7 +99,6 @@ alias reco='sudo dhclient eth0'
 alias volume='alsamixer -c 0'
 alias dlpage='wget -nd -pHEKk'
 alias wifiselect='sudo wifi-select wlan0'
-alias _="sudo"
 
 alias http-on="sudo /etc/rc.d/lighttpd start"
 alias http-off="sudo /etc/rc.d/lighttpd stop"
@@ -148,7 +147,7 @@ lsmount()  { (echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | colum
 sleep-on() { sudo rc.d stop fcron; }
 ls-empty() { find . -type d -empty -print0 | xargs --null ls; }
 rm-empty() { find . -type d -empty -print0 | xargs --null rmdir; }
-u()        { wget $(perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' `xclip -o`); }
+u()        { wget -c $(perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' `xclip -o`); }
 
 
 proxy-on() {

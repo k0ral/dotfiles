@@ -46,8 +46,4 @@ export QT_XFT=true      #   For old qt applicatios
 # LS colors
 eval `dircolors -b`
 
-# Prompts
-#export PROMPT="%{$fg_bold[cyan]%}%n %{$fg[red]%}%#>%{$reset_color%}"
-#export RPROMPT="%{$fg_bold[white]%}[%{$fg[blue]%}%m%{$reset_color%}:%{$fg_bold[yellow]%}%~%{$fg[white]%}] %{$fg[magenta]%}%T%{$reset_color%}"
-
 source ~/.bashrc
