@@ -1,9 +1,9 @@
 ; {{{ ELPA
 (package-initialize)
 
-;(add-to-list 'package-archives '("ELPA"      . "http://tromey.com/elpa/"))
-;(add-to-list 'package-archives '("gnu"       . "http://elpa.gnu.org/packages/"))
-;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("ELPA"      . "http://tromey.com/elpa/"))
+(add-to-list 'package-archives '("gnu"       . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 ; }}}
 
 ; {{{ Folding
@@ -24,8 +24,8 @@
 (global-set-key (kbd "ESC <right>")  'end-of-line)
 (global-set-key (kbd "ESC <up>")     'beginning-of-buffer)
 (global-set-key (kbd "ESC <down>")   'end-of-buffer)
-(global-set-key (kbd "C-g")          'ace-jump-mode)
-(global-set-key (kbd "M-g")          'goto-line)
+(global-set-key (kbd "C-g")          'goto-line)
+(global-set-key (kbd "M-g")          'ace-jump-mode)
 
 (setq scroll-step 1)
 (setq scroll-margin 4)
@@ -38,7 +38,7 @@
 (global-hl-line-mode 1)
 
 (set-face-background 'hl-line "#001")
-(set-face-background 'region "#100")
+(set-face-background 'region  "#100")
 
 (setq cua-enable-cua-keys nil)
 (cua-mode t)
@@ -57,9 +57,9 @@
 
 ; {{{ Undo
 (global-undo-tree-mode 1)
-(global-set-key (kbd "C-z")   'undo-tree-undo)
-(global-set-key (kbd "C-S-z") 'undo-tree-redo)
-(global-set-key (kbd "M-z")   'undo-tree-visualize)
+(global-set-key (kbd "C-z") 'undo-tree-undo)
+(global-set-key (kbd "C-y") 'undo-tree-redo)
+(global-set-key (kbd "M-z") 'undo-tree-visualize)
 ; }}}
 
 ; {{{ Tabs & indentation
@@ -112,8 +112,7 @@
 
 (global-set-key (kbd "C-<prior>")     'bs-cycle-previous)
 (global-set-key (kbd "C-<next>")      'bs-cycle-next)
-;(global-set-key (kbd "C-b")          'bsn-show)
-(global-set-key (kbd "C-b")           'anything-buffers+)
+(global-set-key (kbd "C-b")           'ido-switch-buffer)
 (global-set-key (kbd "C-d")           'split-window)
 ;(global-set-key (kbd "M-<tab>")       'other-window)
 ;(global-set-key (kbd "C-w")         'delete-other-windows)
@@ -125,7 +124,6 @@
 (global-set-key (kbd "C-q")         'server-edit)
 (global-set-key (kbd "ESC <f4>")    'kill-emacs)
 (global-set-key (kbd "C-s")         'save-buffer)
-(global-set-key (kbd "C-S-s")       'write-file)
 (global-set-key (kbd "M-s")         'ido-write-file)
 ;(global-set-key (kbd "<escape>")    'keyboard-quit)
 ; }}}
@@ -232,8 +230,10 @@
 (add-hook 'c-mode-hook                'c-turn-on-eldoc-mode)
 ; }}}
 
-; Syntax highlight
+; {{{ Syntax highlight
 (setq font-lock-maximum-decoration t)
+(global-set-key (kbd "M-h") 'font-lock-mode)
+; }}}
 
 ; Completion
 ;(setq completion-cycle-threshold t)
@@ -241,14 +241,8 @@
 ;(setq read-file-name-completion-ignore-case t)
 
 ; {{{ Backup files
-;(setq make-backup-files t)
 (setq backup-directory-alist         `((".*" . "~/.cache/emacs")))
 (setq auto-save-file-name-transforms `((".*" "~/.cache/emacs" t)))
-;(setq backup-by-copying t)
-(setq delete-old-versions t)
-(setq kept-new-versions 6)
-(setq kept-old-versions 2)
-(setq version-control t)
 ; }}}
 
 ; Diff
@@ -489,4 +483,8 @@
 
 ;(set-frame-parameter (selected-frame) 'alpha '(85 50))
 ;(add-to-list 'default-frame-alist '(alpha 85 50))
+; }}}
+
+; {{{ Hooks
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 ; }}}
