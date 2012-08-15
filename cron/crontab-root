@@ -1,3 +1,4 @@
+@daily       /usr/bin/pacman -Sy
 @weekly      /bin/chown root:root /etc/passwd /etc/shadow /etc/group /etc/gshadow
 @weekly      /bin/chmod 644 /etc/passwd /etc/group
 @weekly      /bin/chmod 400 /etc/shadow /etc/gshadow
