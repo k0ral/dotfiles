@@ -7,16 +7,25 @@
 ; }}}
 
 ; {{{ Folding
-;; (add-to-list 'load-path "~/.emacs.d/custom")
-;; (load "folding" 'nomessage 'noerror)
-;; (folding-mode-add-find-file-hook)
+(add-to-list 'load-path "~/.emacs.d/custom")
+(autoload 'folding-mode          "folding" "Folding mode" t)
+(autoload 'turn-off-folding-mode "folding" "Folding mode" t)
+(autoload 'turn-on-folding-mode  "folding" "Folding mode" t)
 
-;; (folding-add-to-marks-list 'emacs-lisp-mode "; {{{"  "; }}}"  nil t)
-;; (add-hook 'emacs-lisp-mode-hook 'folding-mode)
-;; (folding-add-to-marks-list 'haskell-mode    "-- {{{" "-- }}}" nil t)
-;; (add-hook 'haskell-mode-hook    'folding-mode)
+(eval-after-load "folding" '(progn
+    (folding-mode-add-find-file-hook)
+    (folding-add-to-marks-list 'emacs-lisp-mode   "; {{{"  "; }}}"  nil t)
+    (folding-add-to-marks-list 'lisp-mode         "; {{{"  "; }}}"  nil t)
+    (folding-add-to-marks-list 'haskell-mode      "-- {{{" "-- }}}" nil t)
+    (folding-add-to-marks-list 'shell-script-mode "# {{{"  "# }}}"  nil t)
+    (global-set-key (kbd "M-RET") 'folding-toggle-show-hide)
+    (define-key folding-mode-map (kbd "C-f") nil)
+    (define-key folding-mode-map (kbd "C-b") nil)))
 
-;;(global-set-key (kbd "M-RET") 'folding-toggle-show-hide)
+(add-hook 'emacs-lisp-mode-hook   'folding-mode)
+(add-hook 'haskell-mode-hook      'folding-mode)
+(add-hook 'lisp-mode-hook         'folding-mode)
+(add-hook 'shell-script-mode-hook 'folding-mode)
 ; }}}
 
 ; {{{ Movement
@@ -49,10 +58,11 @@
 ; }}}
 
 ; {{{ Kill ring & clipboard
-(global-set-key (kbd "C-v")              'whole-line-or-region-yank)
-(global-set-key (kbd "M-v")              'browse-kill-ring)
-(global-set-key (kbd "C-c")              'whole-line-or-region-kill-ring-save)
-(global-set-key (kbd "ESC <deletechar>") 'whole-line-or-region-kill-region)
+(global-set-key (kbd "C-v")                'whole-line-or-region-yank)
+(global-set-key (kbd "M-v")                'browse-kill-ring)
+(global-set-key (kbd "C-c")                'whole-line-or-region-kill-ring-save)
+(global-set-key (kbd "ESC <deletechar>")   'whole-line-or-region-kill-region)
+(global-set-key (kbd "ESC <C-delete>")     'kill-line)
 ; }}}
 
 ; {{{ Undo
@@ -221,6 +231,7 @@
 (menu-bar-mode -1)
 (savehist-mode 1)
 (size-indication-mode t)
+;(tabbar-mode 1)
 (which-function-mode 1)
 
 ; {{{ Eldoc
@@ -246,6 +257,7 @@
 ; }}}
 
 ; Diff
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 ;(global-highlight-changes-mode t)
 ;(setq highlight-changes-visibility-initial-state nil)
 
@@ -261,7 +273,9 @@
 ; linum
 ;(global-linum-mode 1)
 (setq linum-format "%d ")
-(global-set-key (kbd "M-l")         'linum-mode)
+(global-set-key (kbd "C-l")         'linum-mode)
+
+;(require 'tabbar)
 
 ; uniquify
 (when (require 'uniquify nil 'noerror)
@@ -435,28 +449,6 @@
 ;      'mail-send-hook))
 ;
 ;(setq wl-init-file "~/.config/emacs/wanderlust/wl")
-; }}}
-
-; {{{ ERC
-;(autoload 'erc "erc" "IRC client" t)
-;(eval-after-load "erc" '(progn
-;    (require 'erc-match)
-;
-;    (erc-autojoin-mode t)
-;    (setq erc-autojoin-channels-alist '((".*\\.freenode.net" "#emacs" "#haskell" "#haskell-fr")))
-;
-;    (setq erc-server         "irc.freenode.net")
-;    (setq erc-port           6667)
-;    (setq erc-nick           "k0ral")
-;    (setq erc-user-full-name "k0ral")
-;    ;(setq erc-email-userid   "userid"    ; for when ident is not activated
-;    (setq erc-prompt-for-password t)
-;
-;    (setq erc-keywords '("hbro" "koral" "k0ral"))
-;
-;    (erc-track-mode t)
-;    (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE" "324" "329" "332" "333" "353" "477"))
-;    (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))))
 ; }}}
 
 ; {{{ GUI
