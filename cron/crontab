@@ -1,5 +1,7 @@
+DISPLAY=:0
+
 */7  * * * * /usr/bin/offlineimap
-*/11 * * * * cd ${HOME}/images/wallpapers && /usr/bin/hsetroot -fill "`ls * | sort -R | head -1`"
+*/11 * * * * cd ${HOME}/images/wallpapers && /usr/bin/hsetroot -fill "`/bin/ls | /usr/bin/shuf -n 1`"
 @weekly      /bin/mv -u ${HOME}/Desktop/* ${HOME} && rm -r ${HOME}/Desktop
 @weekly      /bin/chmod 600 ${HOME}/.config/msmtp/*
 @weekly      /bin/chmod -R go-rwx ${HOME}/mail
