@@ -25,8 +25,8 @@ import XMonad.Prompt
 --import XMonad.Prompt.RunOrRaise
 --import XMonad.Prompt.Shell
 import qualified XMonad.StackSet as W
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.Scratchpad
 import XMonad.Util.EZConfig(additionalKeys)
 
 import qualified Data.Map as M
@@ -36,18 +36,19 @@ import System.Exit
 import System.IO
 -- }}}
 
-myTerminal           = "urxvtc"
-myBrowser            = "luakit"
-myWorkspaces         = ["1","web"] ++ map show [3..9]
+myTerminal           = "urxvtc -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'"
+myBrowser            = "hbro"
+myWorkspaces         = map show [1..7] ++ ["8:web", "9:music"]
 
 myBorderWidth        = 1
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
--- Whether focus follows the mouse pointer.
-myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 
+-- Scratchpad
+scratchpads = 
+    [NS "urxvt" "urxvt -name scratchpad" (title =? "scratchpad") defaultFloating]
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -77,11 +78,13 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     -- Spawn programs
     ((modm,                 xK_Return),     spawn $ XMonad.terminal conf),
     ((modm,                 xK_t),          spawn myBrowser),
-    ((modm,                 xK_BackSpace),  scratchpadSpawnActionTerminal myTerminal),
+    --((modm,                 xK_BackSpace),  scratchpadSpawnActionCustom (myTerminal ++ " -t scratchpad")),
+    ((modm,                 xK_BackSpace),  namedScratchpadAction scratchpads "lxterminal"),
     --((modm,                 xK_r),          spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     ((modm,                 xK_r),          spawn "gmrun"),
     --((modm,                 xK_r),          shellPrompt mySP),
     --((modm .|. shiftMask,   xK_r ),         runOrRaisePrompt mySP),
+    ((modm,                 xK_l),          spawn "slock"),
     ((modm,                 xK_F4),         kill),
 
     -- Layouts
@@ -101,7 +104,7 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     --((modm,                 xK_Return),     windows W.swapMaster),
     --((modm .|. shiftMask,   xK_j     ),     windows W.swapDown  ),
     --((modm .|. shiftMask,   xK_k     ),     windows W.swapUp    ),
-    ((modm,     xK_m), dwmpromote),
+    ((modm,                 xK_m),          dwmpromote),
 
     -- Resize
     ((modm,                 xK_Down),       sendMessage Shrink),
@@ -163,7 +166,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ [
 webLayout     = avoidStruts . maximize . smartBorders . windowNavigation $ myTabbed ||| Grid ||| stack ||| tiled ||| Mirror tiled |||              Full ||| Accordion
 defaultLayout = avoidStruts . maximize . smartBorders . windowNavigation $              Grid ||| stack ||| tiled ||| Mirror tiled ||| myTabbed ||| Full ||| Accordion
 
-myLayout = onWorkspace "web" webLayout defaultLayout
+myLayout = onWorkspace "8:web" webLayout defaultLayout
   
 tiled    = Tall nmaster delta ratio
   where
@@ -183,10 +186,11 @@ tabTheme = Theme {
     activeTextColor     = "#ffffff",
     inactiveTextColor   = "#aaaaaa",
     urgentTextColor     = "#ffff00",
-    fontName            = "xft:Inconsolata:pixelsize=14",
+    fontName            = "xft:Consolas:size=10",
     decoWidth           = 200,
-    decoHeight          = 20
-    }
+    decoHeight          = 20,
+    windowTitleAddons   = [],
+    windowTitleIcons    = []}
 -- }}}
 
 -- {{{ Window rules
@@ -211,20 +215,21 @@ ignoredWindows = composeAll [
 moveToWorkspace = composeAll [
     resource =? "hbro"  --> doF (W.shift "web") ]
 
-manageScratchPad :: ManageHook
-manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
+manageScratchpad :: ManageHook
+manageScratchpad = namedScratchpadManageHook scratchpads
+{-manageScratchpad = scratchpadManageHook (W.RationalRect l t w h)
   where
     h = 0.4         -- terminal height
     w = 0.95        -- terminal width
     t = 1 - h       -- distance from top edge
     l = (1 - w)/2   -- distance from left edge
-
+-}
 onNewWindow = 
     manageDocks <+>
     floatingWindows <+>
     ignoredWindows <+>
     moveToWorkspace <+>
-    manageScratchPad
+    manageScratchpad
 -- }}}
 
 ------------------------------------------------------------------------
@@ -243,13 +248,13 @@ myLogHook pipe = do
     fadeInactiveLogHook 0.7
 
 statusInfo pipe = defaultPP {
-    ppCurrent           = dzenColor "lightblue" "#0000aa",
+    ppCurrent           = dzenColor "#aaaaff" "",
     ppVisible           = wrap "(" ")",
     ppHidden            = (\i -> case i of
         "NSP" -> ""
         _     -> i),
     ppHiddenNoWindows   = \_ -> "",
-    ppUrgent            = dzenColor "yellow" "red",
+    ppUrgent            = dzenColor "red" "",
     ppSep               = " | ",
     ppWsSep             = " ",
     ppTitle             = dzenColor "#7777ff" "" . shorten 30,
@@ -269,9 +274,10 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook { args = ["-bg", "darkgreen", "-
 
 -- {{{ Entry point
 main = do
-    dzenPipe <- spawnPipe "dzen2 -fg \"#7777aa\" -bg \"#000033\" -fn \"Inconsolata:pixelsize=16\" -ta \"l\" -expand \"r\""
+    status <- spawnPipe "dzen2 -fg '#333377' -bg '#000011' -fn 'Consolas:pixelsize=14' -ta l -expand r"
+    conky  <- spawnPipe "conky | dzen2 -fn 'Consolas:pixelsize=14' -ta r -expand l -dock"
     _ <- spawn myTerminal
-    xmonad $ myUrgencyHook $ defaults dzenPipe
+    xmonad $ myUrgencyHook $ defaults status
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -282,7 +288,7 @@ defaults pipe = defaultConfig {
     focusFollowsMouse  = myFocusFollowsMouse,
     borderWidth        = myBorderWidth,
     modMask            = myModMask,
-    numlockMask        = myNumlockMask,
+    -- numlockMask        = myNumlockMask,
     workspaces         = myWorkspaces,
     normalBorderColor  = myNormalBorderColor,
     focusedBorderColor = myFocusedBorderColor,
