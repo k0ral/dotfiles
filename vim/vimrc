@@ -82,17 +82,6 @@ set foldenable                                  " enable folding
 set foldmethod=marker                           " use explicit markers {{{ … }}}
 " }}}
 
-" Spell checking {{{
-set nospell                                     " No spell checking by default
-
-"augroup filetypedetect
-"  au BufNewFile,BufRead *.txt setlocal spell spelllang=en_us
-"  au BufNewFile,BufRead *.tex setlocal spell spelllang=en_us
-"augroup END
-
-nmap <silent> <leader>s :set spell!<CR>
-" }}}
-
 " Others {{{
 set autoread                                    " Auto read a file changed from the outside
 set autowrite                                   " Automatically save before commands like :next and :make
@@ -103,7 +92,7 @@ set grepprg=ack                                 " grep program
 set hidden                                      " Hide buffers when they are abandoned
 set nojoinspaces                                " Improve the behavior of J key
 set report=0                                    " Print total modifications for next command
-set shell=zsh
+set shell=bash
 set shortmess=atI                               " Stifle many interruptive prompts
 set showcmd                                     " Show (partial) command in status line.
 set showmatch                                   " Show matching brackets.
