@@ -1,7 +1,7 @@
 ! {{{ urxvt
 URxvt.depth: 32
 URxvt.background: Black
-URxvt.foreground: #555555
+URxvt.foreground: #777777
 
 URxvt*saveLines: 12000
 URxvt.cursorBlink: true
@@ -12,10 +12,10 @@ URxvt.fading: 50%
 URxvt.tintColor: #0000ff
 URxvt.scrollBar: off
 
-URxvt.font:           xft:Consolas:style=Regular
-URxvt.boldFont:       xft:Consolas:style=Bold
-URxvt.italicFont:     xft:Consolas:style=Italic
-URxvt.boldItalicFont: xft:Consolas:style=Bold Italic
+URxvt.font:           xft:Consolas:style=Regular:size=10
+URxvt.boldFont:       xft:Consolas:style=Bold:size=10
+URxvt.italicFont:     xft:Consolas:style=Italic:size=10
+URxvt.boldItalicFont: xft:Consolas:style=Bold Italic:size=10
 URxvt.letterSpace: -1
 URxvt.lineSpace: 0
 URxvt.meta8: false
