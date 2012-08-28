@@ -47,8 +47,12 @@ myFocusedBorderColor = "#ff0000"
 myFocusFollowsMouse = True
 
 -- Scratchpad
-scratchpads = 
-    [NS "urxvt" "urxvt -name scratchpad" (title =? "scratchpad") defaultFloating]
+scratchpads = [NS "urxvt" "urxvt -name scratchpad -title scratchpad -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'" (title =? "scratchpad") (customFloating $ W.RationalRect l t w h)]
+  where
+    h = 0.4         -- terminal height
+    w = 0.95        -- terminal width
+    t = 1 - h       -- distance from top edge
+    l = (1 - w)/2   -- distance from left edge
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -79,7 +83,7 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm,                 xK_Return),     spawn $ XMonad.terminal conf),
     ((modm,                 xK_t),          spawn myBrowser),
     --((modm,                 xK_BackSpace),  scratchpadSpawnActionCustom (myTerminal ++ " -t scratchpad")),
-    ((modm,                 xK_BackSpace),  namedScratchpadAction scratchpads "lxterminal"),
+    ((modm,                 xK_BackSpace),  namedScratchpadAction scratchpads "urxvt"),
     --((modm,                 xK_r),          spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     ((modm,                 xK_r),          spawn "gmrun"),
     --((modm,                 xK_r),          shellPrompt mySP),
@@ -140,9 +144,10 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm .|. shiftMask,   xK_q),          io (exitWith ExitSuccess)),
     ((modm              ,   xK_F5),         spawn "xmonad --recompile; xmonad --restart")
     ]
-    -- }}}
+-- }}}
 
 -- {{{ Mouse bindings
+-- You may also bind events to the mouse scroll wheel (button4 and button5)
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ [
     -- mod-button1, Set the window to floating mode and move by dragging
     ((modm, button1), (\w -> focus w >> mouseMoveWindow w
@@ -153,10 +158,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ [
     --, ((modm, button3), (\w -> focus w >> mouseResizeWindow w
     --                                   >> windows W.shiftMaster))
     ((modm, button3),               (\w -> focus w >> Sqr.mouseResizeWindow w False)),
-    ((modm .|. shiftMask, button3), (\w -> focus w >> Sqr.mouseResizeWindow w True ))
-
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
-    ]
+    ((modm .|. shiftMask, button3), (\w -> focus w >> Sqr.mouseResizeWindow w True ))]
 -- }}}
 
 -- {{{ Layouts
@@ -217,19 +219,13 @@ moveToWorkspace = composeAll [
 
 manageScratchpad :: ManageHook
 manageScratchpad = namedScratchpadManageHook scratchpads
-{-manageScratchpad = scratchpadManageHook (W.RationalRect l t w h)
-  where
-    h = 0.4         -- terminal height
-    w = 0.95        -- terminal width
-    t = 1 - h       -- distance from top edge
-    l = (1 - w)/2   -- distance from left edge
--}
+
 onNewWindow = 
+    manageScratchpad <+>
     manageDocks <+>
     floatingWindows <+>
     ignoredWindows <+>
-    moveToWorkspace <+>
-    manageScratchpad
+    moveToWorkspace
 -- }}}
 
 ------------------------------------------------------------------------
