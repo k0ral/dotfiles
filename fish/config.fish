@@ -22,7 +22,7 @@
 #    set -Ux LC_TELEPHONE en_US.utf8
 #    set -Ux LC_TIME en_US.utf8
 #    set -Ux LC_TYPE en_US.utf8
-#     
+#
 #    # Default applications
 #    set -Ux BROWSER /usr/bin/firefox
 #    set -Ux CC /usr/bin/colorgcc
@@ -30,38 +30,38 @@
 #    set -Ux PAGER /usr/bin/less
 #    #set TERM "rxvt-unicode"
 #    #set XTERM "urxvt"
-#     
+#
 #    # Misc
 #    set -Ux ALTERNATE_EDITOR ""
 #    set -Ux COLORTERM "yes"
 #    set -Uxe MAILCHECK
 #    #set http_proxy "http://localhost:8118"
 #    #set HTTP_PROXY $http_proxy
-#    set -Ux _JAVA_OPTIONS '-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' 
+#    set -Ux _JAVA_OPTIONS '-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 #    set -Ux JAVA_FONTS /usr/share/fonts/TTF
 #    set -Ux GDK_USE_XFT 1    #   For old gtk applications
 #    set -Ux QT_XFT true      #   For old qt applicatios
-#     
+#
 #    #eval `dircolors -b`
 #    set -Ux LS_COLORS "rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.axa=00;36:*.oga=00;36:*.spx=00;36:*.xspf=00;36:"
 #end
-# 
+#
 #set PATH /usr/lib/ccache/bin/ /usr/lib/colorgcc/bin ~/.cabal/bin $PATH
 # }}}
 
 # {{{ Prompt
 function fish_prompt
     set_color $fish_color_cwd
-    
+
     echo -n (whoami)
-    
+
     set_color normal
     echo -n '@'
     set_color purple
     echo -n (hostname)
     set_color normal
     echo -n ':'
-      
+
 # Color writeable dirs green, read-only dirs red
     if test -w "."
         set_color green
@@ -78,7 +78,7 @@ function fish_prompt
 
 # Git repository
     if test -d ".git"
-        echo -n ' ['(parse_git_branch)']'            
+        echo -n ' ['(parse_git_branch)']'
     end
 
 # Mercurial repository
@@ -96,7 +96,7 @@ function chmod
 end
 
 function cp
-    cp -v --strip-trailing-slashes $argv
+    command cp -v --strip-trailing-slashes $argv
 end
 
 function mkdir
@@ -131,7 +131,7 @@ function la
     ls -la $argv
 end
 
-function lsa 
+function lsa
     ls -a $argv
 end
 
@@ -151,12 +151,12 @@ function caly
 end
 
 function free
-    free -h $argv
+    command free -h $argv
 end
 
 function diff
     colordiff $argv
-end 
+end
 
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -265,7 +265,7 @@ function reco
 end
 
 function volume
-    alsamixer -c 0
+    alsamixer
 end
 
 alias dlpage='wget -nd -pHEKk'
@@ -285,7 +285,7 @@ if [ (whoami) != 'root' ];
     end
 
     function up
-        sudo pacman-color -Syu; and sudo diffpac
+        pak -Syu --aur; and sudo diffpac
     end
 
     function remove
@@ -311,7 +311,7 @@ end
 # }}}
 
 # {{{ Functions
-function sleep-on 
+function sleep-on
     sudo /etc/rc.d/fcron stop
 end
 
@@ -330,7 +330,7 @@ end
 
 # {{{ Git utilities
 set fish_git_dirty_color red
-function parse_git_dirty 
+function parse_git_dirty
     git diff --quiet HEAD ^&-
     if test $status = 1
         echo (set_color $fish_git_dirty_color)"Δ"(set_color normal)
@@ -338,8 +338,8 @@ function parse_git_dirty
 end
 
 function parse_git_branch
-    set -l branch (git branch --color ^&- | awk '/*/ {print $2}') 
-    echo $branch (parse_git_dirty)     
+    set -l branch (git branch --color ^&- | awk '/*/ {print $2}')
+    echo $branch (parse_git_dirty)
 end
 # }}}
 
