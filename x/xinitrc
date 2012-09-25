@@ -6,6 +6,7 @@ xsetroot -solid black &
 xset b off     # Disable beep sound
 xset +fp /usr/share/fonts/local
 xset fp rehash
+setxkbmap fr
 #xbindkeys
 
 # For QGTKStyle to work
@@ -22,7 +23,6 @@ urxvtd -q -f -o
 #volumeicon &
 #xcompmgr -c -f -F -D 5 &
 #xcompmgr &
-#conky &
 #cairo-compmgr &
 wmname LG3D &
 #unclutter &
@@ -31,6 +31,6 @@ wmname LG3D &
 trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x0077 --height 20 --widthtype request &
 ck-launch-session udiskie &
 #anamnesis --start &
-xrandr --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal
+#xrandr --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal
 
 exec xmonad
