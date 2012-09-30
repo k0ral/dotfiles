@@ -47,7 +47,7 @@ myFocusedBorderColor = "#ff0000"
 myFocusFollowsMouse = True
 
 -- Scratchpad
-scratchpads = [NS "urxvt" "urxvt -name scratchpad -title scratchpad -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'" (title =? "scratchpad") (customFloating $ W.RationalRect l t w h)]
+scratchpads = [NS "urxvt" "urxvt -name scratchpad -title scratchpad -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'" (appName =? "scratchpad") (customFloating $ W.RationalRect l t w h)]
   where
     h = 0.4         -- terminal height
     w = 0.95        -- terminal width
