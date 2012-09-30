@@ -3,12 +3,6 @@
 total_run_times 0           # Exit after some times; 0 = never
 # }}}
 
-# cpu_avg_samples 2 
-## net_avg_samples 2 : Nombre d'échantillons pour faire la moyenne de l'utilisation réseau
-
-# Default sizes
-default_bar_size 100 5
-
 # Buffer {{{
 no_buffers yes
 #text_buffer_size 1024
@@ -34,7 +28,7 @@ TEXT
 #
 ^fg(\#3333ff)TEMP ${if_match $acpitemp <= 50}^fg(green)$else${if_match $acpitemp >= 70}^fg(red)$else^fg(orange)$endif$endif${acpitemp}°C \
 #
-#^fg(\#3333ff)BAT ${if_match $battery_percent >= 80}^fg(green)$else${if_match $battery_percent <= 20}^fg(red)$else^fg(orange)$endif$endif$battery_short${if_empty $battery_time}$else($battery_time)$endif \
+^fg(\#3333ff)BAT ${if_match ${battery_percent BAT} >= 80}^fg(green)$else${if_match ${battery_percent BAT} <= 20}^fg(red)$else^fg(orange)$endif$endif${battery_short BAT}${if_empty ${battery_time BAT}}$else(${battery_time BAT})$endif \
 #
 ^fg(\#3333ff)CPU ${freq_g cpu0}G \
 ${if_match ${cpu cpu1} <= 50}^fg(green)$else${if_match ${cpu cpu1} >= 80}^fg(red)$else^fg(orange)$endif$endif${cpu cpu1}%\
@@ -42,7 +36,7 @@ ${if_match ${cpu cpu1} <= 50}^fg(green)$else${if_match ${cpu cpu1} >= 80}^fg(red
 ^fg(\#3333ff):${if_match ${cpu cpu3} <= 50}^fg(green)$else${if_match ${cpu cpu3} >= 80}^fg(red)$else^fg(orange)$endif$endif${cpu cpu3}%\
 ^fg(\#3333ff):${if_match ${cpu cpu4} <= 50}^fg(green)$else${if_match ${cpu cpu4} >= 80}^fg(red)$else^fg(orange)$endif$endif${cpu cpu4}%\
 #
-^fg(\#0000ff) | \
+^fg(\#0000ff) ‖ \
 #
 ^fg(\#3333ff)/ \
 ${if_match ${fs_free_perc /} <= 10}^fg(red)\
@@ -76,9 +70,6 @@ $endif\
 #
 ^fg(\#3333ff) ‖ \
 #
-^fg(\#3333ff)I/O ${diskio /dev/sda}\
-#
- ‖ \
 ${if_up wlan0}\
 WLAN0 ${addr wlan0}\
 #${if_gw}GATEWAY: $gw_ip ($gw_iface)$endif
@@ -93,7 +84,10 @@ $endif$endif\
 #
 ^fg(\#3333ff) ‖ \
 #
-#${if_running mpd}^fg(green)MPD^fg(#3333ff) ‖ $endif\
+${if_running mpd}^fg(green)$else^fg(red)${endif}MPD \
+${if_running sshd}^fg(green)$else^fg(red)${endif}SSH \
+${if_running ntpd}^fg(green)$else^fg(red)${endif}NTP \
+^fg(\#3333ff)‖ \
 #
 USERS \
 ${if_match $user_number > 1}^fg(red)\
@@ -102,14 +96,14 @@ $user_number\
 #
 ^fg(\#3333ff) ‖ \
 ✉ \
-${if_match ${new_mails /home/chahine/mail/myopera/INBOX} > 0}^fg(green)$endif\
-${new_mails /home/chahine/mail/myopera/INBOX}^fg(\#3333ff):\
-${if_match ${new_mails /home/chahine/mail/mailoo/INBOX} > 0}^fg(green)$endif\
-${new_mails /home/chahine/mail/mailoo/INBOX}\
+${if_match ${new_mails /home/koral/mail/myopera/INBOX} > 0}^fg(green)$endif\
+${new_mails /home/koral/mail/myopera/INBOX}^fg(\#3333ff):\
+${if_match ${new_mails /home/koral/mail/mailoo/INBOX} > 0}^fg(green)$endif\
+${new_mails /home/koral/mail/mailoo/INBOX}\
 ^fg(\#3333ff) ‖ \
 VOL ${mixer 'Master'}\
  ‖ \
 PKG \
 ^fg(green)${execi 600 pacman -Qu | wc -l}\
- ^fg(\#3333ff)‖ \
+^fg(\#3333ff) ‖ \
 ^fg(cyan)${time %R}
