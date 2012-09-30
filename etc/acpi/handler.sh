@@ -21,12 +21,8 @@ case "$1" in
         ;;
     button/sleep)
         case "$2" in
-            SLPB|SBTN)
-                echo -n mem >/sys/power/state
-                ;;
-            *)
-                logger "ACPI action undefined: $2"
-                ;;
+            #SLPB|SBTN) echo -n mem >/sys/power/state ;;
+            *)         logger "ACPI action undefined: $2" ;;
         esac
         ;;
     ac_adapter)
@@ -52,8 +48,8 @@ case "$1" in
                 esac
                 ;;
             *)
-		logger "ACPI action undefined: $2" 
-		;;
+                logger "ACPI action undefined: $2"
+                ;;
         esac
         ;;
     battery)
@@ -75,55 +71,16 @@ case "$1" in
         ;;
     button/lid)
         case "$3" in
-            close)
-                logger 'LID closed'
-                ;;
-            open)
-                logger 'LID opened'
-                ;;
-        esac
-        ;;
-    hotkey)
-        case "$3" in
-                    00000030)
-                       amixer -c 0 set Master 5%+
-                    ;;
-                    00000031)
-                       amixer -c 0 set Master 5%-
-                    ;;
-                    00000032)
-                       if [ -n "$(amixer get Master | grep off)" ]; then 
-                        amixer -c 0 set Master unmute; 
-                       else
-                        amixer -c 0 set Master mute; 
-                       fi
-                    ;;
-
-                    00000040)
-                        mpc prev
-                    ;;
-                    00000041)
-                        mpc next
-                    ;;
-                    00000043)
-                        mpc stop
-                    ;;
-                    00000045)
-                        mpc toggle
-                    ;;
-
-                    0000005c)
-                       if [ -z "$(lsmod |grep acpi_cpufreq)" ]; then
-                        modprobe acpi_cpufreq
-                        /etc/rc.d/cpufreq start
-                       else
-                        /etc/rc.d/cpufreq stop
-                        rmmod acpi_cpufreq
-                       fi
-                    ;;
-    esac
-    ;;
-    *)
-        logger "ACPI group/action undefined: $1 / $2"
-        ;;
+            close) logger 'LID closed' ;;
+            open)  logger 'LID opened' ;;
+        esac ;;
+    button/volumedown) amixer set Master 2%- ;;
+    button/volumeup)   amixer set Master 2%+ ;;
+    button/mute)
+        if [ -n "$(amixer get Master | grep off)" ]; then
+            amixer -c 0 set Master unmute;
+        else
+            amixer -c 0 set Master mute;
+        fi ;;
+    cd/play) mpc toggle ;;
 esac
