@@ -6,28 +6,6 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 ; }}}
 
-; {{{ Folding
-(add-to-list 'load-path "~/.emacs.d/custom")
-(autoload 'folding-mode          "folding" "Folding mode" t)
-(autoload 'turn-off-folding-mode "folding" "Folding mode" t)
-(autoload 'turn-on-folding-mode  "folding" "Folding mode" t)
-
-(eval-after-load "folding" '(progn
-    (folding-mode-add-find-file-hook)
-    (folding-add-to-marks-list 'emacs-lisp-mode   "; {{{"  "; }}}"  nil t)
-    (folding-add-to-marks-list 'lisp-mode         "; {{{"  "; }}}"  nil t)
-    (folding-add-to-marks-list 'haskell-mode      "-- {{{" "-- }}}" nil t)
-    (folding-add-to-marks-list 'shell-script-mode "# {{{"  "# }}}"  nil t)
-    (global-set-key (kbd "M-RET") 'folding-toggle-show-hide)
-    (define-key folding-mode-map (kbd "C-f") nil)
-    (define-key folding-mode-map (kbd "C-b") nil)))
-
-(add-hook 'emacs-lisp-mode-hook   'folding-mode)
-(add-hook 'haskell-mode-hook      'folding-mode)
-(add-hook 'lisp-mode-hook         'folding-mode)
-(add-hook 'shell-script-mode-hook 'folding-mode)
-; }}}
-
 ; {{{ Movement
 (global-set-key (kbd "ESC <left>")   'beginning-of-line)
 (global-set-key (kbd "ESC <right>")  'end-of-line)
@@ -35,11 +13,15 @@
 (global-set-key (kbd "ESC <down>")   'end-of-buffer)
 (global-set-key (kbd "C-g")          'goto-line)
 (global-set-key (kbd "M-g")          'ace-jump-mode)
+; }}}
 
-(setq scroll-step 1)
-(setq scroll-margin 4)
-;(setq scroll-conservatively 100000)
-(setq scroll-preserve-screen-position t)
+; {{{ Scroll
+(setq-default scroll-step 1)
+(setq-default scroll-margin 7)
+(setq-default scroll-conservatively 100000)
+(setq-default scroll-preserve-screen-position t)
+
+(global-set-key (kbd "M-m")          'recenter)
 ; }}}
 
 ; {{{ Selection
@@ -287,13 +269,12 @@
     (setq-default save-place t))
 
 ; {{{ yasnippets
-(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.6.1")
-(autoload 'yas/expand "yasnippet" "Completion snippets" t)
-(eval-after-load "yasnippet" '(progn
-    (yas/load-directory "~/.emacs.d/elpa/yasnippet-0.6.1/snippets")
-    (yas/global-mode 1)))
+;(autoload 'yas/expand "yasnippet" "Completion snippets" t)
+;(eval-after-load "yasnippet" '(progn
+;    (yas/load-directory "~/.emacs.d/elpa/yasnippet-0.6.1/snippets")
+;    (yas/global-mode 1)))
 
-(global-set-key (kbd "<tab>") 'yas/expand)
+;(global-set-key (kbd "<tab>") 'yas/expand)
 ; }}}
 
 ; {{{ Autopair
@@ -480,3 +461,6 @@
 ; {{{ Hooks
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 ; }}}
+
+; Hooks
+(add-hook 'before-save-hook 'whitespace-cleanup)
