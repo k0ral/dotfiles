@@ -6,7 +6,6 @@ xsetroot -solid black &
 xset b off     # Disable beep sound
 xset +fp /usr/share/fonts/local
 xset fp rehash
-setxkbmap fr
 setxkbmap -option ctrl:nocaps
 #xbindkeys
 
@@ -30,7 +29,7 @@ wmname LG3D &
 # gtk-redshift &
 #wicd-gtk &
 trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x0077 --height 20 --widthtype request &
-ck-launch-session udiskie &
+#ck-launch-session udiskie &
 #anamnesis --start &
 #xrandr --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal
 
