@@ -10,26 +10,20 @@ set $*
 case "$1" in
     button/power)
         case "$2" in
-            PBTN|PWRF)
-                logger "PowerButton pressed: $2"
-                #poweroff
-                ;;
-            *)
-                logger "ACPI action undefined: $2"
-                ;;
-        esac
-        ;;
+            PBTN|PWRF) logger "PowerButton pressed: $2" ;; #poweroff ;;
+            *) logger "ACPI action undefined: $2" ;;
+        esac ;;
     button/sleep)
         case "$2" in
             #SLPB|SBTN) echo -n mem >/sys/power/state ;;
             *)         logger "ACPI action undefined: $2" ;;
-        esac
-        ;;
+        esac ;;
     ac_adapter)
         case "$2" in
             AC|ACAD|ADP0)
                 case "$4" in
                     00000000)
+                        logger "AC unplugged"
                         echo "powersave" >/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
                         echo "powersave" >/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
                         echo "powersave" >/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
@@ -38,6 +32,7 @@ case "$1" in
                         #/etc/laptop-mode/laptop-mode start
                     ;;
                     00000001)
+                        logger "AC plugged"
                         echo "conservative" >/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
                         echo "conservative" >/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
                         echo "conservative" >/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
@@ -45,41 +40,32 @@ case "$1" in
                         echo -n $maxspeed >$setspeed
                         #/etc/laptop-mode/laptop-mode stop
                     ;;
-                esac
-                ;;
-            *)
-                logger "ACPI action undefined: $2"
-                ;;
-        esac
-        ;;
+                esac ;;
+            *) logger "ACPI action undefined: $2" ;;
+        esac ;;
     battery)
         case "$2" in
             BAT0)
                 case "$4" in
-                    00000000)
-                        logger 'Battery online'
-                        ;;
-                    00000001)
-                        logger 'Battery offline'
-                        ;;
-                esac
-                ;;
-            CPU0)
-                ;;
+                    00000000) logger 'Battery online' ;;
+                    00000001) logger 'Battery offline' ;;
+                esac ;;
+            CPU0) ;;
             *)  logger "ACPI action undefined: $2" ;;
-        esac
-        ;;
+        esac ;;
     button/lid)
         case "$3" in
             close) logger 'LID closed' ;;
             open)  logger 'LID opened' ;;
         esac ;;
-    button/volumedown) amixer set Master 2%- ;;
-    button/volumeup)   amixer set Master 2%+ ;;
+    button/volumedown) amixer set Master 3%-; logger 'Volume increased' ;;
+    button/volumeup)   amixer set Master 3%+; logger 'Volume decreased' ;;
     button/mute)
         if [ -n "$(amixer get Master | grep off)" ]; then
+            logger 'Sound unmuted'
             amixer -c 0 set Master unmute;
         else
+            logger 'Sound muted'
             amixer -c 0 set Master mute;
         fi ;;
     cd/play) mpc toggle ;;
