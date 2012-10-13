@@ -90,7 +90,7 @@ function fish_prompt
 end
 # }}}
 
-# {{{ Aliases
+# {{{ Aliases: custom options
 function chmod
     chmod -c --preserve-root $argv
 end
@@ -103,10 +103,6 @@ function mkdir
     command mkdir -p -v $argv
 end
 
-function mk
-    mkdir $argv
-end
-
 function mv
     command mv -v $argv
 end
@@ -115,28 +111,8 @@ function rename
     rename -v $argv
 end
 
-function rm
-    safe-rm -v $argv
-end
-
 function ls
     command ls --tabsize=0 --literal --color=auto --show-control-chars -p -h --group-directories-first -X $argv
-end
-
-function l
-    ls -l $argv
-end
-
-function la
-    ls -la $argv
-end
-
-function lsa
-    ls -a $argv
-end
-
-function cd
-    builtin cd $argv; and ls
 end
 
 function df
@@ -154,24 +130,12 @@ function free
     command free -h $argv
 end
 
-function diff
-    colordiff $argv
+function egrep
+    command egrep --color=auto $argv
 end
 
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-
-function gcc
-    colorgcc $argv
-end
-
-#alias grep='grep --color=auto'
-#alias make="colormake"
-
-#alias emacs='emacsclient -c -n -a ""'
-
-function gdb
-    cgdb -q $argv
+function fgrep
+    command fgrep --color=auto $argv
 end
 
 function locate
@@ -186,6 +150,10 @@ function mutt
     command mutt -y $argv
 end
 
+function my_indent
+    indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -ncs -di4 -fca -hnl -i4 -ip4 -l120 -lp -nlps -npcs -nprs -npsl -saf -sai -saw -sbi4 -sc -nsob -ss -ts4 -nut $argv
+end
+
 function octave
     octave -q $argv
 end
@@ -193,27 +161,10 @@ end
 function wget
     command wget -c $argv
 end
+# }}}
 
-#alias -p grep='ack'
-#alias more='vimpager'
-#alias less='vimpager'
 
-function pacman
-    pacman-color $argv
-end
-
-alias ping='mtr'
-
-function top
-    htop $argv
-end
-
-#function which
-#    type --all $argv
-#end
-
-alias my_indent='indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -ncs -di4 -fca -hnl -i4 -ip4 -l120 -lp -nlps -npcs -nprs -npsl -saf -sai -saw -sbi4 -sc -nsob -ss -ts4 -nut '
-
+# {{{ Aliases: shorter commands
 function e
     emacsclient -t -a "" $argv
 end
@@ -231,8 +182,24 @@ function h
     halt
 end
 
+function l
+    ls -l $argv
+end
+
+function la
+    ls -la $argv
+end
+
+function lsa
+    ls -a $argv
+end
+
 function m
     mutt
+end
+
+function mk
+    mkdir $argv
 end
 
 function n
@@ -247,7 +214,58 @@ function s
     sudo $argv
 end
 
+function vol
+    alsamixer
+end
+# }}}
+
+function cd
+    builtin cd $argv; and ls
+end
+
+# {{{ Aliases: alternative programs
+function diff
+    colordiff $argv
+end
+
+function gcc
+    colorgcc $argv
+end
+
+function rm
+    safe-rm -v $argv
+end
+
+#alias grep='grep --color=auto'
+#alias make="colormake"
+
+#alias emacs='emacsclient -c -n -a ""'
+
+function gdb
+    cgdb -q $argv
+end
+
+#alias -p grep='ack'
+#alias more='vimpager'
+#alias less='vimpager'
+
+function pacman
+    pacman-color $argv
+end
+
+#alias ping='mtr'
+
+function top
+    htop $argv
+end
+
+#function which
+#    type --all $argv
+#end
+
 #alias openports='sudo netstat --all --numeric --programs --inet'
+# }}}
+
 function listening-ports
     sudo netstat -tlnp
 end
@@ -264,10 +282,6 @@ function reco
     sudo dhclient eth0
 end
 
-function volume
-    alsamixer
-end
-
 alias dlpage='wget -nd -pHEKk'
 alias wifiselect='sudo wifi-select wlan0'
 
@@ -277,11 +291,11 @@ end
 
 if [ (whoami) != 'root' ];
     function reboot
-        sudo reboot
+        s reboot
     end
 
     function halt
-        sudo halt
+        s halt
     end
 
     function up
@@ -289,23 +303,23 @@ if [ (whoami) != 'root' ];
     end
 
     function remove
-        sudo pacman-color -Rs $argv
+        s pacman-color -Rs $argv
     end
 
     function sys
-        sudo systemctl $argv
+        s systemctl $argv
     end
 
     function start
-        sudo systemctl start $argv
+        s systemctl start $argv
     end
 
     function stop
-        sudo systemctl stop $argv
+        s systemctl stop $argv
     end
 
     function restart
-        sudo systemctl restart $argv
+        s systemctl restart $argv
     end
 end
 # }}}
