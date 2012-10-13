@@ -1,10 +1,6 @@
 #!/bin/sh
 # Default acpi script that takes an entry for all actions
 
-minspeed=`cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq`
-maxspeed=`cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq`
-setspeed="/sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed"
-
 set $*
 
 case "$1" in
@@ -24,20 +20,10 @@ case "$1" in
                 case "$4" in
                     00000000)
                         logger "AC unplugged"
-                        echo "powersave" >/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-                        echo "powersave" >/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
-                        echo "powersave" >/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
-                        echo "powersave" >/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
-                        echo -n $minspeed >$setspeed
                         #/etc/laptop-mode/laptop-mode start
                     ;;
                     00000001)
                         logger "AC plugged"
-                        echo "conservative" >/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-                        echo "conservative" >/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
-                        echo "conservative" >/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
-                        echo "conservative" >/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
-                        echo -n $maxspeed >$setspeed
                         #/etc/laptop-mode/laptop-mode stop
                     ;;
                 esac ;;
