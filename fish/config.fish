@@ -175,7 +175,7 @@ function gdb
 end
 
 function locate
-    locate -e $argv
+    command locate -e $argv
 end
 
 function mplayer
@@ -292,20 +292,20 @@ if [ (whoami) != 'root' ];
         sudo pacman-color -Rs $argv
     end
 
-    function rc
-        sudo rc.d $argv
+    function sys
+        sudo systemctl $argv
     end
 
     function start
-        sudo rc.d start $argv
+        sudo systemctl start $argv
     end
 
     function stop
-        sudo rc.d stop $argv
+        sudo systemctl stop $argv
     end
 
     function restart
-        sudo rc.d restart $argv
+        sudo systemctl restart $argv
     end
 end
 # }}}
