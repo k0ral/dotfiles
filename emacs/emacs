@@ -43,9 +43,12 @@
 (global-set-key (kbd "C-v")                'whole-line-or-region-yank)
 (global-set-key (kbd "M-v")                'browse-kill-ring)
 (global-set-key (kbd "C-c")                'whole-line-or-region-kill-ring-save)
+(global-set-key (kbd "<C-delete>")         'paredit-forward-kill-word)
 (global-set-key (kbd "ESC <deletechar>")   'whole-line-or-region-kill-region)
-(global-set-key (kbd "ESC <C-delete>")     'kill-line)
+(global-set-key (kbd "ESC <C-delete>")     'paredit-kill)
+;(global-set-key (kbd "ESC <C-delete>")     'kill-line)
 ; }}}
+
 
 ; {{{ Undo
 (global-undo-tree-mode 1)
@@ -67,6 +70,8 @@
 (setq-default indent-tabs-mode nil)
 
 (global-set-key (kbd "<return>")    'newline-and-indent)
+(global-set-key (kbd "TAB")         'indent-or-expand)
+(global-set-key (kbd "M-i")         'indent-region)
 ; }}}
 
 ; {{{ Search & replace
@@ -190,9 +195,8 @@
 (add-hook 'server-done-hook (lambda nil (kill-buffer nil)))
 ; }}}
 
-; Minor modes
-; Trailing whitespaces
-(add-hook 'emacs-lisp-mode-hook (lambda nil (setq show-trailing-whitespace t)))
+; Display
+(setq-default show-trailing-whitespace t)
 
 ; Highlight parenthesis
 (when (require 'rainbow-delimiters nil 'noerror)
@@ -211,6 +215,7 @@
 (file-name-shadow-mode 1)
 ;(icomplete-mode 1)
 (menu-bar-mode -1)
+(paredit-mode t)
 (savehist-mode 1)
 (size-indication-mode t)
 ;(tabbar-mode 1)
@@ -228,10 +233,22 @@
 (global-set-key (kbd "M-h") 'font-lock-mode)
 ; }}}
 
-; Completion
+; {{{ Completion
+(defun indent-or-expand ()
+  (interactive)
+  (if (and
+       (or (bobp) (= ?w (char-syntax (char-before))))
+       (or (eobp) (not (= ?w (char-syntax (char-after))))))
+      ;(dabbrev-expand nil)
+       (hippie-expand nil)
+    (indent-according-to-mode)))
+
+(setq dabbrev-abbrev-skip-leading-regexp "[=*]")
+(setq hippie-expand-dabbrev-as-symbol nil)
 ;(setq completion-cycle-threshold t)
 ;(setq completion-ignore-case t)
 ;(setq read-file-name-completion-ignore-case t)
+; }}}
 
 ; {{{ Backup files
 (setq backup-directory-alist         `((".*" . "~/.cache/emacs")))
@@ -261,7 +278,8 @@
 
 ; uniquify
 (when (require 'uniquify nil 'noerror)
-    (setq uniquify-separator ":"))
+    (setq uniquify-separator "|")
+    (setq uniquify-buffer-name-style 'reverse))
 
 ; saveplace
 (when (require 'saveplace nil 'noerror)
