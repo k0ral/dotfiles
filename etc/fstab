@@ -14,7 +14,4 @@ tmpfs		/tmp	tmpfs	nodev,nosuid	0	0
 #/dev/mapper/home               /home       ext4        rw,relatime,data=ordered	0 2
 
 # /etc
-/etc                            /home/koral/.config/etc none bind,ro        0       0
-
-# NAS
-twyk.org:/                      /mnt/adama  nfs4            defaults            0       0
+# /etc                            /home/koral/.config/etc none bind,ro        0       0
