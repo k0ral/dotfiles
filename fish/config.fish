@@ -299,7 +299,7 @@ if [ (whoami) != 'root' ];
     end
 
     function up
-        pak -Syu --aur; and sudo diffpac
+        pak -Syu --aur
     end
 
     function remove
@@ -310,16 +310,24 @@ if [ (whoami) != 'root' ];
         s systemctl $argv
     end
 
+    function enable
+        sys enable $argv
+    end
+
+    function disable
+        sys disable $argv
+    end
+
     function start
-        s systemctl start $argv
+        sys start $argv
     end
 
     function stop
-        s systemctl stop $argv
+        sys stop $argv
     end
 
     function restart
-        s systemctl restart $argv
+        sys restart $argv
     end
 end
 # }}}
