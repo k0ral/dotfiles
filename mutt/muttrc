@@ -1,7 +1,8 @@
 # {{{ Paths
 set folder=~/mail                   # Mailboxes folder (must be set _before_ any other path)
 set alias_file=~/.config/mutt/aliases
-set header_cache=~/mutt/.hcache
+set header_cache=~/.config/mutt/.hcache
+set message_cachedir=~/.config/mutt/.mcache
 #set mailcap_path="~/.mutt/mailcap:/usr/local/share/mailcap"
 #set mbox="~/Maildir/Inbox/"
 #set mbox_type=Maildir
@@ -10,12 +11,6 @@ set postponed=+postponed
 set record=!
 set spoolfile=+Inbox/               # Location for new mails
 # }}}
-
-# Commands
-set sendmail="/usr/bin/msmtp --read-envelope-from"
-
-auto_view text/html
-alternative_order text/plain text/html
 
 # {{{ Sources
 source ~/.config/mutt/abook
@@ -31,53 +26,70 @@ source ~/.config/mutt/pgp
 source ~/.config/mutt/sidebar
 # }}}
 
-# Charset and locale
-set send_charset="utf-8"
+# {{{ HTML mails
+set implicit_autoview   # pager shows parts having a mailcap viewer
+auto_view text/html  application/x-pgp-message
+alternative_order text/plain text/html
+# }}}
+
+# Commands
+set sendmail="/usr/bin/msmtp --read-envelope-from"
+
+# {{{ Charset/locale/encoding
+unset allow_8bit                    # never do Q-P encoding on legal 8-bit chars
+set allow_ansi                      # allow ANSI color codes in messages.
 set locale="fr_FR.UTF-8"            # locale to use for printing time
+set send_charset="utf-8"
+# }}}
+
+# {{{ Inhibit confirmation
+#unset confirmappend                 # Append to mailboxes
+set delete=yes
+set move=yes
+# }}}
+
+# {{{ Pager
+#set pager=less                     # some people prefer an external pager
+set pager_context=4                 # no. of lines of context to give when scrolling
+set pager_index_lines=6             # how many index lines to show in the pager
+set pager_stop                      # don't move to the next message on next-page
+# }}}
 
 # {{{ Other
-unset allow_8bit                    # never do Q-P encoding on legal 8-bit chars
 unset arrow_cursor
 set autoedit                        # go to the editor right away when composing
 unset beep
-#unset confirmappend                 # don't ask me if i want to append to mailboxes
 set copy=yes                        # always save a copy of outgoing messages
-set delete=yes                      # purge deleted messages without asking
 set edit_headers
 unset fcc_attach                    # keep attachments in copies of sent messages?
 set forward_quote
 set help
 set hidden_host                     # Hide host details
 set include                         # always include messages when replying
-set move=yes                        # don't ask about moving messages, just do it
-#set pager=less                     # some people prefer an external pager
-set pager_context=4                 # no. of lines of context to give when scrolling
-set pager_index_lines=6             # how many index lines to show in the pager
-set pager_stop                      # don't move to the next message on next-page
-#set reply_to                       # always use reply-to if present
+unset markers                       # no ugly plus signs
+set reply_to                        # always use reply-to if present
 #set resolve                        # move to the next message when an action is performed
 set reverse_alias                   # attempt to look up my names for people
 set reverse_name                    # use my address as it appears in the message I am replying to
 unset save_empty                    # remove files when no messages are left
+set sig_dashes
 set strict_threads                  # don't thread by subject, but by "In-Reply-To"
-set tilde                           # virtual lines to pad blank lines in the pager
+set tilde
 unset use_domain                    # don't qualify local addresses with $domain
 unset user_agent
-# }}} 
+# }}}
 
 # Print messages
 set print=ask-yes                   # ask me if I really want to print messages
 set print_command="/usr/bin/muttprint %s -p {PrinterName}"
 
-# HTML mails
-set implicit_autoview   # pager shows parts having a mailcap viewer
-auto_view text/html  application/x-pgp-message
-
-# Sorting
+# {{{ Sorting
 set sort=threads                # primary sorting method
+set sort_alias=alias            # sort alias file by alias
 set sort_aux=reverse-date       # secondary sorting method
 set sort_browser=reverse-date   # how to sort files in the dir browser
 folder-hook "outbox" set sort=date
+# }}}
 
 # Format {{{
 set attach_format="%4n %u%D%I %t %T %8s  %.40d%> %.7m/%.10M %10C"

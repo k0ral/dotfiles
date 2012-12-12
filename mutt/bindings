@@ -1,21 +1,31 @@
 # Key bindings
 macro index,pager y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
-bind browser y exit
-
 
 #       alias       alias menu
 #       attach      attachment menu
-#       browser     directory browser
+
+# Directory browser
+bind    browser y       exit
 macro   browser q       '<exit><quit>'
+
 #       compose     compose menu
-#       index       message index
+
+# Message index
+#bind    index   \cs         copy-message
 bind    index   s           save-message
-bind    index   \t          next-unread
 bind    index   b           bounce-message
+bind    index   R           group-reply
+bind    index   \cn         next-new
+bind    index   \c<down>    next-thread
+#bind    index   \t          collapse-all
+bind    index   <Space>     flag-message
 macro   index   q           '<change-folder>?<toggle-mailboxes>'
+macro   index   /           <search>~b
+
 #       pgp         pgp menu
 #       postpone    postponed message recall menu
-#       generic     generic keymap for all of the above
+
+# Generic keymap for all of the above
 bind generic    \eOH        first-entry
 bind generic    \eOF        last-entry
 bind generic    <up>        previous-entry
@@ -24,10 +34,11 @@ bind generic    <pageup>    previous-page
 bind generic    <pagedown>  next-page
 bind generic    {           top-page
 bind generic    }           bottom-page
+#bind generic    <F5>        sync-mailbox
 #macro   generic \cb     <pipe-entry>'urlview'<enter> 'Follow links with urlview'
 
 #       editor      line editor
-#       pager       text viewer
+# Text viewer
 bind pager      e           exit
 bind pager      s           save-message
 bind pager      \t          next-unread
@@ -35,6 +46,7 @@ bind pager      b           bounce-message
 bind pager      \eOH        top
 bind pager      \eOF        bottom
 bind pager      n           search-next
+bind pager      R           group-reply
 bind pager      <up>        previous-line
 bind pager      <down>      next-line
 bind pager      <left>      previous-entry
@@ -50,7 +62,7 @@ macro   pager \cb       <pipe-entry>'urlview'<enter> 'Follow links with urlview'
 #macro  index f1	"<enter-command>woohoo!"
 #bind   pager G bottom # just like vi and less
 #macro  pager   \Ck     "<pipe-message> pgp -kaf<Enter>"    # a comment is valid here
-#macro  pager X "<pipe-message> morepgp<Enter>"	            # pipe PGP message to a script
+#macro  pager X "<pipe-message> morepgp<Enter>"             # pipe PGP message to a script
 #bind editor \cy eol	# make ^Y jump to the end of the line
 
 #   Launch fetchmail

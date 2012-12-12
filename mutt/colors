@@ -1,12 +1,12 @@
 #color  element     foreground      background  [regex]
 #color  normal      white           default
 
-# Interface {{{
-color   status      brightgreen     blue
-color   search      brightyellow    red
-color   message     brightyellow    default                 # Information message
-color   error       brightred       default
-color   markers     brightred       default
+# {{{ Interface
+color status      cyan            black
+color search      brightyellow    red
+color message     yellow          default           # Information message
+color error       brightred       default
+color markers     brightred       default
 # }}}
 
 # Mails list {{{
@@ -40,9 +40,9 @@ color   signature   red             default
 
 color   tilde       red             default
 
-# Special {{{
-color   body        green           default "(ftp|http|https)://[^ ]+"	# point out URLs
-color   body        green           default [-a-z_0-9.]+@[-a-z_0-9.]+	# e-mail addresses
+# {{{ Special
+color   body        green           default "(ftp|http|https)://[^ ]+"  # point out URLs
+color   body        green           default [-a-z_0-9.]+@[-a-z_0-9.]+   # e-mail addresses
 color   bold        brightwhite     default               # boldface text
 color   underline   brightgreen     default         # underlined text
 color   body        brightgreen     default " [;:]-*[)>(<|]"             # :-) etc
