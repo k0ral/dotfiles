@@ -46,6 +46,7 @@ set send_charset="utf-8"
 #unset confirmappend                 # Append to mailboxes
 set delete=yes
 set move=yes
+unset wait_key
 # }}}
 
 # {{{ Pager
@@ -73,6 +74,7 @@ set reverse_alias                   # attempt to look up my names for people
 set reverse_name                    # use my address as it appears in the message I am replying to
 unset save_empty                    # remove files when no messages are left
 set sig_dashes
+set sleep_time=0
 set strict_threads                  # don't thread by subject, but by "In-Reply-To"
 set tilde
 unset use_domain                    # don't qualify local addresses with $domain
