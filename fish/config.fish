@@ -95,8 +95,12 @@ function chmod
     chmod -c --preserve-root $argv
 end
 
+#function cp
+#    command cp -v --strip-trailing-slashes $argv
+#end
+
 function cp
-    command cp -v --strip-trailing-slashes $argv
+    rsync -av --progress $argv
 end
 
 function mkdir
@@ -119,7 +123,6 @@ function df
     command df -hT
 end
 
-#alias df="cdf -h"
 #alias du='du -chs'
 
 function caly
@@ -179,7 +182,7 @@ function f
 end
 
 function h
-    halt
+    shutdown
 end
 
 function l
@@ -289,6 +292,10 @@ function wtf
     dmesg $argv
 end
 
+function bit
+    transmission-remote twyk.org $argv
+end
+
 if [ (whoami) != 'root' ];
     function reboot
         s reboot
@@ -298,8 +305,12 @@ if [ (whoami) != 'root' ];
         s halt
     end
 
+    function shutdown
+        s shutdown
+    end
+
     function up
-        pak -Syu --aur
+        yaourt -Syu --aur
     end
 
     function remove
