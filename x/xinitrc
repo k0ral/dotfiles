@@ -25,10 +25,11 @@ urxvtd -q -f -o
 #xcompmgr &
 #cairo-compmgr &
 wmname LG3D &
+dunst -fn consolas &
 #unclutter &
 # gtk-redshift &
 #wicd-gtk &
-trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x0077 --height 20 --widthtype request &
+#trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x0077 --height 20 --widthtype request &
 #ck-launch-session udiskie &
 #anamnesis --start &
 #xrandr --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal
