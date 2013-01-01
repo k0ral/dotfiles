@@ -28,7 +28,7 @@ TEXT
 #
 ^fg(\#3333ff)TEMP ${if_match $acpitemp <= 50}^fg(green)$else${if_match $acpitemp >= 70}^fg(red)$else^fg(orange)$endif$endif${acpitemp}°C \
 #
-^fg(\#3333ff)BAT ${if_match ${battery_percent BAT} >= 80}^fg(green)$else${if_match ${battery_percent BAT} <= 20}^fg(red)$else^fg(orange)$endif$endif${battery_short BAT}${if_empty ${battery_time BAT}}$else(${battery_time BAT})$endif \
+^fg(\#3333ff)BAT ${if_match ${battery_percent BAT} >= 80}^fg(green)$else${if_match ${battery_percent BAT} <= 20}^fg(red)$else^fg(orange)$endif$endif${battery_short BAT} \
 #
 ^fg(\#3333ff)CPU ${freq_g cpu0}G \
 ${if_match ${cpu cpu1} <= 50}^fg(green)$else${if_match ${cpu cpu1} >= 80}^fg(red)$else^fg(orange)$endif$endif${cpu cpu1}%\
