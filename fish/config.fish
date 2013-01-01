@@ -92,7 +92,7 @@ end
 
 # {{{ Aliases: custom options
 function chmod
-    chmod -c --preserve-root $argv
+    command chmod -c --preserve-root $argv
 end
 
 #function cp
