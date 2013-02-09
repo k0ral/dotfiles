@@ -186,6 +186,10 @@ function h
 end
 
 function l
+    ls -og --time-style=+ $argv
+end
+
+function ll
     ls -l $argv
 end
 
