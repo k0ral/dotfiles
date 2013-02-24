@@ -9,8 +9,9 @@
 ; {{{ Movement
 (global-set-key (kbd "ESC <left>")   'beginning-of-line)
 (global-set-key (kbd "ESC <right>")  'end-of-line)
-(global-set-key (kbd "ESC <up>")     'beginning-of-buffer)
-(global-set-key (kbd "ESC <down>")   'end-of-buffer)
+(global-set-key (kbd "ESC <C-up>")   'beginning-of-buffer)
+(global-set-key (kbd "ESC <C-down>") 'end-of-buffer)
+
 (global-set-key (kbd "C-g")          'goto-line)
 (global-set-key (kbd "M-g")          'ace-jump-mode)
 ; }}}
@@ -37,6 +38,47 @@
 (global-set-key (kbd "M-SPC")       'cua-set-rectangle-mark)
 (global-set-key (kbd "C-a")         'mark-whole-buffer)
 (global-set-key (kbd "M-c")         'whole-line-or-region-comment-dwim)
+; }}}
+
+; {{{ Line manipulation
+(defun duplicate-line (arg)
+  "Duplicate current line, leaving point in lower line."
+  (interactive "*p")
+
+  ;; save the point for undo
+  (setq buffer-undo-list (cons (point) buffer-undo-list))
+
+  ;; local variables for start and end of line
+  (let ((bol (save-excursion (beginning-of-line) (point)))
+        eol)
+    (save-excursion
+
+      ;; don't use forward-line for this, because you would have
+      ;; to check whether you are at the end of the buffer
+      (end-of-line)
+      (setq eol (point))
+
+      ;; store the line and disable the recording of undo information
+      (let ((line (buffer-substring bol eol))
+            (buffer-undo-list t)
+            (count arg))
+        ;; insert the line arg times
+        (while (> count 0)
+          (newline)         ;; because there is no newline in 'line'
+          (insert line)
+          (setq count (1- count)))
+        )
+
+      ;; create the undo information
+      (setq buffer-undo-list (cons (cons eol (point)) buffer-undo-list)))
+    ) ; end-of-let
+
+  ;; put the point in the lowest line and return
+  (next-line arg))
+
+(global-set-key (kbd "ESC <up>")   'move-text-up)
+(global-set-key (kbd "ESC <down>") 'move-text-down)
+(global-set-key (kbd "M-d")        'duplicate-line)
 ; }}}
 
 ; {{{ Kill ring & clipboard
@@ -72,6 +114,7 @@
 (global-set-key (kbd "<return>")    'newline-and-indent)
 (global-set-key (kbd "TAB")         'indent-or-expand)
 (global-set-key (kbd "M-i")         'indent-region)
+(global-set-key (kbd "M-a")         'align-regexp)
 ; }}}
 
 ; {{{ Search & replace
@@ -92,8 +135,9 @@
 (define-key isearch-mode-map (kbd "C-s")   'save-buffer)
 (define-key isearch-mode-map (kbd "C-S-s") 'write-file)
 
-(global-set-key (kbd "C-r")         'query-replace)
-(global-set-key (kbd "M-r")         'replace-string)
+(global-set-key (kbd "C-r")         'iedit-mode)
+;; (global-set-key (kbd "M-r")         'replace-string)
+(global-set-key (kbd "M-r")         'query-replace)
 ; }}}
 
 ; {{{ Buffer manipulation
@@ -101,16 +145,16 @@
     (interactive)
     (kill-buffer (current-buffer)))
 
-(when (require 'buffer-move)
-    (global-set-key (kbd "ESC C-<up>")    'buf-move-up)
-    (global-set-key (kbd "ESC C-<down>")  'buf-move-down)
-    (global-set-key (kbd "ESC C-<left>")  'buf-move-left)
-    (global-set-key (kbd "ESC C-<right>") 'buf-move-right))
+;; (when (require 'buffer-move)
+;;     (global-set-key (kbd "ESC C-<up>")    'buf-move-up)
+;;     (global-set-key (kbd "ESC C-<down>")  'buf-move-down)
+;;     (global-set-key (kbd "ESC C-<left>")  'buf-move-left)
+;;     (global-set-key (kbd "ESC C-<right>") 'buf-move-right))
 
 (global-set-key (kbd "C-<prior>")     'bs-cycle-previous)
 (global-set-key (kbd "C-<next>")      'bs-cycle-next)
 (global-set-key (kbd "C-b")           'ido-switch-buffer)
-(global-set-key (kbd "C-d")           'split-window)
+;; (global-set-key (kbd "C-d")           'split-window)
 ;(global-set-key (kbd "M-<tab>")       'other-window)
 ;(global-set-key (kbd "C-w")         'delete-other-windows)
 ; }}}
@@ -176,7 +220,6 @@
 (define-key dired-mode-map (kbd "C-n")         'dired-next-marked-file)
 (define-key dired-mode-map (kbd "C-p")         'dired-prev-marked-file)
 (define-key dired-mode-map (kbd "D")           'dired-do-delete)
-
 
 (define-key dired-mode-map (kbd "DEL")         'dired-up-directory)
 (define-key dired-mode-map (kbd "/")           'dired-isearch-filenames-regexp)))
@@ -431,23 +474,9 @@
 (global-set-key (kbd "<f12>")       'multi-term)
 ; }}}
 
-; {{{ Wanderlust
-;(autoload 'wl                    "wl" "Wanderlust" t)
-;(autoload 'wl-other-frame        "wl" "Wanderlust on new frame." t)
-;(autoload 'wl-draft              "wl-draft" "Write draft with Wanderlust." t)
-;(autoload 'wl-user-agent-compose "wl-draft" nil t)
-;
-;(if (boundp 'mail-user-agent)
-;    (setq mail-user-agent 'wl-user-agent))
-;(if (fboundp 'define-mail-user-agent)
-;    (define-mail-user-agent
-;      'wl-user-agent
-;      'wl-user-agent-compose
-;      'wl-draft-send
-;      'wl-draft-kill
-;      'mail-send-hook))
-;
-;(setq wl-init-file "~/.config/emacs/wanderlust/wl")
+; {{{ IDE
+(setq compilation-ask-about-save nil)
+(setq compilation-save-buffers-predicate '(lambda () nil))
 ; }}}
 
 ; {{{ GUI
@@ -478,7 +507,5 @@
 
 ; {{{ Hooks
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-; }}}
-
-; Hooks
 (add-hook 'before-save-hook 'whitespace-cleanup)
+; }}}
