@@ -182,7 +182,7 @@ function f
 end
 
 function h
-    shutdown
+    systemctl poweroff
 end
 
 function l
@@ -217,8 +217,16 @@ function o
     open $argv
 end
 
+function r
+    systemctl reboot
+end
+
 function s
     sudo $argv
+end
+
+function logs
+    journalctl $argv
 end
 
 function vol
