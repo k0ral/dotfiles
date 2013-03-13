@@ -11,6 +11,7 @@ import XMonad.Config.Azerty
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Accordion
 import XMonad.Layout.Decoration
@@ -76,7 +77,7 @@ myNumlockMask   = mod2Mask
 
 
 -- {{{ Key bindings
-myKeys = \c -> azertyKeys c `M.union` generalKeys c 
+myKeys = \c -> azertyKeys c `M.union` generalKeys c
 
 generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     -- Spawn programs
@@ -169,7 +170,7 @@ webLayout     = avoidStruts . maximize . smartBorders . windowNavigation $ myTab
 defaultLayout = avoidStruts . maximize . smartBorders . windowNavigation $              Grid ||| stack ||| tiled ||| Mirror tiled ||| myTabbed ||| Full ||| Accordion
 
 myLayout = onWorkspace "8:web" webLayout defaultLayout
-  
+
 tiled    = Tall nmaster delta ratio
   where
     nmaster = 1        -- Windows in the master pane
@@ -209,23 +210,28 @@ tabTheme = Theme {
 floatingWindows = composeAll [
     --className =? "MPlayer"        --> doFloat,
     className =? "Gimp"           --> doFloat]
-    
+
 ignoredWindows = composeAll [
-    resource  =? "desktop_window" --> doIgnore,
-    resource  =? "kdesktop"       --> doIgnore ]
+    resource  =? "desktop_window" --> doIgnore]
 
 moveToWorkspace = composeAll [
-    resource =? "hbro"  --> doF (W.shift "web") ]
+    resource =? "hbro"  --> doF (W.shift "8:web") ]
 
 manageScratchpad :: ManageHook
 manageScratchpad = namedScratchpadManageHook scratchpads
 
-onNewWindow = 
+steamFix = composeAll [
+    className =? "Steam" --> doFloat,
+    className =? "steam" --> doFloat, --bigpicture-mode
+    className =? "Steam" --> doIgnore]
+
+onNewWindow =
     manageScratchpad <+>
     manageDocks <+>
     floatingWindows <+>
     ignoredWindows <+>
     moveToWorkspace
+    <+> steamFix
 -- }}}
 
 ------------------------------------------------------------------------
@@ -258,20 +264,16 @@ statusInfo pipe = defaultPP {
     ppOutput            = hPutStrLn pipe }
 -- }}}
 
-------------------------------------------------------------------------
--- Startup hook
 
--- Perform an arbitrary action each time xmonad starts or is restarted
--- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
--- per-workspace layout choices.
-myStartupHook = return ()
+-- Perform an arbitrary action each time xmonad starts or is restarted.
+-- Used by, e.g., XMonad.Layout.PerWorkspace to initialize per-workspace layout choices.
+myStartupHook = setWMName "LG3D"
 
 myUrgencyHook = withUrgencyHook dzenUrgencyHook { args = ["-bg", "darkgreen", "-xs", "1"] }
 
 -- {{{ Entry point
 main = do
     status <- spawnPipe "dzen2 -fg '#333377' -bg '#000011' -fn 'Consolas:pixelsize=14' -ta l -expand r"
-    conky  <- spawnPipe "conky | dzen2 -fn 'Consolas:pixelsize=14' -ta r -expand l -dock"
     _ <- spawn myTerminal
     xmonad $ myUrgencyHook $ defaults status
 
