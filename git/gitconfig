@@ -1,7 +1,9 @@
 [user]
-	name = koral
-	email = koral att mailoo dott org
+    name = koral
+    email = koral att mailoo dott org
 [color]
-	diff = true
-	status = auto
-	branch = auto
+    diff = true
+    status = auto
+    branch = auto
+[core]
+    editor = nano
