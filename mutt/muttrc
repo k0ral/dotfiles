@@ -33,7 +33,9 @@ alternative_order text/plain text/html
 # }}}
 
 # Commands
+set editor="/usr/bin/emacsclient -t"
 set sendmail="/usr/bin/msmtp --read-envelope-from"
+
 
 # {{{ Charset/locale/encoding
 unset allow_8bit                    # never do Q-P encoding on legal 8-bit chars
