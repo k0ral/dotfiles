@@ -1,5 +1,5 @@
 [Unit]
-Description=Emacs: the extensible, self-documenting text editor
+Description=Emacs daemon
 
 [Service]
 Type=forking
