@@ -1,0 +1,10 @@
+[Unit]
+Description=System Monitor for X
+
+[Service]
+Environment=DISPLAY=:0
+
+ExecStart=/bin/sh -c "/usr/bin/conky | /usr/bin/dzen2 -fn 'Consolas:pixelsize=14' -ta r -expand l -dock"
+
+[Install]
+WantedBy=wm.target

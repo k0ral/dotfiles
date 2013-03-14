@@ -1,0 +1,20 @@
+[Unit]
+Description=XMonad service
+
+[Service]
+#Environment=PATH=uncomment:to:override:your:PATH
+
+ExecStartPre=/usr/bin/xrdb -merge %h/.config/x/Xresources
+ExecStartPre=/usr/bin/xsetroot -cursor_name left_ptr
+ExecStartPre=/usr/bin/xsetroot -solid black
+ExecStartPre=/usr/bin/xset b off
+#ExecStartPre=/usr/bin/xset +fp /usr/share/fonts/local
+ExecStartPre=/usr/bin/xset fp rehash
+ExecStartPre=/usr/bin/setxkbmap -option ctrl:nocaps
+
+ExecStart=/home/koral/.cabal/bin/xmonad
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=wm.target

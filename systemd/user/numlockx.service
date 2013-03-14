@@ -1,0 +1,12 @@
+[Unit]
+Description=numlock
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/numlockx on
+ExecStop=/usr/bin/numlockx off
+SuccessExitStatus=203
+
+[Install]
+WantedBy=wm.target

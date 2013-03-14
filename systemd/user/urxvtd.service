@@ -1,0 +1,10 @@
+[Unit]
+Description=rxvt-unicode daemon
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/urxvtd -q -f -o
+Restart=always
+
+[Install]
+WantedBy=wm.target
