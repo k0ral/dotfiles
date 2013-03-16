@@ -1,7 +1,7 @@
 # /etc/profile
 
 #Set our umask
-umask 027
+umask 022
 
 # Set our default path
 PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin"

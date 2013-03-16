@@ -14,7 +14,7 @@ export LC_PAPER='en_US.utf8'
 export LC_TELEPHONE='en_US.utf8'
 export LC_TIME='en_US.utf8'
 export LC_TYPE='en_US.utf8'
- 
+
 # Default applications
 export BROWSER='/usr/bin/firefox'
 export CC='/usr/bin/colorgcc'
@@ -22,18 +22,18 @@ export EDITOR='/usr/bin/emacsclient -t'
 export PAGER='/usr/bin/less'
 #set TERM "rxvt-unicode"
 #set XTERM "urxvt"
- 
+
 # Misc
 export ALTERNATE_EDITOR=''
 export COLORTERM='yes'
 export MAILCHECK
 #set http_proxy "http://localhost:8118"
 #set HTTP_PROXY $http_proxy
-export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel' 
-export JAVA_FONTS='/usr/share/fonts/TTF'
+#export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+#export JAVA_FONTS='/usr/share/fonts/TTF'
 export GDK_USE_XFT=1      #   For old gtk applications
 export QT_XFT='true'      #   For old qt applicatios
- 
+
 eval `dircolors -b`
 
 export PATH=/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:~/.cabal/bin:$PATH
