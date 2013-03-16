@@ -1,7 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 # Default acpi script that takes an entry for all actions
-
-set $*
 
 case "$1" in
     button/power)
