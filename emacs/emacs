@@ -153,7 +153,6 @@
 
 (global-set-key (kbd "C-<prior>")     'bs-cycle-previous)
 (global-set-key (kbd "C-<next>")      'bs-cycle-next)
-(global-set-key (kbd "C-b")           'ido-switch-buffer)
 ;; (global-set-key (kbd "C-d")           'split-window)
 ;(global-set-key (kbd "M-<tab>")       'other-window)
 ;(global-set-key (kbd "C-w")         'delete-other-windows)
@@ -165,7 +164,6 @@
 (global-set-key (kbd "C-q")         'server-edit)
 (global-set-key (kbd "ESC <f4>")    'kill-emacs)
 (global-set-key (kbd "C-s")         'save-buffer)
-(global-set-key (kbd "M-s")         'ido-write-file)
 ;(global-set-key (kbd "<escape>")    'keyboard-quit)
 ; }}}
 
@@ -250,7 +248,7 @@
 (setq vc-follow-symlinks t)
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq require-final-newline t)
-;(setq ring-bell-function 'ignore)
+;; (setq ring-bell-function 'ignore)
 (setq inhibit-startup-screen t)
 
 ; Minor modes
@@ -349,13 +347,15 @@
     (ido-mode 'both)
     (ido-everywhere 1)
 
+    (setq ido-decorations '(" {" "}" " | " " | ..." " [" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]"))
+
     (setq ido-create-new-buffer 'never)
     (setq ido-enable-tramp-completion nil)
 
-    (setq ido-enable-last-directory-history t)
-    (setq ido-max-work-directory-list  30)
-    (setq ido-max-work-file-list       50)
-    (setq ido-save-directory-list-file "~/.config/emacs/ido.last")
+    (setq ido-enable-last-directory-history nil)
+    ;; (setq ido-max-work-directory-list  30)
+    ;; (setq ido-max-work-file-list       50)
+    ;; (setq ido-save-directory-list-file "~/.config/emacs/ido.last")
 
     ;(setq ido-ignore-extensions t)
     ;(setq ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
@@ -368,14 +368,19 @@
     (setq ido-enable-flex-matching  t)
     (setq ido-max-prospects         8)
     (setq ido-confirm-unique-completion t)
-    (setq confirm-nonexistent-file-or-buffer nil))
+    (setq confirm-nonexistent-file-or-buffer nil)
+
+    (global-set-key (kbd "C-b")  'ido-switch-buffer))
+    (global-set-key (kbd "M-s")  'ido-write-file)
+    ;; (global-set-key (kbd "C-w") 'ido-kill-buffer)
 
 (global-set-key (kbd "C-o") 'find-file)
-;(global-set-key (kbd "C-w") 'ido-kill-buffer)
 ; }}}
 
 
 ; {{{ Language-based modes
+(setq default-major-mode 'text-mode)
+
 ; Haskell
 ;(add-to-list 'load-path "~/.emacs.d/elpa/haskell-mode-2.8.0")
 ;(autoload 'haskell-mode          "haskell-mode" "Major mode for editing Haskell scripts." t)
@@ -392,8 +397,8 @@
 ;    ("\\.hsc$"    . haskell-mode)
 ;    ("\\.chs$"    . haskell-mode)
 ;    ("\\.l[hg]s$" . literate-haskell-mode))))
-
 ; PKGBUILD
+
 (autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
 (setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
 
@@ -508,4 +513,18 @@
 ; {{{ Hooks
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (add-hook 'before-save-hook 'whitespace-cleanup)
+; }}}
+
+; {{{ Folding
+(add-hook 'c-mode-common-hook   'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'haskell-mode-hook    'hs-minor-mode)
+(add-hook 'java-mode-hook       'hs-minor-mode)
+(add-hook 'lisp-mode-hook       'hs-minor-mode)
+(add-hook 'perl-mode-hook       'hs-minor-mode)
+(add-hook 'sh-mode-hook         'hs-minor-mode)
+
+(global-set-key (kbd "<f2>")  'hs-toggle-hiding)
+(global-set-key (kbd "<f3>")  'hs-hide-all)
+(global-set-key (kbd "<f4>")  'hs-show-all)
 ; }}}
