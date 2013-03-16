@@ -86,7 +86,6 @@ $endif$endif\
 #
 ${if_running mpd}^fg(green)$else^fg(red)${endif}MPD \
 ${if_running sshd}^fg(green)$else^fg(red)${endif}SSH \
-${if_running ntpd}^fg(green)$else^fg(red)${endif}NTP \
 ^fg(\#3333ff)‖ \
 #
 USERS \
