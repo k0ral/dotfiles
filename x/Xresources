@@ -12,10 +12,10 @@ URxvt.fading: 50%
 URxvt.tintColor: #0000ff
 URxvt.scrollBar: off
 
-URxvt.font:           xft:Consolas:style=Regular:size=10
-URxvt.boldFont:       xft:Consolas:style=Bold:size=10
-URxvt.italicFont:     xft:Consolas:style=Italic:size=10
-URxvt.boldItalicFont: xft:Consolas:style=Bold Italic:size=10
+URxvt.font:           xft:Inconsolata:style=Regular:size=10
+URxvt.boldFont:       xft:Inconsolata:style=Bold:size=10
+URxvt.italicFont:     xft:Inconsolata:style=Italic:size=10
+URxvt.boldItalicFont: xft:Inconsolata:style=Bold Italic:size=10
 URxvt.letterSpace: -1
 URxvt.lineSpace: 0
 URxvt.meta8: false
