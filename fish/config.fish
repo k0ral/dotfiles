@@ -82,7 +82,7 @@ function fish_prompt
     end
 
 # Mercurial repository
-    if hg root >/dev/null 2>/dev/null; echo ' [☿]'; return; end
+    if hg root >/dev/null 2>/dev/null; echo -n ' [☿]'; end
 
     echo ''
     set_color normal
