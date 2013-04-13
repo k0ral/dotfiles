@@ -36,7 +36,7 @@ ${if_match ${cpu cpu1} <= 50}^fg(green)$else${if_match ${cpu cpu1} >= 80}^fg(red
 ^fg(\#3333ff):${if_match ${cpu cpu3} <= 50}^fg(green)$else${if_match ${cpu cpu3} >= 80}^fg(red)$else^fg(orange)$endif$endif${cpu cpu3}%\
 ^fg(\#3333ff):${if_match ${cpu cpu4} <= 50}^fg(green)$else${if_match ${cpu cpu4} >= 80}^fg(red)$else^fg(orange)$endif$endif${cpu cpu4}%\
 #
-^fg(\#0000ff) ‖ \
+^fg(\#0000ff) | \
 #
 ^fg(\#3333ff)/ \
 ${if_match ${fs_free_perc /} <= 10}^fg(red)\
@@ -68,7 +68,7 @@ $endif$endif\
 $swapfree\
 $endif\
 #
-^fg(\#3333ff) ‖ \
+^fg(\#3333ff) | \
 #
 ${if_up wlan0}\
 WLAN0 ${addr wlan0}\
@@ -82,27 +82,27 @@ ETH0 ${addr eth0} \
 ^fg(green)${downspeed eth0}^fg(\#3333ff):^fg(red)${upspeed eth0}\
 $endif$endif\
 #
-^fg(\#3333ff) ‖ \
+^fg(\#3333ff) | \
 #
 ${if_running mpd}^fg(green)$else^fg(red)${endif}MPD \
 ${if_running sshd}^fg(green)$else^fg(red)${endif}SSH \
-^fg(\#3333ff)‖ \
+^fg(\#3333ff)| \
 #
 USERS \
 ${if_match $user_number > 1}^fg(red)\
 $endif\
 $user_number\
 #
-^fg(\#3333ff) ‖ \
+^fg(\#3333ff) | \
 ✉ \
 ${if_match ${new_mails /home/koral/mail/myopera/INBOX} > 0}^fg(green)$endif\
 ${new_mails /home/koral/mail/myopera/INBOX}^fg(\#3333ff):\
 ${if_match ${new_mails /home/koral/mail/mailoo/INBOX} > 0}^fg(green)$endif\
 ${new_mails /home/koral/mail/mailoo/INBOX}\
-^fg(\#3333ff) ‖ \
-VOL ${mixer 'Master'}\
- ‖ \
+^fg(\#3333ff) | \
+VOL ${execi 1 amixer sget Master | grep Mono: | sed 's/^[[:space:]]*\(.*\)/\1/' | cut -d' ' -f4 | sed 's/\[\([[:digit:]]*\)*%\]/\1/'}\
+ | \
 PKG \
 ^fg(green)${execi 600 pacman -Qu | wc -l}\
-^fg(\#3333ff) ‖ \
+^fg(\#3333ff) | \
 ^fg(cyan)${time %R}
