@@ -326,7 +326,7 @@ if [ (whoami) != 'root' ];
     end
 
     function remove
-        s pacman-color -Rs $argv
+        s pacman -Rs $argv
     end
 
     function sys
