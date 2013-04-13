@@ -7,6 +7,7 @@ ExecStartPre=/usr/bin/xsetroot -cursor_name left_ptr
 ExecStartPre=/usr/bin/xsetroot -solid black
 ExecStartPre=/usr/bin/xset b off
 ExecStartPre=/usr/bin/setxkbmap -option ctrl:nocaps
+ExecStartPre=/usr/bin/setxkbmap fr
 
 ExecStart=/home/koral/.cabal/bin/xmonad
 
