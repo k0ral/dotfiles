@@ -263,11 +263,6 @@ end
 #alias -p grep='ack'
 #alias more='vimpager'
 #alias less='vimpager'
-
-function pacman
-    pacman-color $argv
-end
-
 #alias ping='mtr'
 
 function top

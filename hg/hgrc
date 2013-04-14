@@ -1,0 +1,12 @@
+[ui]
+username = koral <koral att mailoo dott org>
+
+[extensions]
+color=
+convert=
+graphlog=
+pager=
+record=
+
+[pager]
+pager = LESS='FRX' less
