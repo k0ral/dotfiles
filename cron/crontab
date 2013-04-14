@@ -8,7 +8,7 @@ DISPLAY=:0
 @weekly      cd ${HOME}/server/dotfiles && hg pull -u ssh://twyk.org/~/.config
 @weekly      /bin/mkdir -p ${HOME}/server/backup/ && rsync -rvzh --chmod=go-rwx --del --force homeserver:/home/koral/backup/ ${HOME}/server/backup/
 @weekly      /bin/mkdir -p ${HOME}/server/script/ && rsync -rvzh --chmod=go-rwx --del --force homeserver:/home/koral/script/ ${HOME}/server/script/
-@weekly      cd ${HOME}/.config && hg push
+@weekly      cd ${HOME}/.config && hg push; hg push bb
 @weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/mail    homeserver:/home/koral/mystik/
 @weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/prog    homeserver:/home/koral/mystik/
 @weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/.config homeserver:/home/koral/mystik/
