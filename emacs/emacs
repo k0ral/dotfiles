@@ -439,9 +439,9 @@
 ;    (windmove-default-keybindings 'meta))
 
 
-; {{{ Modeline
-(set-face-background 'modeline "#111")
-(set-face-foreground 'modeline "#aaaaff")
+; {{{ Mode-line
+(set-face-background 'mode-line "#111111")
+(set-face-foreground 'mode-line "#aaaaff")
 (setq-default mode-line-format (list
     ;; insert vs overwrite mode, input-method in a tooltip
     " " '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
