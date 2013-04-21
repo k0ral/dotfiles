@@ -391,14 +391,14 @@
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
-;(setq auto-mode-alist (append auto-mode-alist '(
+(setq auto-mode-alist (append auto-mode-alist '(
 ;    ("\\.[hg]s$"  . haskell-mode)
 ;    ("\\.hic?$"   . haskell-mode)
 ;    ("\\.hsc$"    . haskell-mode)
-;    ("\\.chs$"    . haskell-mode)
+    ("\\.chs$"    . haskell-mode))))
 ;    ("\\.l[hg]s$" . literate-haskell-mode))))
-; PKGBUILD
 
+; PKGBUILD
 (autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
 (setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
 
