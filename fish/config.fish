@@ -175,7 +175,7 @@ function s
 end
 
 function logs
-    journalctl $argv
+    s journalctl -u $argv
 end
 
 function vol
@@ -253,18 +253,6 @@ function bit
 end
 
 if [ (whoami) != 'root' ];
-    function reboot
-        s reboot
-    end
-
-    function halt
-        s halt
-    end
-
-    function shutdown
-        s shutdown
-    end
-
     function up
         yaourt -Syu --aur
     end
@@ -314,6 +302,10 @@ end
 
 function u
     wget -c (perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' (xclip -o))
+end
+
+function uu
+    wget -c (perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' (xclip -o)) -O $argv
 end
 # }}}
 
