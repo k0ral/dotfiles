@@ -77,14 +77,26 @@
     ;(indent-region (point-min) (point-max) nil)
     (untabify (point-min) (point-max)))
 
+(defun indent-region-or-buffer ()
+  "Indent a region if selected, otherwise the whole buffer."
+  (interactive)
+  (save-excursion
+    (if (region-active-p)
+        (progn
+          (indent-region (region-beginning) (region-end))
+          (message "Indented selected region."))
+      (progn
+        (indent-region (point-min) (point-max)))
+        (message "Indented buffer."))))
+
 (setq-default tab-width 4)
 ;(setq-default standard-indent 4)
 (setq-default indent-tabs-mode nil)
 
-(global-set-key (kbd "<return>")    'newline-and-indent)
-(global-set-key (kbd "TAB")         'indent-or-expand)
-(global-set-key (kbd "M-i")         'indent-region)
-(global-set-key (kbd "M-a")         'align-regexp)
+(global-set-key (kbd "RET")    'newline-and-indent)
+(global-set-key (kbd "TAB")    'indent-or-expand)
+(global-set-key (kbd "M-i")    'indent-region-or-buffer)
+(global-set-key (kbd "M-a")    'align-regexp)
 ; }}}
 
 ; {{{ Search & replace
