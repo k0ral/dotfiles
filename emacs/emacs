@@ -27,10 +27,6 @@
 
 ; {{{ Selection
 (whole-line-or-region-mode 1)
-(global-hl-line-mode 1)
-
-(set-face-background 'hl-line "#001")
-(set-face-background 'region  "#100")
 
 (setq cua-enable-cua-keys nil)
 (cua-mode t)
@@ -221,10 +217,19 @@
 ; Display
 (setq-default show-trailing-whitespace t)
 
-; Highlight parenthesis
+; {{{ Highlights
 (when (require 'rainbow-delimiters nil 'noerror)
     (global-rainbow-delimiters-mode 1))
-(show-paren-mode t)
+(show-paren-mode 1)
+(setq-default show-paren-delay 0)
+(set-face-background 'show-paren-match-face "#f00")
+(set-face-foreground 'show-paren-match-face "#ff0")
+(set-face-attribute  'show-paren-match-face nil :weight 'extra-bold)
+
+(global-hl-line-mode 1)
+(set-face-background 'hl-line "#001")
+(set-face-background 'region  "#100")
+; }}}
 
 ; Misc
 (setq vc-follow-symlinks t)
