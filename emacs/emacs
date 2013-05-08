@@ -324,9 +324,10 @@
 ; }}}
 
 ; {{{ Autopair
-(when (require 'autopair)
-    (setq autopair-autowrap t)
-    (autopair-global-mode 1))
+;; (when (require 'autopair)
+    ;; (setq autopair-autowrap t)
+    ;; (autopair-global-mode 1))
+(electric-pair-mode +1)
 ; }}}
 
 ; {{{ ido
