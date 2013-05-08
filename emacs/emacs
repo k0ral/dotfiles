@@ -150,9 +150,6 @@
 (global-set-key (kbd "M-x") 'smex)
 ; }}}
 
-; Mutt
-(add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
-
 ; {{{ Dired
 (eval-after-load "dired" '(progn
 (defun dired-execute nil
@@ -372,6 +369,11 @@
 (global-set-key (kbd "C-o") 'find-file)
 ; }}}
 
+; Mutt
+(add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
+
+; Subword matching
+(global-subword-mode 1)
 
 ; {{{ Language-based modes
 (setq default-major-mode 'text-mode)
