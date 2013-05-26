@@ -372,6 +372,9 @@
 ; Mutt
 (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
 
+(add-to-list 'auto-mode-alist '("\\.*rc$" . conf-unix-mode))
+(add-to-list 'auto-mode-alist '("rc$"     . conf-unix-mode))
+
 ; Subword matching
 (global-subword-mode 1)
 
