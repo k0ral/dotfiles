@@ -2,21 +2,22 @@ DISPLAY=:0
 
 */7  * * * * /usr/bin/offlineimap -u quiet
 */11 * * * * cd ${HOME}/images/wallpapers && /usr/bin/hsetroot -fill "`/bin/ls | /usr/bin/shuf -n 1`"
+@daily       cd ${HOME}/.config && [ -z "`/usr/bin/hg diff --stat`" ] || /usr/bin/notify-send "Uncommitted configuration updates"
+@daily       cd ${HOME}/.config && (hg push; hg push bb) && /usr/bin/notify-send "Configuration pushed to twyk.org & bitbucket"
+@daily       cd ${HOME}/server/dotfiles && hg pull -u ssh://twyk.org/~/.config && /usr/bin/notify-send "Homeserver configuration pulled"
+@daily       /bin/chmod 600 ${HOME}/.config/msmtp/*
 @weekly      /bin/mv -u ${HOME}/Desktop/* ${HOME} && rm -r ${HOME}/Desktop
-@weekly      /bin/chmod 600 ${HOME}/.config/msmtp/*
 @weekly      /bin/chmod -R go-rwx ${HOME}/mail ${HOME}/papers ${HOME}/server
-@weekly      cd ${HOME}/server/dotfiles && hg pull -u ssh://twyk.org/~/.config
 @weekly      /bin/mkdir -p ${HOME}/server/backup/ && rsync -rvzh --chmod=go-rwx --del --force homeserver:/home/koral/backup/ ${HOME}/server/backup/
 @weekly      /bin/mkdir -p ${HOME}/server/script/ && rsync -rvzh --chmod=go-rwx --del --force homeserver:/home/koral/script/ ${HOME}/server/script/
-@weekly      cd ${HOME}/.config && hg push; hg push bb
 @weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/mail    homeserver:/home/koral/mystik/
 @weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/prog    homeserver:/home/koral/mystik/
 @weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/.config homeserver:/home/koral/mystik/
 @weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/music   homeserver:/home/koral/shared/
-@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/doc     homeserver:/home/koral/mystik/
-@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/images  homeserver:/home/koral/mystik/
-@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/papers  homeserver:/home/koral/mystik/
-@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/reading homeserver:/home/koral/mystik/
-@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/sound   homeserver:/home/koral/mystik/
-@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/studies homeserver:/home/koral/mystik/
-@monthly     rsync -rvzh --chmod=go-rwx --del --force ${HOME}/tmp     homeserver:/home/koral/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/doc     homeserver:/home/koral/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/images  homeserver:/home/koral/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/papers  homeserver:/home/koral/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/reading homeserver:/home/koral/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/sound   homeserver:/home/koral/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/studies homeserver:/home/koral/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/tmp     homeserver:/home/koral/mystik/
