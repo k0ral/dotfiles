@@ -41,27 +41,30 @@
 (global-set-key (kbd "C-h")          'highlight-phrase)
 ;; }}}
 
-; {{{ Line manipulation
+;; {{{ Line manipulation
 (defun smart-open-line ()
   "Insert an empty line after the current line. Position the cursor at its beginning, according to the current mode."
   (interactive)
   (move-end-of-line nil)
   (newline-and-indent))
 
-(global-set-key (kbd "ESC <up>")   'move-text-up)
-(global-set-key (kbd "ESC <down>") 'move-text-down)
 (global-set-key (kbd "M-RET")      'smart-open-line)
-; }}}
+;; }}}
 
-; {{{ Kill ring & clipboard
+;; {{{ Kill ring & clipboard
+(defun backward-kill-line (arg)
+  "Kill ARG lines backward."
+  (interactive "p")
+  (kill-line (- 1 arg)))
+
 (global-set-key (kbd "C-v")                'whole-line-or-region-yank)
 (global-set-key (kbd "M-v")                'browse-kill-ring)
 (global-set-key (kbd "C-c")                'whole-line-or-region-kill-ring-save)
-(global-set-key (kbd "<C-delete>")         'paredit-forward-kill-word)
-(global-set-key (kbd "ESC <deletechar>")   'whole-line-or-region-kill-region)
-(global-set-key (kbd "ESC <C-delete>")     'paredit-kill)
-;(global-set-key (kbd "ESC <C-delete>")     'kill-line)
-; }}}
+;; (global-set-key (kbd "<C-delete>")         'paredit-forward-kill-word)
+(global-set-key (kbd "<M-delete>")         'whole-line-or-region-kill-region)
+(global-set-key (kbd "<M-backspace>")      'backward-kill-line)
+(global-set-key (kbd "<C-M-delete>")       'paredit-kill)
+;; }}}
 
 ; {{{ Undo
 (global-undo-tree-mode 1)
