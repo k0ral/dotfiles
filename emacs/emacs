@@ -66,42 +66,45 @@
 (global-set-key (kbd "<C-M-delete>")       'paredit-kill)
 ;; }}}
 
-; {{{ Undo
+;; {{{ Undo
 (global-undo-tree-mode 1)
 (global-set-key (kbd "C-z") 'undo-tree-undo)
 (global-set-key (kbd "C-y") 'undo-tree-redo)
 (global-set-key (kbd "M-z") 'undo-tree-visualize)
-; }}}
+;; }}}
 
-; {{{ Tabs & indentation
+;; {{{ Tabs & indentation
 (defun clean ()
     "Clean and indent whole buffer"
     (interactive)
     (delete-trailing-whitespace)
     ;(indent-region (point-min) (point-max) nil)
-    (untabify (point-min) (point-max)))
+    (untabify (point-min) (point-max))
+    (message "Cleaned buffer.") )
 
 (defun indent-region-or-buffer ()
-  "Indent a region if selected, otherwise the whole buffer."
-  (interactive)
-  (save-excursion
-    (if (region-active-p)
-        (progn
-          (indent-region (region-beginning) (region-end))
-          (message "Indented selected region."))
-      (progn
-        (indent-region (point-min) (point-max)))
-        (message "Indented buffer."))))
+   "Indent a region if selected, otherwise the current line."
+   (interactive)
+   (save-excursion (if (region-active-p)
+       (progn
+         (indent-region (region-beginning) (region-end))
+         (message "Indented selected region.") )
+       (progn
+         (indent-region (line-beginning-position) (line-beginning-position 2))
+         (message "Indented line.") ))))
 
-(setq-default tab-width 4)
-;(setq-default standard-indent 4)
 (setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(defvaralias 'c-basic-offset     'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+;; (setq-default standard-indent 4)
+;; (setq-default indent-line-function 'insert-tab)
 
 (global-set-key (kbd "RET")    'newline-and-indent)
 (global-set-key (kbd "TAB")    'indent-or-expand)
 (global-set-key (kbd "M-i")    'indent-region-or-buffer)
 (global-set-key (kbd "M-a")    'align-regexp)
-; }}}
+;; }}}
 
 ; {{{ Search & replace
 (setq search-highlight t)
