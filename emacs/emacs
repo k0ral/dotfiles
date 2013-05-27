@@ -127,23 +127,18 @@
 (global-set-key (kbd "M-r")         'query-replace-regexp)
 ;; }}}
 
-; {{{ Buffer manipulation
+;; {{{ Buffer manipulation
 (defun kill-current-buffer ()
     (interactive)
     (kill-buffer (current-buffer)))
 
-;; (when (require 'buffer-move)
-;;     (global-set-key (kbd "ESC C-<up>")    'buf-move-up)
-;;     (global-set-key (kbd "ESC C-<down>")  'buf-move-down)
-;;     (global-set-key (kbd "ESC C-<left>")  'buf-move-left)
-;;     (global-set-key (kbd "ESC C-<right>") 'buf-move-right))
-
 (global-set-key (kbd "C-<prior>")     'bs-cycle-previous)
 (global-set-key (kbd "C-<next>")      'bs-cycle-next)
 ;; (global-set-key (kbd "C-d")           'split-window)
-;(global-set-key (kbd "M-<tab>")       'other-window)
+(global-set-key (kbd "M-<tab>")       'other-window)
+(global-set-key (kbd "M-w")           'delete-window)
 ;(global-set-key (kbd "C-w")         'delete-other-windows)
-; }}}
+;; }}}
 
 ; {{{ Session
 ;(global-set-key (kbd "C-q")         'save-buffers-kill-terminal)
