@@ -148,12 +148,13 @@
 (global-set-key (kbd "C-s")         'save-buffer)
 ;; }}}
 
-; {{{ Interaction
+;; {{{ Interaction
 (smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-; }}}
+(global-set-key (kbd "M-x")    'smex)
+;; (global-set-key (kbd "<menu>") 'smex)
+;; }}}
 
-; {{{ Dired
+;; {{{ Dired
 (eval-after-load "dired" '(progn
 (defun dired-execute nil
   "Try to execute file at point."
@@ -199,11 +200,11 @@
 
 (define-key dired-mode-map (kbd "DEL")         'dired-up-directory)
 (define-key dired-mode-map (kbd "/")           'dired-isearch-filenames-regexp)))
-; }}}
+;; }}}
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
-; {{{ Server
+;; {{{ Server
 (defun server-shutdown ()
     "Save buffers, quit, and shutdown (kill) server"
     (interactive)
@@ -212,7 +213,7 @@
 
 (add-hook 'server-done-hook 'delete-frame)
 (add-hook 'server-done-hook (lambda nil (kill-buffer nil)))
-; }}}
+;; }}}
 
 ; Display
 (setq-default show-trailing-whitespace t)
@@ -261,7 +262,7 @@
 (global-set-key (kbd "M-h") 'font-lock-mode)
 ; }}}
 
-; {{{ Completion
+;; {{{ Completion
 (defun indent-or-expand ()
   (interactive)
   (if (and
@@ -276,12 +277,12 @@
 ;(setq completion-cycle-threshold t)
 ;(setq completion-ignore-case t)
 ;(setq read-file-name-completion-ignore-case t)
-; }}}
+;; }}}
 
-; {{{ Backup files
+;; {{{ Backup files
 (setq backup-directory-alist         `((".*" . "~/.cache/emacs")))
 (setq auto-save-file-name-transforms `((".*" "~/.cache/emacs" t)))
-; }}}
+;; }}}
 
 ; Diff
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -302,8 +303,6 @@
 (setq linum-format "%d ")
 (global-set-key (kbd "C-l")         'linum-mode)
 
-;(require 'tabbar)
-
 ; uniquify
 (when (require 'uniquify nil 'noerror)
     (setq uniquify-separator "|")
@@ -314,21 +313,12 @@
     (setq save-place-file "~/.config/emacs/saveplace")
     (setq-default save-place t))
 
-; {{{ yasnippets
-;(autoload 'yas/expand "yasnippet" "Completion snippets" t)
-;(eval-after-load "yasnippet" '(progn
-;    (yas/load-directory "~/.emacs.d/elpa/yasnippet-0.6.1/snippets")
-;    (yas/global-mode 1)))
-
-;(global-set-key (kbd "<tab>") 'yas/expand)
-; }}}
-
-; {{{ Autopair
+;; {{{ Autopair
 ;; (when (require 'autopair)
     ;; (setq autopair-autowrap t)
     ;; (autopair-global-mode 1))
 (electric-pair-mode +1)
-; }}}
+;; }}}
 
 ; {{{ ido
 (when (require 'ido nil 'noerror)
@@ -416,7 +406,6 @@
 ;    (other .     "linux")))
 
 ;(setq         c-indent-level 4)             ; TAB = 4 spaces
-;(setq-default c-basic-offset 4)             ; Indentation unit
 ;(setq-default c-toggle-electric-flag nil)
 
 (add-hook 'c-mode-common-hook (lambda ()
@@ -427,22 +416,16 @@
 (setq auto-mode-alist (append '(("\.profile$" . shell-script-mode)) auto-mode-alist))
 ; }}}
 
-; {{{ Term mode
-;(require 'cl)
+;; {{{ Term mode
 ;(require 'term)
 (add-to-list 'load-path "/home/chahine/.emacs.d/elpa/multi-term-0.8.8")
 (autoload 'multi-term "multi-term" nil t)
 (eval-after-load "multi-term" '(progn
     (setq multi-term-program "/bin/bash")
     (setq multi-term-scroll-to-bottom-on-output "this")))
-; }}}
+;; }}}
 
-; Windows movement
-;(when (require 'windmove nil 'noerror)
-;    (windmove-default-keybindings 'meta))
-
-
-; {{{ Mode-line
+;; {{{ Mode-line
 (set-face-background 'mode-line "#111111")
 (set-face-foreground 'mode-line "#aaaaff")
 (setq-default mode-line-format (list
@@ -459,33 +442,33 @@
     '(:eval (when buffer-read-only
               (concat ","  (propertize "RO" 'face 'font-lock-type-face))))
 
-    ; the buffer name; the file name as a tool tip
+    ;; the buffer name; the file name as a tool tip
     " | " (propertize "%b " 'face 'font-lock-keyword-face)
 
-    ; line and column
+    ;; line and column
     " | " (propertize "%04l" 'face 'font-lock-type-face)
     "," (propertize "%03c" 'face 'font-lock-type-face)
 
-    ; relative position, size of file
+    ;; relative position, size of file
     " | " (propertize "%p" 'face 'font-lock-type-face)
     "/" (propertize "%I" 'face 'font-lock-constant-face)
 
-    ; the current major mode for the buffer.
+    ;; the current major mode for the buffer.
     " | " (propertize "%m" 'face 'font-lock-string-face)
     " /" minor-mode-alist
 
     " | %Z %e %[ %-"))
-; }}}
+;; }}}
 
-; {{{ Keys
+;; {{{ Keys
 (global-set-key (kbd "<f11>")       'compile)
 (global-set-key (kbd "<f12>")       'multi-term)
-; }}}
+;; }}}
 
-; {{{ IDE
+;; {{{ IDE
 (setq compilation-ask-about-save nil)
 (setq compilation-save-buffers-predicate '(lambda () nil))
-; }}}
+;; }}}
 
 ; {{{ GUI
 ;(scroll-bar-mode -1)
@@ -513,12 +496,12 @@
 ;(add-to-list 'default-frame-alist '(alpha 85 50))
 ; }}}
 
-; {{{ Hooks
+;; {{{ Hooks
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 (add-hook 'before-save-hook 'whitespace-cleanup)
-; }}}
+;; }}}
 
-; {{{ Folding
+;; {{{ Folding
 (add-hook 'c-mode-common-hook   'hs-minor-mode)
 (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
 (add-hook 'haskell-mode-hook    'hs-minor-mode)
