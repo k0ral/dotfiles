@@ -140,14 +140,13 @@
 ;(global-set-key (kbd "C-w")         'delete-other-windows)
 ;; }}}
 
-; {{{ Session
-;(global-set-key (kbd "C-q")         'save-buffers-kill-terminal)
-;(global-set-key (kbd "C-q")         'kill-current-buffer)
-(global-set-key (kbd "C-q")         'server-edit)
-(global-set-key (kbd "ESC <f4>")    'kill-emacs)
+;; {{{ Session
+;; (global-set-key (kbd "C-q")         'save-buffers-kill-terminal)
+(global-set-key (kbd "C-q")         'kill-current-buffer)
+;; (global-set-key (kbd "C-q")         'server-edit)
+;; (global-set-key (kbd "ESC <f4>")      'kill-emacs)
 (global-set-key (kbd "C-s")         'save-buffer)
-;(global-set-key (kbd "<escape>")    'keyboard-quit)
-; }}}
+;; }}}
 
 ; {{{ Interaction
 (smex-initialize)
