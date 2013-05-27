@@ -106,15 +106,14 @@
 (global-set-key (kbd "M-a")    'align-regexp)
 ;; }}}
 
-; {{{ Search & replace
+;; {{{ Search & replace
 (setq search-highlight t)
 (setq query-replace-highlight t)
 
 ;(global-set-key (kbd "C-f")         'isearch-forward)
 ;(global-set-key (kbd "C-S-f")       'isearch-backward)
 
-(when (require 'loccur)
-    (global-set-key (kbd "C-f")         'loccur))
+(global-set-key (kbd "C-f")         'occur)
 (global-set-key (kbd "M-f")         'multi-occur)
 (global-set-key (kbd "C-n")         'next-error)
 (global-set-key (kbd "C-p")         'previous-error)
@@ -125,9 +124,8 @@
 (define-key isearch-mode-map (kbd "C-S-s") 'write-file)
 
 (global-set-key (kbd "C-r")         'iedit-mode)
-;; (global-set-key (kbd "M-r")         'replace-string)
-(global-set-key (kbd "M-r")         'query-replace)
-; }}}
+(global-set-key (kbd "M-r")         'query-replace-regexp)
+;; }}}
 
 ; {{{ Buffer manipulation
 (defun kill-current-buffer ()
