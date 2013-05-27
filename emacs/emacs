@@ -29,16 +29,17 @@
 ;; (global-set-key (kbd "<S-prior>")    'scroll-down)
 ;; }}}
 
-; {{{ Selection
+;; {{{ Selection
 (whole-line-or-region-mode 1)
 
 (setq cua-enable-cua-keys nil)
 (cua-mode t)
 
-(global-set-key (kbd "M-SPC")       'cua-set-rectangle-mark)
-(global-set-key (kbd "C-a")         'mark-whole-buffer)
-(global-set-key (kbd "M-c")         'whole-line-or-region-comment-dwim)
-; }}}
+(global-set-key (kbd "M-SPC")        'cua-set-rectangle-mark)
+(global-set-key (kbd "C-a")          'mark-whole-buffer)
+(global-set-key (kbd "M-c")          'whole-line-or-region-comment-dwim)
+(global-set-key (kbd "C-h")          'highlight-phrase)
+;; }}}
 
 ; {{{ Line manipulation
 (defun smart-open-line ()
