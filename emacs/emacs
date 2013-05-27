@@ -1,20 +1,75 @@
-; {{{ ELPA
+(require 'cl)
+
+;; {{{ ELPA
 (package-initialize)
 
 (add-to-list 'package-archives '("ELPA"      . "http://tromey.com/elpa/"))
 (add-to-list 'package-archives '("gnu"       . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-; }}}
 
-; {{{ Movement
-(global-set-key (kbd "ESC <left>")   'beginning-of-line)
-(global-set-key (kbd "ESC <right>")  'end-of-line)
-(global-set-key (kbd "ESC <C-up>")   'beginning-of-buffer)
-(global-set-key (kbd "ESC <C-down>") 'end-of-buffer)
+(defvar myPackages '(ace-jump-mode autopair browse-kill-ring buffer-move c-eldoc
+                     color-file-completion crontab-mode dired+ haskell-mode iedit
+                     paredit rainbow-delimiters rainbow-mode smex solarized-theme
+                     undo-tree whole-line-or-region) "Default packages")
+
+(defun myPackages-installed-p ()
+  (loop for pkg in myPackages
+        when (not (package-installed-p pkg)) do (return nil)
+        finally (return t) ))
+
+(unless (myPackages-installed-p)
+  (message "%s" "Refreshing package database...")
+  (package-refresh-contents)
+  (dolist (pkg myPackages)
+    (when (not (package-installed-p pkg))
+      (package-install pkg) )))
+;; }}}
+
+;; {{{ Minor modes
+(delete-selection-mode 1)
+(file-name-shadow-mode 1)
+(global-hl-line-mode 1)
+;; (global-linum-mode 1)
+(when (require 'rainbow-delimiters nil 'noerror) (global-rainbow-delimiters-mode 1))
+(global-subword-mode 1)
+(global-visual-line-mode 1)
+;; (icomplete-mode 1)
+(ido-mode 'both)
+(menu-bar-mode -1)
+(paredit-mode t)
+(recentf-mode 1)
+(savehist-mode 1)
+(scroll-bar-mode -1)
+(size-indication-mode t)
+(show-paren-mode 1)
+;(tabbar-mode 1)
+(tool-bar-mode -1)
+(which-function-mode 1)
+;; }}}
+
+;; {{{ General options
+(setq-default echo-keystrokes 0.1)
+(setq-default use-dialog-box nil)
+(setq-default vc-follow-symlinks t)
+(setq-default require-final-newline t)
+;; (setq ring-bell-function 'ignore)
+(setq-default inhibit-startup-screen t)
+(setq-default show-trailing-whitespace t)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+;; }}}
+
+;; {{{ Movement
+(global-set-key (kbd "<C-left>")     'subword-backward)
+(global-set-key (kbd "<C-right>")    'subword-forward)
+(global-set-key (kbd "<M-left>")     'beginning-of-line)
+(global-set-key (kbd "<M-right>")    'end-of-line)
+(global-set-key (kbd "<M-up>")       'beginning-of-buffer)
+(global-set-key (kbd "<M-down>")     'end-of-buffer)
 
 (global-set-key (kbd "C-g")          'goto-line)
 (global-set-key (kbd "M-g")          'ace-jump-mode)
-; }}}
+;; }}}
 
 ;; {{{ Scroll
 (setq-default scroll-step 1)
@@ -215,52 +270,27 @@
 (add-hook 'server-done-hook (lambda nil (kill-buffer nil)))
 ;; }}}
 
-; Display
-(setq-default show-trailing-whitespace t)
-
-; {{{ Highlights
-(when (require 'rainbow-delimiters nil 'noerror)
-    (global-rainbow-delimiters-mode 1))
-(show-paren-mode 1)
+;; {{{ Highlights
 (setq-default show-paren-delay 0)
 (set-face-background 'show-paren-match-face "#f00")
 (set-face-foreground 'show-paren-match-face "#ff0")
 (set-face-attribute  'show-paren-match-face nil :weight 'extra-bold)
 
-(global-hl-line-mode 1)
-(set-face-background 'hl-line "#001")
-(set-face-background 'region  "#100")
-; }}}
+(set-face-background 'hl-line "#000011")
+(set-face-background 'region  "#00ff00")
+;; }}}
 
-; Misc
-(setq vc-follow-symlinks t)
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq require-final-newline t)
-;; (setq ring-bell-function 'ignore)
-(setq inhibit-startup-screen t)
-
-; Minor modes
-(delete-selection-mode 1)
-(file-name-shadow-mode 1)
-;(icomplete-mode 1)
-(menu-bar-mode -1)
-(paredit-mode t)
-(savehist-mode 1)
-(size-indication-mode t)
-;(tabbar-mode 1)
-(which-function-mode 1)
-
-; {{{ Eldoc
+;; {{{ Eldoc
 (add-hook 'emacs-lisp-mode-hook       'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook             'turn-on-eldoc-mode)
 (add-hook 'c-mode-hook                'c-turn-on-eldoc-mode)
-; }}}
+;; }}}
 
-; {{{ Syntax highlight
+;; {{{ Syntax highlight
 (setq font-lock-maximum-decoration t)
 (global-set-key (kbd "M-h") 'font-lock-mode)
-; }}}
+;; }}}
 
 ;; {{{ Completion
 (defun indent-or-expand ()
@@ -299,7 +329,6 @@
 ;(global-set-key (kbd "M-<prior>") 'highlight-changes-previous-change)
 
 ; linum
-;(global-linum-mode 1)
 (setq linum-format "%d ")
 (global-set-key (kbd "C-l")         'linum-mode)
 
@@ -320,47 +349,43 @@
 (electric-pair-mode +1)
 ;; }}}
 
-; {{{ ido
-(when (require 'ido nil 'noerror)
-    (ido-mode 'both)
-    (ido-everywhere 1)
-
-    (setq ido-decorations '(" {" "}" " | " " | ..." " [" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]"))
-
-    (setq ido-create-new-buffer 'never)
-    (setq ido-enable-tramp-completion nil)
-
-    (setq ido-enable-last-directory-history nil)
-    ;; (setq ido-max-work-directory-list  30)
-    ;; (setq ido-max-work-file-list       50)
-    ;; (setq ido-save-directory-list-file "~/.config/emacs/ido.last")
-
-    ;(setq ido-ignore-extensions t)
-    ;(setq ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
-
-    (setq ido-work-directory-list '("~/"))
-
-    (setq ido-case-fold             t)
-    (setq ido-use-filename-at-point nil)
-    (setq ido-use-url-at-point      nil)
-    (setq ido-enable-flex-matching  t)
-    (setq ido-max-prospects         8)
-    (setq ido-confirm-unique-completion t)
-    (setq confirm-nonexistent-file-or-buffer nil)
-
-    (global-set-key (kbd "C-b")  'ido-switch-buffer))
-    (global-set-key (kbd "M-s")  'ido-write-file)
-    ;; (global-set-key (kbd "C-w") 'ido-kill-buffer)
-
-
+ ; {{{ ido
 (defadvice ido-find-file (after find-file-sudo activate)
   "Find file as root if necessary."
   (unless (and buffer-file-name
                (file-writable-p buffer-file-name))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
-(global-set-key (kbd "C-o") 'find-file)
-; }}}
+(ido-everywhere 1)
+
+(setq-default ido-decorations '(" {" "}" " | " " | ..." " [" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]"))
+
+(setq ido-create-new-buffer 'never)
+(setq ido-enable-tramp-completion nil)
+(setq ido-enable-last-directory-history nil)
+;; (setq ido-max-work-directory-list  30)
+;; (setq ido-max-work-file-list       50)
+;; (setq ido-save-directory-list-file "~/.config/emacs/ido.last")
+
+;; (setq ido-ignore-extensions t)
+;; (setq ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
+
+(setq-default ido-work-directory-list '("~/"))
+(setq-default ido-case-fold             t)
+(setq-default ido-use-filename-at-point nil)
+(setq-default ido-use-url-at-point      nil)
+(setq-default ido-enable-flex-matching  t)
+(setq-default ido-max-prospects         8)
+(setq-default ido-confirm-unique-completion t)
+
+(setq-default confirm-nonexistent-file-or-buffer nil)
+
+(global-set-key (kbd "C-b")  'ido-switch-buffer)
+(global-set-key (kbd "M-s")  'ido-write-file)
+;; (global-set-key (kbd "C-w")  'ido-kill-buffer)
+(global-set-key (kbd "C-o")  'ido-find-file)
+(global-set-key (kbd "M-o")  'bookmark-bmenu-list)
+;; }}}
 
 ; Mutt
 (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
@@ -368,11 +393,9 @@
 (add-to-list 'auto-mode-alist '("\\.*rc$" . conf-unix-mode))
 (add-to-list 'auto-mode-alist '("rc$"     . conf-unix-mode))
 
-; Subword matching
-(global-subword-mode 1)
 
-; {{{ Language-based modes
-(setq default-major-mode 'text-mode)
+;; {{{ Language-based modes
+(setq-default default-major-mode 'text-mode)
 
 ; Haskell
 ;(add-to-list 'load-path "~/.emacs.d/elpa/haskell-mode-2.8.0")
@@ -414,7 +437,7 @@
 ; Shell script
 (setq auto-mode-alist (append '(("\.bashrc$" . shell-script-mode)) auto-mode-alist))
 (setq auto-mode-alist (append '(("\.profile$" . shell-script-mode)) auto-mode-alist))
-; }}}
+;; }}}
 
 ;; {{{ Term mode
 ;(require 'term)
@@ -470,31 +493,12 @@
 (setq compilation-save-buffers-predicate '(lambda () nil))
 ;; }}}
 
-; {{{ GUI
-;(scroll-bar-mode -1)
-;(tool-bar-mode -1)
-
-;(add-to-list 'default-frame-alist '(font . "Consolas-10"))
-
-; Colors
-;(add-to-list 'load-path "~/.emacs.d/elpa/color-theme-6.6.1")
-;(require 'color-theme)
-;(load "~/.emacs.d/elpa/color-theme-blackboard-0.0.2/color-theme-blackboard.el")
-
-;(setq color-theme-is-global nil)
-;(color-theme-blackboard)
-
-;(defun apply-color-theme (frame)
-;    (select-frame frame)
-;    (if (display-graphic-p frame) (color-theme-blackboard) (color-theme-tty-dark)))
-;(add-hook 'after-make-frame-functions 'color-theme-blackboard)
-
-;(setq frame-background-mode nil)
-;(invert-face 'default)
+;; {{{ GUI
+;; (invert-face 'default)
 
 ;(set-frame-parameter (selected-frame) 'alpha '(85 50))
 ;(add-to-list 'default-frame-alist '(alpha 85 50))
-; }}}
+;; }}}
 
 ;; {{{ Hooks
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
@@ -513,4 +517,30 @@
 (global-set-key (kbd "<f2>")  'hs-toggle-hiding)
 (global-set-key (kbd "<f3>")  'hs-hide-all)
 (global-set-key (kbd "<f4>")  'hs-show-all)
-; }}}
+;; }}}
+
+;; {{{ Theme
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector ["#002b36" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#839496"])
+ '(custom-enabled-themes (quote (solarized-dark)))
+ '(custom-safe-themes (quote ("b6f7795c2fbf75baf3419c60ef7625154c046fc2b10e3fdd188e5757e08ac0ec" "30fe7e72186c728bd7c3e1b8d67bc10b846119c45a0f35c972ed427c45bacc19" "b4018b7d8352dc7f21c0906cd33621ec487e872a97527dcdad590f0fb50cf9e8" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "9f443833deb3412a34d2d2c912247349d4bd1b09e0f5eaba11a3ea7872892000" "5e1d1564b6a2435a2054aa345e81c89539a72c4cad8536cfe02583e0b7d5e2fa" "6cfe5b2f818c7b52723f3e121d1157cf9d95ed8923dbc1b47f392da80ef7495d" "89f613708c8018d71d97e3da7a1e23c8963b798252f1ac2ab813ad63b7a4b341" "21d9280256d9d3cf79cbcf62c3e7f3f243209e6251b215aede5026e0c5ad853f" default)))
+ '(fci-rule-color "#073642")
+ '(frame-brackground-mode (quote dark))
+ '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
+ '(highlight-tail-colors (quote (("#073642" . 0) ("#546E00" . 20) ("#00736F" . 30) ("#00629D" . 50) ("#7B6000" . 60) ("#8B2C02" . 70) ("#93115C" . 85) ("#073642" . 100))))
+ '(vc-annotate-background "#93a1a1")
+ '(vc-annotate-color-map (quote ((20 . "#990A1B") (40 . "#FF6E64") (60 . "#cb4b16") (80 . "#7B6000") (100 . "#b58900") (120 . "#DEB542") (140 . "#546E00") (160 . "#859900") (180 . "#B4C342") (200 . "#3F4D91") (220 . "#6c71c4") (240 . "#9EA0E5") (260 . "#2aa198") (280 . "#69CABF") (300 . "#00629D") (320 . "#268bd2") (340 . "#69B7F0") (360 . "#d33682"))))
+ '(vc-annotate-very-old-color "#93115C"))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(set-background-color "#000011")
+(set-default-font "Inconsolata-12")
+;; }}}
