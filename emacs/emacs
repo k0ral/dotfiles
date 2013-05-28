@@ -8,8 +8,8 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (defvar myPackages '(ace-jump-mode autopair browse-kill-ring buffer-move c-eldoc
-                     color-file-completion crontab-mode dired+ haskell-mode iedit
-                     paredit rainbow-delimiters rainbow-mode smex solarized-theme
+                     color-file-completion crontab-mode dired+ haskell-mode highlight-symbol
+                     iedit paredit rainbow-delimiters rainbow-mode smex solarized-theme
                      undo-tree whole-line-or-region) "Default packages")
 
 (defun myPackages-installed-p ()
@@ -35,6 +35,7 @@
 (global-visual-line-mode 1)
 ;; (icomplete-mode 1)
 (ido-mode 'both)
+(highlight-symbol-mode 1)
 (menu-bar-mode -1)
 (paredit-mode t)
 (recentf-mode 1)
@@ -93,7 +94,6 @@
 (global-set-key (kbd "M-SPC")        'cua-set-rectangle-mark)
 (global-set-key (kbd "C-a")          'mark-whole-buffer)
 (global-set-key (kbd "M-c")          'whole-line-or-region-comment-dwim)
-(global-set-key (kbd "C-h")          'highlight-phrase)
 ;; }}}
 
 ;; {{{ Line manipulation
@@ -281,6 +281,10 @@
 
 (set-face-background 'hl-line "#000011")
 (set-face-background 'region  "#00ff00")
+
+(global-set-key (kbd "C-h")          'highlight-symbol-at-point)
+(global-set-key (kbd "M-n")          'highlight-symbol-next)
+(global-set-key (kbd "M-p")          'highlight-symbol-prev)
 ;; }}}
 
 ;; {{{ Eldoc
