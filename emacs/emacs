@@ -384,6 +384,7 @@
 (setq-default ido-enable-flex-matching  t)
 (setq-default ido-max-prospects         8)
 (setq-default ido-confirm-unique-completion t)
+(setq-default ido-auto-merge-work-directories-length -1) ; Do not try to find a file outside current directory in case given filename matches nothing; just open a new file!
 
 (setq-default confirm-nonexistent-file-or-buffer nil)
 
