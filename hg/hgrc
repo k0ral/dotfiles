@@ -1,5 +1,6 @@
 [ui]
 username = koral <koral att mailoo dott org>
+editor = nano
 
 [extensions]
 color=
