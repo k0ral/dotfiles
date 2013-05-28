@@ -112,6 +112,8 @@
   (interactive "p")
   (kill-line (- 1 arg)))
 
+(setq x-select-enable-primary t)
+
 (global-set-key (kbd "C-v")                'whole-line-or-region-yank)
 (global-set-key (kbd "M-v")                'browse-kill-ring)
 (global-set-key (kbd "C-c")                'whole-line-or-region-kill-ring-save)
