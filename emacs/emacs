@@ -156,6 +156,7 @@
 (defvaralias 'cperl-indent-level 'tab-width)
 ;; (setq-default standard-indent 4)
 ;; (setq-default indent-line-function 'insert-tab)
+(setq-default c-default-style    "linux")
 
 (global-set-key (kbd "RET")    'newline-and-indent)
 (global-set-key (kbd "TAB")    'indent-or-expand)
