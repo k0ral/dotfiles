@@ -1,0 +1,9 @@
+[Unit]
+Description=Composite manager
+
+[Service]
+ExecStart=/bin/compton
+Restart=always
+
+[Install]
+WantedBy=wm.target
