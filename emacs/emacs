@@ -26,6 +26,7 @@
 ;; }}}
 
 ;; {{{ Minor modes
+(blink-cursor-mode 1)
 (delete-selection-mode 1)
 (file-name-shadow-mode 1)
 (global-hl-line-mode 1)
@@ -280,7 +281,7 @@
 (set-face-foreground 'show-paren-match-face "#ff0")
 (set-face-attribute  'show-paren-match-face nil :weight 'extra-bold)
 
-(set-face-background 'hl-line "#000011")
+(set-face-background 'hl-line "#000033")
 (set-face-background 'region  "#00ff00")
 
 (global-set-key (kbd "C-h")          'highlight-symbol-at-point)
@@ -396,15 +397,17 @@
 (global-set-key (kbd "M-o")  'bookmark-bmenu-list)
 ;; }}}
 
-; Mutt
-(add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
-
-(add-to-list 'auto-mode-alist '("\\.*rc$" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("rc$"     . conf-unix-mode))
-
-
 ;; {{{ Language-based modes
+(autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
+
 (setq-default default-major-mode 'text-mode)
+(add-to-list 'auto-mode-alist '("/mutt"      . mail-mode))
+(add-to-list 'auto-mode-alist '("\\.*rc$"    . conf-unix-mode))
+(add-to-list 'auto-mode-alist '("rc$"        . conf-unix-mode))
+(add-to-list 'auto-mode-alist '("/PKGBUILD$" . pkgbuild-mode))
+(add-to-list 'auto-mode-alist '("\.bashrc$"  . shell-script-mode))
+(add-to-list 'auto-mode-alist '("\.profile$" . shell-script-mode))
+(add-to-list 'auto-mode-alist '("\.chs$"     . haskell-mode))
 
 ; Haskell
 ;(add-to-list 'load-path "~/.emacs.d/elpa/haskell-mode-2.8.0")
@@ -416,20 +419,11 @@
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
-(setq auto-mode-alist (append auto-mode-alist '(
-;    ("\\.[hg]s$"  . haskell-mode)
-;    ("\\.hic?$"   . haskell-mode)
-;    ("\\.hsc$"    . haskell-mode)
-    ("\\.chs$"    . haskell-mode))))
-;    ("\\.l[hg]s$" . literate-haskell-mode))))
-
-; PKGBUILD
-(autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
-(setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
-
-; Python
-;(autoload 'python-mode "python-mode.el" "Python mode." t)
-;(setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
+;; (setq auto-mode-alist (append auto-mode-alist '(
+   ;; ("\\.[hg]s$"  . haskell-mode)
+   ;; ("\\.hic?$"   . haskell-mode)
+   ;; ("\\.hsc$"    . haskell-mode)
+   ;; ("\\.l[hg]s$" . literate-haskell-mode))))
 
 ; C/C++/Java
 ;(setq c-default-style '(
@@ -442,15 +436,11 @@
 
 (add-hook 'c-mode-common-hook (lambda ()
     (font-lock-add-keywords nil '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
-
-; Shell script
-(setq auto-mode-alist (append '(("\.bashrc$" . shell-script-mode)) auto-mode-alist))
-(setq auto-mode-alist (append '(("\.profile$" . shell-script-mode)) auto-mode-alist))
 ;; }}}
 
 ;; {{{ Term mode
 ;(require 'term)
-(add-to-list 'load-path "/home/chahine/.emacs.d/elpa/multi-term-0.8.8")
+(add-to-list 'load-path "/home/koral/.emacs.d/elpa/multi-term-0.8.8")
 (autoload 'multi-term "multi-term" nil t)
 (eval-after-load "multi-term" '(progn
     (setq multi-term-program "/bin/bash")
@@ -530,6 +520,10 @@
 
 ;; {{{ Theme
 (load-theme 'solarized-dark t)
-(set-background-color "#000011")
-(set-default-font "Inconsolata-12")
+(add-to-list 'default-frame-alist '(background-color . "#000011"))
+(add-to-list 'default-frame-alist '(background-mode  . dark))
+(add-to-list 'default-frame-alist '(cursor-color     . "#00ff00"))
+(add-to-list 'default-frame-alist '(cursor-type      . bar))
+(add-to-list 'default-frame-alist '(font             . "Inconsolata-12"))
+(add-to-list 'default-frame-alist '(mouse-color      . "#007700"))
 ;; }}}
