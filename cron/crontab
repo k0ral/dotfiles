@@ -6,6 +6,7 @@ DISPLAY=:0
 @daily       cd ${HOME}/.config && (hg push; hg push bb) && /usr/bin/notify-send "Configuration pushed to twyk.org & bitbucket"
 @daily       cd ${HOME}/server/dotfiles && hg pull -u ssh://twyk.org/~/.config && /usr/bin/notify-send "Homeserver configuration pulled"
 @daily       /bin/chmod 600 ${HOME}/.config/msmtp/*
+@daily       /bin/detox -r ${HOME}/music
 @weekly      /bin/mv -u ${HOME}/Desktop/* ${HOME} && rm -r ${HOME}/Desktop
 @weekly      /bin/chmod -R go-rwx ${HOME}/mail ${HOME}/papers ${HOME}/server
 @weekly      /bin/mkdir -p ${HOME}/server/backup/ && rsync -rvzh --chmod=go-rwx --del --force homeserver:/home/koral/backup/ ${HOME}/server/backup/
