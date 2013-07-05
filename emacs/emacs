@@ -62,6 +62,15 @@
 ;; }}}
 
 ;; {{{ Movement
+(defun goto-line-with-feedback ()
+    "Show line numbers temporarily, while prompting for the line number input"
+    (interactive)
+    (unwind-protect
+        (progn
+          (linum-mode 1)
+          (goto-line (read-number "Goto line: ")))
+      (linum-mode -1)))
+
 (global-set-key (kbd "<C-left>")     'subword-backward)
 (global-set-key (kbd "<C-right>")    'subword-forward)
 (global-set-key (kbd "<M-left>")     'beginning-of-line)
@@ -71,6 +80,7 @@
 
 (global-set-key (kbd "C-g")          'goto-line)
 (global-set-key (kbd "M-g")          'ace-jump-mode)
+(global-set-key [remap goto-line] 'goto-line-with-feedback)
 ;; }}}
 
 ;; {{{ Scroll
@@ -349,7 +359,7 @@
 
 ; saveplace
 (when (require 'saveplace nil 'noerror)
-    (setq save-place-file "~/.config/emacs/saveplace")
+    (setq save-place-file (expand-file-name ".saveplace" user-emacs-directory))
     (setq-default save-place t))
 
 ;; {{{ Autopair
