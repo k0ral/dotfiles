@@ -114,7 +114,11 @@
   (move-end-of-line nil)
   (newline-and-indent))
 
+
 (global-set-key (kbd "M-RET")      'smart-open-line)
+(global-set-key (kbd "M-j")        (lambda ()
+                                     (interactive)
+                                     (join-line -1) ))
 ;; }}}
 
 ;; {{{ Kill ring & clipboard
