@@ -61,7 +61,7 @@ function mv
 end
 
 function rename
-    rename -v $argv
+    command rename -v $argv
 end
 
 function ls
@@ -118,16 +118,20 @@ end
 
 # {{{ Aliases: shorter commands
 function e
-    emacsclient -t -a "" $argv
+    emacsclient -c -n $argv
 end
 
 function E
-    set SUDO_EDITOR "emacsclient -t"
+    set SUDO_EDITOR "emacsclient -c -n"
     sudoedit $argv
 end
 
 function f
     find ./ -name $argv
+end
+
+function g
+    sr google $argv
 end
 
 function h
@@ -151,7 +155,7 @@ function lsa
 end
 
 function m
-    mutt
+    runInTmux main mutt
 end
 
 function mk
@@ -159,7 +163,7 @@ function mk
 end
 
 function n
-    ncmpcpp $argv
+    runInTmux main ncmpcpp
 end
 
 function o
@@ -178,8 +182,8 @@ function logs
     s journalctl -u $argv
 end
 
-function vol
-    alsamixer
+function v
+    runInTmux main alsamixer
 end
 # }}}
 
@@ -244,10 +248,6 @@ end
 alias dlpage='wget -nd -pHEKk'
 alias wifiselect='sudo wifi-select wlan0'
 
-function wtf
-    dmesg $argv
-end
-
 function bit
     transmission-remote twyk.org $argv
 end
@@ -288,8 +288,14 @@ end
 # }}}
 
 # {{{ Functions
-function sleep-on
-    sudo /etc/rc.d/fcron stop
+function runInTmux
+    tmux new -s $argv[1]
+    tmux -q findw -N $argv[2]; or tmux neww -n $argv[2] $argv[2]
+end
+
+function fade
+    # echo "systemctl poweroff" | at now +60 minutes
+    watch -n 80 amixer set Master 1-
 end
 
 function ls-empty
