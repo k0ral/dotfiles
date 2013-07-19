@@ -25,6 +25,7 @@ LC_TYPE=en_US.utf8
 BROWSER=/usr/bin/firefox
 CC=/usr/bin/colorgcc
 EDITOR='/usr/bin/emacsclient -c -n'
+LESS='-R '
 LESS_ADVANCED_PREPROCESSOR=1
 LESSOPEN='| /bin/lesspipe.sh %s'
 PAGER=/usr/bin/less
