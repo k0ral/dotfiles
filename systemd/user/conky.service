@@ -3,7 +3,7 @@ Description=System Monitor for X
 
 [Service]
 Environment=DISPLAY=:0
-ExecStart=/bin/sh -c "/usr/bin/conky | /usr/bin/dzen2 -fn 'Inconsolata:pixelsize=14' -ta r -expand l -dock"
+ExecStart=/bin/sh -c "/usr/bin/conky | /usr/bin/dzen2 -fn 'Inconsolata:pixelsize=16' -ta r -expand l -dock"
 Restart=always
 
 [Install]
