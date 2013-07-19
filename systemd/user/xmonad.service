@@ -8,6 +8,7 @@ ExecStartPre=/usr/bin/xsetroot -solid black
 ExecStartPre=/usr/bin/xset b off
 ExecStartPre=/usr/bin/setxkbmap -option ctrl:nocaps
 ExecStartPre=/usr/bin/setxkbmap fr
+ExecStartPre=/bin/hsetroot -solid "#000000"
 
 EnvironmentFile=-/home/koral/.config/systemd/user/environment
 
