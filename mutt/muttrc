@@ -33,7 +33,7 @@ alternative_order text/plain text/html
 # }}}
 
 # Commands
-set editor="/usr/bin/emacsclient -t"
+set editor="/usr/bin/emacsclient -c"
 set sendmail="/usr/bin/msmtp --read-envelope-from"
 
 
