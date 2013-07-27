@@ -25,6 +25,7 @@ import XMonad.Layout.WindowNavigation
 import XMonad.Prompt
 --import XMonad.Prompt.RunOrRaise
 --import XMonad.Prompt.Shell
+import XMonad.Prompt.XMonad
 import qualified XMonad.StackSet as W
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run(spawnPipe)
@@ -37,28 +38,27 @@ import System.Exit
 import System.IO
 -- }}}
 
-myTerminal           = "urxvtc -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'"
-myBrowser            = "hbro"
-myWorkspaces         = map show [1..7] ++ ["8:web", "9:music"]
+-- myTerminal           = "urxvtc -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'"
+myTerminal           = "urxvtc -e bash -c '" ++ myShell ++ "'"
+myShell              = "tmux -q has -t main && exec tmux new -t main \\; neww || exec tmux new -s main"
+myBrowser            = "firefox"
+myWorkspaces         = map show [1..6] ++ ["7:dev", "8:web", "9:music"]
 
 myBorderWidth        = 1
-myNormalBorderColor  = "#dddddd"
-myFocusedBorderColor = "#ff0000"
+myNormalBorderColor  = "#000099"
+myFocusedBorderColor = "#cccc00"
 
 myFocusFollowsMouse = True
 
 -- Scratchpad
-scratchpads = [NS "urxvt" "urxvt -name scratchpad -title scratchpad -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'" (appName =? "scratchpad") (customFloating $ W.RationalRect l t w h)]
+-- scratchpads = [NS "urxvt" "urxvt -name scratchpad -title scratchpad -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'" (appName =? "scratchpad") (customFloating $ W.RationalRect l t w h)]
+scratchpads = [NS "urxvt" ("urxvt -name scratchpad -title scratchpad -e bash -c '" ++ myShell ++ "'") (appName =? "scratchpad") (customFloating $ W.RationalRect l t w h)]
   where
     h = 0.4         -- terminal height
     w = 0.95        -- terminal width
     t = 1 - h       -- distance from top edge
     l = (1 - w)/2   -- distance from left edge
 
--- modMask lets you specify which modkey you want to use. The default
--- is mod1Mask ("left alt").  You may also consider using mod3Mask
--- ("right alt"), which does not conflict with emacs keybindings. The
--- "windows key" is usually mod4Mask.
 myModMask = mod4Mask
 
 -- The mask for the numlock key. Numlock status is "masked" from the
@@ -86,10 +86,11 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     --((modm,                 xK_BackSpace),  scratchpadSpawnActionCustom (myTerminal ++ " -t scratchpad")),
     ((modm,                 xK_BackSpace),  namedScratchpadAction scratchpads "urxvt"),
     --((modm,                 xK_r),          spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
-    ((modm,                 xK_r),          spawn "gmrun"),
+    ((modm,                 xK_r),          spawn "dmenu_run -b -l 10 -p 'Execute'"),
     --((modm,                 xK_r),          shellPrompt mySP),
     --((modm .|. shiftMask,   xK_r ),         runOrRaisePrompt mySP),
     ((modm,                 xK_l),          spawn "slock"),
+    ((modm,                 xK_x),          xmonadPrompt defaultXPConfig),
     ((modm,                 xK_F4),         kill),
 
     -- Layouts
@@ -166,10 +167,13 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ [
 -- If you change layout bindings be sure to use 'mod-shift-space' after
 -- restarting (with 'mod-q') to reset your layout state to the new
 -- defaults, as xmonad preserves your old layout settings by default.
-webLayout     = avoidStruts . maximize . smartBorders . windowNavigation $ myTabbed ||| Grid ||| stack ||| tiled ||| Mirror tiled |||              Full ||| Accordion
-defaultLayout = avoidStruts . maximize . smartBorders . windowNavigation $              Grid ||| stack ||| tiled ||| Mirror tiled ||| myTabbed ||| Full ||| Accordion
+devLayout     = avoidStruts . maximize . smartBorders . windowNavigation $ tiled
+webLayout     = avoidStruts . maximize . smartBorders . windowNavigation $ Full
+defaultLayout = avoidStruts . maximize . smartBorders . windowNavigation $ Grid ||| tiled ||| Mirror tiled ||| myTabbed ||| Full ||| Accordion
 
-myLayout = onWorkspace "8:web" webLayout defaultLayout
+myLayout = onWorkspace "8:web" webLayout .
+           onWorkspace "7:dev" devLayout $
+           defaultLayout
 
 tiled    = Tall nmaster delta ratio
   where
@@ -215,15 +219,10 @@ ignoredWindows = composeAll [
     resource  =? "desktop_window" --> doIgnore]
 
 moveToWorkspace = composeAll [
-    resource =? "hbro"  --> doF (W.shift "8:web") ]
+    resource =? "emacs"  --> doF (W.shift "7:dev") ]
 
 manageScratchpad :: ManageHook
 manageScratchpad = namedScratchpadManageHook scratchpads
-
-steamFix = composeAll [
-    className =? "Steam" --> doFloat,
-    className =? "steam" --> doFloat, --bigpicture-mode
-    className =? "Steam" --> doIgnore]
 
 onNewWindow =
     manageScratchpad <+>
@@ -231,7 +230,6 @@ onNewWindow =
     floatingWindows <+>
     ignoredWindows <+>
     moveToWorkspace
-    <+> steamFix
 -- }}}
 
 ------------------------------------------------------------------------
@@ -273,7 +271,7 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook { args = ["-bg", "darkgreen", "-
 
 -- {{{ Entry point
 main = do
-    status <- spawnPipe "dzen2 -fg '#333377' -bg '#000011' -fn 'Consolas:pixelsize=14' -ta l -expand r"
+    status <- spawnPipe "dzen2 -fg '#333377' -bg '#000011' -fn 'Inconsolata:pixelsize=16' -ta l -expand r"
     _ <- spawn myTerminal
     xmonad $ myUrgencyHook $ defaults status
 
