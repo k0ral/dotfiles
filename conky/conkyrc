@@ -88,12 +88,13 @@ ${if_running mpd}^fg(green)$else^fg(red)${endif}MPD \
 ${if_running sshd}^fg(green)$else^fg(red)${endif}SSH \
 ^fg(\#3333ff)| \
 #
-USERS \
-${if_match $user_number > 1}^fg(red)\
-$endif\
-$user_number\
+# USERS \
+# ${if_match $user_number > 1}^fg(red)\
+# $endif\
+# $user_number\
 #
-^fg(\#3333ff) | \
+# ^fg(\#3333ff) | \
+#
 ✉ \
 ${if_match ${new_mails /home/koral/mail/myopera/INBOX} > 0}^fg(green)$endif\
 ${new_mails /home/koral/mail/myopera/INBOX}^fg(\#3333ff):\
