@@ -423,6 +423,7 @@
 (add-to-list 'auto-mode-alist '("\.bashrc$"  . shell-script-mode))
 (add-to-list 'auto-mode-alist '("\.profile$" . shell-script-mode))
 (add-to-list 'auto-mode-alist '("\.chs$"     . haskell-mode))
+;(add-to-list 'auto-mode-alist '("\.ino$"     . c-mode))
 
 ; Haskell
 ;(add-to-list 'load-path "~/.emacs.d/elpa/haskell-mode-2.8.0")
@@ -505,13 +506,6 @@
 ;; {{{ IDE
 (setq compilation-ask-about-save nil)
 (setq compilation-save-buffers-predicate '(lambda () nil))
-;; }}}
-
-;; {{{ GUI
-;; (invert-face 'default)
-
-;(set-frame-parameter (selected-frame) 'alpha '(85 50))
-;(add-to-list 'default-frame-alist '(alpha 85 50))
 ;; }}}
 
 ;; {{{ Hooks
