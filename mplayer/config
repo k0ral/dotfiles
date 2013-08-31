@@ -1,5 +1,5 @@
-vo=vdpau,
-vc=ffh264vdpau,ffmpeg12vdpau,ffodivxvdpau,ffwmv3vdpau,ffvc1vdpau,
+#vo=vdpau,
+#vc=ffh264vdpau,ffmpeg12vdpau,ffodivxvdpau,ffwmv3vdpau,ffvc1vdpau,
 
 
 # Cache (in ko)

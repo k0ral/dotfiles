@@ -1,7 +1,13 @@
 # {{{ Prompt
 function fish_prompt
-    set_color $fish_color_cwd
+# Is it a remote session ?
+    if test -z (who -m)
+    else
+        set_color red
+        echo -n "[remotely] "
+    end
 
+    set_color $fish_color_cwd
     echo -n (whoami)
 
     set_color normal
@@ -50,6 +56,11 @@ end
 
 function cp
     rsync -av --progress $argv
+end
+
+function mkcd
+    mkdir $argv
+    cd $argv
 end
 
 function mkdir
@@ -216,10 +227,17 @@ end
 #alias -p grep='ack'
 #alias more='vimpager'
 #alias less='vimpager'
-#alias ping='mtr'
+
+function ping
+    grc ping $argv
+end
 
 function top
     htop $argv
+end
+
+function traceroute
+    grc traceroute $argv
 end
 
 #function which
@@ -246,7 +264,10 @@ function reco
 end
 
 alias dlpage='wget -nd -pHEKk'
-alias wifiselect='sudo wifi-select wlan0'
+
+function wifi
+    s wifi-select wlan0
+end
 
 function bit
     transmission-remote twyk.org $argv
@@ -288,6 +309,11 @@ end
 # }}}
 
 # {{{ Functions
+function cutFrom
+    echo "ffmpeg -ss $argv[1] -i $argv[2] -acodec copy -vcodec copy $argv[2].new"
+    ffmpeg -ss $argv[1] -i $argv[2] -acodec copy -vcodec copy new.$argv[2]
+end
+
 function runInTmux
     tmux new -s $argv[1]
     tmux -q findw -N $argv[2]; or tmux neww -n $argv[2] $argv[2]
@@ -300,6 +326,11 @@ end
 
 function ls-empty
     find . -type d -empty -print0 | xargs --null ls $argv
+end
+
+function sbg
+    cd $HOME/images/wallpapers
+    /usr/bin/hsetroot -fill (/bin/ls | /usr/bin/shuf -n 1)
 end
 
 function rm-empty

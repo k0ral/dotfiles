@@ -6,7 +6,9 @@ import qualified XMonad.Actions.ConstrainedResize as Sqr
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DwmPromote
 import XMonad.Actions.FindEmptyWorkspace
+import XMonad.Actions.GridSelect
 import XMonad.Actions.NoBorders
+import XMonad.Actions.Warp
 import XMonad.Config.Azerty
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FadeInactive
@@ -38,11 +40,53 @@ import System.Exit
 import System.IO
 -- }}}
 
+-- {{{ Applications
 -- myTerminal           = "urxvtc -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'"
 myTerminal           = "urxvtc -e bash -c '" ++ myShell ++ "'"
 myShell              = "tmux -q has -t main && exec tmux new -t main \\; neww || exec tmux new -s main"
 myBrowser            = "firefox"
-myWorkspaces         = map show [1..6] ++ ["7:dev", "8:web", "9:music"]
+-- }}}
+
+-- {{{ Workspaces & layouts
+myWorkspaces =  ["1:movie", "2:music", "3:dev", "4:web"] ++ map show [5..9]
+
+devLayout     = avoidStruts . maximize . smartBorders . windowNavigation $ tiled
+movieLayout   =               maximize . noBorders    . windowNavigation $ Full
+webLayout     = avoidStruts . maximize . smartBorders . windowNavigation $ Full
+defaultLayout = avoidStruts . maximize . smartBorders . windowNavigation $ Grid ||| tiled ||| Mirror tiled ||| myTabbed ||| Full ||| Accordion
+
+tiled = Tall nmaster delta ratio
+  where
+    nmaster = 1        -- Windows in the master pane
+    ratio   = 1/2      -- Proportion of screen occupied by master pane
+    delta   = 3/100    -- Percent of screen to increment by when resizing panes
+stack    = StackTile 1 (3/100) (1/2)
+myTabbed = tabbed shrinkText tabTheme
+
+
+tabTheme = Theme {
+    activeColor         = "#000077",
+    inactiveColor       = "#000000",
+    urgentColor         = "#770000",
+    activeBorderColor   = "#000077",
+    inactiveBorderColor = "#111111",
+    urgentBorderColor   = "#777700",
+    activeTextColor     = "#ffffff",
+    inactiveTextColor   = "#aaaaaa",
+    urgentTextColor     = "#ffff00",
+    fontName            = "xft:Inconsolata:size=10",
+    decoWidth           = 200,
+    decoHeight          = 20,
+    windowTitleAddons   = [],
+    windowTitleIcons    = []}
+
+
+myLayout = onWorkspace "1:movie" movieLayout .
+           onWorkspace "3:dev"   devLayout .
+           onWorkspace "4:web"   webLayout $
+           defaultLayout
+-- }}}
+
 
 myBorderWidth        = 1
 myNormalBorderColor  = "#000099"
@@ -104,7 +148,8 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm,                 xK_Page_Down),  windows W.focusDown),
     ((modm,                 xK_Page_Up),    windows W.focusUp),
     --((modm,                 xK_m),          windows W.focusMaster),
-    ((modm              ,   xK_u),          focusUrgent),
+    ((modm,                 xK_u),          focusUrgent),
+    ((modm,                 xK_g),          goToSelected defaultGSConfig),
 
     -- Swap focused window
     --((modm,                 xK_Return),     windows W.swapMaster),
@@ -135,6 +180,9 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm,                 xK_e),          viewEmptyWorkspace),
     ((modm .|. shiftMask,   xK_e),          tagToEmptyWorkspace),
 
+    -- Mouse
+    ((modm,                 xK_o),          banish UpperLeft),
+
     -- Toggle the status bar gap
     ((modm,                 xK_b),          sendMessage ToggleStruts),
 
@@ -163,42 +211,6 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm .|. shiftMask, button3), (\w -> focus w >> Sqr.mouseResizeWindow w True ))]
 -- }}}
 
--- {{{ Layouts
--- If you change layout bindings be sure to use 'mod-shift-space' after
--- restarting (with 'mod-q') to reset your layout state to the new
--- defaults, as xmonad preserves your old layout settings by default.
-devLayout     = avoidStruts . maximize . smartBorders . windowNavigation $ tiled
-webLayout     = avoidStruts . maximize . smartBorders . windowNavigation $ Full
-defaultLayout = avoidStruts . maximize . smartBorders . windowNavigation $ Grid ||| tiled ||| Mirror tiled ||| myTabbed ||| Full ||| Accordion
-
-myLayout = onWorkspace "8:web" webLayout .
-           onWorkspace "7:dev" devLayout $
-           defaultLayout
-
-tiled    = Tall nmaster delta ratio
-  where
-    nmaster = 1        -- Windows in the master pane
-    ratio   = 1/2      -- Proportion of screen occupied by master pane
-    delta   = 3/100    -- Percent of screen to increment by when resizing panes
-stack    = StackTile 1 (3/100) (1/2)
-myTabbed = tabbed shrinkText tabTheme
-
-tabTheme = Theme {
-    activeColor         = "#000077",
-    inactiveColor       = "#000000",
-    urgentColor         = "#770000",
-    activeBorderColor   = "#000077",
-    inactiveBorderColor = "#111111",
-    urgentBorderColor   = "#777700",
-    activeTextColor     = "#ffffff",
-    inactiveTextColor   = "#aaaaaa",
-    urgentTextColor     = "#ffff00",
-    fontName            = "xft:Consolas:size=10",
-    decoWidth           = 200,
-    decoHeight          = 20,
-    windowTitleAddons   = [],
-    windowTitleIcons    = []}
--- }}}
 
 -- {{{ Window rules
 -- Execute arbitrary actions and WindowSet manipulations when managing
@@ -235,8 +247,6 @@ onNewWindow =
 ------------------------------------------------------------------------
 -- Event handling
 
--- * EwmhDesktops users should change this to ewmhDesktopsEventHook
---
 -- Defines a custom handler function for X Events. The function should
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
