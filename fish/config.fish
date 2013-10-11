@@ -310,9 +310,15 @@ end
 
 # {{{ Functions
 function cutFrom
-    echo "ffmpeg -ss $argv[1] -i $argv[2] -acodec copy -vcodec copy $argv[2].new"
+    echo "> ffmpeg -ss $argv[1] -i $argv[2] -acodec copy -vcodec copy new.$argv[2]"
     ffmpeg -ss $argv[1] -i $argv[2] -acodec copy -vcodec copy new.$argv[2]
 end
+
+function cutTo
+    echo "> ffmpeg -i $argv[2] -acodec copy -vcodec copy -to $argv[1] new.$argv[2]"
+    ffmpeg -i $argv[2] -acodec copy -vcodec copy -to $argv[1] new.$argv[2]
+end
+
 
 function runInTmux
     tmux new -s $argv[1]
@@ -321,7 +327,7 @@ end
 
 function fade
     # echo "systemctl poweroff" | at now +60 minutes
-    watch -n 80 amixer set Master 1-
+    watch -n 90 amixer set Master 1-
 end
 
 function ls-empty
