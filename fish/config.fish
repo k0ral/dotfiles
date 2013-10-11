@@ -80,7 +80,7 @@ function ls
 end
 
 function df
-    command df -hT
+    command pydf
 end
 
 #alias du='du -chs'
