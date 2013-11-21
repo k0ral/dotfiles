@@ -397,7 +397,7 @@
 ;; (setq ido-save-directory-list-file "~/.config/emacs/ido.last")
 
 ;; (setq ido-ignore-extensions t)
-;; (setq ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
+(setq ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
 
 (setq-default ido-work-directory-list '("~/"))
 (setq-default ido-case-fold             t)
