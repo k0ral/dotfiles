@@ -83,7 +83,9 @@ function df
     command pydf
 end
 
-#alias du='du -chs'
+function du
+    command du -hs $argv
+end
 
 function caly
     cal -y $argv
