@@ -1,7 +1,10 @@
 # Route DNS requests through dnsmasq first
 nameserver 127.0.0.1
-# First OpenDNS server
+
+# OpenDNS servers
 nameserver 208.67.222.222
-# Second OpenDNS server
 nameserver 208.67.220.220
 
+# Google servers
+nameserver 8.8.8.8
+nameserver 8.8.4.4
