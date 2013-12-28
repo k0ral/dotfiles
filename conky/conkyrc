@@ -95,7 +95,9 @@ ${if_running sshd}^fg(green)$else^fg(red)${endif}SSH \
 #
 # ^fg(\#3333ff) | \
 #
-✉ \
+MAIL \
+${if_match ${new_mails /home/koral/mail/gmail/INBOX} > 0}^fg(green)$endif\
+${new_mails /home/koral/mail/gmail/INBOX}^fg(\#3333ff):\
 ${if_match ${new_mails /home/koral/mail/myopera/INBOX} > 0}^fg(green)$endif\
 ${new_mails /home/koral/mail/myopera/INBOX}^fg(\#3333ff):\
 ${if_match ${new_mails /home/koral/mail/mailoo/INBOX} > 0}^fg(green)$endif\
