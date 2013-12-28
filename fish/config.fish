@@ -95,6 +95,10 @@ function free
     command free -h $argv
 end
 
+function grep
+    ack $argv
+end
+
 function egrep
     command egrep --color=auto $argv
 end
