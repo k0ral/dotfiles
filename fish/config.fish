@@ -58,6 +58,10 @@ function cp
     rsync -av --progress $argv
 end
 
+function dmesg
+    command dmesg -T $argv
+end
+
 function mkcd
     mkdir $argv
     cd $argv
