@@ -109,15 +109,3 @@ set folder_format="%N %t %f %> %15d"
 
 #   Mailboxes
 mailboxes =outbox
-
-
-# Identify mailing lists I subscribe to
-#   lists <list-name> [ <list-name> ... ]
-
-
-# Scoring
-#	score <pattern> <value>
-#
-# 9999 and -9999 are special values which cause processing of hooks to stop
-# at that entry.  If you prefix the score with an equal sign (=), the score
-# is assigned to the message and processing stops.
