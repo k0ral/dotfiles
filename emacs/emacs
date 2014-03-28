@@ -564,7 +564,6 @@ word."
 ;; }}}
 
 ;; {{{ Keys
-(global-set-key (kbd "<f11>")       'compile)
 (global-set-key (kbd "<f12>")       'multi-term)
 ;; }}}
 
