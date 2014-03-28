@@ -53,4 +53,6 @@ case "$1" in
             amixer -c 0 set Master mute;
         fi ;;
     cd/play) mpc toggle ;;
+    cd/next) mpc next ;;
+    cd/prev) mpc prev ;;
 esac
