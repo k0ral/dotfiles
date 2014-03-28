@@ -128,7 +128,7 @@ function my_indent
 end
 
 function octave
-    octave -q $argv
+    command octave -q $argv
 end
 
 function wget
