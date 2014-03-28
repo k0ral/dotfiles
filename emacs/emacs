@@ -51,13 +51,15 @@
 ;; }}}
 
 ;; {{{ General options
-(setq-default echo-keystrokes 0.1)
-(setq-default use-dialog-box nil)
-(setq-default vc-follow-symlinks t)
-(setq-default require-final-newline t)
-;; (setq ring-bell-function 'ignore)
-(setq-default inhibit-startup-screen t)
-(setq-default show-trailing-whitespace t)
+(setq-default
+    echo-keystrokes          0.1
+    use-dialog-box           nil
+    vc-follow-symlinks       t
+    require-final-newline    t
+    inhibit-startup-screen   t
+    show-trailing-whitespace t
+    ;ring-bell-function      'ignore
+)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; }}}
@@ -130,10 +132,12 @@
 ;; }}}
 
 ;; {{{ Scroll
-(setq-default scroll-step 1)
-(setq-default scroll-margin 7)
-(setq-default scroll-conservatively 1000)
-(setq-default scroll-preserve-screen-position t)
+(setq-default
+    scroll-step                     1
+    scroll-margin                   7
+    scroll-conservatively           1000
+    scroll-preserve-screen-position t
+)
 
 (global-set-key (kbd "M-m")          'recenter)
 (global-set-key (kbd "<S-down>")     'scroll-up-line)
@@ -303,13 +307,15 @@ word."
 (when (require 'dired-details+ nil 'noerror)
   (setq dired-details-hide-link-targets nil) )
 
-(setq dired-auto-revert-buffer t)
-(setq dired-dwim-target t)
-(setq dired-listing-switches "-lh --group-directories-first")
-(setq dired-recursive-deletes 'always)
-(setq dired-recursive-copies 'always)
+(setq
+    dired-auto-revert-buffer     t
+    dired-dwim-target            t
+    dired-listing-switches       "-lh --group-directories-first"
+    dired-recursive-deletes      'always
+    dired-recursive-copies       'always
+    image-dired-external-viewer  "mirage"
+)
 ;; (put 'dired-find-alternate-file 'disabled nil)
-(setq image-dired-external-viewer "mirage")
 
 (define-key dired-mode-map (kbd "<f5>")        'revert-buffer)
 
@@ -449,24 +455,28 @@ word."
 
 (setq-default ido-decorations '(" {" "}" " | " " | ..." " [" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]"))
 
-(setq ido-create-new-buffer 'never)
-(setq ido-enable-tramp-completion nil)
-(setq ido-enable-last-directory-history nil)
-;; (setq ido-max-work-directory-list  30)
-;; (setq ido-max-work-file-list       50)
-;; (setq ido-save-directory-list-file "~/.config/emacs/ido.last")
+(setq
+    ido-create-new-buffer             'never
+    ido-enable-tramp-completion       nil
+    ido-enable-last-directory-history nil
+;   ido-max-work-directory-list  30)
+;   ido-max-work-file-list       50)
+;   ido-save-directory-list-file "~/.config/emacs/ido.last")
+)
 
 ;; (setq ido-ignore-extensions t)
 (setq ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
 
-(setq-default ido-work-directory-list '("~/"))
-(setq-default ido-case-fold             t)
-(setq-default ido-use-filename-at-point nil)
-(setq-default ido-use-url-at-point      nil)
-(setq-default ido-enable-flex-matching  t)
-(setq-default ido-max-prospects         8)
-(setq-default ido-confirm-unique-completion t)
-(setq-default ido-auto-merge-work-directories-length -1) ; Do not try to find a file outside current directory in case given filename matches nothing; just open a new file!
+(setq-default
+    ido-work-directory-list                '("~/")
+    ido-case-fold                          t
+    ido-use-filename-at-point              nil
+    ido-use-url-at-point                   nil
+    ido-enable-flex-matching               t
+    ido-max-prospects                      8
+    ido-confirm-unique-completion          t
+    ido-auto-merge-work-directories-length -1 ; Do not try to find a file outside current directory in case given filename matches nothing; just open a new file!
+)
 
 (setq-default confirm-nonexistent-file-or-buffer nil)
 
