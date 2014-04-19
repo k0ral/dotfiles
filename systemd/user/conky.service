@@ -1,10 +1,13 @@
 [Unit]
 Description=System Monitor for X
+Requires=xorg.service
+After=xorg.service
 
 [Service]
 Environment=DISPLAY=:0
 ExecStart=/bin/sh -c "/usr/bin/conky | /usr/bin/dzen2 -fn 'Inconsolata:pixelsize=16' -ta r -expand l -dock"
 Restart=always
+RestartSec=30
 
 [Install]
 WantedBy=wm.target

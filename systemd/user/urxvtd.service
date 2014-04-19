@@ -1,11 +1,14 @@
 [Unit]
 Description=rxvt-unicode daemon
+Requires=xorg.service
+After=xorg.service
 
 [Service]
 Type=forking
 ExecStartPre=/usr/bin/xrdb -merge %h/.config/x/Xresources
 ExecStart=/usr/bin/urxvtd -q -f -o
 Restart=always
+RestartSec=30
 
 [Install]
 WantedBy=wm.target

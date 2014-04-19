@@ -1,0 +1,12 @@
+[Unit]
+Description=X display server
+
+[Service]
+#User=koral
+Type=notify
+ExecStart=/usr/bin/xorg-launch-helper -nolisten tcp -noreset vt1
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=wm.target
