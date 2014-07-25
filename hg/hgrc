@@ -9,6 +9,8 @@ graphlog=
 mq=
 pager=
 record=
+hgext.bookmarks =
+# hggit =
 
 [pager]
 pager = LESS='FRX' less
