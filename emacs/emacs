@@ -7,9 +7,9 @@
 (add-to-list 'package-archives '("gnu"       . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
-(defvar myPackages '(ace-jump-mode autopair browse-kill-ring buffer-move c-eldoc
+(defvar myPackages '(ace-jump-buffer ace-jump-mode browse-kill-ring buffer-move c-eldoc
                      color-file-completion crontab-mode dired+ dired-details
-                     dired-details+ haskell-mode highlight-symbol iedit paredit
+                     dired-details+ haskell-mode highlight-symbol iedit lua-mode paredit
                      rainbow-delimiters rainbow-mode smex solarized-theme undo-tree
                      whole-line-or-region) "Default packages")
 
@@ -410,7 +410,10 @@ word."
 ;; }}}
 
 ; Diff
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq
+    ediff-split-window-function 'split-window-horizontally
+    ediff-window-setup-function 'ediff-setup-windows-plain
+)
 ;(global-highlight-changes-mode t)
 ;(setq highlight-changes-visibility-initial-state nil)
 
@@ -437,11 +440,6 @@ word."
     (setq save-place-file (expand-file-name ".saveplace" user-emacs-directory))
     (setq-default save-place t))
 
-;; {{{ Autopair
-;; (when (require 'autopair)
-    ;; (setq autopair-autowrap t)
-    ;; (autopair-global-mode 1))
-(electric-pair-mode +1)
 ;; }}}
 
  ; {{{ ido
@@ -453,34 +451,25 @@ word."
 
 (ido-everywhere 1)
 
-(setq-default ido-decorations '(" {" "}" " | " " | ..." " [" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]"))
-
-(setq
-    ido-create-new-buffer             'never
-    ido-enable-tramp-completion       nil
-    ido-enable-last-directory-history nil
-;   ido-max-work-directory-list  30)
-;   ido-max-work-file-list       50)
-;   ido-save-directory-list-file "~/.config/emacs/ido.last")
-)
-
-;; (setq ido-ignore-extensions t)
-(setq ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*"))
-
 (setq-default
-    ido-work-directory-list                '("~/")
+    ido-auto-merge-work-directories-length -1 ; Do not try to find a file outside current directory in case given filename matches nothing; just open a new file!
+    ido-create-new-buffer                  'never
     ido-case-fold                          t
+    ido-confirm-unique-completion          t
+    ido-decorations                        '(" {" "}" " | " " | ..." " [" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")
+    ido-enable-flex-matching               t
+    ido-enable-last-directory-history      nil
+    ido-ignore-buffers                '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*" "^\*")
+    ido-save-directory-list-file      "~/.config/emacs/ido.last"
     ido-use-filename-at-point              nil
     ido-use-url-at-point                   nil
-    ido-enable-flex-matching               t
-    ido-max-prospects                      8
-    ido-confirm-unique-completion          t
-    ido-auto-merge-work-directories-length -1 ; Do not try to find a file outside current directory in case given filename matches nothing; just open a new file!
+    ido-work-directory-list                '("~/")
 )
 
 (setq-default confirm-nonexistent-file-or-buffer nil)
 
 (global-set-key (kbd "C-b")  'ido-switch-buffer)
+(global-set-key (kbd "M-b")  'ace-jump-buffer)
 (global-set-key (kbd "M-s")  'ido-write-file)
 ;; (global-set-key (kbd "C-w")  'ido-kill-buffer)
 (global-set-key (kbd "C-o")  'ido-find-file)
