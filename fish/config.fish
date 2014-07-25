@@ -62,6 +62,10 @@ function dmesg
     command dmesg -T $argv
 end
 
+function less
+    command most $argv
+end
+
 function mkcd
     mkdir $argv
     cd $argv
@@ -84,7 +88,8 @@ function ls
 end
 
 function df
-    command pydf
+    # pydf $argv
+    dfc $argv
 end
 
 function du
@@ -107,16 +112,16 @@ function egrep
     command egrep --color=auto $argv
 end
 
+function ffmpeg
+    command ffmpeg -hide_banner $argv
+end
+
 function fgrep
     command fgrep --color=auto $argv
 end
 
 function locate
     command locate -e $argv
-end
-
-function mplayer
-    command mplayer -msgcolor $argv
 end
 
 function mutt
@@ -199,10 +204,6 @@ function s
     sudo $argv
 end
 
-function logs
-    s journalctl -u $argv
-end
-
 function v
     runInTmux main alsamixer
 end
@@ -230,9 +231,9 @@ end
 
 #alias emacs='emacsclient -c -n -a ""'
 
-function gdb
-    cgdb -q $argv
-end
+#function gdb
+#    cgdb -q $argv
+#end
 
 #alias -p grep='ack'
 #alias more='vimpager'
@@ -269,6 +270,14 @@ function pg
     mtr www.google.fr
 end
 
+function play
+    mpv --hwdec=auto $argv
+end
+
+function splay
+    mpv --no-audio $argv
+end
+
 function reco
     sudo dhclient eth0
 end
@@ -283,6 +292,15 @@ function bit
     transmission-remote twyk.org $argv
 end
 
+function logsu
+    journalctl --user-unit $argv
+end
+
+function sysu
+    systemctl --user $argv
+end
+
+
 if [ (whoami) != 'root' ];
     function up
         yaourt -Syu --aur
@@ -290,6 +308,10 @@ if [ (whoami) != 'root' ];
 
     function remove
         s pacman -Rs $argv
+    end
+
+    function logs
+        s journalctl -u $argv
     end
 
     function sys
@@ -354,6 +376,7 @@ function rm-empty
 end
 
 function u
+    echo "> wget -c (perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' (xclip -o))"
     wget -c (perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' (xclip -o))
 end
 
