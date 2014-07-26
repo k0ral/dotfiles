@@ -1,7 +1,7 @@
 DISPLAY=:0
 
-*/7  * * * * /usr/bin/offlineimap -u quiet
-*/11 * * * * cd ${HOME}/images/wallpapers && /usr/bin/hsetroot -fill "`/bin/ls | /usr/bin/shuf -n 1`"
+*/7  * * * * /usr/bin/mbsync -a
+*/11 * * * * xset q &> /dev/null && cd ${HOME}/images/wallpapers && /usr/bin/hsetroot -fill "`/bin/ls | /usr/bin/shuf -n 1`"
 @hourly      /bin/pacman -Qe > ${HOME}/.config/packages
 @daily       cd ${HOME}/.config && [ -z "`/usr/bin/hg diff --stat`" ] || /usr/bin/notify-send "Uncommitted configuration updates"
 @daily       cd ${HOME}/.config && (hg push; hg push bb) && /usr/bin/notify-send "Configuration pushed to twyk.org & bitbucket"

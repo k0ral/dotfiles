@@ -26,6 +26,11 @@ source ~/.config/mutt/pgp
 source ~/.config/mutt/sidebar
 # }}}
 
+# {{{ SSL/TLS
+set ssl_starttls = yes
+set ssl_force_tls = yes
+# }}}
+
 # {{{ HTML mails
 set implicit_autoview   # pager shows parts having a mailcap viewer
 auto_view text/html  application/x-pgp-message
@@ -34,8 +39,8 @@ alternative_order text/plain text/html
 
 # Commands
 set editor="/usr/bin/emacsclient -c"
-set sendmail="/usr/bin/msmtp --read-envelope-from"
-
+#set query_command="abook --mutt-query '%s'"
+#set sendmail="/usr/bin/msmtp --read-envelope-from"
 
 # {{{ Charset/locale/encoding
 unset allow_8bit                    # never do Q-P encoding on legal 8-bit chars
@@ -45,7 +50,7 @@ set send_charset="utf-8"
 # }}}
 
 # {{{ Inhibit confirmation
-#unset confirmappend                 # Append to mailboxes
+unset confirmappend                 # Append to mailboxes
 set delete=yes
 set move=yes
 unset wait_key

@@ -96,10 +96,12 @@ ${if_running sshd}^fg(green)$else^fg(red)${endif}SSH \
 # ^fg(\#3333ff) | \
 #
 MAIL \
-${if_match ${new_mails /home/koral/mail/gmail/INBOX} > 0}^fg(green)$endif\
-${new_mails /home/koral/mail/gmail/INBOX}^fg(\#3333ff):\
-${if_match ${new_mails /home/koral/mail/mailoo/INBOX} > 0}^fg(green)$endif\
-${new_mails /home/koral/mail/mailoo/INBOX}\
+${if_match ${new_mails /home/koral/mail/gmail-moreau/Inbox} > 0}^fg(green)$endif\
+${new_mails /home/koral/mail/gmail-moreau/Inbox}^fg(\#3333ff):\
+${if_match ${new_mails /home/koral/mail/gmail-benchohra/Inbox} > 0}^fg(green)$endif\
+${new_mails /home/koral/mail/gmail-benchohra/Inbox}^fg(\#3333ff):\
+${if_match ${new_mails /home/koral/mail/mailoo/Inbox} > 0}^fg(green)$endif\
+${new_mails /home/koral/mail/mailoo/Inbox}\
 ^fg(\#3333ff) | \
 VOL ${execi 1 amixer sget Master | grep Mono: | sed 's/^[[:space:]]*\(.*\)/\1/' | cut -d' ' -f4 | sed 's/\[\([[:digit:]]*\)*%\]/\1/'}\
  | \
