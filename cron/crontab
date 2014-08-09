@@ -12,8 +12,6 @@ DISPLAY=:0
 @daily       /bin/mv -u ${HOME}/Desktop/* ${HOME} && rm -r ${HOME}/Desktop
 @daily       /bin/mv -u ${HOME}/Downloads/* ${HOME} && rm -r ${HOME}/Downloads
 @daily       /bin/chmod -R go-rwx ${HOME}/mail ${HOME}/papers ${HOME}/server ${HOME}/.gnupg
-@weekly      /bin/mkdir -p ${HOME}/server/backup/ && rsync -rvzh --chmod=go-rwx --del --force homeserver:/home/koral/backup/ ${HOME}/server/backup/
-@weekly      /bin/mkdir -p ${HOME}/server/script/ && rsync -rvzh --chmod=go-rwx --del --force homeserver:/home/koral/script/ ${HOME}/server/script/
 @weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/mail    homeserver:/home/koral/mystik/
 @weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/prog    homeserver:/home/koral/mystik/
 @weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/.config homeserver:/home/koral/mystik/
