@@ -12,14 +12,14 @@ DISPLAY=:0
 @daily       /bin/mv -u ${HOME}/Desktop/* ${HOME} && rm -r ${HOME}/Desktop
 @daily       /bin/mv -u ${HOME}/Downloads/* ${HOME} && rm -r ${HOME}/Downloads
 @daily       /bin/chmod -R go-rwx ${HOME}/mail ${HOME}/papers ${HOME}/server ${HOME}/.gnupg
-@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/mail    homeserver:/home/koral/mystik/
-@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/prog    homeserver:/home/koral/mystik/
-@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/.config homeserver:/home/koral/mystik/
-@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/music   homeserver:/home/koral/shared/
-@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/doc     homeserver:/home/koral/mystik/
-@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/images  homeserver:/home/koral/mystik/
-@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/papers  homeserver:/home/koral/mystik/
-@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/reading homeserver:/home/koral/mystik/
-@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/sound   homeserver:/home/koral/mystik/
-@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/studies homeserver:/home/koral/mystik/
-@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/tmp     homeserver:/home/koral/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/mail    homeserver:/mnt/2/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/prog    homeserver:/mnt/2/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/.config homeserver:/mnt/2/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/music   homeserver:/mnt/1/shared/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/doc     homeserver:/mnt/2/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/images  homeserver:/mnt/2/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/papers  homeserver:/mnt/2/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/reading homeserver:/mnt/2/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/sound   homeserver:/mnt/2/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/studies homeserver:/mnt/2/mystik/
+@weekly      rsync -rvzh --chmod=go-rwx --del --force ${HOME}/tmp     homeserver:/mnt/2/mystik/
