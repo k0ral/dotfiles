@@ -136,6 +136,10 @@ function octave
     command octave -q $argv
 end
 
+function sshfs
+    command sshfs -o follow_symlinks $argv
+end
+
 function wget
     command wget -c $argv
 end
