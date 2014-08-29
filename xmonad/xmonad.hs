@@ -3,15 +3,18 @@
 -- {{{ Imports
 import XMonad
 import qualified XMonad.Actions.ConstrainedResize as Sqr
+import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DwmPromote
 import XMonad.Actions.FindEmptyWorkspace
+import XMonad.Actions.FloatKeys
+import XMonad.Actions.FloatSnap
 import XMonad.Actions.GridSelect
 import XMonad.Actions.NoBorders
 import XMonad.Actions.Warp
 import XMonad.Config.Azerty
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.FadeInactive
+-- import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
@@ -42,8 +45,9 @@ import System.IO
 
 -- {{{ Applications
 -- myTerminal           = "urxvtc -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'"
-myTerminal           = "urxvtc -e bash -c '" ++ myShell ++ "'"
-myShell              = "tmux -q has -t main && exec tmux new -t main \\; neww || exec tmux new -s main"
+-- myTerminal           = "urxvtc -e bash -c '" ++ myShell ++ "'"
+myTerminal           = "termite -e \"bash -c '" ++ myShell ++ "'\""
+myShell              = "tmux -q has -t main && exec tmux new -t main \\; neww -c ~ || exec tmux new -s main"
 myBrowser            = "firefox"
 -- }}}
 
@@ -63,7 +67,6 @@ tiled = Tall nmaster delta ratio
 stack    = StackTile 1 (3/100) (1/2)
 myTabbed = tabbed shrinkText tabTheme
 
-
 tabTheme = Theme {
     activeColor         = "#000077",
     inactiveColor       = "#000000",
@@ -80,7 +83,6 @@ tabTheme = Theme {
     windowTitleAddons   = [],
     windowTitleIcons    = []}
 
-
 myLayout = onWorkspace "1:movie" movieLayout .
            onWorkspace "3:dev"   devLayout .
            onWorkspace "4:web"   webLayout $
@@ -96,7 +98,11 @@ myFocusFollowsMouse = True
 
 -- Scratchpad
 -- scratchpads = [NS "urxvt" "urxvt -name scratchpad -title scratchpad -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'" (appName =? "scratchpad") (customFloating $ W.RationalRect l t w h)]
-scratchpads = [NS "urxvt" ("urxvt -name scratchpad -title scratchpad -e bash -c '" ++ myShell ++ "'") (appName =? "scratchpad") (customFloating $ W.RationalRect l t w h)]
+-- scratchpads = [NS "urxvt" ("urxvt -name scratchpad -title scratchpad -e bash -c '" ++ myShell ++ "'") (appName =? "scratchpad") (customFloating $ W.RationalRect l t w h)]
+scratchpads = [NS "termite"
+                  ("termite -r scratchpad -t scratchpad -e \"bash -c '" ++ myShell ++ "'\"")
+                  (title =? "scratchpad")
+                  (customFloating $ W.RationalRect l t w h) ]
   where
     h = 0.4         -- terminal height
     w = 0.95        -- terminal width
@@ -127,28 +133,29 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     -- Spawn programs
     ((modm,                 xK_Return),     spawn $ XMonad.terminal conf),
     ((modm,                 xK_t),          spawn myBrowser),
-    --((modm,                 xK_BackSpace),  scratchpadSpawnActionCustom (myTerminal ++ " -t scratchpad")),
-    ((modm,                 xK_BackSpace),  namedScratchpadAction scratchpads "urxvt"),
+    ((modm,                 xK_BackSpace),  namedScratchpadAction scratchpads "termite"),
     --((modm,                 xK_r),          spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     ((modm,                 xK_r),          spawn "dmenu_run -b -l 10 -p 'Execute'"),
     --((modm,                 xK_r),          shellPrompt mySP),
     --((modm .|. shiftMask,   xK_r ),         runOrRaisePrompt mySP),
     ((modm,                 xK_l),          spawn "slock"),
     ((modm,                 xK_x),          xmonadPrompt defaultXPConfig),
-    ((modm,                 xK_F4),         kill),
+    ((modm,                 xK_F4),         kill1),
 
     -- Layouts
     ((modm,                 xK_space),      sendMessage NextLayout),
     ((modm .|. shiftMask,   xK_space),      setLayout $ XMonad.layoutHook conf),
     ((modm,                 xK_n),          refresh),
-
+    ((modm,                 xK_v),          windows copyToAll),
+    ((modm .|. shiftMask,   xK_v),          killAllOtherCopies),
+    ((modm,                 xK_i),          withFocused $ \w -> tileWindow w (Rectangle 100 100 400 200) >> float w >> snapMove R Nothing w >> snapMove D Nothing w),
 
     -- Focus
     ((modm,                 xK_Tab),        windows W.focusDown),
     ((modm,                 xK_Page_Down),  windows W.focusDown),
     ((modm,                 xK_Page_Up),    windows W.focusUp),
     --((modm,                 xK_m),          windows W.focusMaster),
-    ((modm,                 xK_u),          focusUrgent),
+    -- ((modm,                 xK_u),          focusUrgent),
     ((modm,                 xK_g),          goToSelected defaultGSConfig),
 
     -- Swap focused window
@@ -173,10 +180,18 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm,                 xK_Left),       prevWS),
     ((modm,                 xK_Down),       nextScreen),
     ((modm,                 xK_Up),         prevScreen),
+
     ((modm .|. controlMask, xK_Right),      sendMessage $ Swap R),
     ((modm .|. controlMask, xK_Left ),      sendMessage $ Swap L),
     ((modm .|. controlMask, xK_Up   ),      sendMessage $ Swap U),
     ((modm .|. controlMask, xK_Down ),      sendMessage $ Swap D),
+
+    ((modm .|. shiftMask,   xK_Right),      withFocused $ snapMove R Nothing),
+    ((modm .|. shiftMask,   xK_Left ),      withFocused $ snapMove L Nothing),
+    ((modm .|. shiftMask,   xK_Up   ),      withFocused $ snapMove U Nothing),
+    ((modm .|. shiftMask,   xK_Down ),      withFocused $ snapMove D Nothing),
+
+
     ((modm,                 xK_e),          viewEmptyWorkspace),
     ((modm .|. shiftMask,   xK_e),          tagToEmptyWorkspace),
 
@@ -224,14 +239,13 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ [
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 floatingWindows = composeAll [
-    --className =? "MPlayer"        --> doFloat,
     className =? "Gimp"           --> doFloat]
 
 ignoredWindows = composeAll [
     resource  =? "desktop_window" --> doIgnore]
 
 moveToWorkspace = composeAll [
-    resource =? "emacs"  --> doF (W.shift "7:dev") ]
+    resource =? "emacs"  --> doF (W.shift "3:dev") ]
 
 manageScratchpad :: ManageHook
 manageScratchpad = namedScratchpadManageHook scratchpads
@@ -255,7 +269,7 @@ myEventHook = mempty
 -- {{{ Status bars and logging
 myLogHook pipe = do
     dynamicLogWithPP $ statusInfo pipe
-    fadeInactiveLogHook 0.7
+    -- fadeInactiveLogHook 0.7
 
 statusInfo pipe = defaultPP {
     ppCurrent           = dzenColor "#aaaaff" "",
