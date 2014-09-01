@@ -8,7 +8,7 @@ DISPLAY=:0
 @daily       cd ${HOME}/server/dotfiles && hg pull -u ssh://twyk.org/~/.config && /usr/bin/notify-send "Homeserver configuration pulled"
 @daily       /bin/chmod 600 ${HOME}/.config/msmtp/*
 @daily       /bin/detox -r ${HOME}/music
-@daily       /bin/scp ${HOME}/papers/resume/two-columns/resume.pdf homeserver:/home/koral/public/
+@daily       /bin/scp ${HOME}/papers/resume/two-colomns/resume.pdf homeserver:/home/koral/public/
 @daily       /bin/mv -u ${HOME}/Desktop/* ${HOME} && rm -r ${HOME}/Desktop
 @daily       /bin/mv -u ${HOME}/Downloads/* ${HOME} && rm -r ${HOME}/Downloads
 @daily       /bin/chmod -R go-rwx ${HOME}/mail ${HOME}/papers ${HOME}/server ${HOME}/.gnupg
