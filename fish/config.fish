@@ -26,19 +26,6 @@ function fish_prompt
     echo -n (prompt_pwd)
     set_color normal
 
-# Subversion repository
-    if test -d ".svn"
-        echo -n ' ['(parse_svn_revision)']'
-    end
-
-# Git repository
-    if test -d ".git"
-        echo -n ' ['(parse_git_branch)']'
-    end
-
-# Mercurial repository
-    if hg root >/dev/null 2>/dev/null; echo -n ' [☿]'; end
-
     echo ''
     set_color normal
     echo -n '> '
@@ -355,6 +342,15 @@ function cutTo
     ffmpeg -i $argv[2] -acodec copy -vcodec copy -to $argv[1] new.$argv[2]
 end
 
+function hdmi
+    echo "> xrandr --output HDMI1 --auto"
+    xrandr --output HDMI1 --auto
+end
+
+function vga
+    echo "> xrandr --output VGA1 --auto"
+    xrandr --output VGA1 --auto
+end
 
 function runInTmux
     tmux new -s $argv[1]
@@ -386,27 +382,6 @@ end
 
 function uu
     wget -c (perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' (xclip -o)) -O $argv
-end
-# }}}
-
-# {{{ Git utilities
-set fish_git_dirty_color red
-function parse_git_dirty
-    git diff --quiet HEAD ^&-
-    if test $status = 1
-        echo (set_color $fish_git_dirty_color)"Δ"(set_color normal)
-    end
-end
-
-function parse_git_branch
-    set -l branch (git branch --color ^&- | awk '/*/ {print $2}')
-    echo $branch (parse_git_dirty)
-end
-# }}}
-
-# {{{ SVN utilities
-function parse_svn_revision
-    sh -c 'svn info 2> /dev/null' | sed -n '/^Revision/p' | sed -e 's/^Revision: \(.*\)/\1/'
 end
 # }}}
 
