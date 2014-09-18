@@ -44,9 +44,7 @@ import System.IO
 -- }}}
 
 -- {{{ Applications
--- myTerminal           = "urxvtc -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'"
--- myTerminal           = "urxvtc -e bash -c '" ++ myShell ++ "'"
-myTerminal           = "termite -e \"bash -c '" ++ myShell ++ "'\""
+myTerminal           = "termite -e \"/bin/sh -c '" ++ myShell ++ "'\""
 myShell              = "tmux -q has -t main && exec tmux new -t main \\; neww -c ~ || exec tmux new -s main"
 myBrowser            = "firefox"
 -- }}}
