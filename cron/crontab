@@ -1,7 +1,7 @@
 DISPLAY=:0
+PATH=/home/koral/.nix-profile/bin:/home/koral/.nix-profile/sbin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin/:/usr/local/sbin:/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:/home/koral/.cabal/bin:/usr/bin/core_perl
 
-*/7  * * * * /usr/bin/mbsync -a
-*/11 * * * * xset q &> /dev/null && cd ${HOME}/images/wallpapers && /usr/bin/hsetroot -fill "`/bin/ls | /usr/bin/shuf -n 1`"
+*/7  * * * * mbsync -a
 @hourly      /bin/pacman -Qe > ${HOME}/.config/packages
 @daily       cd ${HOME}/.config && [ -z "`/usr/bin/hg diff --stat`" ] || /usr/bin/notify-send "Uncommitted configuration updates"
 @daily       cd ${HOME}/.config && (hg push; hg push bb) && /usr/bin/notify-send "Configuration pushed to twyk.org & bitbucket"
