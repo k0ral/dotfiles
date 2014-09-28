@@ -37,11 +37,8 @@ function chmod
     command chmod -c --preserve-root $argv
 end
 
-#function cp
-#    command cp -v --strip-trailing-slashes $argv
-#end
-
 function cp
+#    command cp -v --strip-trailing-slashes $argv
     rsync -av --progress $argv
 end
 
@@ -376,8 +373,8 @@ function rm-empty
 end
 
 function u
-    echo "> wget -c (perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' (xclip -o))"
-    wget -c (perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' (xclip -o))
+    echo "> wget -c (xclip -o | sed -e's/%\([0-9A-F][0-9A-F]\)/\\\\\x\1/g' | sed -r 's/\\\\(.)/\1/g')"
+    wget -c (xclip -o | sed -e's/%\([0-9A-F][0-9A-F]\)/\\\\\x\1/g' | sed -r 's/\\\\(.)/\1/g')
 end
 
 function uu
