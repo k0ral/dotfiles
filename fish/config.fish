@@ -46,10 +46,6 @@ function dmesg
     command dmesg -T $argv
 end
 
-function less
-    command most $argv
-end
-
 function mkcd
     mkdir $argv
     cd $argv
@@ -225,7 +221,6 @@ end
 
 #alias -p grep='ack'
 #alias more='vimpager'
-#alias less='vimpager'
 
 function ping
     grc ping $argv
