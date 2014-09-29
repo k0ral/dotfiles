@@ -3,7 +3,6 @@ PATH=/home/koral/.nix-profile/bin:/home/koral/.nix-profile/sbin:/bin:/usr/bin:/u
 
 */7  * * * * mbsync -a
 @hourly      /bin/pacman -Qe > ${HOME}/.config/packages && /bin/pacman -Qm >> ${HOME}/.config/packages
-@daily       cd ${HOME}/.config && [ -z "`/usr/bin/hg diff --stat`" ] || /usr/bin/notify-send "Uncommitted configuration updates"
 @daily       cd ${HOME}/.config && (hg push; hg push bb) && /usr/bin/notify-send "Configuration pushed to twyk.org & bitbucket"
 @daily       cd ${HOME}/server/dotfiles && hg pull -u ssh://twyk.org/~/.config && /usr/bin/notify-send "Homeserver configuration pulled"
 @daily       /bin/chmod 600 ${HOME}/.config/msmtp/*
