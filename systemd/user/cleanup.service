@@ -1,0 +1,7 @@
+[Unit]
+Description=Clean-up service
+
+[Service]
+Type=simple
+EnvironmentFile=-/home/koral/.config/systemd/user/environment
+ExecStart=/home/koral/.nix-profile/bin/detox -r /home/koral/music

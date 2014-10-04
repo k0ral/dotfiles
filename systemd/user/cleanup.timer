@@ -1,0 +1,10 @@
+[Unit]
+Description=Clean-up timer
+
+[Timer]
+OnBootSec=3h
+OnUnitActiveSec=5h
+Unit=cleanup.service
+
+[Install]
+WantedBy=wm.target
