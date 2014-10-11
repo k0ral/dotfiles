@@ -1,7 +1,6 @@
 DISPLAY=:0
 PATH=/home/koral/.nix-profile/bin:/home/koral/.nix-profile/sbin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin/:/usr/local/sbin:/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:/home/koral/.cabal/bin:/usr/bin/core_perl
 
-@hourly      /bin/pacman -Qe > ${HOME}/.config/packages && /bin/pacman -Qm >> ${HOME}/.config/packages
 @daily       cd ${HOME}/.config && (hg push; hg push bb) && /usr/bin/notify-send "Configuration pushed to twyk.org & bitbucket"
 @daily       cd ${HOME}/server/dotfiles && hg pull -u ssh://twyk.org/~/.config && /usr/bin/notify-send "Homeserver configuration pulled"
 @daily       /bin/scp ${HOME}/papers/resume/two-colomns/resume.pdf homeserver:/home/koral/public/
