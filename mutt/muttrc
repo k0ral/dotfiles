@@ -23,7 +23,7 @@ source ~/.config/mutt/hooks
 source ~/.config/mutt/mailboxes
 source ~/.config/mutt/mailing_lists
 source ~/.config/mutt/pgp
-source ~/.config/mutt/sidebar
+# source ~/.config/mutt/sidebar
 # }}}
 
 # {{{ SSL/TLS
