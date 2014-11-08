@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily backup timer
+
+[Timer]
+OnCalendar=daily
+Unit=daily-backup.service
+
+[Install]
+WantedBy=wm.target

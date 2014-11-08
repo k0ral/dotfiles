@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily backup
+
+[Service]
+Type=oneshot
+EnvironmentFile=-%h/.config/systemd/user/environment
+ExecStart=-/bin/sh -c 'cd %h/.config && (hg push; hg push bb) && /usr/bin/notify-send "Configuration pushed to twyk.org & bitbucket"'
+ExecStart=-/bin/sh -c 'cd %h/server/dotfiles && hg pull -u ssh://twyk.org/~/.config && /usr/bin/notify-send "Homeserver configuration pulled"'
+ExecStart=-/bin/scp %h/papers/resume/two-colomns/resume.pdf homeserver:/home/koral/public/
