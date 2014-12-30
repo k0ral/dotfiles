@@ -165,7 +165,7 @@ function lsa
 end
 
 function m
-    runInTmux main mutt
+    mutt $argv
 end
 
 function mk
@@ -173,7 +173,7 @@ function mk
 end
 
 function n
-    runInTmux main ncmpcpp
+    ncmpcpp $argv
 end
 
 function o
@@ -189,7 +189,7 @@ function s
 end
 
 function v
-    runInTmux main alsamixer
+    alsamixer $argv
 end
 # }}}
 
@@ -344,13 +344,7 @@ function vga
     xrandr --output VGA1 --auto
 end
 
-function runInTmux
-    tmux new -s $argv[1]
-    tmux -q findw -N $argv[2]; or tmux neww -n $argv[2] $argv[2]
-end
-
 function fade
-    # echo "systemctl poweroff" | at now +60 minutes
     watch -n 90 amixer set Master 1-
 end
 
