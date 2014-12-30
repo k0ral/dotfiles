@@ -148,6 +148,10 @@ function h
     systemctl poweroff
 end
 
+function k
+    ps aux | percol | awk '{ print $2 }' | xargs kill $argv
+end
+
 function l
     ls -og --time-style=+ $argv
 end
