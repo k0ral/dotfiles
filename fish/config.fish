@@ -313,6 +313,10 @@ if [ (whoami) != 'root' ];
         sys disable $argv
     end
 
+    function restart
+        sys restart $argv
+    end
+
     function start
         sys start $argv
     end
@@ -321,8 +325,8 @@ if [ (whoami) != 'root' ];
         sys stop $argv
     end
 
-    function restart
-        sys restart $argv
+    function suspend
+        sys suspend
     end
 end
 # }}}
