@@ -1,51 +1,51 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
 -- {{{ Imports
-import XMonad
-import qualified XMonad.Actions.ConstrainedResize as Sqr
-import XMonad.Actions.CopyWindow
-import XMonad.Actions.CycleWS
-import XMonad.Actions.DwmPromote
-import XMonad.Actions.FindEmptyWorkspace
-import XMonad.Actions.FloatKeys
-import XMonad.Actions.FloatSnap
-import XMonad.Actions.GridSelect
-import XMonad.Actions.NoBorders
-import XMonad.Actions.Warp
-import XMonad.Config.Azerty
-import XMonad.Hooks.DynamicLog
+import           XMonad
+import qualified XMonad.Actions.ConstrainedResize  as Sqr
+import           XMonad.Actions.CopyWindow
+import           XMonad.Actions.CycleWS
+import           XMonad.Actions.DwmPromote
+import           XMonad.Actions.FindEmptyWorkspace
+import           XMonad.Actions.FloatKeys
+import           XMonad.Actions.FloatSnap
+import           XMonad.Actions.GridSelect
+import           XMonad.Actions.NoBorders
+import           XMonad.Actions.Warp
+import           XMonad.Config.Azerty
+import           XMonad.Hooks.DynamicLog
 -- import XMonad.Hooks.FadeInactive
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.SetWMName
-import XMonad.Hooks.UrgencyHook
-import XMonad.Layout.Accordion
-import XMonad.Layout.Decoration
-import XMonad.Layout.Grid
-import XMonad.Layout.Maximize
-import XMonad.Layout.NoBorders
-import XMonad.Layout.PerWorkspace
-import XMonad.Layout.StackTile
-import XMonad.Layout.Tabbed
-import XMonad.Layout.WindowNavigation
-import XMonad.Prompt
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Hooks.SetWMName
+import           XMonad.Hooks.UrgencyHook
+import           XMonad.Layout.Accordion
+import           XMonad.Layout.Decoration
+import           XMonad.Layout.Grid
+import           XMonad.Layout.Maximize
+import           XMonad.Layout.NoBorders
+import           XMonad.Layout.PerWorkspace
+import           XMonad.Layout.StackTile
+import           XMonad.Layout.Tabbed
+import           XMonad.Layout.WindowNavigation
+import           XMonad.Prompt
 --import XMonad.Prompt.RunOrRaise
 --import XMonad.Prompt.Shell
-import XMonad.Prompt.XMonad
-import qualified XMonad.StackSet as W
-import XMonad.Util.NamedScratchpad
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
+import           XMonad.Prompt.XMonad
+import qualified XMonad.StackSet                   as W
+import           XMonad.Util.EZConfig              (additionalKeys)
+import           XMonad.Util.NamedScratchpad
+import           XMonad.Util.Run                   (spawnPipe)
 
-import qualified Data.Map as M
-import Data.Monoid
+import qualified Data.Map                          as M
+import           Data.Monoid
 
-import System.Exit
-import System.IO
+import           System.Exit
+import           System.IO
 -- }}}
 
 -- {{{ Applications
 myTerminal           = "termite -e \"/bin/sh -c '" ++ myShell ++ "'\""
-myShell              = "tmux -q has -t main && exec tmux new -t main \\; neww -c ~ || exec tmux new -s main"
+myShell              = "abduco -c /tmp/abduco-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` fish"
 myBrowser            = "firefox"
 -- }}}
 
@@ -88,15 +88,13 @@ myLayout = onWorkspace "1:movie" movieLayout .
 -- }}}
 
 
-myBorderWidth        = 1
+myBorderWidth        = 2
 myNormalBorderColor  = "#000099"
-myFocusedBorderColor = "#cccc00"
+myFocusedBorderColor = "#ffff00"
 
 myFocusFollowsMouse = True
 
 -- Scratchpad
--- scratchpads = [NS "urxvt" "urxvt -name scratchpad -title scratchpad -e bash -c 'dtach -c /tmp/dtach-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` -Ez /usr/bin/fish'" (appName =? "scratchpad") (customFloating $ W.RationalRect l t w h)]
--- scratchpads = [NS "urxvt" ("urxvt -name scratchpad -title scratchpad -e bash -c '" ++ myShell ++ "'") (appName =? "scratchpad") (customFloating $ W.RationalRect l t w h)]
 scratchpads = [NS "termite"
                   ("termite -r scratchpad -t scratchpad -e \"bash -c '" ++ myShell ++ "'\"")
                   (title =? "scratchpad")
@@ -236,8 +234,8 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ [
 --
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
-floatingWindows = composeAll [
-    className =? "Gimp"           --> doFloat]
+-- floatingWindows = composeAll [
+    -- className =? "Gimp"           --> doFloat]
 
 ignoredWindows = composeAll [
     resource  =? "desktop_window" --> doIgnore]
@@ -251,7 +249,7 @@ manageScratchpad = namedScratchpadManageHook scratchpads
 onNewWindow =
     manageScratchpad <+>
     manageDocks <+>
-    floatingWindows <+>
+    -- floatingWindows <+>
     ignoredWindows <+>
     moveToWorkspace
 -- }}}
