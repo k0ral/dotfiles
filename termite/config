@@ -15,10 +15,6 @@ search_wrap = true
 #icon_name = terminal
 #geometry = 640x480
 
-# 0.0: opaque, 1.0: transparent
-transparency = 0.1
-pseudo_transparency = false
-
 # "system", "on" or "off"
 cursor_blink = system
 
@@ -39,7 +35,7 @@ cursor_shape = ibeam
 foreground = #999999
 foreground_bold = #ffffff
 #foreground_dim = #888888
-background = #000022
+background = rgba(0, 0, 31, 0.8)
 #cursor = #dcdccc
 
 # if unset, will reverse foreground and background
@@ -71,5 +67,3 @@ highlight = #2f2f2f
 #border = #3f3f3f
 #border_width = 0.5
 #roundness = 2.0
-
-# vim: ft=dosini
