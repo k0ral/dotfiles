@@ -4,4 +4,4 @@ Description=Synchronize IMAP mails
 [Service]
 Type=oneshot
 EnvironmentFile=-/home/koral/.config/systemd/user/environment
-ExecStart=-/home/koral/.nix-profile/bin/mbsync -a
+ExecStart=-/bin/mbsync -a
