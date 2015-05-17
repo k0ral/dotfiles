@@ -1,9 +1,15 @@
 [user]
     name = koral
-    email = koral att mailoo dott org
+    email = koral@mailoo.org
 [color]
-    diff = true
-    status = auto
-    branch = auto
+    ui = auto # covers diff = true, status = auto, branch = auto
+    interactive = auto
 [core]
     editor = nano
+[push]
+    default = simple
+[alias]
+    ci = commit
+    co = checkout
+    ls = log --date=short --graph --pretty=format:'%Cred%h %C(bold blue)%cn%Creset %cd %C(yellow)%d %C(bold white)%s'
+    st = status
