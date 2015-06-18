@@ -46,6 +46,10 @@ function dmesg
     command dmesg -T $argv
 end
 
+function less
+    command less -R $argv
+end
+
 function mkcd
     mkdir $argv
     cd $argv
