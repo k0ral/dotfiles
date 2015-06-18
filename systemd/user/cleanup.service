@@ -4,7 +4,7 @@ Description=Clean-up service
 [Service]
 Type=oneshot
 EnvironmentFile=-%h/.config/systemd/user/environment
-ExecStart=/home/koral/.nix-profile/bin/detox -r %h/music
+ExecStart=/bin/detox -r %h/music
 ExecStart=/bin/chmod -R go-rwx %h/mail %h/papers %h/server %h/.gnupg
 ExecStart=-/bin/mv -u %h/Downloads/* %h/Desktop/* %h
 ExecStart=-/bin/rm -r %h/Downloads %h/Desktop
