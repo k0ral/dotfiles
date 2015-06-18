@@ -245,8 +245,6 @@ end
 #function which
 #    type --all $argv
 #end
-
-#alias openports='sudo netstat --all --numeric --programs --inet'
 # }}}
 
 function listening-ports
@@ -254,7 +252,7 @@ function listening-ports
 end
 
 function openports
-    sudo iptstate -o
+    s lsof -Pan -i tcp -i udp
 end
 
 function pg
