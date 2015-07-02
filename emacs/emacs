@@ -423,60 +423,6 @@ word."
 (setq-default confirm-nonexistent-file-or-buffer nil)
 (global-set-key (kbd "M-o")  'bookmark-bmenu-list)
 
-;; {{{ Dired
-(eval-after-load"dired" '(progn
-(defun dired-execute nil
-  "Try to execute file at point."
-  (interactive)
-  (shell-command (dired-get-filename)) )
-
-(when (require 'dired-details+ nil 'noerror)
-  (setq dired-details-hide-link-targets nil) )
-
-(setq
-    dired-auto-revert-buffer     t
-    dired-dwim-target            t
-    dired-listing-switches       "-lh --group-directories-first"
-    dired-recursive-deletes      'always
-    dired-recursive-copies       'always
-    image-dired-external-viewer  "mirage"
-)
-;; (put 'dired-find-alternate-file 'disabled nil)
-
-(define-key dired-mode-map (kbd "<f5>")        'revert-buffer)
-
-(define-key dired-mode-map (kbd "r")           'dired-do-rename)
-(define-key dired-mode-map (kbd "x")           'dired-do-flagged-delete)
-;(define-key dired-mode-map (kbd "X")           'dired-do-flagged-delete)
-(define-key dired-mode-map (kbd "c")           'dired-do-copy)
-(define-key dired-mode-map (kbd "C")           'dired-do-copy-regexp)
-(define-key dired-mode-map (kbd "m")           'dired-do-rename)
-(define-key dired-mode-map (kbd "M")           'dired-do-rename-regexp)
-(define-key dired-mode-map (kbd "p")           'dired-display-file)
-(define-key dired-mode-map (kbd "l")           'dired-do-symlink)
-(define-key dired-mode-map (kbd "h")           'dired-do-chmod)
-(define-key dired-mode-map (kbd "g")           'dired-do-chgrp)
-(define-key dired-mode-map (kbd "t")           'dired-do-touch)
-(define-key dired-mode-map (kbd "z")           'dired-do-compress)
-(define-key dired-mode-map (kbd "<deletechar>") 'dired-do-kill-lines)
-(define-key dired-mode-map (kbd "<return>")    'dired-find-alternate-file)
-
-(define-key dired-mode-map (kbd "SPC")         'dired-mark)
-(define-key dired-mode-map (kbd "TAB")         'dired-toggle-marks)
-(define-key dired-mode-map (kbd "C-a")         'dired-mark-subdir-files)
-(define-key dired-mode-map (kbd "* *")         'dired-mark-subdir-files)
-(define-key dired-mode-map (kbd "* x")         'dired-mark-executables)
-;(define-key dired-mode-map (kbd "C-@")         'dired-flag-files-regexp)
-(define-key dired-mode-map (kbd "C-@")         'dired-mark-files-regexp)
-;(define-key dired-mode-map (kbd "!")         'dired-flag-files-regexp)
-(define-key dired-mode-map (kbd "C-n")         'dired-next-marked-file)
-(define-key dired-mode-map (kbd "C-p")         'dired-prev-marked-file)
-(define-key dired-mode-map (kbd "D")           'dired-do-delete)
-
-(define-key dired-mode-map (kbd "DEL")         'dired-up-directory)
-(define-key dired-mode-map (kbd "/")           'dired-isearch-filenames-regexp) ))
-;; }}}
-
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 ;; {{{ Server
