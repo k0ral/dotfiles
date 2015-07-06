@@ -122,6 +122,10 @@
     ido-work-directory-list                '("~/")
     ) )
 
+(use-package iedit
+  :bind (("M-SPC" . iedit-rectangle-mode)
+         ("C-r"   . iedit-mode) ) )
+
 (use-package paredit
   :bind ("<C-M-delete>" . paredit-kill)
   :config
@@ -284,7 +288,6 @@
 ;; (setq cua-enable-cua-keys nil)
 ;; (cua-mode t)
 
-(global-set-key (kbd "M-SPC")        'iedit-rectangle-mode)
 (global-set-key (kbd "C-a")          'mark-whole-buffer)
 ;; }}}
 
@@ -385,7 +388,6 @@ word."
 (define-key isearch-mode-map (kbd "C-s")   'save-buffer)
 (define-key isearch-mode-map (kbd "C-S-s") 'write-file)
 
-(global-set-key (kbd "C-r")         'iedit-mode)
 (global-set-key (kbd "M-r")         'query-replace-regexp)
 ;; }}}
 
