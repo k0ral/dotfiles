@@ -398,7 +398,7 @@ word."
 
 (defalias 'list-buffers 'ibuffer)
 (setq-default
-    ;; ibuffer-default-sorting-mode 'alphabetic
+    ibuffer-default-sorting-mode 'major-mode
     ibuffer-expert t
     ibuffer-show-empty-filter-groups nil
     uniquify-separator "|"
