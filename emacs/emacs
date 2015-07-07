@@ -54,6 +54,9 @@
   :init
   (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode) )
 
+(use-package expand-region
+  :bind ("C-S-SPC" . er/expand-region) )
+
 (use-package golden-ratio
   :init
   (setq golden-ratio-auto-scale t)
