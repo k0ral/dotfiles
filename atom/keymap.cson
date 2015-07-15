@@ -1,0 +1,27 @@
+'atom-workspace atom-text-editor':
+  'ctrl-left': 'editor:move-to-previous-subword-boundary'
+  'ctrl-right': 'editor:move-to-next-subword-boundary'
+  'alt-left': 'editor:move-to-first-character-of-line'
+  'alt-right': 'editor:move-to-end-of-screen-line'
+  'alt-down': 'core:move-to-bottom'
+  'alt-up': 'core:move-to-top'
+  'alt-delete': 'editor:cut-to-end-of-line'
+  'alt-backspace': 'editor:delete-to-beginning-of-line'
+  'ctrl-shift-delete': 'editor:delete-to-next-word-boundary'
+
+'atom-workspace atom-text-editor:not([mini])':
+  'ctrl-down': 'editor:move-to-beginning-of-next-paragraph'
+  'ctrl-up': 'editor:move-to-beginning-of-previous-paragraph'
+  'ctrl-h': 'quick-highlight:toggle'
+  'alt-c': 'editor:toggle-line-comments'
+  'ctrl-alt-l': 'linter:toggle'
+
+'body':
+  'ctrl-o': 'advanced-open-file:toggle'
+
+'.platform-win32, .platform-linux':
+  'ctrl-shift-t': 'tree-view:toggle'
+
+'.platform-win32 atom-text-editor, .platform-linux atom-text-editor':
+  'alt-n': 'find-and-replace:find-next-selected'
+  'alt-p': 'find-and-replace:find-previous-selected'

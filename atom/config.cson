@@ -1,0 +1,46 @@
+"*":
+  welcome:
+    showOnStartup: false
+  core:
+    audioBeep: false
+    autoHideMenuBar: true
+    themes: [
+      "one-dark-ui"
+      "solarized-dark-syntax"
+    ]
+    disabledPackages: [
+      "spell-check"
+      "package-generator"
+      "metrics"
+      "wrap-guide"
+    ]
+  editor:
+    invisibles: {}
+    fontFamily: "Inconsolata"
+    showIndentGuide: true
+    showInvisibles: true
+    softWrap: true
+    lineHeight: 1.1
+    fontSize: 16
+  minimap:
+    plugins:
+      "highlight-selected": true
+      bookmarks: true
+      selection: true
+      "find-and-replace": true
+      linter: true
+  "one-dark-ui": {}
+  "highlight-line":
+    hideHighlightOnSelect: true
+    enableSelectionBorder: true
+  "autocomplete-plus": {}
+  autosave: {}
+  linter:
+    lintOnFly: false
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  tabs:
+    enableVcsColoring: true
+    tabScrolling: true
+  "status-bar": {}
+  "fuzzy-finder": {}
