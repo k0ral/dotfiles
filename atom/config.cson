@@ -13,6 +13,8 @@
       "package-generator"
       "metrics"
       "wrap-guide"
+      "linter-hlint"
+      "linter-cpplint"
     ]
   editor:
     invisibles: {}
