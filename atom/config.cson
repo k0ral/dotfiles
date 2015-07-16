@@ -46,3 +46,6 @@
     tabScrolling: true
   "status-bar": {}
   "fuzzy-finder": {}
+  "atom-beautify":
+    analytics: false
+  "keybinding-cheatsheet": {}

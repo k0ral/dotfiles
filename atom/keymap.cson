@@ -1,3 +1,6 @@
+'atom-workspace':
+  'F1': 'keybinding-cheatsheet:toggle'
+
 'atom-workspace atom-text-editor':
   'ctrl-left': 'editor:move-to-previous-subword-boundary'
   'ctrl-right': 'editor:move-to-next-subword-boundary'
