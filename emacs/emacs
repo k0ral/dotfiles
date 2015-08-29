@@ -210,7 +210,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Don't let the cursor go into minibuffer prompt
-(setq minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
+(setq-default minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
 ;; }}}
 
 ;; {{{ General functions
@@ -256,7 +256,7 @@
   point reaches the beginning or end of the buffer, stop there."
 
   (interactive "^p")
-  (setq arg (or arg 1))
+  (setq-default arg (or arg 1))
 
   ;; Move lines first
   (when (/= arg 1)
@@ -296,7 +296,7 @@
 
 ;; {{{ Selection
 
-;; (setq cua-enable-cua-keys nil)
+;; (setq-default cua-enable-cua-keys nil)
 ;; (cua-mode t)
 
 (global-set-key (kbd "C-a")          'mark-whole-buffer)
@@ -382,8 +382,8 @@ word."
 ;; }}}
 
 ;; {{{ Search & replace
-(setq search-highlight t)
-(setq query-replace-highlight t)
+(setq-default search-highlight t)
+(setq-default query-replace-highlight t)
 
 (global-set-key (kbd "C-f")         'isearch-forward)
 (global-set-key (kbd "M-f")         'isearch-occur)
@@ -466,7 +466,7 @@ word."
 ;; }}}
 
 ;; {{{ Syntax highlight
-(setq font-lock-maximum-decoration t)
+(setq-default font-lock-maximum-decoration t)
 (global-set-key (kbd "M-h") 'font-lock-mode)
 ;; }}}
 
@@ -496,14 +496,13 @@ word."
     )
 
 ; linum
-(setq linum-format "%d ")
+(setq-default linum-format "%d ")
 (global-set-key (kbd "C-l")         'linum-mode)
 
 ; saveplace
-(setq save-place-file (expand-file-name ".saveplace" user-emacs-directory))
+(setq-default save-place-file (expand-file-name ".saveplace" user-emacs-directory))
 (setq-default save-place t)
 ;; }}}
-
 
 ;; {{{ Language-based modes
 (autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
@@ -518,7 +517,7 @@ word."
 ;(add-to-list 'auto-mode-alist '("\.ino$"     . c-mode))
 
 ; C/C++/Java
-;(setq c-default-style '(
+;(setq-default c-default-style '(
 ;    (java-mode . "java")
 ;    (awk-mode .  "awk")
 ;    (other .     "linux")))
@@ -594,8 +593,8 @@ word."
 ;; }}}
 
 ;; {{{ IDE
-(setq compilation-ask-about-save nil)
-(setq compilation-save-buffers-predicate '(lambda () nil))
+(setq-default compilation-ask-about-save nil)
+(setq-default compilation-save-buffers-predicate '(lambda () nil))
 ;; }}}
 
 ;; {{{ Hooks
