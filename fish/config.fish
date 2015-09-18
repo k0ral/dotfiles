@@ -280,7 +280,7 @@ function wifi
 end
 
 function bit
-    transmission-remote twyk.org $argv
+    transmission-remote twyk.xyz $argv
 end
 
 function logsu
