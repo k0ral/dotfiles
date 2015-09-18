@@ -1,5 +1,5 @@
 Host homeserver
-    HostName twyk.org
+    HostName twyk.xyz
     User koral
 
 Host 192.168.0.*
