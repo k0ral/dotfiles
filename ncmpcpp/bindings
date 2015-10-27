@@ -186,13 +186,13 @@ def_key "space"
 #def_key "enter"
 #  press_enter
 #
-#def_key "delete"
-#  delete_playlist_items
-#
+def_key "delete"
+  delete_playlist_items
+
 #def_key "delete"
 #  delete_stored_playlist
 #
-def_key "delete"
+def_key "d"
   delete_browser_items
 #
 #def_key "right"
