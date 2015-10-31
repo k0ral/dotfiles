@@ -41,7 +41,7 @@ world-file: /home/koral/.cabal/world
 -- constraint:
 -- preference:
 -- solver: choose
--- documentation: True
+documentation: True
 -- doc-index-file: $datadir/doc/index.html
 -- max-backjumps: 200
 -- reorder-goals: False
