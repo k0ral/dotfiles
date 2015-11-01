@@ -288,6 +288,7 @@
     scroll-margin                   7
     scroll-conservatively           1000
     scroll-preserve-screen-position t
+    scroll-error-top-bottom         t
 )
 
 (global-set-key (kbd "M-m")          'recenter)
