@@ -13,7 +13,6 @@
 
 ;; {{{ use-package
 (eval-when-compile (require 'use-package))
-(require 'diminish)                ;; if you use :diminish
 (require 'bind-key)                ;; if you use any :bind variant
 
 (setq use-package-always-ensure t)
@@ -73,7 +72,6 @@
   )
 
 (use-package guide-key
-  :diminish guide-key-mode
   :init
   (setq-default
     guide-key/guide-key-sequence '("C-x" "C-c p")
@@ -150,11 +148,16 @@
   :init
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode) )
 
+(use-package rich-minority
+  :config
+  (rich-minority-mode 1)
+  (setq rm-blacklist "")
+  )
+
 (use-package shrink-whitespace
   :bind ("<C-S-delete>" . shrink-whitespace) )
 
 (use-package smart-cursor-color
-  :diminish smart-cursor-color-mode
   :config
   (smart-cursor-color-mode 1) )
 
@@ -165,7 +168,6 @@
   (smex-initialize) )
 
 (use-package undo-tree
-  :diminish undo-tree-mode
   :bind (("C-z" . undo-tree-undo)
          ("C-y" . undo-tree-redo)
          ("M-z" . undo-tree-visualize) )
@@ -173,7 +175,6 @@
   (global-undo-tree-mode 1) )
 
 (use-package whole-line-or-region
-  :diminish whole-line-or-region-mode
   :bind (("M-c" . whole-line-or-region-comment-dwim)
          ("C-v" . whole-line-or-region-yank)
          ("C-c" . whole-line-or-region-kill-ring-save)
