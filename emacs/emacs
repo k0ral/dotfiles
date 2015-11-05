@@ -450,6 +450,14 @@
 
 (set-face-background 'hl-line "#000033")
 (set-face-background 'region  "#00ff00")
+
+(defun font-lock-comment-annotations ()
+  "Highlight a bunch of well known comment annotations."
+  (font-lock-add-keywords
+   nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|OPTIMIZE\\|HACK\\|REFACTOR\\):"
+          1 font-lock-warning-face t))))
+
+(add-hook 'prog-mode-hook 'font-lock-comment-annotations)
 ;; }}}
 
 ;; {{{ Eldoc
@@ -498,37 +506,13 @@
 ;; }}}
 
 ;; {{{ Language-based modes
-(autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
-
 (setq-default default-major-mode 'text-mode)
 (add-to-list 'auto-mode-alist '("/mutt"      . mail-mode))
 (add-to-list 'auto-mode-alist '("\\.*rc$"    . conf-unix-mode))
 (add-to-list 'auto-mode-alist '("rc$"        . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("/PKGBUILD$" . pkgbuild-mode))
 (add-to-list 'auto-mode-alist '("\.bashrc$"  . shell-script-mode))
 (add-to-list 'auto-mode-alist '("\.profile$" . shell-script-mode))
 ;(add-to-list 'auto-mode-alist '("\.ino$"     . c-mode))
-
-; C/C++/Java
-;(setq-default c-default-style '(
-;    (java-mode . "java")
-;    (awk-mode .  "awk")
-;    (other .     "linux")))
-
-;(setq         c-indent-level 4)             ; TAB = 4 spaces
-;(setq-default c-toggle-electric-flag nil)
-
-(add-hook 'c-mode-common-hook (lambda ()
-    (font-lock-add-keywords nil '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
-;; }}}
-
-;; {{{ Term mode
-;(require 'term)
-(add-to-list 'load-path "/home/koral/.emacs.d/elpa/multi-term-0.8.8")
-(autoload 'multi-term "multi-term" nil t)
-(eval-after-load "multi-term" '(progn
-    (setq multi-term-program "/bin/bash")
-    (setq multi-term-scroll-to-bottom-on-output "this")))
 ;; }}}
 
 ;; {{{ Mode-line
@@ -546,52 +530,10 @@
   :config
   (sml/setup)
   (sml/apply-theme 'dark) )
-
-;; (set-face-background 'mode-line "#111111")
-;; (set-face-foreground 'mode-line "#aaaaff")
-;; (setq-default mode-line-format (list
-;;     ;; insert vs overwrite mode, input-method in a tooltip
-;;     " " '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
-;;             'face 'font-lock-preprocessor-face
-;;             'help-echo (concat "Buffer is in " (if overwrite-mode "overwrite" "insert") " mode")))
-
-;;     ;; was this buffer modified since the last save?
-;;     '(:eval (when (buffer-modified-p)
-;;               (concat ","  (propertize "Mod" 'face 'font-lock-warning-face))))
-
-;;     ;; is this buffer read-only?
-;;     '(:eval (when buffer-read-only
-;;               (concat ","  (propertize "RO" 'face 'font-lock-type-face))))
-
-;;     ;; the buffer name; the file name as a tool tip
-;;     " | " (propertize "%b " 'face 'font-lock-keyword-face)
-
-;;     ;; line and column
-;;     " | " (propertize "%04l" 'face 'font-lock-type-face)
-;;     "," (propertize "%03c" 'face 'font-lock-type-face)
-
-;;     ;; relative position, size of file
-;;     " | " (propertize "%p" 'face 'font-lock-type-face)
-;;     "/" (propertize "%I" 'face 'font-lock-constant-face)
-
-;;     ;; the current major mode for the buffer.
-;;     " | " (propertize "%m" 'face 'font-lock-string-face)
-;;     " /" minor-mode-alist
-
-;;     " | %Z %e %[ %-"))
-;; }}}
-
-;; {{{ Keys
-(global-set-key (kbd "<f12>")       'multi-term)
-;; }}}
-
-;; {{{ IDE
-(setq-default compilation-ask-about-save nil)
-(setq-default compilation-save-buffers-predicate '(lambda () nil))
 ;; }}}
 
 ;; {{{ Hooks
-(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+(add-hook 'after-save-hook  'executable-make-buffer-file-executable-if-script-p)
 (add-hook 'before-save-hook 'whitespace-cleanup)
 (add-hook 'before-save-hook 'dos2unix)
 ;; }}}
