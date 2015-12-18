@@ -1,7 +1,7 @@
 [Unit]
 Description=Random wallpaper with feh
-Requires=xorg.service
-After=xorg.service
+Requisite=xorg.service
+#After=xorg.service
 
 [Timer]
 OnBootSec=1m

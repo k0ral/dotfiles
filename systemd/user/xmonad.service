@@ -1,7 +1,7 @@
 [Unit]
 Description=XMonad service
-Requires=xorg.service
-After=xorg.service
+Requisite=xorg.service
+#After=xorg.service
 
 [Service]
 #ExecStartPre=/usr/bin/xrdb -merge %h/.config/x/Xresources

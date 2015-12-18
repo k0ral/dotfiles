@@ -1,7 +1,7 @@
 [Unit]
 Description=System Monitor for X
-Requires=xorg.service
-After=xorg.service
+Requisite=xorg.service
+#After=xorg.service
 
 [Service]
 EnvironmentFile=-/home/koral/.config/systemd/user/environment

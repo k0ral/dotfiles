@@ -1,5 +1,7 @@
 [Unit]
 Description=Random wallpaper with feh
+Requisite=xorg.service
+#After=xorg.service
 
 [Service]
 Type=simple

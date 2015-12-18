@@ -1,7 +1,7 @@
 [Unit]
 Description=Composite manager
-Requires=xorg.service
-After=xorg.service
+Requisite=xorg.service
+#After=xorg.service
 
 [Service]
 Environment=DISPLAY=:0
