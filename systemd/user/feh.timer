@@ -6,7 +6,6 @@ Requisite=xorg.service
 [Timer]
 OnBootSec=1m
 OnUnitActiveSec=11m
-Unit=feh.service
 
 [Install]
-WantedBy=wm.target
+WantedBy=timers.target

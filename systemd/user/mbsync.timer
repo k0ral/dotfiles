@@ -4,7 +4,6 @@ Description=Synchronize IMAP mails
 [Timer]
 OnBootSec=1m
 OnUnitActiveSec=7m
-Unit=mbsync.service
 
 [Install]
-WantedBy=wm.target
+WantedBy=timers.target

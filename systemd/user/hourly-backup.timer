@@ -3,7 +3,6 @@ Description=Hourly backup timer
 
 [Timer]
 OnCalendar=hourly
-Unit=hourly-backup.service
 
 [Install]
-WantedBy=wm.target
+WantedBy=timers.target
