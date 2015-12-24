@@ -1,9 +1,0 @@
-set show-all-if-ambiguous on
-set echo-control-characters off
-
-# Up/down arrow only show matching history entries
-"\e[A":history-search-backward
-"\e[B":history-search-forward
-
-# Prefix with "sudo"
-"\es":"\C-asudo \C-e"
