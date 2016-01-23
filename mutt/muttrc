@@ -95,7 +95,7 @@ set print_command="/usr/bin/muttprint %s -p {PrinterName}"
 # {{{ Sorting
 set sort=threads                # primary sorting method
 set sort_alias=alias            # sort alias file by alias
-set sort_aux=reverse-date       # secondary sorting method
+set sort_aux=reverse-last-date-received       # secondary sorting method
 set sort_browser=reverse-date   # how to sort files in the dir browser
 folder-hook "outbox" set sort=date
 # }}}
