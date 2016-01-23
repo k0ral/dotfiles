@@ -15,7 +15,7 @@
   boot.loader.grub.device = "/dev/sda";
 
   environment.systemPackages = with pkgs; [
-    ack acpi aria2 detox dfc dzen2 fish git grc isync man_db mercurial mpc_cli mutt nox ntfs3g progress rsync sshfsFuse wget w3m
+    ack acpi aria2 detox dfc dzen2 fish git grc isync man_db mercurial mpc_cli mutt nox ntfs3g progress rsync slock sshfsFuse wget w3m
   ];
 
 
@@ -53,6 +53,8 @@
   # nixpkgs.config.packageOverrides = pkgs : rec { 
   #   kde4 = pkgs.kde410; 
   # };
+
+  security.setuidPrograms = [ "slock" ];
 
   services.acpid.enable = true;
   services.acpid.handlers.volumeDown = {
