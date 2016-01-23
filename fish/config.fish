@@ -287,6 +287,10 @@ function logsu
     journalctl --user-unit $argv
 end
 
+function sys
+    systemctl $argv
+end
+
 function sysu
     systemctl --user $argv
 end
@@ -303,10 +307,6 @@ if [ (whoami) != 'root' ];
 
     function logs
         s journalctl -u $argv
-    end
-
-    function sys
-        s systemctl $argv
     end
 
     function enable
