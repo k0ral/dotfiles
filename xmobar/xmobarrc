@@ -1,0 +1,102 @@
+Config
+  { alpha = 240
+  , font =         "xft:Inconsolata:size=12:antialias=true"
+  , bgColor =      "#000011"
+  , fgColor =      "#3333FF"
+  , position =     TopW R 75
+  , sepChar =  "%"   -- delineator between plugin names and straight text
+  , alignSep = "}{"  -- separator between left-right alignment
+  , template = "%coretemp% | %battery% | %multicpu% | %disku% | %memory% | %swap% | %dynnetwork% }{ %mail% | %default:Master% | %date%"
+  , lowerOnStart =     True    -- send to bottom of window stack on start
+  , hideOnStart =      False   -- start with window unmapped (hidden)
+  , allDesktops =      True    -- show on all desktops
+  , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
+  , pickBroadest =     False   -- choose widest display (multi-monitor)
+  , persistent =       True    -- enable/disable hiding (True = disabled)
+  , commands =
+    [ Run Battery
+      [ "--template" , "BAT <acstatus>"
+      , "--Low"      , "10"        -- units: %
+      , "--High"     , "80"        -- units: %
+      , "--low"      , "red"
+      , "--normal"   , "orange"
+      , "--high"     , "green"
+      , "--" -- battery specific options
+      -- discharging status
+      , "-o"	, "<left>% (<timeleft>)"
+      -- AC "on" status
+      , "-O"	, "<fc=orange>Charging</fc>"
+      -- charged status
+      , "-i"	, "<fc=green>Charged</fc>"
+      ] 130
+
+    , Run CoreTemp
+      [ "--template" , "TEMP <core0>°C"
+      , "--Low"      , "60"        -- units: °C
+      , "--High"     , "80"        -- units: °C
+      , "--low"      , "green"
+      , "--normal"   , "orange"
+      , "--high"     , "red"
+      ] 130
+
+    --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
+    , Run Date "<fc=cyan>%T</fc>" "date" 10
+
+    , Run DiskU [ ("/", "/ <free>") ]
+      [ "--Low"      , "50"
+      , "--High"     , "90"
+      , "--low"      , "green"
+      , "--normal"   , "orange"
+      , "--high"     , "red"
+      ] 110
+
+    , Run DynNetwork
+      [ "--template" , "<dev> <fc=green><rx>k</fc>:<fc=red><tx>k</fc>"
+      , "--minwidth"    , "4"
+      ] 30
+
+    , Run Mail
+      [ ("moreau"    , "~/mail/gmail-moreau/Inbox")
+      , ("benchohra" , "~/mail/gmail-benchohra/Inbox")
+      , ("koral"     , "~/mail/mailoo/Inbox")
+      ] "mail"
+
+    , Run Memory
+      [ "--template" ,"MEM <used>M"
+      , "--Low"      , "500"        -- units: %
+      , "--High"     , "2000"        -- units: %
+      , "--low"      , "green"
+      , "--normal"   , "orange"
+      , "--high"     , "red"
+      , "--minwidth" , "4"
+      ] 50
+
+    , Run MultiCpu
+      [ "--template" , "CPU <total0>:<total1>:<total2>:<total3>"
+      , "--Low"      , "50"         -- units: %
+      , "--High"     , "85"         -- units: %
+      , "--low"      , "green"
+      , "--normal"   , "orange"
+      , "--high"     , "red"
+      , "--suffix"   , "True"
+      , "--minwidth"    , "4"
+      ] 30
+
+    , Run Swap
+      [ "--template" , "SWAP <free>M"
+      , "--Low"      , "50"        -- units: %
+      , "--High"     , "80"        -- units: %
+      , "--low"      , "green"
+      , "--normal"   , "orange"
+      , "--high"     , "red"
+      ] 70
+
+    , Run Volume "default" "Master"
+      [ "--template" , "VOL <volume> <status>"
+      , "--low"      , "red"
+      , "--normal"   , "orange"
+      , "--high"     , "green"
+      , "--suffix"   , "True"
+      ] 10
+    ]
+  }
