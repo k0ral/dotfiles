@@ -4,7 +4,7 @@
 #text/html; html2text -width 70; copiousoutput
 text/html; elinks -dump -dump-color-mode 1 -dump-charset utf-8 -default-mime-type text/html %s; copiousoutput;
 
-video/*;        mplayer %s > /dev/null
+video/*;        mpv %s > /dev/null
 image/*;        sxiv %s > /dev/null
 
 application/pdf; pdftotext -layout /dev/stdin -; copiousoutput
