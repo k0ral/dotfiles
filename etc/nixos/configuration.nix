@@ -94,6 +94,7 @@
     HandleLidSwitch=ignore
   '';
   services.openssh.enable = true;
+  services.openssh.startWhenNeeded = true;
   services.redshift.enable = true;
   services.redshift.latitude = "43.7";
   services.redshift.longitude = "7.2";
