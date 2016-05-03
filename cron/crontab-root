@@ -1,6 +1,0 @@
-@daily       /usr/bin/pacman -Sy
-@weekly      /bin/chown root:root /etc/passwd /etc/shadow /etc/group /etc/gshadow /etc/hostname /etc/locale.conf /etc/vconsole.conf /etc/localtime
-@weekly      /bin/chmod 644 /etc/passwd /etc/group /etc/hostname /etc/locale.conf /etc/vconsole.conf /etc/localtime
-@weekly      /bin/chmod 400 /etc/shadow /etc/gshadow
-@daily       /bin/hosts-update
-@monthly     /usr/bin/pacman-optimize && /bin/sync
