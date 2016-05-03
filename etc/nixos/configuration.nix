@@ -15,7 +15,7 @@
   boot.loader.grub.device = "/dev/sda";
 
   environment.systemPackages = with pkgs; [
-    ack acpi aria2 detox dfc dzen2 fish git grc isync man_db mercurial mpc_cli mutt nox ntfs3g progress rsync slock sshfsFuse wget w3m
+    ack acpi aria2 atool binutils cacert detox dfc dzen2 ffmpeg fish git grc htop isync libxml2 lsdvd mailutils man_db mediainfo mercurial mkvtoolnix-cli mpc_cli mutt nox ntfs3g powertop progress rfkill rsync slock sshfsFuse telnet tree unrar unzip urlview vobcopy wget w3m xorg.xkill zip
   ];
 
 
