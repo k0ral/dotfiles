@@ -4,17 +4,17 @@ Description=Daily backup
 [Service]
 Type=oneshot
 EnvironmentFile=-%h/.config/systemd/user/environment
-ExecStart=-/bin/sh -c 'cd %h/.config && git push && notify-send "Dotfiles pushed"'
-ExecStart=-/bin/sh -c 'cd %h/server/dotfiles && git pull && notify-send "Homeserver configuration pulled"'
-ExecStart=-/bin/scp %h/papers/resume/two-colomns/resume.pdf homeserver:/home/http/public/
-ExecStart=-/bin/rsync -rvzh --chmod=go-rwx --del --force %h/mail    homeserver:/home/koral/mystik/
-ExecStart=-/bin/rsync -rvzh --chmod=go-rwx --del --force %h/prog --exclude 'cabal-sandbox/' --delete-excluded homeserver:/home/koral/mystik/
-ExecStart=-/bin/rsync -rvzh --chmod=go-rwx --del --force %h/.config homeserver:/home/koral/mystik/
-ExecStart=-/bin/rsync -rvzh --chmod=o-w    --del --force %h/music/  homeserver:/home/music/
-ExecStart=-/bin/rsync -rvzh --chmod=go-rwx --del --force %h/doc     homeserver:/home/koral/mystik/
-ExecStart=-/bin/rsync -rvzh --chmod=go-rwx --del --force %h/images  homeserver:/home/koral/mystik/
-ExecStart=-/bin/rsync -rvzh --chmod=go-rwx --del --force %h/papers  homeserver:/home/koral/mystik/
-ExecStart=-/bin/rsync -rvzh --chmod=go-rwx --del --force %h/reading homeserver:/home/koral/mystik/
-ExecStart=-/bin/rsync -rvzh --chmod=go-rwx --del --force %h/sound   homeserver:/home/koral/mystik/
-ExecStart=-/bin/rsync -rvzh --chmod=go-rwx --del --force %h/studies homeserver:/home/koral/mystik/
-#ExecStart=-/bin/rsync -rvzh --chmod=go-rwx --del --force %h/tmp     homeserver:/home/koral/mystik/
+ExecStart=-/run/current-system/sw/bin/sh -c 'cd %h/.config && git push && notify-send "Dotfiles pushed"'
+ExecStart=-/run/current-system/sw/bin/sh -c 'cd %h/server/dotfiles && git pull && notify-send "Homeserver configuration pulled"'
+ExecStart=-/run/current-system/sw/bin/scp %h/papers/resume/two-colomns/resume.pdf homeserver:/home/http/public/
+ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/mail    homeserver:/home/koral/mystik/
+ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/prog --exclude '.cabal-sandbox/' --exclude '.stack-work' --delete-excluded homeserver:/home/koral/mystik/
+ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/.config homeserver:/home/koral/mystik/
+ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=o-w    --del --force %h/music/  homeserver:/home/music/
+ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/doc     homeserver:/home/koral/mystik/
+ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/images  homeserver:/home/koral/mystik/
+ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/papers  homeserver:/home/koral/mystik/
+ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/reading homeserver:/home/koral/mystik/
+ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/sound   homeserver:/home/koral/mystik/
+ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/studies homeserver:/home/koral/mystik/
+#ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/tmp     homeserver:/home/koral/mystik/

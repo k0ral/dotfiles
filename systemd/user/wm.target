@@ -1,7 +1,0 @@
-[Unit]
-Description=Window manager target
-Requires=dbus.socket
-AllowIsolate=true
-
-[Install]
-Alias=default.target

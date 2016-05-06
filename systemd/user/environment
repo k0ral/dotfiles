@@ -1,2 +1,3 @@
 DISPLAY=:0
-PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin/:/usr/local/sbin:/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:/home/koral/.cabal/bin:/usr/bin/core_perl
+PATH=.cabal-sandbox/bin:/run/current-system/sw/bin/:/home/koral/.nix-profile/bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin/:/usr/local/sbin:/usr/lib/ccache/bin/:/usr/lib/colorgcc/bin:/home/koral/.cabal/bin:/home/koral/.local/bin:/usr/bin/core_perl
+SHELL=/run/current-system/sw/bin/bash

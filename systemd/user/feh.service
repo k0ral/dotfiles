@@ -1,9 +1,7 @@
 [Unit]
 Description=Random wallpaper with feh
-Requisite=xorg.service
-#After=xorg.service
 
 [Service]
 Type=simple
 EnvironmentFile=-/home/koral/.config/systemd/user/environment
-ExecStart=/bin/sh -c 'feh --randomize --recursive --bg-fill /home/koral/images/wallpapers'
+ExecStart=/home/koral/.nix-profile/bin/feh --randomize --recursive --bg-fill %h/images/wallpapers

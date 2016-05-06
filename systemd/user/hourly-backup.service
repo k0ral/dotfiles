@@ -1,8 +1,0 @@
-[Unit]
-Description=Hourly backup
-
-[Service]
-Type=oneshot
-EnvironmentFile=-%h/.config/systemd/user/environment
-ExecStart=-/bin/sh -c '/bin/pacman -Qe > %h/.config/packages'
-ExecStart=-/bin/sh -c '/bin/pacman -Qm >> %h/.config/packages'

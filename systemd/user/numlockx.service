@@ -2,10 +2,11 @@
 Description=numlock
 
 [Service]
+EnvironmentFile=-/home/koral/.config/systemd/user/environment
 Type=oneshot
-ExecStart=/usr/bin/numlockx on
-ExecStop=/usr/bin/numlockx off
+ExecStart=/home/koral/.nix-profile/bin/numlockx on
+ExecStop=/home/koral/.nix-profile/bin/numlockx off
 SuccessExitStatus=203
 
 [Install]
-WantedBy=wm.target
+WantedBy=default.target

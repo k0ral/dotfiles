@@ -1,8 +1,0 @@
-[Unit]
-Description=Hourly backup timer
-
-[Timer]
-OnCalendar=hourly
-
-[Install]
-WantedBy=timers.target

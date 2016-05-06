@@ -1,13 +1,11 @@
 [Unit]
 Description=Notification daemon
-Requisite=xorg.service
-#After=xorg.service
 
 [Service]
 Environment=DISPLAY=:0
-ExecStart=/bin/dunst
+ExecStart=/home/koral/.nix-profile/bin/dunst
 Restart=always
 RestartSec=30
 
 [Install]
-WantedBy=wm.target
+WantedBy=graphical.target

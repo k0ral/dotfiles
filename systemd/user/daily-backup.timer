@@ -6,4 +6,4 @@ OnCalendar=daily
 Unit=daily-backup.service
 
 [Install]
-WantedBy=wm.target
+WantedBy=timers.target
