@@ -216,8 +216,8 @@ mpd_crossfade_time = "5"
 ## Note: below variables also support text attributes listed above.
 ##
 #
-now_playing_prefix = $b$r
-now_playing_suffix = $/b$/r
+now_playing_prefix = $b
+now_playing_suffix = $/b
 #browser_playlist_prefix = "$2playlist$9 "
 selected_item_prefix = $2
 selected_item_suffix = $9
@@ -263,7 +263,7 @@ selected_item_suffix = $9
 ##   not available.
 ##
 #
-song_columns_list_format = "(7f)[magenta]{l} (30)[green]{tE} (4f)[magenta]{nE:N°} (15)[cyan]{bE} (5f)[magenta]{yE} (20)[green]{aE} (15f)[cyan]{gEr} (15f)[magenta]{CEr}"
+song_columns_list_format = "(7f)[magenta]{l} (20)[red]{aE} (30)[yellow]{tE} (4f)[magenta]{nE:N°} (15)[blue]{bE} (5f)[magenta]{yE} (15f)[cyan]{gEr} (15f)[magenta]{CEr}"
 #
 ##### various settings #####
 #
