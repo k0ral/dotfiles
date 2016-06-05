@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleContexts          #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
 -- {{{ Imports
@@ -195,15 +195,12 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     -- Mouse
     ((modm,                 xK_o),          banish UpperLeft),
 
-    -- Toggle the status bar gap
-    ((modm,                 xK_b),          sendMessage ToggleStruts),
-
     ((modm,                 xK_z),          withFocused toggleBorder),
     ((modm,                 xK_F11),        withFocused (sendMessage . maximizeRestore)),
 
     ((modm,                 xK_Print),      spawn "scrot -e 'mv $f ~/'"),
 
-    ((modm .|. shiftMask,   xK_q),          io (exitWith ExitSuccess)),
+    ((modm .|. shiftMask,   xK_q),          io exitSuccess),
     ((modm              ,   xK_F5),         spawn "xmonad --recompile; xmonad --restart")
     ]
 -- }}}
@@ -263,24 +260,19 @@ onNewWindow =
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 myEventHook = mempty
 
--- {{{ Status bars and logging
-myLogHook pipe = do
-    dynamicLogWithPP $ statusInfo pipe
-    -- fadeInactiveLogHook 0.7
-
-statusInfo pipe = defaultPP {
-    ppCurrent           = dzenColor "#aaaaff" "",
+-- {{{ Status bar
+statusBarPP = xmobarPP {
+    ppCurrent           = xmobarColor "cyan" "",
     ppVisible           = wrap "(" ")",
     ppHidden            = (\i -> case i of
         "NSP" -> ""
         _     -> i),
-    ppHiddenNoWindows   = \_ -> "",
-    ppUrgent            = dzenColor "red" "",
+    ppHiddenNoWindows   = const "",
+    ppUrgent            = xmobarColor "red" "",
     ppSep               = " | ",
     ppWsSep             = " ",
-    ppTitle             = dzenColor "#7777ff" "" . shorten 30,
-    ppOrder             = \(ws:_:_:_) -> [ws],
-    ppOutput            = hPutStrLn pipe }
+    ppTitle             = xmobarColor "#7777ff" "" . shorten 30,
+    ppOrder             = \(ws:_:_:_) -> [ws] }
 -- }}}
 
 
@@ -290,16 +282,16 @@ myStartupHook = setWMName "LG3D"
 
 myUrgencyHook = withUrgencyHook dzenUrgencyHook { args = ["-bg", "darkgreen", "-xs", "1"] }
 
+
 -- {{{ Entry point
 main = do
-    status <- spawnPipe "dzen2 -fg '#333377' -bg '#000011' -fn 'Inconsolata:pixelsize=16' -ta l -expand r"
     _ <- spawn myTerminal
-    xmonad $ myUrgencyHook $ defaults status
+    xmonad =<< statusBar "xmobar" statusBarPP (const (myModMask, xK_b)) myConfig
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
 -- use the defaults defined in xmonad/XMonad/Config.hs
-defaults pipe = defaultConfig {
+myConfig = myUrgencyHook $ defaultConfig {
     -- simple stuff
     terminal           = myTerminal,
     focusFollowsMouse  = myFocusFollowsMouse,
@@ -318,7 +310,6 @@ defaults pipe = defaultConfig {
     layoutHook         = myLayout,
     manageHook         = onNewWindow,
     handleEventHook    = myEventHook,
-    logHook            = myLogHook pipe,
     startupHook        = myStartupHook
     }
 -- }}}
