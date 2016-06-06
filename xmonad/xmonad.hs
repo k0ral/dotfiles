@@ -1,6 +1,5 @@
 {-# LANGUAGE FlexibleContexts          #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
-
 -- {{{ Imports
 import           XMonad
 import qualified XMonad.Actions.ConstrainedResize  as Sqr
@@ -15,7 +14,6 @@ import           XMonad.Actions.NoBorders
 import           XMonad.Actions.Warp
 import           XMonad.Config.Azerty
 import           XMonad.Hooks.DynamicLog
--- import XMonad.Hooks.FadeInactive
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.SetWMName
 import           XMonad.Hooks.UrgencyHook
@@ -25,12 +23,11 @@ import           XMonad.Layout.Grid
 import           XMonad.Layout.Maximize
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.PerWorkspace
+import           XMonad.Layout.Spacing
 import           XMonad.Layout.StackTile
 import           XMonad.Layout.Tabbed
 import           XMonad.Layout.WindowNavigation
 import           XMonad.Prompt
---import XMonad.Prompt.RunOrRaise
---import XMonad.Prompt.Shell
 import           XMonad.Prompt.XMonad
 import qualified XMonad.StackSet                   as W
 import           XMonad.Util.EZConfig              (additionalKeys)
@@ -53,10 +50,10 @@ myBrowser            = "firefox"
 -- {{{ Workspaces & layouts
 myWorkspaces =  ["1:movie", "2:music", "3:dev", "4:web"] ++ map show [5..9]
 
-devLayout     = avoidStruts . maximize . smartBorders . windowNavigation $ tiled
-movieLayout   =               maximize . noBorders    . windowNavigation $ Full
-webLayout     = avoidStruts . maximize . smartBorders . windowNavigation $ Full
-defaultLayout = avoidStruts . maximize . smartBorders . windowNavigation $ Grid ||| tiled ||| Mirror tiled ||| myTabbed ||| Full ||| Accordion
+devLayout     = avoidStruts . maximize . smartBorders . smartSpacing 3 . windowNavigation $ tiled
+movieLayout   =               maximize . noBorders    . smartSpacing 3 . windowNavigation $ Full
+webLayout     = avoidStruts . maximize . smartBorders . smartSpacing 3 . windowNavigation $ Full
+defaultLayout = avoidStruts . maximize . smartBorders . smartSpacing 3 . windowNavigation $ Grid ||| tiled ||| Mirror tiled ||| myTabbed ||| Full ||| Accordion
 
 tiled = Tall nmaster delta ratio
   where
@@ -89,11 +86,9 @@ myLayout = onWorkspace "1:movie" movieLayout .
 -- }}}
 
 
-myBorderWidth        = 2
+myBorderWidth        = 1
 myNormalBorderColor  = "#000099"
-myFocusedBorderColor = "#ffff00"
-
-myFocusFollowsMouse = True
+myFocusedBorderColor = "cyan"
 
 -- Scratchpad
 scratchpads = [NS "termite"
@@ -124,17 +119,15 @@ myNumlockMask   = mod2Mask
 
 
 -- {{{ Key bindings
-myKeys = \c -> azertyKeys c `M.union` generalKeys c
+myKeys c = azertyKeys c `M.union` generalKeys c
 
-generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
+generalKeys conf@XConfig {XMonad.modMask = modm} = M.fromList [
     -- Spawn programs
     ((modm,                 xK_Return),     spawn $ XMonad.terminal conf),
     ((modm,                 xK_t),          spawn myBrowser),
     ((modm,                 xK_BackSpace),  namedScratchpadAction scratchpads "termite"),
     --((modm,                 xK_r),          spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     ((modm,                 xK_r),          spawn "dmenu_run -b -l 10 -p 'Execute'"),
-    --((modm,                 xK_r),          shellPrompt mySP),
-    --((modm .|. shiftMask,   xK_r ),         runOrRaisePrompt mySP),
     ((modm,                 xK_l),          spawn "slock"),
     ((modm,                 xK_x),          xmonadPrompt defaultXPConfig),
     ((modm,                 xK_F4),         kill1),
@@ -188,7 +181,6 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((modm .|. shiftMask,   xK_Up   ),      withFocused $ snapMove U Nothing),
     ((modm .|. shiftMask,   xK_Down ),      withFocused $ snapMove D Nothing),
 
-
     ((modm,                 xK_e),          viewEmptyWorkspace),
     ((modm .|. shiftMask,   xK_e),          tagToEmptyWorkspace),
 
@@ -207,17 +199,17 @@ generalKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
 
 -- {{{ Mouse bindings
 -- You may also bind events to the mouse scroll wheel (button4 and button5)
-myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ [
+myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList [
     -- mod-button1, Set the window to floating mode and move by dragging
-    ((modm, button1), (\w -> focus w >> mouseMoveWindow w
-                                       >> windows W.shiftMaster)),
+    ((modm, button1), \w -> focus w >> mouseMoveWindow w
+                                       >> windows W.shiftMaster),
     -- mod-button2, Raise the window to the top of the stack
-    ((modm, button2), (\w -> focus w >> windows W.shiftMaster)),
+    ((modm, button2), \w -> focus w >> windows W.shiftMaster),
     -- mod-button3, Set the window to floating mode and resize by dragging
     --, ((modm, button3), (\w -> focus w >> mouseResizeWindow w
     --                                   >> windows W.shiftMaster))
-    ((modm, button3),               (\w -> focus w >> Sqr.mouseResizeWindow w False)),
-    ((modm .|. shiftMask, button3), (\w -> focus w >> Sqr.mouseResizeWindow w True ))]
+    ((modm, button3),               \w -> focus w >> Sqr.mouseResizeWindow w False),
+    ((modm .|. shiftMask, button3), \w -> focus w >> Sqr.mouseResizeWindow w True )]
 -- }}}
 
 
@@ -264,9 +256,9 @@ myEventHook = mempty
 statusBarPP = xmobarPP {
     ppCurrent           = xmobarColor "cyan" "",
     ppVisible           = wrap "(" ")",
-    ppHidden            = (\i -> case i of
+    ppHidden            = \i -> case i of
         "NSP" -> ""
-        _     -> i),
+        _     -> i,
     ppHiddenNoWindows   = const "",
     ppUrgent            = xmobarColor "red" "",
     ppSep               = " | ",
@@ -294,7 +286,7 @@ main = do
 myConfig = myUrgencyHook $ defaultConfig {
     -- simple stuff
     terminal           = myTerminal,
-    focusFollowsMouse  = myFocusFollowsMouse,
+    focusFollowsMouse  = True,
     borderWidth        = myBorderWidth,
     modMask            = myModMask,
     -- numlockMask        = myNumlockMask,
