@@ -19,7 +19,6 @@
 ;; }}}
 
 ;; {{{ Minor modes
-(blink-cursor-mode 1)
 (delete-selection-mode 1)
 (electric-indent-mode 1)
 (file-name-shadow-mode 1)
@@ -188,6 +187,11 @@
   :config
   (whole-line-or-region-mode 1) )
 
+;; {{{ Cursor
+(blink-cursor-mode 1)
+
+(setq-default x-stretch-cursor t)
+;; }}}
 
 ;; {{{ Prettify symbols
 (global-prettify-symbols-mode +1)
