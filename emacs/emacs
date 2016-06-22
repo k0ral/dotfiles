@@ -113,13 +113,17 @@
   :config
   (ido-mode 'both)
   (ido-everywhere 1)
-  (flx-ido-mode 1)
+
+  (use-package flx-ido
+    :config
+    (flx-ido-mode 1) )
 
   (defadvice ido-find-file (after find-file-sudo activate)
     "Find file as root if necessary."
     (unless (and buffer-file-name
                  (file-writable-p buffer-file-name))
       (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
   (setq-default
     ido-auto-merge-work-directories-length -1 ; Do not try to find a file outside current directory in case given filename matches nothing; just open a new file!
     ido-create-new-buffer                  'never
@@ -157,7 +161,7 @@
   :config
   (rich-minority-mode 1)
   (setq rm-blacklist "")
-  )
+)
 
 (use-package shrink-whitespace
   :bind ("<C-S-delete>" . shrink-whitespace) )
@@ -203,14 +207,15 @@
 
 ;; {{{ General options
 (setq-default
-    echo-keystrokes          0.1
-    use-dialog-box           nil
-    vc-follow-symlinks       t
-    require-final-newline    t
-    initial-scratch-message  ""
-    inhibit-startup-screen   t
-    show-trailing-whitespace t
-    ;ring-bell-function      'ignore
+  echo-keystrokes          0.1
+  load-prefer-newer        t
+  mouse-yank-at-point      t
+  use-dialog-box           nil
+  vc-follow-symlinks       t
+  require-final-newline    t
+  initial-scratch-message  ""
+  inhibit-startup-screen   t
+  show-trailing-whitespace t
 )
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -242,13 +247,14 @@
 
 ;; {{{ Movement
 (defun goto-line-with-feedback ()
-    "Show line numbers temporarily, while prompting for the line number input"
-    (interactive)
-    (unwind-protect
-        (progn
-          (linum-mode 1)
-          (goto-line (read-number "Goto line: ")))
-      (linum-mode -1)))
+  "Show line numbers temporarily, while prompting for the line number input"
+  (interactive)
+  (unwind-protect
+    (progn
+      (linum-mode 1)
+        (goto-line (read-number "Goto line: ")))
+    (linum-mode -1)
+))
 
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
@@ -541,7 +547,7 @@
 
 ;; {{{ Theme
 (use-package solarized-theme
-  :init
+  :config
   (add-to-list 'default-frame-alist '(background-color . "#000011"))
   (add-to-list 'default-frame-alist '(background-mode  . dark))
   ;; (add-to-list 'default-frame-alist '(cursor-color     . "#00ff00"))
@@ -549,6 +555,5 @@
   (add-to-list 'default-frame-alist '(font             . "Inconsolata-12"))
   (add-to-list 'default-frame-alist '(mouse-color      . "#007700"))
   (add-to-list 'default-frame-alist '(alpha            . 90))
-  :config
   (load-theme 'solarized-dark t) )
 ;; }}}
