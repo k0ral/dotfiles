@@ -53,6 +53,12 @@
   :init
   (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode) )
 
+(use-package counsel
+  :bind (("<f1> f" . counsel-describe-function)
+         ("<f1> v" . counsel-describe-variable)
+         ("C-o"    . counsel-find-file)
+         ("M-x"    . counsel-M-x) ) )
+
 (use-package expand-region
   :bind ("C-S-SPC" . er/expand-region) )
 
@@ -102,9 +108,8 @@
 
 (use-package idomenu
   :bind (("C-b" . ido-switch-buffer)
-         ("M-s" . ido-write-file)
+         ("M-s" . ido-write-file) )
          ;; ("C-w" . ido-kill-buffer)
-         ("C-o" . ido-find-file) )
   :config
   (ido-mode 'both)
   (ido-everywhere 1)
@@ -161,11 +166,8 @@
   :config
   (smart-cursor-color-mode 1) )
 
-(use-package smex
-  :bind ("M-x" . smex)
-  ;; ("<menu>" . smex)
-  :config
-  (smex-initialize) )
+(use-package swiper
+  :bind ("C-f" . swiper) )
 
 (use-package undo-tree
   :bind (("C-z" . undo-tree-undo)
@@ -378,7 +380,6 @@
 (setq-default search-highlight t)
 (setq-default query-replace-highlight t)
 
-(global-set-key (kbd "C-f")         'isearch-forward)
 (global-set-key (kbd "M-f")         'isearch-occur)
 ;; (global-set-key (kbd "C-S-f")       'isearch-backward)
 
