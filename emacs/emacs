@@ -76,15 +76,6 @@
     (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup) )
   )
 
-(use-package guide-key
-  :init
-  (setq-default
-    guide-key/guide-key-sequence '("C-x" "C-c p")
-    guide-key/idle-delay 0.1
-    guide-key/recursive-key-sequence-flag t )
-  :config
-  (guide-key-mode 1) )
-
 (use-package haskell-mode
   :mode "\.chs$"
   :init (progn
@@ -178,6 +169,10 @@
          ("M-z" . undo-tree-visualize) )
   :config
   (global-undo-tree-mode 1) )
+
+(use-package which-key
+  :config
+  (which-key-mode) )
 
 (use-package whole-line-or-region
   :bind (("M-c" . whole-line-or-region-comment-dwim)
