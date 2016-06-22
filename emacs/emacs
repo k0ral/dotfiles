@@ -39,8 +39,8 @@
 (which-function-mode 1)
 ;; }}}
 
-(use-package ace-jump-mode
-  :bind ("M-g" . ace-jump-mode) )
+(use-package avy
+  :bind ("M-g" . avy-goto-word-1) )
 
 (use-package adaptive-wrap
   :ensure t
