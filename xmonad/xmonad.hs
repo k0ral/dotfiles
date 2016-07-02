@@ -17,7 +17,6 @@ import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.SetWMName
 import           XMonad.Hooks.UrgencyHook
-import           XMonad.Layout.Accordion
 import           XMonad.Layout.Decoration
 import           XMonad.Layout.Grid
 import           XMonad.Layout.Maximize
@@ -53,7 +52,7 @@ myWorkspaces =  ["1:movie", "2:music", "3:dev", "4:web"] ++ map show [5..9]
 devLayout     = avoidStruts . maximize . smartBorders . smartSpacing 3 . windowNavigation $ tiled
 movieLayout   =               maximize . noBorders    . smartSpacing 3 . windowNavigation $ Full
 webLayout     = avoidStruts . maximize . smartBorders . smartSpacing 3 . windowNavigation $ Full
-defaultLayout = avoidStruts . maximize . smartBorders . smartSpacing 3 . windowNavigation $ Grid ||| tiled ||| Mirror tiled ||| myTabbed ||| Full ||| Accordion
+defaultLayout = avoidStruts . maximize . smartBorders . smartSpacing 3 . windowNavigation $ Grid ||| tiled ||| Mirror tiled ||| myTabbed ||| Full
 
 tiled = Tall nmaster delta ratio
   where
