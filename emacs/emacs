@@ -55,6 +55,7 @@
 (use-package counsel
   :bind (("<f1> f" . counsel-describe-function)
          ("<f1> v" . counsel-describe-variable)
+         ("C-f"    . counsel-grep)
          ("C-o"    . counsel-find-file)
          ("M-x"    . counsel-M-x) ) )
 
@@ -159,9 +160,6 @@
 (use-package smart-cursor-color
   :config
   (smart-cursor-color-mode 1) )
-
-(use-package swiper
-  :bind ("C-f" . swiper) )
 
 (use-package undo-tree
   :bind (("C-z" . undo-tree-undo)
