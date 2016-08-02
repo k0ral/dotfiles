@@ -53,7 +53,7 @@
   networking.tcpcrypt.enable = true;
   #networking.wireless.enable = true;
 
-
+  nix.nixPath = [ "nixpkgs=/home/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" ];
   nixpkgs.config.allowUnfree = true;
 
 
