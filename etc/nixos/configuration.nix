@@ -14,9 +14,17 @@
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
 
-  environment.systemPackages = with pkgs; [
-    ack acpi aria2 atool binutils cacert detox dfc dzen2 ffmpeg fish git grc htop isync libxml2 lsdvd mailutils man_db mediainfo mercurial mkvtoolnix-cli mpc_cli mutt nox ntfs3g powertop progress rfkill rsync slock sshfsFuse telnet tree unrar unzip urlview vobcopy wget w3m xorg.xkill zip
-  ];
+  environment.systemPackages = 
+    let devPack = with pkgs; [ ack binutils cabal-install cacert emacs icu git grc gnumake mercurial pandoc pkgconfig urlview ];
+        fsPack = with pkgs; [ atool bashmount detox dfc encfs ntfs3g libnotify rsync sshfsFuse tree unrar unzip zip ];
+        graphicalPack = with pkgs; [ arandr dmenu2 dunst dzen2 lemonbar slock termite wmctrl xclip xorg.xbacklight xorg.xkill ];
+        mediaPack = with pkgs; [ apvlv beets feh ffmpeg jpegoptim lsdvd mediainfo mkvtoolnix-cli mpc_cli mpd mpv ncmpcpp sxiv vobcopy ];
+        netPack = with pkgs; [ aria2 bind conkeror elinks firefox isync mutt telnet transmission w3m weechat wget ];
+        nixPack = with pkgs; [ cabal2nix nix-repl nox ];
+        haskellPack = with pkgs.haskell.packages.ghc801; [ ghc ghc-mod happy hledger hlint open-haddock stack stylish-haskell xmobar ];
+        pythonPack = with pkgs.python3Packages; [ glances mps-youtube udiskie youtube-dl ];
+        systemPack = with pkgs; [ abduco acpi fish htop lsof man numlockx pciutils powertop progress rfkill ];
+    in devPack ++ fsPack ++ graphicalPack ++ mediaPack ++ netPack ++ nixPack ++ pythonPack ++ systemPack ++ haskellPack;
 
 
   fonts.enableFontDir = true;
