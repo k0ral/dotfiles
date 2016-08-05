@@ -84,9 +84,9 @@ Config
       ] 30
 
     , Run Swap
-      [ "--template" , "SWAP <free>M"
-      , "--Low"      , "50"        -- units: %
-      , "--High"     , "80"        -- units: %
+      [ "--template" , "SWAP <used>M"
+      , "--Low"      , "5"        -- units: %
+      , "--High"     , "30"       -- units: %
       , "--low"      , "green"
       , "--normal"   , "orange"
       , "--high"     , "red"
