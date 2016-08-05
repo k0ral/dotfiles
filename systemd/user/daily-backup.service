@@ -14,7 +14,6 @@ ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=o-w    --del --force %
 ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/doc     homeserver:/home/koral/mystik/
 ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/images  homeserver:/home/koral/mystik/
 ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/papers  homeserver:/home/koral/mystik/
-ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/reading homeserver:/home/koral/mystik/
 ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/sound   homeserver:/home/koral/mystik/
 ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/studies homeserver:/home/koral/mystik/
 #ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/tmp     homeserver:/home/koral/mystik/
