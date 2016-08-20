@@ -5,7 +5,7 @@ Description=System Monitor for X
 
 [Service]
 EnvironmentFile=-/home/koral/.config/systemd/user/environment
-ExecStart=/home/koral/.nix-profile/bin/xmobar
+ExecStart=/run/current-system/sw/bin/xmobar
 Restart=always
 RestartSec=19
 

@@ -3,7 +3,7 @@ Description=Notification daemon
 
 [Service]
 Environment=DISPLAY=:0
-ExecStart=/home/koral/.nix-profile/bin/dunst
+ExecStart=/run/current-system/sw/bin/dunst
 Restart=always
 RestartSec=30
 

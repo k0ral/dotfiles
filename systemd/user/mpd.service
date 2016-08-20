@@ -2,8 +2,8 @@
 Description=Music Player Daemon
 
 [Service]
-ExecStart=/home/koral/.nix-profile/bin/mpd --no-daemon %h/.config/mpd/mpd.conf
-ExecStop=/home/koral/.nix-profile/bin/mpd --kill
+ExecStart=/run/current-system/sw/bin/mpd --no-daemon %h/.config/mpd/mpd.conf
+ExecStop=/run/current-system/sw/bin/mpd --kill
 
 PIDFile=%h/.config/mpd/pid
 Restart=always
