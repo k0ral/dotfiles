@@ -6,7 +6,7 @@ Config
   , position =     TopW R 100
   , sepChar =  "%"   -- delineator between plugin names and straight text
   , alignSep = "}{"  -- separator between left-right alignment
-  , template = "%StdinReader% }{ %coretemp% | %battery% | %multicpu% | %disku% | %memory% | %swap% | %dynnetwork% | %mail% | %default:Master% | %date%"
+  , template = "%StdinReader% }{ %coretemp% | BAT %battery% | CPU %multicpu% | %disku% | %memory% | %swap% | IO %diskio% | %dynnetwork% | %mail% | %default:Master% | %date%"
   , lowerOnStart =     True    -- send to bottom of window stack on start
   , hideOnStart =      False   -- start with window unmapped (hidden)
   , allDesktops =      True    -- show on all desktops
@@ -16,7 +16,7 @@ Config
   , commands =
     [ Run StdinReader
     , Run Battery
-      [ "--template" , "BAT <acstatus>"
+      [ "--template" , "<acstatus>"
       , "--Low"      , "10"        -- units: %
       , "--High"     , "80"        -- units: %
       , "--low"      , "red"
@@ -43,12 +43,14 @@ Config
     --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
     , Run Date "<fc=cyan>%T</fc>" "date" 10
 
+    , Run DiskIO [ ("/", "<read> <write>") ] [] 30
+
     , Run DiskU [ ("/", "/ <free>") ]
-      [ "--Low"      , "50"
-      , "--High"     , "90"
-      , "--low"      , "green"
+      [ "--Low"      , "10"
+      , "--High"     , "50"
+      , "--low"      , "red"
       , "--normal"   , "orange"
-      , "--high"     , "red"
+      , "--high"     , "green"
       ] 110
 
     , Run DynNetwork
@@ -73,7 +75,7 @@ Config
       ] 50
 
     , Run MultiCpu
-      [ "--template" , "CPU <total0>:<total1>:<total2>:<total3>"
+      [ "--template" , "<total0>:<total1>:<total2>:<total3>"
       , "--Low"      , "50"         -- units: %
       , "--High"     , "85"         -- units: %
       , "--low"      , "green"
