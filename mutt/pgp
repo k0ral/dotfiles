@@ -4,7 +4,7 @@
 #set pgp_timeout=600
 
 set crypt_use_gpgme = yes
-set crypt_autosign = yes
+set crypt_autosign = no
 set crypt_replysign = yes
 set crypt_replyencrypt = yes
 set crypt_replysignencrypted = yes
