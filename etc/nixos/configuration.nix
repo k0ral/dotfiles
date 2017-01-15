@@ -15,14 +15,14 @@
   boot.loader.grub.device = "/dev/sda";
 
   environment.systemPackages = 
-    let devPack = with pkgs; [ ack binutils cabal-install cacert chromaprint emacs icu git grc gnumake libxml2 mercurial octave pandoc pkgconfig ruby urlview ];
-        fsPack = with pkgs; [ atool bashmount detox dfc encfs file libmtp libnotify ntfs3g rmlint rsync sshfsFuse tree unrar unzip zip ];
-        graphicalPack = with pkgs; [ arandr dmenu2 dunst dzen2 lemonbar slock termite wmctrl xclip xorg.xbacklight xorg.xkill ];
-        mediaPack = with pkgs; [ apvlv beets feh ffmpeg handbrake jpegoptim lsdvd mediainfo mkvtoolnix-cli mpc_cli mpd mpv ncmpcpp sxiv ];
+    let devPack = with pkgs; [ ack asciidoc-full-with-plugins asciidoctor awscli binutils bundler cabal-install cacert chromaprint emacs icu git grc gnumake libxml2 mercurial octave pkgconfig ruby urlview ];
+        fsPack = with pkgs; [ atool bashmount detox dfc duplicity encfs file libmtp libnotify ncdu ntfs3g rmlint rsync sshfsFuse tree unrar unzip zip ];
+        graphicalPack = with pkgs; [ arandr dmenu2 dunst dzen2 scrot slock termite wmctrl xclip xorg.xbacklight xorg.xkill ];
+        mediaPack = with pkgs; [ apvlv beets feh ffmpeg handbrake imagemagick jpegoptim lsdvd mediainfo mkvtoolnix-cli mpc_cli mpd mpv ncmpcpp sxiv ];
         netPack = with pkgs; [ aria2 bind conkeror elinks firefox isync mutt telnet transmission w3m weechat wget ];
         nixPack = with pkgs; [ cabal2nix nix-repl nox ];
-        haskellPack = with pkgs.haskell.packages.ghc801; [ cabal-db ghc ghc-mod haddocset happy hledger hlint stack stylish-haskell xmobar ]; # open-haddock
-        pythonPack = with pkgs.python3Packages; [ glances udiskie youtube-dl ]; # grip mps-youtube
+        haskellPack = with pkgs.haskell.packages.ghc801; [ apply-refact ghc ghc-mod haddocset happy hasktags hindent hledger hlint stylish-haskell xmobar ]; # open-haddock
+        pythonPack = with pkgs.python3Packages; [ glances grip udiskie youtube-dl ]; # mps-youtube
         systemPack = with pkgs; [ abduco acpi fish htop lsof man numlockx pciutils powertop progress rfkill smartmontools ];
     in devPack ++ fsPack ++ graphicalPack ++ mediaPack ++ netPack ++ nixPack ++ pythonPack ++ systemPack ++ haskellPack;
 
@@ -32,6 +32,7 @@
   fonts.fonts = with pkgs; [
     corefonts  # Micrsoft free fonts
     inconsolata  # monospaced
+    source-code-pro
     unifont # some international languages
     ];
   fonts.fontconfig.defaultFonts.monospace = [ "Inconsolata" ];
