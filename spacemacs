@@ -320,7 +320,7 @@ you should place your code here."
 
   (global-set-key (kbd "M-b") 'ibuffer)
   (global-set-key (kbd "M-c") 'spacemacs/comment-or-uncomment-lines)
-  ;; (global-set-key (kbd "M-g") 'goto-line)
+  (global-set-key (kbd "M-g") 'goto-line)
   (global-set-key (kbd "M-i") 'spacemacs/indent-region-or-buffer)
   (global-set-key (kbd "M-n") 'highlight-symbol-next)
   (global-set-key (kbd "M-p") 'highlight-symbol-prev)
