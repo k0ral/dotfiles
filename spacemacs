@@ -40,8 +40,10 @@ values."
      (haskell :variables
               haskell-enable-hindent-style "gibiansky"
               haskell-stylish-on-save t)
-     helm
+
+     ;; helm
      ibuffer
+     ivy
      nixos
      python
      semantic
@@ -303,12 +305,12 @@ you should place your code here."
 
   (global-set-key (kbd "C-b") 'switch-to-buffer)
   (global-set-key (kbd "C-d") 'spacemacs/jump-to-definition)
-  (global-set-key (kbd "C-f") 'spacemacs/helm-swoop-region-or-symbol)
+  (global-set-key (kbd "C-f") 'swiper)
   (global-set-key (kbd "C-h") 'highlight-symbol-at-point)
-  (global-set-key (kbd "C-o") 'spacemacs/helm-find-files)
+  (global-set-key (kbd "C-o") 'counsel-find-file)
   (global-set-key (kbd "C-r") 'origami-toggle-node)
   (global-set-key (kbd "C-s") 'save-buffer)
-  (global-set-key (kbd "C-t") 'helm-projectile-find-file)
+  (global-set-key (kbd "C-t") 'counsel-projectile)
   (global-set-key (kbd "C-v") 'whole-line-or-region-yank)
   (global-set-key (kbd "C-w") 'kill-this-buffer)
   (global-set-key (kbd "C-y") 'undo-tree-redo)
