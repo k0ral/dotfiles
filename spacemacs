@@ -301,12 +301,18 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (global-subword-mode)
+
   (define-key evil-emacs-state-map (kbd "C-z") nil)
+
+  (setq-default c-basic-offset 2)
+  (setq-default tab-width 2)
 
   (global-set-key (kbd "C-b") 'switch-to-buffer)
   (global-set-key (kbd "C-d") 'spacemacs/jump-to-definition)
   (global-set-key (kbd "C-f") 'swiper)
   (global-set-key (kbd "C-h") 'highlight-symbol-at-point)
+  (global-set-key (kbd "C-l") 'linum-mode)
   (global-set-key (kbd "C-o") 'counsel-find-file)
   (global-set-key (kbd "C-r") 'origami-toggle-node)
   (global-set-key (kbd "C-s") 'save-buffer)
