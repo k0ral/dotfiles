@@ -325,6 +325,7 @@ you should place your code here."
   (global-set-key (kbd "C-<next>") 'bs-cycle-next)
   (global-set-key (kbd "C-+") 'text-scale-increase)
   (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "C-:") 'avy-goto-word-1)
 
   (global-set-key (kbd "M-b") 'ibuffer)
   (global-set-key (kbd "M-c") 'spacemacs/comment-or-uncomment-lines)
