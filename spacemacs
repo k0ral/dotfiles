@@ -308,7 +308,7 @@ you should place your code here."
   (setq-default c-basic-offset 2)
   (setq-default tab-width 2)
 
-  (global-set-key (kbd "C-b") 'counsel-projectile-switch-to-buffer)
+  (global-set-key (kbd "C-b") 'switch-to-buffer)
   (global-set-key (kbd "C-d") 'spacemacs/jump-to-definition)
   (global-set-key (kbd "C-f") 'swiper)
   (global-set-key (kbd "C-h") 'highlight-symbol-at-point)
