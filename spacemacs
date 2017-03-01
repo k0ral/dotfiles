@@ -57,7 +57,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(highlight-symbol ibuffer-vc tronesque-theme whole-line-or-region)
+   dotspacemacs-additional-packages '(highlight-symbol ibuffer-vc multiple-cursors tronesque-theme whole-line-or-region)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -313,6 +313,7 @@ you should place your code here."
   (global-set-key (kbd "C-f") 'swiper)
   (global-set-key (kbd "C-h") 'highlight-symbol-at-point)
   (global-set-key (kbd "C-l") 'linum-mode)
+  (global-set-key (kbd "C-m") 'mc/mark-more-like-this)
   (global-set-key (kbd "C-o") 'counsel-find-file)
   (global-set-key (kbd "C-r") 'origami-toggle-node)
   (global-set-key (kbd "C-s") 'save-buffer)
@@ -333,7 +334,7 @@ you should place your code here."
   (global-set-key (kbd "M-i") 'spacemacs/indent-region-or-buffer)
   (global-set-key (kbd "M-n") 'highlight-symbol-next)
   (global-set-key (kbd "M-p") 'highlight-symbol-prev)
-  (global-set-key (kbd "M-r") 'query-replace-regexp)
+  (global-set-key (kbd "M-r") 'mc/mark-all-dwim)
   (global-set-key (kbd "M-z") 'undo-tree-visualize)
   (global-set-key (kbd "M-<backspace>") 'backward-kill-sentence)
   (global-set-key (kbd "M-<delete>") 'whole-line-or-region-kill-region)
