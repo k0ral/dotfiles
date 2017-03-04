@@ -61,7 +61,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(ac-ispell define-word disaster fancy-battery google-translate hy-mode lorem-ipsum open-junk-file org org-bullets org-plus-contrib orgit smeargle toc-org uuidgen vi-tilde-fringe)
+   dotspacemacs-excluded-packages '(ac-ispell define-word disaster fancy-battery flycheck-pos-tip google-translate hy-mode lorem-ipsum macrostep open-junk-file org org-bullets org-plus-contrib orgit pcre2el smeargle toc-org uuidgen vi-tilde-fringe)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
