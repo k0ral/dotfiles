@@ -45,7 +45,6 @@ set editor="/usr/bin/emacsclient -c"
 # {{{ Charset/locale/encoding
 unset allow_8bit                    # never do Q-P encoding on legal 8-bit chars
 set allow_ansi                      # allow ANSI color codes in messages.
-set locale="fr_FR.UTF-8"            # locale to use for printing time
 set send_charset="utf-8"
 # }}}
 
