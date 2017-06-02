@@ -39,7 +39,9 @@
 
 
   hardware.bumblebee.enable = true;
-
+  hardware.bluetooth.enable = true;
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.package = pkgs.pulseaudioFull.override { gconfSupport = false; };
 
   i18n = {
   #   consoleFont = "Lat2-Terminus16";
@@ -67,16 +69,16 @@
 
   services.acpid.enable = true;
   services.acpid.handlers.volumeDown = {
-    event = "button/volumedown.*";
-    action = "${pkgs.alsaUtils}/bin/amixer set Master 3%-";
+    event = "button/volumedown";
+    action = "${pkgs.alsaUtils}/bin/amixer -c0 set Master 3%-";
   };
   services.acpid.handlers.volumeUp = {
-    event = "button/volumeup.*";
-    action = "${pkgs.alsaUtils}/bin/amixer set Master 3%+";
+    event = "button/volumeup";
+    action = "${pkgs.alsaUtils}/bin/amixer -c0 set Master 3%+";
   };
   services.acpid.handlers.mute = {
-    event = "button/mute.*";
-    action = "${pkgs.alsaUtils}/bin/amixer set Master toggle";
+    event = "button/mute";
+    action = "${pkgs.alsaUtils}/bin/amixer -c0 set Master toggle";
   };
   services.acpid.handlers.cdPlay = {
     event = "cd/play.*";
