@@ -1,0 +1,61 @@
+"*":
+  autosave: {}
+  "command-palette":
+    preserveLastSearch: true
+  core:
+    audioBeep: false
+    autoHideMenuBar: true
+    closeEmptyWindows: false
+    disabledPackages: [
+      "spell-check"
+      "package-generator"
+      "wrap-guide"
+      "autoflow"
+      "deprecation-cop"
+      "autosave"
+      "language-go"
+      "language-gfm"
+      "language-less"
+      "language-mustache"
+      "language-objective-c"
+      "language-ruby-on-rails"
+      "language-ruby"
+      "language-sass"
+      "language-toml"
+    ]
+    telemetryConsent: "limited"
+    themes: [
+      "one-dark-ui"
+      "solarized-dark-syntax"
+    ]
+  editor:
+    fontFamily: "inconsolata"
+    fontSize: 15
+    invisibles: {}
+    lineHeight: 1.1
+    showLineNumbers: false
+    tabType: "soft"
+  "exception-reporting":
+    userId: "b1ea1bc2-2fdc-4ec8-98df-026a0917b8b7"
+  "find-and-replace":
+    scrollToResultOnLiveSearch: true
+  "fuzzy-finder":
+    preserveLastSearch: true
+  "git-diff":
+    showIconsInEditorGutter: true
+  "haskell-ghc-mod":
+    stackSandbox: false
+  "highlight-line":
+    hideHighlightOnSelect: true
+  "ide-haskell":
+    autoHideOutput: true
+    onSavePrettify: true
+  "line-ending-selector":
+    defaultLineEnding: "LF"
+  "markdown-preview": {}
+  tabs:
+    enableVcsColoring: true
+  "tree-view":
+    squashDirectoryNames: true
+  welcome:
+    showOnStartup: false
