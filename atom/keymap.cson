@@ -26,6 +26,9 @@
 
 '.platform-win32, .platform-linux':
   'ctrl-shift-t': 'tree-view:toggle'
+  'alt': 'abort!'
+  'alt-f1': 'window:toggle-menu-bar'
+
 
 '.platform-win32 atom-text-editor, .platform-linux atom-text-editor':
   'alt-n': 'find-and-replace:find-next-selected'
