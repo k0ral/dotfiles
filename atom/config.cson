@@ -59,6 +59,11 @@
     onSavePrettify: true
   "line-ending-selector":
     defaultLineEnding: "LF"
+  "linter-ui-default":
+    hidePanelWhenEmpty: true
+    panelRepresents: "Entire Project"
+    showProviderName: true
+    statusBarClickBehavior: "Jump to next issue"
   "markdown-preview": {}
   tabs:
     enableVcsColoring: true
