@@ -1,4 +1,9 @@
 "*":
+  "autocomplete-haskell":
+    defaultHintPanelVisibility: "Hidden"
+    hideHintPanelIfEmpty: true
+  "autocomplete-plus":
+    enableAutoActivation: false
   autosave: {}
   "command-palette":
     preserveLastSearch: true
@@ -44,7 +49,9 @@
   "git-diff":
     showIconsInEditorGutter: true
   "haskell-ghc-mod":
+    highlightTooltips: false
     stackSandbox: false
+    useLinter: true
   "highlight-line":
     hideHighlightOnSelect: true
   "ide-haskell":
