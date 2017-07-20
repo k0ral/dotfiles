@@ -66,6 +66,11 @@
   # };
 
   security.setuidPrograms = [ "slock" ];
+  programs.nano.nanorc = ''
+    set nowrap
+    set tabstospaces
+    set tabsize 2
+  '';
 
   services.acpid.enable = true;
   services.acpid.handlers.volumeDown = {
