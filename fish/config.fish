@@ -134,11 +134,11 @@ end
 
 # {{{ Aliases: shorter commands
 function e
-    emacsclient -c -n $argv
+    atom $argv
 end
 
 function E
-    set SUDO_EDITOR "emacsclient -c -n"
+    set SUDO_EDITOR "atom"
     sudoedit $argv
 end
 
@@ -222,8 +222,6 @@ end
 
 #alias grep='grep --color=auto'
 #alias make="colormake"
-
-#alias emacs='emacsclient -c -n -a ""'
 
 #function gdb
 #    cgdb -q $argv
