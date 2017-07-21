@@ -4,16 +4,9 @@ Description=Daily backup
 [Service]
 Type=oneshot
 EnvironmentFile=-%h/.config/systemd/user/environment
-ExecStart=-/run/current-system/sw/bin/sh -c 'cd %h/.config && git push && notify-send "Dotfiles pushed"'
-ExecStart=-/run/current-system/sw/bin/sh -c 'cd %h/server/dotfiles && git pull && notify-send "Homeserver configuration pulled"'
-ExecStart=-/run/current-system/sw/bin/scp %h/papers/resume/two-colomns/resume.pdf homeserver:/home/http/public/
-ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/mail    homeserver:/home/koral/mystik/
-ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/prog --exclude '.cabal-sandbox/' --exclude '.stack-work' --delete-excluded homeserver:/home/koral/mystik/
-ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/.config homeserver:/home/koral/mystik/
-ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=o-w    --del --force %h/music/  homeserver:/home/music/
-ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/doc     homeserver:/home/koral/mystik/
-ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/images  homeserver:/home/koral/mystik/
-ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/papers  homeserver:/home/koral/mystik/
-ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/sound   homeserver:/home/koral/mystik/
-ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/studies homeserver:/home/koral/mystik/
-#ExecStart=-/run/current-system/sw/bin/rsync -rvzh --chmod=go-rwx --del --force %h/tmp     homeserver:/home/koral/mystik/
+ExecStart=-/run/current-system/sw/bin/git -C %h/.config push
+ExecStart=-/home/koral/.config/systemd/user/borg-wrapper create -x -C lzma "koral@45.32.237.83:backup::{utcnow}-{hostname}-{user}" %h/doc %h/feeds %h/images %h/papers %h/prog/archive %h/studies %h/.config %h/.mozilla
+ExecStart=-/home/koral/.config/systemd/user/borg-wrapper prune -d 30 "koral@45.32.237.83:backup"
+# ExecStart=-/run/current-system/sw/bin/rsync -rvh --chmod=o-w    --del --force %h/music/   homeserver:/home/music/
+#ExecStart=-/run/current-system/sw/bin/rsync -rvh --chmod=go-rwx --del --force %h/tmp      homeserver:/home/koral/mystik/
+#ExecStart=-/run/current-system/sw/bin/scp %h/papers/resume/two-colomns/resume.pdf homeserver:/home/http/public/
