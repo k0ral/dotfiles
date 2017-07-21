@@ -1,5 +1,5 @@
-Host homeserver
-    HostName twyk.xyz
+Host vps
+    HostName 45.32.237.83
     User koral
 
 Host 192.168.0.*
