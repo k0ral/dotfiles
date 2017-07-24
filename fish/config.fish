@@ -48,6 +48,14 @@ function dmesg
     command dmesg -T $argv
 end
 
+function ffmpeg
+    command ffmpeg -hide_banner $argv
+end
+
+function ffprobe
+    command ffprobe -hide_banner $argv
+end
+
 function less
     command less -R $argv
 end
@@ -96,10 +104,6 @@ end
 
 function egrep
     command egrep --color=auto $argv
-end
-
-function ffmpeg
-    command ffmpeg -hide_banner $argv
 end
 
 function fgrep
