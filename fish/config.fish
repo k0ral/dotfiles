@@ -338,6 +338,10 @@ end
 # }}}
 
 # {{{ Functions
+function bitrate
+    for i in $argv; ffprobe -v error -select_streams v:0 -show_entries stream=bit_rate -of default=nw=1:nk=1 -sexagesimal $i | tr -d '\n'; echo " $i"; end
+end
+
 function cutFrom
     echo "> ffmpeg -ss $argv[1] -i $argv[2] -acodec copy -vcodec copy new.$argv[2]"
     ffmpeg -ss $argv[1] -i $argv[2] -acodec copy -vcodec copy new.$argv[2]
@@ -346,6 +350,10 @@ end
 function cutTo
     echo "> ffmpeg -i $argv[2] -acodec copy -vcodec copy -to $argv[1] new.$argv[2]"
     ffmpeg -i $argv[2] -acodec copy -vcodec copy -to $argv[1] new.$argv[2]
+end
+
+function duration
+    for i in $argv; ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 -sexagesimal $i | tr -d '\n'; echo " $i"; end
 end
 
 function hdmi
