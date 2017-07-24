@@ -213,7 +213,7 @@ end
 
 # {{{ Aliases: alternative programs
 function diff
-    colordiff $argv
+    command diff --color=always $argv
 end
 
 function gcc
