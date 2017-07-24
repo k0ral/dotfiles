@@ -60,6 +60,10 @@ function less
     command less -R $argv
 end
 
+function ls
+    command ls --tabsize=0 --literal --color=auto --show-control-chars -p -h --group-directories-first -X $argv
+end
+
 function mkcd
     mkdir $argv
     cd $argv
@@ -75,10 +79,6 @@ end
 
 function rename
     command rename -v $argv
-end
-
-function ls
-    command ls --tabsize=0 --literal --color=auto --show-control-chars -p -h --group-directories-first -X $argv
 end
 
 function df
@@ -154,10 +154,6 @@ function g
     sr google $argv
 end
 
-function h
-    systemctl poweroff
-end
-
 function k
     ps aux | percol | awk '{ print $2 }' | xargs kill $argv
 end
@@ -192,10 +188,6 @@ end
 
 function o
     open $argv
-end
-
-function r
-    systemctl reboot
 end
 
 function s
@@ -297,43 +289,32 @@ function sysu
     systemctl --user $argv
 end
 
+function logs
+    journalctl -u $argv
+end
 
-if [ (whoami) != 'root' ];
-    function up
-        yaourt -Syu --aur
-    end
+function enable
+    sys enable $argv
+end
 
-    function remove
-        s pacman -Rs $argv
-    end
+function disable
+    sys disable $argv
+end
 
-    function logs
-        s journalctl -u $argv
-    end
+function restart
+    sys restart $argv
+end
 
-    function enable
-        sys enable $argv
-    end
+function start
+    sys start $argv
+end
 
-    function disable
-        sys disable $argv
-    end
+function stop
+    sys stop $argv
+end
 
-    function restart
-        sys restart $argv
-    end
-
-    function start
-        sys start $argv
-    end
-
-    function stop
-        sys stop $argv
-    end
-
-    function suspend
-        sys suspend
-    end
+function suspend
+    sys suspend
 end
 # }}}
 
