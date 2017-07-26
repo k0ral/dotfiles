@@ -6,7 +6,7 @@ Config
   , position =     TopW R 100
   , sepChar =  "%"   -- delineator between plugin names and straight text
   , alignSep = "}{"  -- separator between left-right alignment
-  , template = "%StdinReader% }{ %coretemp% | BAT %battery% | CPU %multicpu% | %disku% | %memory% | %swap% | IO %diskio% | %dynnetwork% | %mail% | %default:Master% | %date%"
+  , template = "%StdinReader% }{ %coretemp% | BAT %battery% | CPU %multicpu% | %disku% | %memory% | IO %diskio% | %dynnetwork% | %mail% | %default:Master% | %date%"
   , lowerOnStart =     True    -- send to bottom of window stack on start
   , hideOnStart =      False   -- start with window unmapped (hidden)
   , allDesktops =      True    -- show on all desktops
@@ -84,15 +84,6 @@ Config
       , "--suffix"   , "True"
       , "--minwidth"    , "4"
       ] 30
-
-    , Run Swap
-      [ "--template" , "SWAP <used>M"
-      , "--Low"      , "5"        -- units: %
-      , "--High"     , "30"       -- units: %
-      , "--low"      , "green"
-      , "--normal"   , "orange"
-      , "--high"     , "red"
-      ] 70
 
     , Run Volume "default" "Master"
       [ "--template" , "VOL <volume> <status>"
