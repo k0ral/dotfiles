@@ -442,10 +442,10 @@ def_key "p"
 #def_key "B"
 #  select_album
 #
-#def_key "a"
-#  add_selected_items
+def_key "A"
+  add_selected_items
 def_key "a"
-   add_item_to_playlist
+  add_item_to_playlist
 #
 #def_key "c"
 #  clear_playlist
