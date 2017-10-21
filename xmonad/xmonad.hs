@@ -42,7 +42,7 @@ import           System.IO
 
 -- {{{ Applications
 myTerminal           = "termite -e \"/bin/sh -c '" ++ myShell ++ "'\""
-myShell              = "abduco -c /tmp/abduco-`cat /dev/urandom | tr -dc A-Za-z0-9_ | head -c8` fish"
+myShell              = "fish"
 myBrowser            = "firefox"
 -- }}}
 
