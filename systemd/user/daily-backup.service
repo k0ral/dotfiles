@@ -5,7 +5,7 @@ Description=Daily backup
 Type=oneshot
 EnvironmentFile=-%h/.config/systemd/user/environment
 ExecStart=-/run/current-system/sw/bin/git -C %h/.config push
-ExecStart=-/home/koral/.config/systemd/user/borg-wrapper create --remote-path=borg1 -x -C lzma "17994@ch-s011.rsync.net:backup::{utcnow:%Y-%m-%d}-{hostname}-{user}" %h/doc %h/feeds %h/images %h/papers %h/prog/archive %h/studies %h/.config %h/.mozilla
+ExecStart=-/home/koral/.config/systemd/user/borg-wrapper create --remote-path=borg1 -x -C lzma "17994@ch-s011.rsync.net:backup::{utcnow}-{hostname}" %h/doc %h/feeds %h/images %h/papers %h/prog/archive %h/studies %h/.config %h/.mozilla
 ExecStart=-/home/koral/.config/systemd/user/borg-wrapper prune --remote-path=borg1 -d 30 "17994@ch-s011.rsync.net:backup"
 # ExecStart=-/run/current-system/sw/bin/rsync -rvh --chmod=o-w    --del --force %h/music/   homeserver:/home/music/
 #ExecStart=-/run/current-system/sw/bin/rsync -rvh --chmod=go-rwx --del --force %h/tmp      homeserver:/home/koral/mystik/
