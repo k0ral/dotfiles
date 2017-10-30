@@ -352,8 +352,7 @@ function ls-empty
 end
 
 function sbg
-    cd $HOME/images/wallpapers
-    /usr/bin/hsetroot -fill (/bin/ls | /usr/bin/shuf -n 1)
+    feh --randomize --recursive --bg-fill /home/koral/images/wallpapers
 end
 
 function rm-empty
