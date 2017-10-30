@@ -34,8 +34,7 @@
       "solarized-dark-syntax"
     ]
   editor:
-    fontFamily: "inconsolata"
-    fontSize: 15
+    fontFamily: "Fira Code"
     invisibles: {}
     lineHeight: 1.1
     showLineNumbers: false
