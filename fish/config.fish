@@ -273,10 +273,6 @@ function wifi
     s wifi-select wlan0
 end
 
-function bit
-    transmission-remote twyk.xyz $argv
-end
-
 function logsu
     journalctl --user-unit $argv
 end
