@@ -9,15 +9,17 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
+  boot.supportedFilesystems = [ "zfs" ];
+
 
   environment.systemPackages = 
-    let devPack = with pkgs; [ ack asciidoc-full-with-plugins asciidoctor awscli binutils bundler cabal-install cacert chromaprint emacs icu git grc gnumake libxml2 mercurial octave pkgconfig ruby urlview ];
-        fsPack = with pkgs; [ atool bashmount detox dfc duplicity encfs file libmtp libnotify ncdu ntfs3g rmlint rsync sshfsFuse tree unrar unzip zip ];
-        graphicalPack = with pkgs; [ arandr dmenu2 dunst dzen2 scrot slock termite wmctrl xclip xorg.xbacklight xorg.xkill ];
-        mediaPack = with pkgs; [ apvlv beets feh ffmpeg handbrake imagemagick jpegoptim lsdvd mediainfo mkvtoolnix-cli mpc_cli mpd mpv ncmpcpp sxiv ];
-        netPack = with pkgs; [ aria2 bind conkeror elinks firefox isync mutt telnet transmission w3m weechat wget ];
+    let devPack = with pkgs; [ ack asciidoc asciidoctor atom binutils bundler cabal-install cacert chromaprint git gnumake grc icu libxml2 mercurial openssl pkgconfig poppler_utils python3 urlview zeal ];
+        fsPack = with pkgs; [ atool bashmount borgbackup detox dfc duplicity encfs file libmtp libnotify ncdu ntfs3g rmlint rsync sshfsFuse tree unrar unzip zip ];
+        graphicalPack = with pkgs; [ arandr dmenu2 dunst dzen2 scrot termite wmctrl xclip xorg.xbacklight xorg.xkill ];
+        mediaPack = with pkgs; [ beets feh ffmpeg imagemagick jpegoptim lsdvd mediainfo mkvtoolnix-cli mpc_cli mpd mpv pamixer ncmpcpp sxiv zathura ];
+        netPack = with pkgs; [ aria2 bind bluez bluez-tools buku conkeror elinks firefox isync neomutt notmuch obexfs telnet w3m weechat wget ];
         nixPack = with pkgs; [ cabal2nix nix-repl nox ];
-        haskellPack = with pkgs.haskell.packages.ghc801; [ apply-refact ghc ghc-mod haddocset happy hasktags hindent hledger hlint stylish-haskell xmobar ]; # open-haddock
+        haskellPack = with pkgs.haskell.packages.ghc802; [ apply-refact ghc ghc-mod hakyll happy hasktags hlint stylish-haskell xmobar ]; # open-haddock haddocset hledger hindent
         pythonPack = with pkgs.python3Packages; [ glances grip udiskie youtube-dl ]; # mps-youtube
         systemPack = with pkgs; [ abduco acpi fish htop lsof man numlockx pciutils powertop progress rfkill smartmontools ];
     in devPack ++ fsPack ++ graphicalPack ++ mediaPack ++ netPack ++ nixPack ++ pythonPack ++ systemPack ++ haskellPack;
