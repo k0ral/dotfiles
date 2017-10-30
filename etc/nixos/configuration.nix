@@ -29,7 +29,10 @@
   fonts.enableGhostscriptFonts = true;
   fonts.fonts = with pkgs; [
     corefonts  # Micrsoft free fonts
+    fira-code
+    hasklig
     inconsolata  # monospaced
+    iosevka
     source-code-pro
     unifont # some international languages
     ];
