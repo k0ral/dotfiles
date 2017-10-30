@@ -105,6 +105,7 @@
   };
 
   services.atd.enable = true;
+  services.compton.enable = true;
   services.dnsmasq.enable = true;
   services.dnsmasq.servers = config.networking.nameservers;
   services.journald.extraConfig = "SystemMaxUse=100M";
