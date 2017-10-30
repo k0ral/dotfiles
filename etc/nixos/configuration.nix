@@ -41,6 +41,10 @@
 
   hardware.bumblebee.enable = true;
   hardware.bluetooth.enable = true;
+  hardware.opengl = {
+    driSupport = true;
+    driSupport32Bit = true;
+  };
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull.override { gconfSupport = false; };
 
