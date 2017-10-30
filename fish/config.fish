@@ -175,7 +175,7 @@ function lsa
 end
 
 function m
-    mutt $argv
+    neomutt $argv
 end
 
 function mk
