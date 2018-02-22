@@ -144,6 +144,25 @@
   # The NixOS release to be compatible with for stateful data such as databases.
   # system.stateVersion = "16.03";
 
+  systemd.user.services.mpd = {
+    description = "Music Player Daemon";
+    serviceConfig = {
+      ExecStart = "${pkgs.mpd}/bin/mpd --no-daemon";
+      ExecStop = "${pkgs.mpd}/bin/mpd --kill";
+      PIDFile = "%h/.config/mpd/pid";
+      Restart = "always";
+      RestartSec = 30;
+    };
+    wantedBy = [ "default.target" ];
+  };
+
+  systemd.user.sockets.mpd = {
+    wantedBy = [ "sockets.target" ];
+    socketConfig = {
+      ListenStream = 6600;
+    };
+  };
+
   time.timeZone = "Europe/Paris";
 
   users.extraUsers.koral = {
