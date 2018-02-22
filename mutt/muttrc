@@ -1,29 +1,30 @@
-# {{{ Paths
 set folder=~/mail                   # Mailboxes folder (must be set _before_ any other path)
+
+# {{{ Paths
 set alias_file=~/.config/mutt/aliases
 set header_cache=~/.config/mutt/.hcache
 set message_cachedir=~/.config/mutt/.mcache
-#set mailcap_path="~/.mutt/mailcap:/usr/local/share/mailcap"
-#set mbox="~/Maildir/Inbox/"
-#set mbox_type=Maildir
+set mailcap_path="~/.mutt/mailcap"
+set mbox_type=Maildir
 set postponed=+postponed
 #set record=+outbox                  # Outgoing mail
-set record=!
-set spoolfile=+Inbox/               # Location for new mails
+#set record=!
 # }}}
+
 
 # {{{ Sources
 source ~/.config/mutt/abook
 source ~/.config/mutt/alternates
-#source ~/.config/mutt/aliases
+source ~/.config/mutt/aliases
 source ~/.config/mutt/bindings
 source ~/.config/mutt/colors
 source ~/.config/mutt/headers
 source ~/.config/mutt/hooks
-source ~/.config/mutt/mailboxes
-source ~/.config/mutt/mailing_lists
+#source ~/.config/mutt/mailboxes
+#source ~/.config/mutt/mailing_lists
+source ~/.config/mutt/notmuch
 source ~/.config/mutt/pgp
-# source ~/.config/mutt/sidebar
+source ~/.config/mutt/sidebar
 # }}}
 
 # {{{ SSL/TLS
@@ -39,7 +40,6 @@ alternative_order text/plain text/html
 
 # Commands
 set editor="nano"
-#set editor="emacsclient -c"
 #set editor="atom --wait"
 #set query_command="abook --mutt-query '%s'"
 #set sendmail="/usr/bin/msmtp --read-envelope-from"
@@ -53,7 +53,7 @@ set send_charset="utf-8"
 # {{{ Inhibit confirmation
 unset confirmappend                 # Append to mailboxes
 set delete=yes
-set move=yes
+#set move=yes
 unset wait_key
 # }}}
 
@@ -95,6 +95,7 @@ set print_command="/usr/bin/muttprint %s -p {PrinterName}"
 
 # {{{ Sorting
 set sort=threads                # primary sorting method
+#set sort=from
 set sort_alias=alias            # sort alias file by alias
 set sort_aux=reverse-last-date-received       # secondary sorting method
 set sort_browser=reverse-date   # how to sort files in the dir browser
@@ -105,7 +106,7 @@ folder-hook "outbox" set sort=date
 set attach_format="%4n %u%D%I %t %T %8s  %.40d%> %.7m/%.10M %10C"
 set attribution="*** %n <%a> [%{%Y-%m-%d %H:%M:%S %Z}] ***"
 set compose_format="New mail | Size: %l | Host: %h | Attachments: %a %>-"
-set index_format="%4C  %Z  %[%Y/%m/%d %H:%M]  %-15.15n  %s"
+set index_format="%4C  %24g  %[%Y/%m/%d %H:%M]  %-15.15n  %s"
 set status_format=" Host: %h | Box: %f %r | Msgs: %?M?%M/?%m %?n?| New: %n? %?d?| Del: %d? %?F?| Flag: %F? %?t?| Tag: %t? %?p?| Post: %p? %?b?| Inc: %b?| Size: %l | Sort: %s/%S %> %P "
 #set pager_format="%-10.10i %[!%a %b %d %R]"
 set pager_format="-%S- %-20.20f %s"
@@ -114,4 +115,4 @@ set folder_format="%N %t %f %> %15d"
 
 
 #   Mailboxes
-mailboxes =outbox
+#mailboxes =outbox

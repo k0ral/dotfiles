@@ -16,7 +16,7 @@ bind    index   s           save-message
 bind    index   b           bounce-message
 bind    index   R           group-reply
 bind    index   \cn         next-new
-bind    index   \c<down>    next-thread
+#bind    index   \c<down>    next-thread
 #bind    index   \t          collapse-all
 bind    index   <Space>     flag-message
 macro   index   q           '<change-folder>?<toggle-mailboxes>'
