@@ -21,7 +21,7 @@
         nixPack = with pkgs; [ cabal2nix nix-repl nox ];
         haskellPack = with pkgs.haskell.packages.ghc802; [ apply-refact ghc ghc-mod hakyll happy hasktags hlint stylish-haskell xmobar ]; # open-haddock haddocset hledger hindent
         pythonPack = with pkgs.python3Packages; [ glances grip udiskie youtube-dl ]; # mps-youtube
-        systemPack = with pkgs; [ abduco acpi fish htop lsof man numlockx pciutils powertop progress rfkill smartmontools ];
+        systemPack = with pkgs; [ abduco acpi fish htop lsof man numlockx pciutils powertop progress psmisc rfkill smartmontools usbutils ];
     in devPack ++ fsPack ++ graphicalPack ++ mediaPack ++ netPack ++ nixPack ++ pythonPack ++ systemPack ++ haskellPack;
 
 
