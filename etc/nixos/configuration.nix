@@ -65,6 +65,7 @@
   nix.nixPath = [ "nixpkgs=/home/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" ];
   nix.useSandbox = true;
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.pulseaudio = true;
 
 
   # Override package
