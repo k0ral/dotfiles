@@ -38,7 +38,6 @@
   fonts.fontconfig.defaultFonts.monospace = [ "Inconsolata" ];
 
 
-  hardware.bumblebee.enable = true;
   hardware.bluetooth.enable = true;
   hardware.opengl = {
     driSupport = true;
