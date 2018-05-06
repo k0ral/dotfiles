@@ -75,7 +75,7 @@ Config
       ] 50
 
     , Run MultiCpu
-      [ "--template" , "<total0>:<total1>:<total2>:<total3>"
+      [ "--template" , "<total0>:<total1>:<total2>:<total3>:<total4>:<total5>:<total6>:<total7>"
       , "--Low"      , "50"         -- units: %
       , "--High"     , "85"         -- units: %
       , "--low"      , "green"
