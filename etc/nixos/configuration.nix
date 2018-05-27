@@ -170,4 +170,10 @@
     isNormalUser = true;
     uid = 1000;
   };
+
+  # Android development
+  # environment.systemPackages = with pkgs; [ androidenv.platformTools heimdall ];
+  # services.udev.packages = [ pkgs.android-udev-rules ];
+  # users.extraGroups.plugdev = { };
+  # users.extraUsers.koral.extraGroups = [ "plugdev" ];
 }
