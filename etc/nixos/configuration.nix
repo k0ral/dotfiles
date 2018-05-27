@@ -48,7 +48,7 @@
 
   i18n = {
   #   consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "fr";
+    consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
   };
 
@@ -129,10 +129,10 @@
   services.xserver.desktopManager.xterm.enable = false;
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.enable = true;
-  services.xserver.layout = "fr";
+  services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
   services.xserver.synaptics.enable = true;
-  services.xserver.xkbVariant = "latin9";
+  services.xserver.xkbVariant = "altgr-intl";
   services.xserver.windowManager.default = "xmonad";
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.xmonad.enableContribAndExtras = true;
