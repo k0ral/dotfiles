@@ -41,6 +41,7 @@
     invisibles: {}
     lineHeight: 1.1
     showLineNumbers: false
+    softWrap: true
     tabType: "soft"
   "exception-reporting":
     userId: "b1ea1bc2-2fdc-4ec8-98df-026a0917b8b7"
@@ -58,11 +59,13 @@
     hideHighlightOnSelect: true
   "ide-haskell":
     autoHideOutput: true
+    messageDisplayFrontend: "linter"
     onSavePrettify: true
   "line-ending-selector":
     defaultLineEnding: "LF"
   "linter-ui-default":
     hidePanelWhenEmpty: true
+    panelHeight: 300
     panelRepresents: "Entire Project"
     showProviderName: true
     statusBarClickBehavior: "Jump to next issue"
@@ -73,3 +76,9 @@
     squashDirectoryNames: true
   welcome:
     showOnStartup: false
+".python.regexp.source":
+  editor:
+    tabLength: 2
+".python.source":
+  editor:
+    tabLength: 2
