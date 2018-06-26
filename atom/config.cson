@@ -51,16 +51,16 @@
     preserveLastSearch: true
   "git-diff":
     showIconsInEditorGutter: true
-  "haskell-ghc-mod":
-    highlightTooltips: false
-    stackSandbox: false
-    useLinter: true
   "highlight-line":
     hideHighlightOnSelect: true
   "ide-haskell":
     autoHideOutput: true
     messageDisplayFrontend: "linter"
     onSavePrettify: true
+    onSavePrettifyFormats: {}
+  "ide-haskell-cabal":
+    cabal:
+      activeGhcVersion: "8.0"
   "line-ending-selector":
     defaultLineEnding: "LF"
   "linter-ui-default":
