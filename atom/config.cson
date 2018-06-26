@@ -27,6 +27,9 @@
       "language-ruby"
       "language-sass"
       "language-toml"
+      "github"
+      "background-tips"
+      "open-on-github"
     ]
     telemetryConsent: "limited"
     themes: [
