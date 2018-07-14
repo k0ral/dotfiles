@@ -208,19 +208,9 @@ function gcc
     colorgcc $argv
 end
 
-function rm
-    safe-rm -v $argv
-end
-
-#alias grep='grep --color=auto'
-#alias make="colormake"
-
 #function gdb
 #    cgdb -q $argv
 #end
-
-#alias -p grep='ack'
-#alias more='vimpager'
 
 function ping
     grc ping $argv
@@ -264,10 +254,6 @@ function reco
 end
 
 alias dlpage='wget -nd -pHEKk'
-
-function wifi
-    s wifi-select wlan0
-end
 
 function logsu
     journalctl --user-unit $argv
@@ -330,13 +316,8 @@ function duration
 end
 
 function hdmi
-    echo "> xrandr --output HDMI1 --auto"
-    xrandr --output HDMI1 --auto
-end
-
-function vga
-    echo "> xrandr --output VGA1 --auto"
-    xrandr --output VGA1 --auto
+    echo "> xrandr --output HDMI2 --auto"
+    xrandr --output HDMI2 --auto
 end
 
 function fade
