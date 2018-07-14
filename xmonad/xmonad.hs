@@ -126,7 +126,7 @@ generalKeys conf@XConfig {XMonad.modMask = modm} = M.fromList [
     ((modm,                 xK_t),          spawn myBrowser),
     ((modm,                 xK_BackSpace),  namedScratchpadAction scratchpads "termite"),
     ((modm,                 xK_r),          spawn "dmenu_run -nb '#000033' -b -l 10 -p 'Execute'"),
-    ((modm,                 xK_l),          spawn "slock"),
+    ((modm,                 xK_l),          spawn "i3lock-fancy"),
     ((modm,                 xK_x),          xmonadPrompt defaultXPConfig),
     ((modm,                 xK_F4),         kill1),
 

@@ -14,7 +14,7 @@
   environment.systemPackages = 
     let devPack = with pkgs; [ ack asciidoc asciidoctor atom binutils bundler cabal-install cacert chromaprint git gnumake grc icu libxml2 mercurial openssl pkgconfig poppler_utils python3 urlview zeal ];
         fsPack = with pkgs; [ atool bashmount borgbackup detox dfc duplicity encfs file libmtp libnotify ncdu ntfs3g rmlint rsync sshfsFuse tree unrar unzip zip ];
-        graphicalPack = with pkgs; [ arandr dmenu2 dunst dzen2 scrot termite wmctrl xclip xorg.xbacklight xorg.xkill ];
+        graphicalPack = with pkgs; [ arandr dmenu2 dunst dzen2 i3lock-fancy termite wmctrl xclip xorg.xbacklight xorg.xkill ];
         mediaPack = with pkgs; [ beets feh ffmpeg imagemagick jpegoptim lsdvd mediainfo mkvtoolnix-cli mpc_cli mpd mpv pamixer ncmpcpp sxiv zathura ];
         netPack = with pkgs; [ aria2 bind bluez bluez-tools buku conkeror elinks firefox isync neomutt notmuch obexfs telnet w3m weechat wget ];
         nixPack = with pkgs; [ cabal2nix nix-repl nox ];
