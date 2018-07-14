@@ -44,6 +44,10 @@ function cp
     rsync -av --progress $argv
 end
 
+function diff
+    command diff --color=always $argv
+end
+
 function dmesg
     command dmesg -T $argv
 end
@@ -208,10 +212,6 @@ function cd
 end
 
 # {{{ Aliases: alternative programs
-function diff
-    command diff --color=always $argv
-end
-
 function gcc
     colorgcc $argv
 end
