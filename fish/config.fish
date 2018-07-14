@@ -122,6 +122,14 @@ function octave
     command octave -q $argv
 end
 
+function pstree
+    command pstree -p -T -a
+end
+
+function rm
+  command rm -v $argv
+end
+
 function sshfs
     command sshfs -o follow_symlinks $argv
 end
