@@ -17,14 +17,17 @@ import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.SetWMName
 import           XMonad.Hooks.UrgencyHook
-import           XMonad.Layout.Decoration
 import           XMonad.Layout.Grid
+import           XMonad.Layout.MagicFocus
 import           XMonad.Layout.Maximize
+import           XMonad.Layout.MultiToggle
+import           XMonad.Layout.MultiToggle.Instances
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.PerWorkspace
+import           XMonad.Layout.SimpleFloat
 import           XMonad.Layout.Spacing
-import           XMonad.Layout.StackTile
 import           XMonad.Layout.Tabbed
+import           XMonad.Layout.ThreeColumns
 import           XMonad.Layout.WindowNavigation
 import           XMonad.Prompt
 import           XMonad.Prompt.XMonad
@@ -47,19 +50,17 @@ myBrowser            = "firefox"
 -- }}}
 
 -- {{{ Workspaces & layouts
-myWorkspaces =  ["1:movie", "2:music", "3:dev", "4:web"] ++ map show [5..9]
+myWorkspaces =  ["1:movie", "2:music", "3:dev", "4:read"] <> map show [5..9]
 
-devLayout     = avoidStruts . maximize . smartBorders . smartSpacing 3 . windowNavigation $ tiled
-movieLayout   =               maximize . noBorders    . smartSpacing 3 . windowNavigation $ Full
-webLayout     = avoidStruts . maximize . smartBorders . smartSpacing 3 . windowNavigation $ Full
-defaultLayout = avoidStruts . maximize . smartBorders . smartSpacing 3 . windowNavigation $ Grid ||| tiled ||| Mirror tiled ||| myTabbed ||| Full
+myMaximize = maximizeWithPadding 0
+commonLayoutModifiers = avoidStruts . myMaximize . smartBorders . mkToggle1 MIRROR
 
-tiled = Tall nmaster delta ratio
-  where
-    nmaster = 1        -- Windows in the master pane
-    ratio   = 1/2      -- Proportion of screen occupied by master pane
-    delta   = 3/100    -- Percent of screen to increment by when resizing panes
-stack    = StackTile 1 (3/100) (1/2)
+movieLayout   =                         smartBorders   . windowNavigation $ Full
+devLayout     = commonLayoutModifiers . smartSpacing 3 . windowNavigation $ threeColumns
+readLayout    = commonLayoutModifiers                  . windowNavigation $ threeColumns ||| myTabbed
+defaultLayout = commonLayoutModifiers                  . windowNavigation $ threeColumns ||| Grid ||| myTabbed ||| simpleFloat
+
+threeColumns = magicFocus $ ThreeColMid 1 (3/100) (1/2)
 myTabbed = tabbed shrinkText tabTheme
 
 tabTheme = Theme {
@@ -78,9 +79,9 @@ tabTheme = Theme {
     windowTitleAddons   = [],
     windowTitleIcons    = []}
 
-myLayout = onWorkspace "1:movie" movieLayout .
-           onWorkspace "3:dev"   devLayout .
-           onWorkspace "4:web"   webLayout $
+myLayout = onWorkspace "1:movie" movieLayout $
+           onWorkspace "3:dev"   devLayout $
+           onWorkspace "4:read"  readLayout $
            defaultLayout
 -- }}}
 
@@ -284,7 +285,7 @@ main = do
 myConfig = myUrgencyHook $ defaultConfig {
     -- simple stuff
     terminal           = myTerminal,
-    focusFollowsMouse  = True,
+    focusFollowsMouse  = False,
     borderWidth        = myBorderWidth,
     modMask            = myModMask,
     -- numlockMask        = myNumlockMask,
