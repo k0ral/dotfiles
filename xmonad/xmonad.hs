@@ -44,7 +44,7 @@ import           System.IO
 -- }}}
 
 -- {{{ Applications
-myTerminal           = "termite -e \"/bin/sh -c '" ++ myShell ++ "'\""
+myTerminal           = "st -e /run/current-system/sw/bin/fish"
 myShell              = "fish"
 myBrowser            = "firefox"
 -- }}}
@@ -91,10 +91,9 @@ myNormalBorderColor  = "#000099"
 myFocusedBorderColor = "cyan"
 
 -- Scratchpad
-scratchpads = [NS "termite"
-                  ("termite -r scratchpad -t scratchpad -e \"bash -c '" ++ myShell ++ "'\"")
-                  (title =? "scratchpad")
-                  (customFloating $ W.RationalRect l t w h) ]
+scratchpads =
+  [ NS "st" "st -c scratchpad -e /run/current-system/sw/bin/fish" (className =? "scratchpad") (customFloating $ W.RationalRect l t w h)
+  , NS "volume" "st -c volume_scratchpad -e /bin/sh -c alsamixer" (className =? "volume_scratchpad") (customFloating $ W.RationalRect 0.68 0.02 0.3 0.3) ]
   where
     h = 0.4         -- terminal height
     w = 0.95        -- terminal width
@@ -119,80 +118,81 @@ myNumlockMask   = mod2Mask
 
 
 -- {{{ Key bindings
-myKeys c = azertyKeys c `M.union` generalKeys c
+myKeymap = qwertyKeys <> generalKeys
 
-generalKeys conf@XConfig {XMonad.modMask = modm} = M.fromList [
+qwertyKeys = do
+  (i, k) <- zip myWorkspaces [1..]
+  [ ("M-" <> show k, windows $ W.view i), ("M-S-" <> show k, windows $ W.shift i) ]
+
+generalKeys = [
     -- Spawn programs
-    ((modm,                 xK_Return),     spawn $ XMonad.terminal conf),
-    ((modm,                 xK_t),          spawn myBrowser),
-    ((modm,                 xK_BackSpace),  namedScratchpadAction scratchpads "termite"),
-    ((modm,                 xK_r),          spawn "dmenu_run -nb '#000033' -b -l 10 -p 'Execute'"),
-    ((modm,                 xK_l),          spawn "i3lock-fancy"),
-    ((modm,                 xK_x),          xmonadPrompt defaultXPConfig),
-    ((modm,                 xK_F4),         kill1),
+    ("M-<Return>",     spawn myTerminal),
+    ("M-v",            namedScratchpadAction scratchpads "volume"),
+    ("M-r",            spawn "dmenu_run -nb '#000033' -b -l 10 -p 'Execute'"),
+    ("M-l",            spawn "i3lock-fancy"),
+    ("M-x",            xmonadPrompt defaultXPConfig),
+    ("M-<Print>",      spawn "scrot -e 'mv $f ~/'"),
+    ("M-<F4>",         kill1),
+    ("M-p",            spawn "/bin/sh -c 'mpc play $(mpc playlist -f \"%position% [[%artist% - ][%album% - ]%title%|%file%]\" | dmenu -b -nb \"#000033\" -p Play -i -l 20 | cut -d\" \" -f1)'"),
 
     -- Layouts
-    ((modm,                 xK_space),      sendMessage NextLayout),
-    ((modm .|. shiftMask,   xK_space),      setLayout $ XMonad.layoutHook conf),
-    ((modm,                 xK_n),          refresh),
-    ((modm,                 xK_v),          windows copyToAll),
-    ((modm .|. shiftMask,   xK_v),          killAllOtherCopies),
-    ((modm,                 xK_i),          withFocused $ \w -> tileWindow w (Rectangle 100 100 400 200) >> float w >> snapMove R Nothing w >> snapMove D Nothing w),
+    ("M-<Space>",      sendMessage NextLayout),
+    ("M-n",            refresh),
+    -- ("M-_v),          windows copyToAll),
+    ("M-S-v",          killAllOtherCopies),
+    ("M-i",            withFocused $ \w -> tileWindow w (Rectangle 100 100 400 200) >> float w >> snapMove R Nothing w >> snapMove D Nothing w),
+    ("M-m",            sendMessage $ Toggle MIRROR),
+    ("M-S-t",          withFocused $ windows . W.sink),
 
     -- Focus
-    ((modm,                 xK_Tab),        windows W.focusDown),
-    ((modm,                 xK_Page_Down),  windows W.focusDown),
-    ((modm,                 xK_Page_Up),    windows W.focusUp),
-    --((modm,                 xK_m),          windows W.focusMaster),
-    -- ((modm,                 xK_u),          focusUrgent),
-    ((modm,                 xK_g),          goToSelected defaultGSConfig),
-
-    -- Swap focused window
-    --((modm,                 xK_Return),     windows W.swapMaster),
-    --((modm .|. shiftMask,   xK_j     ),     windows W.swapDown  ),
-    --((modm .|. shiftMask,   xK_k     ),     windows W.swapUp    ),
-    ((modm,                 xK_m),          dwmpromote),
+    ("M-<Tab>",        windows W.focusDown),
+    ("M-<Page_Down>",  windows W.focusDown),
+    ("M-<Page_Up>",    windows W.focusUp),
+    -- ("M-_u),          focusUrgent),
+    ("M-g",            goToSelected defaultGSConfig),
 
     -- Resize
-    ((modm,                 xK_Down),       sendMessage Shrink),
-    ((modm,                 xK_Up),         sendMessage Expand),
-
-    -- Push window back into tiling
-    ((modm .|. shiftMask,   xK_t),          withFocused $ windows . W.sink),
+    -- ("M-_Down),       sendMessage Shrink),
+    -- ("M-_Up),         sendMessage Expand),
 
     -- Number of windows in the master area
-    ((modm .|. shiftMask,   xK_greater),    sendMessage (IncMasterN 1)),
-    ((modm,                 xK_less),       sendMessage (IncMasterN (-1))),
+    ("M-S-<Greater>",  sendMessage (IncMasterN 1)),
+    ("M-<Less>",       sendMessage (IncMasterN (-1))),
 
     -- Workspaces/screens navigation
-    ((modm,                 xK_Right),      nextWS),
-    ((modm,                 xK_Left),       prevWS),
-    ((modm,                 xK_Down),       nextScreen),
-    ((modm,                 xK_Up),         prevScreen),
+    ("M-<Right>",      nextWS),
+    ("M-<Left>",       prevWS),
+    ("M-<Down>",       nextScreen),
+    ("M-<Up>",         prevScreen),
 
-    ((modm .|. controlMask, xK_Right),      sendMessage $ Swap R),
-    ((modm .|. controlMask, xK_Left ),      sendMessage $ Swap L),
-    ((modm .|. controlMask, xK_Up   ),      sendMessage $ Swap U),
-    ((modm .|. controlMask, xK_Down ),      sendMessage $ Swap D),
+    -- Window navigation
+    ("M-C-<Right>",    sendMessage $ Swap R),
+    ("M-C-<Left>",     sendMessage $ Swap L),
+    ("M-C-<Up>",       sendMessage $ Swap U),
+    ("M-C-<Down>",     sendMessage $ Swap D),
 
-    ((modm .|. shiftMask,   xK_Right),      withFocused $ snapMove R Nothing),
-    ((modm .|. shiftMask,   xK_Left ),      withFocused $ snapMove L Nothing),
-    ((modm .|. shiftMask,   xK_Up   ),      withFocused $ snapMove U Nothing),
-    ((modm .|. shiftMask,   xK_Down ),      withFocused $ snapMove D Nothing),
+    -- ("M-S-Right),      withFocused $ snapMove R Nothing),
+    -- ("M-S-Left ),      withFocused $ snapMove L Nothing),
+    -- ("M-S-Up   ),      withFocused $ snapMove U Nothing),
+    -- ("M-S-Down ),      withFocused $ snapMove D Nothing),
+    ("M-S-<Right>",    sendMessage $ Go R),
+    ("M-S-<Left>",     sendMessage $ Go L),
+    ("M-S-<Up>",       sendMessage $ Go U),
+    ("M-S-<Down>",     sendMessage $ Go D),
 
-    ((modm,                 xK_e),          viewEmptyWorkspace),
-    ((modm .|. shiftMask,   xK_e),          tagToEmptyWorkspace),
+    ("M-e",            viewEmptyWorkspace),
+    ("M-S-e",          tagToEmptyWorkspace),
 
     -- Mouse
-    ((modm,                 xK_o),          banish UpperLeft),
+    ("M-o",            banish UpperLeft),
 
-    ((modm,                 xK_z),          withFocused toggleBorder),
-    ((modm,                 xK_F11),        withFocused (sendMessage . maximizeRestore)),
+    ("M-z",            withFocused toggleBorder),
+    ("M-<F11>",        withFocused (sendMessage . maximizeRestore)),
 
-    ((modm,                 xK_Print),      spawn "scrot -e 'mv $f ~/'"),
+    ("M-<Insert>",     pasteSelection),
 
-    ((modm .|. shiftMask,   xK_q),          io exitSuccess),
-    ((modm              ,   xK_F5),         spawn "xmonad --recompile; xmonad --restart")
+    ("M-S-q",          io exitSuccess),
+    ("M-<F5>",         spawn "xmonad --recompile; xmonad --restart")
     ]
 -- }}}
 
@@ -269,15 +269,14 @@ statusBarPP = xmobarPP {
 
 -- Perform an arbitrary action each time xmonad starts or is restarted.
 -- Used by, e.g., XMonad.Layout.PerWorkspace to initialize per-workspace layout choices.
-myStartupHook = setWMName "LG3D"
-
+myStartupHook = setWMName "LG3D" >> checkKeymap myConfig myKeymap
 myUrgencyHook = withUrgencyHook dzenUrgencyHook { args = ["-bg", "darkgreen", "-xs", "1"] }
 
 
 -- {{{ Entry point
 main = do
     _ <- spawn myTerminal
-    xmonad =<< statusBar "xmobar" statusBarPP (const (myModMask, xK_b)) myConfig
+    xmonad =<< statusBar "xmobar" statusBarPP (const (myModMask, xK_h)) myConfig
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -294,7 +293,7 @@ myConfig = myUrgencyHook $ defaultConfig {
     focusedBorderColor = myFocusedBorderColor,
 
     -- key bindings
-    keys               = myKeys,
+    keys               = \c -> mkKeymap c myKeymap,
     mouseBindings      = myMouseBindings,
 
     -- hooks, layouts
