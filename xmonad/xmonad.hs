@@ -1,8 +1,13 @@
 {-# LANGUAGE FlexibleContexts          #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 -- {{{ Imports
+import qualified Data.Map                            as M
+import           Data.Monoid
+import           Data.Word
+import           System.Exit
+import           System.IO
 import           XMonad
-import qualified XMonad.Actions.ConstrainedResize  as Sqr
+import qualified XMonad.Actions.ConstrainedResize    as Sqr
 import           XMonad.Actions.CopyWindow
 import           XMonad.Actions.CycleWS
 import           XMonad.Actions.DwmPromote
@@ -31,22 +36,16 @@ import           XMonad.Layout.ThreeColumns
 import           XMonad.Layout.WindowNavigation
 import           XMonad.Prompt
 import           XMonad.Prompt.XMonad
-import qualified XMonad.StackSet                   as W
-import           XMonad.Util.EZConfig              (additionalKeys)
+import qualified XMonad.StackSet                     as W
+import           XMonad.Util.EZConfig
 import           XMonad.Util.NamedScratchpad
-import           XMonad.Util.Run                   (spawnPipe)
-
-import qualified Data.Map                          as M
-import           Data.Monoid
-
-import           System.Exit
-import           System.IO
+import           XMonad.Util.Paste
+import           XMonad.Util.Run                     (spawnPipe)
 -- }}}
 
 -- {{{ Applications
 myTerminal           = "st -e /run/current-system/sw/bin/fish"
 myShell              = "fish"
-myBrowser            = "firefox"
 -- }}}
 
 -- {{{ Workspaces & layouts
@@ -229,9 +228,6 @@ myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList [
 ignoredWindows = composeAll [
     resource  =? "desktop_window" --> doIgnore]
 
-moveToWorkspace = composeAll [
-    resource =? "emacs"  --> doF (W.shift "3:dev") ]
-
 manageScratchpad :: ManageHook
 manageScratchpad = namedScratchpadManageHook scratchpads
 
@@ -239,8 +235,7 @@ onNewWindow =
     manageScratchpad <+>
     manageDocks <+>
     -- floatingWindows <+>
-    ignoredWindows <+>
-    moveToWorkspace
+    ignoredWindows
 -- }}}
 
 ------------------------------------------------------------------------
