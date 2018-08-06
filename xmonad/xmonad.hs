@@ -73,7 +73,7 @@ tabTheme = Theme {
     activeTextColor     = "#ffffff",
     inactiveTextColor   = "#aaaaaa",
     urgentTextColor     = "#ffff00",
-    fontName            = "xft:Inconsolata:size=10",
+    fontName            = "xft:Hack:size=10:autohint=true:antialias=true",
     decoWidth           = 200,
     decoHeight          = 20,
     windowTitleAddons   = [],
