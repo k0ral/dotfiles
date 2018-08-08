@@ -1,6 +1,6 @@
 Config
   { alpha = 240
-  , font =         "xft:Inconsolata:size=12:antialias=true"
+  , font =         "xft:Hack:size=12:antialias=true:autohint=true"
   , bgColor =      "#000011"
   , fgColor =      "#6666FF"
   , position =     TopW R 100
