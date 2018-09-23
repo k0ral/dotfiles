@@ -1,0 +1,246 @@
+# Default config for sway
+#
+# Read `man 5 sway` for a complete reference.
+
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+set $term st
+set $shell /run/current-system/sw/bin/fish
+set $menu dmenu_run -nb '#000033' -b -l 10 -p 'Execute'
+
+### Output configuration
+#
+#output * bg /nix/store/ls11aaz7ccfkq0kwh8kr27g4d4y7plgd-sway-0.15.2/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output eDP-1 position 0,0
+output HDMI-A-2 position 1920,0
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+### Input configuration
+#
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+### Key bindings
+#
+# Basics:
+#
+bindsym $mod+Return exec st -e $shell
+exec st -e $shell
+
+bindsym $mod+F4 kill
+bindsym $mod+F5 reload
+bindsym $mod+F11 fullscreen
+bindsym $mod+r exec $menu
+bindsym $mod+l exec swaylock
+bindsym $mod+m exec ~/.config/mpd/play_menu.sh
+bindsym $mod+w exec ~/.config/sway/switch_window.sh
+bindsym $mod+Shift+q exit
+
+# Take screenshot
+bindsym $mod+Print exec swaygrab
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+#
+# Audio controls
+#
+bindsym XF86AudioRaiseVolume exec pamixer -i 4
+bindsym XF86AudioLowerVolume exec pamixer -d 4
+bindsym XF86AudioMute exec pamixer -t
+
+
+bindsym $mod+v mode "volume"; exec st -c st_volume -t st_volume -e /bin/sh -c alsamixer
+for_window [title="st_volume"] floating enable
+for_window [title="st_volume"] sticky enable
+
+mode "volume" {
+  bindsym $mod+v [title="st_volume"] kill, mode "default"
+  bindsym Return [title="st_volume"] kill, mode "default"
+  bindsym Escape [title="st_volume"] kill, mode "default"
+
+  bindsym $mod+Left workspace prev_on_output
+  bindsym $mod+Right workspace next_on_output
+}
+
+#
+# Moving around:
+#
+# Move your focus around
+bindsym $mod+Tab focus next
+bindsym $mod+Shift+Tab focus prev
+
+bindsym $mod+Up focus output up
+bindsym $mod+Down focus output down
+
+# _move_ the focused window with the same, but add Shift
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#
+# Workspaces:
+#
+bindsym $mod+Left workspace prev_on_output
+bindsym $mod+Right workspace next_on_output
+bindsym $mod+Prior workspace prev_on_output
+bindsym $mod+Next workspace next_on_output
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+# Note: workspaces can have any name you want, not just numbers.
+# We just use 1-10 as the default.
+
+#
+# Layout stuff:
+#
+# You can "split" the current object of your focus with
+# $mod+b or $mod+v, for horizontal and vertical splits
+# respectively.
+#bindsym $mod+b splith
+#bindsym $mod+v splitv
+
+bindsym $mod+Shift+p exec /bin/sh -c 'swaymsg $(cat ~/.config/sway/commands | dmenu -nb "#000033" -b -l 10 -p "swaymsg:")'
+
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+f floating toggle
+bindsym $mod+s sticky toggle
+
+# Swap focus between the tiling area and the floating area
+bindsym $mod+Shift+f focus mode_toggle
+
+# move focus to the parent container
+bindsym $mod+z focus parent
+
+#
+# Scratchpad:
+#
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+h move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+Shift+h scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    # return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+d mode "default"
+}
+bindsym $mod+d mode "resize"
+
+set $move_mode "Move mode"
+mode $move_mode {
+  bindsym Left move workspace to output left
+  bindsym Right move workspace to output right
+  bindsym Up move workspace to output up
+  bindsym Down move workspace to output down
+
+  bindsym $mod+Left workspace prev
+  bindsym $mod+Right workspace next
+  bindsym $mod+Prior workspace prev
+  bindsym $mod+Next workspace next
+
+  bindsym $mod+Shift+m mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+Shift+m mode $move_mode
+
+set $passthrough_mode "Passthrough mode - Press Mod+F12 to exit"
+mode $passthrough_mode {
+  bindsym $mod+F12 mode "default"
+}
+bindsym $mod+F12 mode $passthrough_mode
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    position top
+    #font Hack 10
+    font FontAwesome 11, Hack 10
+    separator_symbol " | "
+    colors {
+      background #000032
+      statusline #ffffff
+    }
+    #status_command i3status --config ~/.config/i3status.conf
+    #status_command i3blocks
+    status_command i3pystatus -c ~/.config/sway/statusbar.py
+}
+
+set $black #000000
+set $cyan #00ffff
+set $darkcyan #007777
+set $red #ff0000
+set $mred #700000
+set $blue #0000ff
+set $mblue #000077
+set $darkblue #000033
+
+
+# client.<color_class> <border> <background> <text> <indicator> <child_border>
+client.focused $mblue $darkblue $cyan $red $cyan
+client.unfocused $darkblue $black $blue $red $darkcyan
+
+default_border pixel 3
+focus_follows_mouse no
+font 'Fira Code'
+gaps 5 on
+hide_edge_borders smart
+seamless_mouse off
+smart_gaps on
+workspace_layout auto left
