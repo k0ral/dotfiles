@@ -1,0 +1,6 @@
+layout auto left
+layout stacking
+layout tabbed
+layout toggle split
+output eDP-1 disable
+output eDP-1 enable
