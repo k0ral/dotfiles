@@ -1,0 +1,9 @@
+{ "editor.fontFamily": "'Fira Code'"
+, "editor.tabSize": 2
+, "editor.wordWrap": "on"
+, "files.trimTrailingWhitespace": true
+, "window.menuBarVisibility": "hidden"
+, "workbench.colorTheme": "Abyss"
+, "workbench.editor.enablePreview": false
+, "workbench.statusBar.feedback.visible": false
+}
