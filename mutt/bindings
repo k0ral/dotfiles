@@ -21,6 +21,7 @@ bind    index   \cn         next-new
 bind    index   <Space>     flag-message
 macro   index   q           '<change-folder>?<toggle-mailboxes>'
 macro   index   /           <search>~b
+macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
 #       pgp         pgp menu
 #       postpone    postponed message recall menu
@@ -35,7 +36,6 @@ bind generic    <pagedown>  next-page
 bind generic    {           top-page
 bind generic    }           bottom-page
 #bind generic    <F5>        sync-mailbox
-#macro   generic \cb     <pipe-entry>'urlview'<enter> 'Follow links with urlview'
 
 #       editor      line editor
 # Text viewer
@@ -51,8 +51,8 @@ bind pager      <up>        previous-line
 bind pager      <down>      next-line
 bind pager      <left>      previous-entry
 bind pager      <right>     next-entry
-macro   pager \cb       <pipe-entry>'urlview'<enter> 'Follow links with urlview'
 
+macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
 #   Examples
 #macro  index S "<save-message>+spam<Enter>"
