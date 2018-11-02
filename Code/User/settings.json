@@ -1,9 +1,12 @@
 { "editor.fontFamily": "'Fira Code'"
+, "editor.minimap.renderCharacters": false
 , "editor.tabSize": 2
 , "editor.wordWrap": "on"
 , "files.trimTrailingWhitespace": true
 , "window.menuBarVisibility": "hidden"
+, "workbench.activityBar.visible": false
 , "workbench.colorTheme": "Abyss"
 , "workbench.editor.enablePreview": false
+, "workbench.settings.editor": "json"
 , "workbench.statusBar.feedback.visible": false
 }
