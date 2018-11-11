@@ -65,7 +65,7 @@
   nix.useSandbox = true;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.pulseaudio = true;
-  nixpkgs.overlays = [(import ./overlays.nix)];
+  nixpkgs.overlays = [(import ./overlays.nix) (import /home/nixpkgs-wayland/default.nix)];
 
 
   # Override package
@@ -79,6 +79,8 @@
     set tabstospaces
     set tabsize 2
   '';
+  programs.sway.enable = true;
+  #programs.way-cooler.enable = true;
 
   services.acpid.enable = true;
   services.acpid.handlers.volumeDown = {
@@ -126,20 +128,6 @@
   services.smartd.enable = true;
   services.udisks2.enable = true;
 
-  services.xserver.autorun = true;
-  services.xserver.desktopManager.default = "none";
-  services.xserver.desktopManager.xterm.enable = false;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.enable = true;
-  services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-  services.xserver.synaptics.enable = true;
-  services.xserver.xkbVariant = "altgr-intl";
-  services.xserver.windowManager.default = "xmonad";
-  services.xserver.windowManager.xmonad.enable = true;
-  services.xserver.windowManager.xmonad.enableContribAndExtras = true;
-
-
   system.autoUpgrade.enable = true;
 
   # The NixOS release to be compatible with for stateful data such as databases.
@@ -168,7 +156,7 @@
 
   users.extraUsers.koral = {
     createHome = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "sway" ];
     isNormalUser = true;
     uid = 1000;
   };
