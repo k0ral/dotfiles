@@ -1,0 +1,62 @@
+icons = "awesome"
+
+[theme]
+name = "solarized-dark"
+
+[theme.overrides]
+idle_bg = "#000033"
+
+[[block]]
+block = "net"
+device = "enp58s0f1"
+bitrate = true
+ip = true
+interval = 2
+
+[[block]]
+block = "net"
+device = "wlp59s0"
+bitrate = true
+ssid = true
+ip = true
+interval = 2
+
+[[block]]
+block = "disk_space"
+
+[[block]]
+block = "memory"
+format_mem = "{Mum}MB ({Mup}%)"
+
+[[block]]
+block = "cpu"
+frequency = true
+
+[[block]]
+block = "temperature"
+interval = 10
+
+[[block]]
+block = "maildir"
+inboxes = ["/home/koral/mail/gmail-moreau/Inbox"]
+interval = 60
+
+[[block]]
+block = "backlight"
+
+[[block]]
+block = "sound"
+
+[[block]]
+block = "battery"
+interval = 10
+format = "{power} {percentage}% {time}"
+
+[[block]]
+block = "uptime"
+
+[[block]]
+block = "time"
+interval = 60
+format = "%v %R"
+

@@ -212,14 +212,15 @@ bar {
     position top
     #font Hack 10
     font FontAwesome 11, Hack 10
-    separator_symbol " | "
+    #separator_symbol " | "
     colors {
       background #000032
       statusline #ffffff
     }
     #status_command i3status --config ~/.config/i3status.conf
     #status_command i3blocks
-    status_command i3pystatus -c ~/.config/sway/statusbar.py
+    #status_command i3pystatus -c ~/.config/sway/statusbar.py
+    status_command i3status-rs ~/.config/sway/statusbar.toml
 }
 
 set $black #000000
