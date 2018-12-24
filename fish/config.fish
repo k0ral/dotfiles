@@ -93,10 +93,6 @@ function less
     command less -R $argv
 end
 
-function ls
-    command ls --tabsize=0 --literal --color=auto --show-control-chars -p -h --group-directories-first -X $argv
-end
-
 function mkcd
     mkdir $argv
     cd $argv
@@ -251,6 +247,11 @@ end
 
 function ping
     grc ping $argv
+end
+
+function ls
+    #command ls --tabsize=0 --literal --color=auto --show-control-chars -p -h --group-directories-first -X $argv
+    exa -g --group-directories-first $argv
 end
 
 function top
