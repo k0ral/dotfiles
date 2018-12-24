@@ -128,7 +128,7 @@ function free
 end
 
 function grep
-    ack $argv
+    rg $argv
 end
 
 function egrep
