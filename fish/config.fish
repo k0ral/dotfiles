@@ -1,3 +1,32 @@
+# {{{ Fuzzy-find history
+function reverse_history_search
+  history | fzf --tiebreak index | read -l command
+  if test $command
+    commandline -rb $command
+  end
+end
+
+function file_search
+  fzf | read -l filepath
+  if test $filepath
+    commandline -a (echo $filepath | string escape)
+  end
+end
+
+function cd_home
+  fd $HOME -type d | fzf | read -l directory
+  if test $directory
+    cd $directory
+  end
+end
+
+function fish_user_key_bindings
+  bind \cr reverse_history_search
+  bind \ct file_search
+  bind \ec cd_home
+end
+# }}}
+
 # {{{ Prompt
 function fish_prompt
 # Is it a remote session ?
