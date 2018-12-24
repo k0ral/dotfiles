@@ -175,11 +175,11 @@ end
 
 # {{{ Aliases: shorter commands
 function e
-    atom $argv
+    code $argv
 end
 
 function E
-    set SUDO_EDITOR "atom"
+    set EDITOR "code --wait"
     sudoedit $argv
 end
 
