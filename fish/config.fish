@@ -188,7 +188,7 @@ function g
 end
 
 function k
-    ps aux | percol | awk '{ print $2 }' | xargs kill $argv
+    ps ux | sed 1d | fzf -m | awk '{print $2}' | xargs kill $argv
 end
 
 function l
