@@ -183,10 +183,6 @@ function E
     sudoedit $argv
 end
 
-function f
-    find ./ -name $argv
-end
-
 function g
     sr google $argv
 end
@@ -366,16 +362,8 @@ function fade
     watch -n 90 amixer set Master 1-
 end
 
-function ls-empty
-    find . -type d -empty -print0 | xargs --null ls $argv
-end
-
 function sbg
     feh --randomize --recursive --bg-fill /home/koral/images/wallpapers
-end
-
-function rm-empty
-    find . -type d -empty -print0 | xargs --null rmdir $argv
 end
 
 function u
