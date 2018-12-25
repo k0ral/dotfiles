@@ -1,12 +1,10 @@
-# Default config for sway
-#
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
-set $term st
+set $term kitty
 set $shell /run/current-system/sw/bin/fish
 set $menu dmenu_run -nb '#000033' -b -l 10 -p 'Execute'
 
@@ -40,8 +38,8 @@ output HDMI-A-2 position 1920,0
 #
 # Basics:
 #
-bindsym $mod+Return exec st -e $shell
-exec st -e $shell
+bindsym $mod+Return exec $term -e $shell
+exec $term -e $shell
 
 bindsym $mod+F4 kill
 bindsym $mod+F5 reload
