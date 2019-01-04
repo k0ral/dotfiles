@@ -9,7 +9,6 @@ idle_bg = "#000033"
 [[block]]
 block = "net"
 device = "enp58s0f1"
-bitrate = true
 ip = true
 interval = 2
 
