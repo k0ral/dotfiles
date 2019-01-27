@@ -26,7 +26,7 @@
 #
 mpd_host = "127.0.0.1"
 #mpd_port = "6600"
-mpd_music_dir = "~/music"
+mpd_music_dir = "/home/music"
 #mpd_connection_timeout = "5"
 mpd_crossfade_time = "5"
 #
@@ -46,7 +46,7 @@ mpd_crossfade_time = "5"
 ## }
 ##
 #
-#visualizer_fifo_path = /tmp/mpd.fifo
+visualizer_fifo_path = /tmp/mpd.fifo
 #
 ##
 ## Note: Below parameter is needed for ncmpcpp
@@ -56,18 +56,12 @@ mpd_crossfade_time = "5"
 ## are some problems with it.
 ##
 #
-#visualizer_output_name = Visualizer feed
+visualizer_output_name = my_fifo
 #
 ##
 ## If you set format to 44100:16:2, make it 'yes'.
 ##
-#visualizer_in_stereo = yes
-#
-##
-## Multiply received samples by given value. Very
-## useful for proper visualization of quiet music.
-##
-#visualizer_sample_multipler = 1
+visualizer_in_stereo = yes
 #
 ##
 ## Note: Below parameter defines how often ncmpcpp
@@ -77,16 +71,16 @@ mpd_crossfade_time = "5"
 ## Keep in mind that sane values start with >=10.
 ##
 #
-#visualizer_sync_interval = 30
+visualizer_sync_interval = 30
 #
 ##
 ## Note: To enable spectrum frequency visualization
 ## you need to compile ncmpcpp with fftw3 support.
 ##
 #
-## Available values: spectrum, wave.
+## Available values: spectrum/wave/wave_filled/ellipse
 ##
-#visualizer_type = wave
+visualizer_type = spectrum
 #
 #visualizer_look = ●▮
 #

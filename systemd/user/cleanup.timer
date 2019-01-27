@@ -1,9 +1,0 @@
-[Unit]
-Description=Clean-up timer
-
-[Timer]
-OnBootSec=3h
-OnUnitActiveSec=5h
-
-[Install]
-WantedBy=timers.target

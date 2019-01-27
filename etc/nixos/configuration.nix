@@ -120,6 +120,27 @@
     HandleHibernateKey=ignore
     HandleLidSwitch=ignore
   '';
+  services.mpd.enable = true;
+  services.mpd.extraConfig = ''
+    metadata_to_use "artist,album,title,track,name,genre,date,composer,performer,disc,comment"
+    restore_paused "yes"
+
+    audio_output {
+      type     "pulse"
+      name     "MPD"
+      server   "127.0.0.1"
+    }
+
+    audio_output {
+      type                    "fifo"
+      name                    "my_fifo"
+      path                    "/tmp/mpd.fifo"
+      format                  "44100:16:2"
+    }
+  '';
+  services.mpd.musicDirectory = "/home/music";
+  services.mpd.network.listenAddress = "any";
+  services.mpd.startWhenNeeded = true;
   services.openssh.enable = true;
   services.openssh.startWhenNeeded = true;
   services.redshift.enable = true;
@@ -133,22 +154,48 @@
   # The NixOS release to be compatible with for stateful data such as databases.
   # system.stateVersion = "16.03";
 
-  systemd.user.services.mpd = {
-    description = "Music Player Daemon";
-    serviceConfig = {
-      ExecStart = "${pkgs.mpd}/bin/mpd --no-daemon";
-      ExecStop = "${pkgs.mpd}/bin/mpd --kill";
-      PIDFile = "%h/.config/mpd/pid";
-      Restart = "always";
-      RestartSec = 30;
-    };
+  systemd.user.services.isync = {
+    description = "Synchronize IMAP mails";
     wantedBy = [ "default.target" ];
+
+    serviceConfig = {
+      ExecStart = "-${pkgs.isync}/bin/mbsync -a";
+      Type = "oneshot";
+    };
   };
 
-  systemd.user.sockets.mpd = {
-    wantedBy = [ "sockets.target" ];
-    socketConfig = {
-      ListenStream = 6600;
+  systemd.user.services.cleanup = {
+    description = "$HOME clean-up";
+    wantedBy = [ "default.target" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart=[
+        "${pkgs.coreutils}/chmod -R go-rwx %h/mail %h/papers %h/.gnupg"
+        "-${pkgs.coreutils}/mv -u %h/Downloads/* %h/Desktop/* %h"
+        "-${pkgs.coreutils}/rm -r %h/Downloads %h/Desktop"
+        #ExecStart=/run/current-system/sw/bin/detox -r %h/music
+      ];
+    };
+  };
+
+  systemd.user.timers.isync = {
+    wantedBy = [ "timers.target" ];
+
+    timerConfig = {
+      Unit = "isync.service";
+      OnBootSec = "1min";
+      OnUnitActiveSec = "7min";
+    };
+  };
+
+  systemd.user.timers.cleanup = {
+    wantedBy = [ "timers.target" ];
+
+    timerConfig = {
+      Unit = "cleanup.service";
+      OnBootSec = "3h";
+      OnUnitActiveSec = "5h";
     };
   };
 
