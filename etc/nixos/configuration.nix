@@ -85,15 +85,15 @@
   services.acpid.enable = true;
   services.acpid.handlers.volumeDown = {
     event = "button/volumedown";
-    action = "${pkgs.alsaUtils}/bin/amixer -c0 set Master 3%-";
+    action = "${pkgs.pamixer}/bin/pamixer -d 3";
   };
   services.acpid.handlers.volumeUp = {
     event = "button/volumeup";
-    action = "${pkgs.alsaUtils}/bin/amixer -c0 set Master 3%+";
+    action = "${pkgs.pamixer}/bin/pamixer -i 3";
   };
   services.acpid.handlers.mute = {
     event = "button/mute";
-    action = "${pkgs.alsaUtils}/bin/amixer -c0 set Master toggle";
+    action = "${pkgs.pamixer}/bin/pamixer -t";
   };
   services.acpid.handlers.cdPlay = {
     event = "cd/play.*";
