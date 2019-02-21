@@ -6,4 +6,6 @@
 , { "key": "alt+left","command": "cursorHome", "when": "textInputFocus" }
 , { "key": "alt+right","command": "cursorEnd", "when": "textInputFocus" }
 , { "key": "alt+c", "command": "editor.action.commentLine", "when": "editorTextFocus && !editorReadonly" }
+, { "key": "alt+n", "command": "editor.action.nextSelectionMatchFindAction", "when": "editorFocus" }
+, { "key": "alt+p", "command": "editor.action.previousSelectionMatchFindAction", "when": "editorFocus" }
 ]
