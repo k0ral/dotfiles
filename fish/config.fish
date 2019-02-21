@@ -356,6 +356,14 @@ function hdmi
     xrandr --output HDMI2 --auto
 end
 
+function audio-hdmi
+    pactl set-card-profile 0 output:hdmi-stereo-extra1
+end
+
+function audio-jack
+    pactl set-card-profile 0 output:analog-stereo
+end
+
 function fade
     watch -n 90 amixer set Master 1-
 end
