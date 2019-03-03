@@ -677,7 +677,7 @@ c.content.autoplay = False
 ## still be downloaded by clicking the download button in the pdf.js
 ## viewer.
 ## Type: Bool
-# c.content.pdfjs = False
+c.content.pdfjs = True
 
 ## Allow websites to request persistent storage quota via
 ## `navigator.webkitPersistentStorage.requestQuota`.
@@ -1325,7 +1325,7 @@ c.tabs.background = True
 
 ## Switch between tabs using the mouse wheel.
 ## Type: Bool
-# c.tabs.mousewheel_switching = True
+c.tabs.mousewheel_switching = False
 
 ## Position of new tabs opened from another tab.
 ## Type: NewTabPosition
@@ -1343,7 +1343,7 @@ c.tabs.background = True
 ##   - next: After the current tab.
 ##   - first: At the beginning.
 ##   - last: At the end.
-# c.tabs.new_position.unrelated = 'last'
+c.tabs.new_position.unrelated = 'next'
 
 ## Padding (in pixels) around text for tabs.
 ## Type: Padding
