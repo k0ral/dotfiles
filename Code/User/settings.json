@@ -4,6 +4,8 @@
 , "editor.tabSize": 2
 , "editor.wordWrap": "on"
 , "files.trimTrailingWhitespace": true
+, "telemetry.enableCrashReporter": false
+, "telemetry.enableTelemetry": false
 , "window.menuBarVisibility": "hidden"
 , "workbench.activityBar.visible": false
 , "workbench.colorTheme": "Abyss"
