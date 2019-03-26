@@ -1,4 +1,5 @@
 { "editor.fontFamily": "'Fira Code'"
+, "editor.fontLigatures": true
 , "editor.minimap.renderCharacters": false
 , "editor.tabSize": 2
 , "editor.wordWrap": "on"
