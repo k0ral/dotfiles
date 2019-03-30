@@ -143,16 +143,30 @@
   services.mpd.startWhenNeeded = true;
   services.openssh.enable = true;
   services.openssh.startWhenNeeded = true;
-  services.redshift.enable = true;
-  services.redshift.latitude = "43.7";
-  services.redshift.longitude = "7.2";
+  services.privoxy.enable = true;
+  #services.redshift.enable = true;
+  #services.redshift.latitude = "43.7";
+  #services.redshift.longitude = "7.2";
   services.smartd.enable = true;
   services.udisks2.enable = true;
 
   system.autoUpgrade.enable = true;
 
-  # The NixOS release to be compatible with for stateful data such as databases.
-  # system.stateVersion = "16.03";
+  systemd.user.services.backup = {
+    description = "Backup";
+    wantedBy = [ "default.target" ];
+
+    serviceConfig = {
+      ExecStart=[
+        "-${pkgs.git}/bin/git -C %h/.config push"
+        "-/bin/sh -c '${pkgs.notmuch}/bin/notmuch config list >| %h/.config/notmuch/config_all'"
+        "-${pkgs.nix}/bin/nix-shell -p borgbackup --run '/home/koral/.config/systemd/user/borg-wrapper create --remote-path=borg1 -x -C lzma \"17994@ch-s011.rsync.net:backup::{utcnow}-{hostname}\" %h/doc %h/feeds %h/images %h/papers %h/prog/archive %h/studies %h/.config %h/.mozilla %h/.task'"
+        "-${pkgs.nix}/bin/nix-shell -p borgbackup --run '/home/koral/.config/systemd/user/borg-wrapper prune --remote-path=borg1 -d 30 \"17994@ch-s011.rsync.net:backup\"'"
+      ];
+
+      Type = "oneshot";
+    };
+  };
 
   systemd.user.services.isync = {
     description = "Synchronize IMAP mails";
@@ -176,6 +190,15 @@
         "-${pkgs.coreutils}/rm -r %h/Downloads %h/Desktop"
         #ExecStart=/run/current-system/sw/bin/detox -r %h/music
       ];
+    };
+  };
+
+  systemd.user.timers.backup = {
+    wantedBy = [ "timers.target" ];
+
+    timerConfig = {
+      Unit = "backup.service";
+      OnCalendar = "daily";
     };
   };
 
