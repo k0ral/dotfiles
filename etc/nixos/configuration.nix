@@ -168,12 +168,15 @@
     };
   };
 
-  systemd.user.services.isync = {
+  systemd.user.services.mailsync = {
     description = "Synchronize IMAP mails";
     wantedBy = [ "default.target" ];
 
     serviceConfig = {
-      ExecStart = "-${pkgs.isync}/bin/mbsync -a";
+      ExecStart = [
+        "-${pkgs.isync}/bin/mbsync -a"
+        "-${pkgs.notmuch}/bin/notmuch new"
+      ];
       Type = "oneshot";
     };
   };
@@ -202,11 +205,11 @@
     };
   };
 
-  systemd.user.timers.isync = {
+  systemd.user.timers.mailsync = {
     wantedBy = [ "timers.target" ];
 
     timerConfig = {
-      Unit = "isync.service";
+      Unit = "mailsync.service";
       OnBootSec = "1min";
       OnUnitActiveSec = "7min";
     };
