@@ -3,7 +3,9 @@
 , "editor.minimap.renderCharacters": false
 , "editor.tabSize": 2
 , "editor.wordWrap": "on"
+, "files.insertFinalNewline": true
 , "files.trimTrailingWhitespace": true
+, "files.trimFinalNewlines": true
 , "telemetry.enableCrashReporter": false
 , "telemetry.enableTelemetry": false
 , "window.menuBarVisibility": "hidden"
