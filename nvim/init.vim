@@ -59,6 +59,10 @@ autocmd FileType haskell let b:autoformat_autoindent=0
 " Rainbow
 let g:rainbow_active = 1
 
+" Auto-pairs
+let g:AutoPairsShortcutToggle = ''
+let g:AutoPairsShortcutJump = ''
+
 " {{{ Commands
 command! ConfigOpen edit $MYVIMRC
 command! ConfigReload source $MYVIMRC
