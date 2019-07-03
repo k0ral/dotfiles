@@ -25,6 +25,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'luochen1990/rainbow'
 Plug 'mbbill/undotree'
+Plug 'mhinz/vim-startify'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 Plug 'neovimhaskell/haskell-vim'
 Plug 'LnL7/vim-nix'
