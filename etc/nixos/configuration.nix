@@ -150,7 +150,7 @@
   services.smartd.enable = true;
   services.udisks2.enable = true;
 
-  system.autoUpgrade.enable = true;
+  system.autoUpgrade.enable = false;
 
   systemd.user.services.backup = {
     description = "Backup";
