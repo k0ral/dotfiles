@@ -12,17 +12,21 @@
   boot.supportedFilesystems = [ "zfs" ];
 
 
-  environment.systemPackages = 
-    let devPack = with pkgs; [ ack asciidoc asciidoctor atom binutils bundler cabal-install cacert chromaprint git gnumake grc icu libxml2 mercurial openssl pkgconfig poppler_utils python3 urlview zeal ];
-        fsPack = with pkgs; [ atool bashmount borgbackup detox dfc duplicity encfs file libmtp libnotify ncdu ntfs3g rmlint rsync sshfsFuse tree unrar unzip zip ];
-        graphicalPack = with pkgs; [ arandr dmenu2 dunst dzen2 i3lock-fancy st wmctrl xclip xorg.xbacklight xorg.xkill ];
-        mediaPack = with pkgs; [ beets feh ffmpeg imagemagick jpegoptim lsdvd mediainfo mkvtoolnix-cli mpc_cli mpd mpv pamixer ncmpcpp sxiv zathura ];
-        netPack = with pkgs; [ aria2 bind bluez bluez-tools buku conkeror elinks firefox isync neomutt notmuch obexfs telnet w3m weechat wget ];
-        nixPack = with pkgs; [ cabal2nix nix-repl nox ];
-        haskellPack = with pkgs.haskell.packages.ghc802; [ apply-refact ghc ghc-mod hakyll happy hasktags hlint stylish-haskell xmobar ]; # open-haddock haddocset hledger hindent
-        pythonPack = with pkgs.python3Packages; [ glances grip udiskie youtube-dl ]; # mps-youtube
-        systemPack = with pkgs; [ abduco acpi fish htop lsof man numlockx pciutils powertop progress psmisc rfkill smartmontools usbutils ];
-    in devPack ++ fsPack ++ graphicalPack ++ mediaPack ++ netPack ++ nixPack ++ pythonPack ++ systemPack ++ haskellPack;
+  environment.systemPackages =
+    let audioPack = with pkgs; [ beets flac mpc_cli ncmpcpp ncpamixer opusTools pamixer paprefs vorbis-tools ];
+        cliPack = with pkgs; [ exa fd fish fzf grc gron tldr loop ncurses.dev ripgrep urlscan yank zsh ];
+        devPack = with pkgs; [ binutils cabal-install cacert chromaprint git gitAndTools.diff-so-fancy gitAndTools.hub gnumake graphviz icu jq libxml2 mercurial neovim neovim-qt nodejs openssl pandoc patchelf pkgconfig poppler_utils python3 tig wkhtmltopdf z3 ];
+        fsPack = with pkgs; [ atool borgbackup detox dfc encfs file libarchive libmtp libnotify ncdu ntfs3g p7zip rmlint rsync sshfsFuse tree unrar unzip zip ];
+        graphicalPack = with pkgs; [ alacritty dmenu dzen2 keynav grim i3status-rust mako qt5.qtwayland slurp swaybg wallutils wl-clipboard xorg.xev ]; # i3lock-fancy kitty redshift-wayland
+        haskellPack = with pkgs.haskell.packages.ghc865; [ apply-refact dhall doctest ghc happy haskell-ci hlint stylish-haskell ]; # brittany hakyll hasktags hdevtools open-haddock haddocset hledger hindent ghc-mod summoner
+        mediaPack = with pkgs; [ evince exiftool ffmpeg imagemagick imv jpegoptim lsdvd mediainfo mkvtoolnix-cli mpv rtv ]; # zathura
+        netPack = with pkgs; [ aria2 arp-scan bluez bluez-tools elinks firefox-wayland googler iftop isync mcabber msmtp neomutt nload notmuch obexfs qutebrowser tcpdump tcpflow telnet w3m weechat wget ];
+        nixPack = with pkgs; [ cabal2nix cachix nix-du nix-top nox ];
+        pythonPack = with pkgs.python3Packages; [ glances grip mps-youtube mutagen virtualenv youtube-dl ];
+        systemPack = with pkgs; [ abduco acpi alsaUtils atop htop light lsof man moreutils numlockx pciutils powertop progress ps_mem psmisc rfkill smartmontools udiskie usbutils ];
+        utilsPack = with pkgs; [ dict taskwarrior ];
+        hie = [ (import /home/hie-nix/default.nix {}).hie86 ];
+    in builtins.concatLists [ audioPack cliPack devPack fsPack graphicalPack mediaPack netPack nixPack pythonPack systemPack utilsPack haskellPack ];
 
 
   fonts.enableFontDir = true;
