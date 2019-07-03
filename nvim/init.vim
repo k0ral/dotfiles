@@ -72,6 +72,8 @@ command! ConfigReload source $MYVIMRC
 nmap <C-b> :Buffers<CR>
 nmap <C-d> dw
 imap <C-d> <C-o>dw
+nnoremap <C-e> <End>
+inoremap <C-e> <End>
 nnoremap <C-f> /
 nmap <C-h> :%s//g<Left><Left>
 nnoremap <C-m> %
