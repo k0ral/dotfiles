@@ -173,11 +173,11 @@ end
 
 # {{{ Aliases: shorter commands
 function e
-    code $argv
+    nvim $argv
 end
 
 function E
-    set EDITOR "code --wait"
+    set EDITOR "nvim"
     sudoedit $argv
 end
 

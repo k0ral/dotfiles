@@ -39,8 +39,7 @@ alternative_order text/plain text/html
 # }}}
 
 # Commands
-set editor="nano"
-#set editor="atom --wait"
+set editor="nvim"
 #set query_command="abook --mutt-query '%s'"
 #set sendmail="/usr/bin/msmtp --read-envelope-from"
 

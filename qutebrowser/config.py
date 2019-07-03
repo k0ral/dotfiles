@@ -807,7 +807,7 @@ c.downloads.location.prompt = False
 ## Same as `{column}`, but starting from index 0.
 ## Type: ShellCommand
 # c.editor.command = ['gvim', '-f', '{file}', '-c', 'normal {line}G{column0}l']
-c.editor.command = ['kak', '{file}']
+c.editor.command = ['nvim', '{file}']
 
 ## Encoding to use for the editor.
 ## Type: Encoding
