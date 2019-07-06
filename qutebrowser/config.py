@@ -1134,7 +1134,7 @@ c.editor.command = ['nvim', '{file}']
 ##   - process-per-site-instance: Pages from separate sites are put into separate processes and separate visits to the same site are also isolated.
 ##   - process-per-site: Pages from separate sites are put into separate processes. Unlike Process per Site Instance, all visits to the same site will share an OS process. The benefit of this model is reduced memory consumption, because more web pages will share processes. The drawbacks include reduced security, robustness, and responsiveness.
 ##   - single-process: Run all tabs in a single process. This should be used for debugging purposes only, and it disables `:open --private`.
-# c.qt.process_model = 'process-per-site-instance'
+c.qt.process_model = 'process-per-site'
 
 ## When to show the scrollbar.
 ## Type: String
