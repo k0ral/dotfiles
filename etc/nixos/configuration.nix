@@ -192,10 +192,10 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart=[
-        "${pkgs.coreutils}/chmod -R go-rwx %h/mail %h/papers %h/.gnupg"
-        "-${pkgs.coreutils}/mv -u %h/Downloads/* %h/Desktop/* %h"
-        "-${pkgs.coreutils}/rm -r %h/Downloads %h/Desktop"
-        #ExecStart=/run/current-system/sw/bin/detox -r %h/music
+        "${pkgs.coreutils}/bin/chmod -R go-rwx %h/mail %h/papers %h/.gnupg"
+        "-${pkgs.coreutils}/bin/mv -u %h/Downloads/* %h/Desktop/* %h"
+        "-${pkgs.coreutils}/bin/rm -d %h/Downloads %h/Desktop"
+        #/run/current-system/sw/bin/detox -r /home/music
       ];
     };
   };
