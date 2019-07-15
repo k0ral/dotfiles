@@ -68,15 +68,31 @@ bindsym XF86AudioLowerVolume exec pamixer -d 4
 bindsym XF86AudioMute exec pamixer -t
 
 
-bindsym $mod+v mode "volume"; exec st -c st_volume -t st_volume -e /bin/sh -c alsamixer
-for_window [title="st_volume"] floating enable
-for_window [title="st_volume"] sticky enable
+bindsym $mod+v mode "volume"; exec $term --class term_volume -e /bin/sh -c ncpamixer
+for_window [app_id="term_volume"] floating enable, sticky enable, resize set width 50 ppt height 50 ppt
 
 mode "volume" {
-  bindsym $mod+v [title="st_volume"] kill, mode "default"
-  bindsym Return [title="st_volume"] kill, mode "default"
-  bindsym Escape [title="st_volume"] kill, mode "default"
+  bindsym $mod+v [app_id="term_volume"] kill, mode "default"
+  bindsym Return [app_id="term_volume"] kill, mode "default"
+  bindsym Escape [app_id="term_volume"] kill, mode "default"
+  bindsym q      [app_id="term_volume"] kill, mode "default"
 
+  bindsym $mod+Left workspace prev_on_output
+  bindsym $mod+Right workspace next_on_output
+}
+
+# Music mode
+bindsym $mod+m mode "music"; exec $term --class term_music -e /bin/sh -c ncmpcpp
+for_window [app_id="term_music"] floating enable, sticky enable, resize set width 90 ppt height 90 ppt
+
+mode "music" {
+  bindsym $mod+m [app_id="term_music"] kill, mode "default"
+  bindsym Escape [app_id="term_music"] kill, mode "default"
+
+  bindsym XF86AudioRaiseVolume exec pamixer -i 4
+  bindsym XF86AudioLowerVolume exec pamixer -d 4
+  bindsym XF86AudioMute exec pamixer -t
+  
   bindsym $mod+Left workspace prev_on_output
   bindsym $mod+Right workspace next_on_output
 }
