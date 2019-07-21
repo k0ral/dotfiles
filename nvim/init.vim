@@ -80,10 +80,13 @@ nmap <C-h> :%s//g<Left><Left>
 nnoremap <C-m> %
 nmap <C-p> :Commands<CR>
 nmap <C-q> :confirm qall<CR>
+imap <C-q> <C-o>:confirm qall<CR>
 nmap <C-s> :w<CR>
 imap <C-s> <C-o>:w<CR>
 nmap <C-t> :Files<CR>
 imap <C-t> <C-o>:Files<CR>
+nnoremap <C-v> p
+inoremap <C-v> <C-o>p
 nmap <C-w> :bdelete<CR>
 imap <C-w> <C-o>:bdelete<CR>
 nmap <C-y> :redo<CR>
