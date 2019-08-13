@@ -1408,7 +1408,7 @@ c.tabs.position = 'left'
 ## `{protocol}`: Protocol (http/https/...) of the current web page. *
 ## `{audio}`: Indicator for audio/mute status.
 ## Type: FormatString
-c.tabs.title.format = '{audio}{index} {perc}{title}'
+c.tabs.title.format = '{audio}{index} {perc}{current_title}'
 
 ## Format to use for the tab title for pinned tabs. The same placeholders
 ## like for `tabs.title.format` are defined.
