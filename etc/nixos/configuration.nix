@@ -66,7 +66,8 @@
     defaultLocale = "en_US.UTF-8";
   };
 
-
+  networking.firewall.allowedTCPPorts = [ 873 6600 ];
+  networking.enableIPv6 = true;
   networking.hostName = "mystix";
   networking.nameservers = [ "2620:0:ccc::2" "2620:0:ccd::2" "2001:4860:4860::8888" "2001:4860:4860::8844" "87.98.175.85" ];
   networking.networkmanager.enable = true;
@@ -160,6 +161,15 @@
   #services.redshift.enable = true;
   #services.redshift.latitude = "43.7";
   #services.redshift.longitude = "7.2";
+  services.rsyncd = {
+    enable = true;
+    modules = {
+      music = {
+        path = "/home/music";
+        "read only" = "yes";
+      };
+    };
+  };
   services.smartd.enable = true;
   services.udisks2.enable = true;
 
