@@ -29,6 +29,15 @@
     in builtins.concatLists [ audioPack cliPack devPack fsPack graphicalPack mediaPack netPack nixPack pythonPack systemPack utilsPack haskellPack ];
 
 
+  environment.variables = {
+    BROWSER="qutebrowser";
+    EDITOR="nvim";
+    MOZ_ENABLE_WAYLAND="1";
+    QT_QPA_PLATFORM="wayland";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION="1";
+  };
+
+
   fonts.enableFontDir = true;
   fonts.enableGhostscriptFonts = true;
   fonts.fonts = with pkgs; [
