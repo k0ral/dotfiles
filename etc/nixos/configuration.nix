@@ -43,13 +43,15 @@
   fonts.fonts = with pkgs; [
     corefonts  # Micrsoft free fonts
     fira-code
+    font-awesome
+    hack-font
     hasklig
-    inconsolata  # monospaced
+    # inconsolata
     iosevka
     source-code-pro
     unifont # some international languages
     ];
-  fonts.fontconfig.defaultFonts.monospace = [ "Inconsolata" ];
+  fonts.fontconfig.defaultFonts.monospace = [ "Hack" ];
 
 
   hardware.bluetooth.enable = true;
