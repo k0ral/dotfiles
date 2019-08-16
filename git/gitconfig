@@ -5,7 +5,7 @@
     ui = auto # covers diff = true, status = auto, branch = auto
     interactive = auto
 [core]
-    editor = nvim
+    editor = nvim +startinsert
 [push]
     default = simple
 [alias]
