@@ -83,13 +83,9 @@
   nixpkgs.config.pulseaudio = true;
   nixpkgs.overlays = [(import ./overlays.nix) (import /home/nixpkgs-wayland/default.nix)];
 
-
-  # Override package
-  # nixpkgs.config.packageOverrides = pkgs : rec { 
-  #   kde4 = pkgs.kde410; 
-  # };
-
-  security.setuidPrograms = [ "slock" ];
+  programs.adb.enable = true;
+  programs.mosh.enable = true;
+  programs.mtr.enable = true;
   programs.nano.nanorc = ''
     set nowrap
     set tabstospaces
@@ -254,7 +250,7 @@
 
   users.extraUsers.koral = {
     createHome = true;
-    extraGroups = [ "wheel" "sway" ];
+    extraGroups = [ "adbusers" "audio" "wheel" "sway" ];
     isNormalUser = true;
     uid = 1000;
   };
