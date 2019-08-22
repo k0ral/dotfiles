@@ -98,6 +98,14 @@ nmap <C-PageDown> :bnext<CR>
 imap <C-PageDown> <C-o>:bnext<CR>
 nmap <C-PageUp> :bprev<CR>
 imap <C-PageUp> <C-o>:bprev<CR>
+inoremap <C-Down> <C-o>}
+nnoremap <C-Down> }
+inoremap <C-Up> <C-o>{
+nnoremap <C-Up> {
+inoremap <C-Left> <C-o>b
+nnoremap <C-Left> b
+inoremap <C-Right> <C-o>e
+nnoremap <C-Right> e
 
 nmap <A-Del> :delete<CR>
 noremap <A-Left> <Home>
