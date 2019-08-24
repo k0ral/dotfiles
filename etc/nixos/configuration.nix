@@ -23,7 +23,7 @@
         netPack = with pkgs; [ aria2 arp-scan bluez bluez-tools elinks firefox-wayland googler iftop isync mcabber msmtp neomutt nload notmuch obexfs qutebrowser tcpdump tcpflow telnet w3m weechat wget ];
         nixPack = with pkgs; [ cabal2nix cachix nix-du nix-top nox ];
         pythonPack = with pkgs.python3Packages; [ glances grip mps-youtube mutagen virtualenv youtube-dl ];
-        systemPack = with pkgs; [ abduco acpi alsaUtils atop htop light lsof man moreutils numlockx pciutils powertop progress ps_mem psmisc rfkill smartmontools udiskie usbutils ];
+        systemPack = with pkgs; [ abduco acpi alsaUtils atop cpulimit htop light lsof man moreutils numlockx pciutils powertop progress ps_mem psmisc rfkill smartmontools udiskie usbutils ];
         utilsPack = with pkgs; [ dict taskwarrior ];
         hie = [ (import /home/hie-nix/default.nix {}).hie86 ];
     in builtins.concatLists [ audioPack cliPack devPack fsPack graphicalPack mediaPack netPack nixPack pythonPack systemPack utilsPack haskellPack ];
