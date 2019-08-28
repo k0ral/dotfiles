@@ -4,8 +4,8 @@
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
-set $term kitty
-set $shell /run/current-system/sw/bin/fish
+set $term alacritty
+set $shell /run/current-system/sw/bin/fish --private
 set $menu dmenu_run -nb '#000033' -b -l 10 -p 'Execute'
 
 ### Output configuration
