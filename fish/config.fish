@@ -91,6 +91,10 @@ function less
     command less -R $argv
 end
 
+function lsblk
+    command lsblk -o NAME,LABEL,UUID,MODEL,SIZE,FSTYPE,MOUNTPOINT $argv
+end
+
 function mkcd
     mkdir $argv
     cd $argv
@@ -163,6 +167,10 @@ end
 
 function sshfs
     command sshfs -o follow_symlinks $argv
+end
+
+function tree
+  command tree -CAFa -I '.hg|.svn|.git' --dirsfirst $argv
 end
 
 function wget
