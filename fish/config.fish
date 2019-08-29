@@ -267,10 +267,6 @@ end
 function traceroute
     grc traceroute $argv
 end
-
-#function which
-#    type --all $argv
-#end
 # }}}
 
 function listening-ports
