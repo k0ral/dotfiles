@@ -17,7 +17,7 @@
         cliPack = with pkgs; [ exa fd fish fzf gcalcli grc gron loop ncurses.dev ripgrep tldr urlscan yank zsh ];
         devPack = with pkgs; [ binutils cabal-install cacert chromaprint git gitAndTools.diff-so-fancy gitAndTools.hub gnumake graphviz icu jq libxml2 mercurial neovim nodejs openssl pandoc patchelf pkgconfig poppler_utils python3 tig wkhtmltopdf z3 ];
         fsPack = with pkgs; [ atool borgbackup detox dfc encfs file libarchive libmtp libnotify ncdu ntfs3g p7zip rmlint rsync sshfsFuse tree unrar unzip zip ];
-        graphicalPack = with pkgs; [ alacritty dmenu dzen2 keynav grim i3status-rust mako qt5.qtwayland slurp swaybg wallutils wl-clipboard xorg.xev ]; # i3lock-fancy kitty redshift-wayland
+        graphicalPack = with pkgs; [ alacritty dmenu dzen2 keynav qt5.qtwayland wallutils xorg.xev ]; # i3lock-fancy 
         haskellPack = with pkgs.haskellPackages; [ apply-refact brittany dhall doctest ghc happy haskell-ci hdevtools hlint stylish-haskell ]; # hakyll hasktags open-haddock haddocset hledger hindent ghc-mod summoner
         mediaPack = with pkgs; [ evince exiftool ffmpeg imagemagick imv jpegoptim lsdvd mediainfo mkvtoolnix-cli mpv pdf2svg rtv ];
         netPack = with pkgs; [ aria2 arp-scan bluez bluez-tools elinks firefox-wayland googler iftop isync mcabber msmtp neomutt nload notmuch obexfs qutebrowser tcpdump tcpflow telnet w3m weechat wget ];
@@ -92,6 +92,7 @@
     set tabsize 2
   '';
   programs.sway.enable = true;
+  programs.sway.extraPackages = with pkgs; [ grim i3status-rust mako redshift-wayland slurp swaybg swayidle swaylock wl-clipboard xwayland ];
   #programs.way-cooler.enable = true;
 
   services.acpid.enable = true;
