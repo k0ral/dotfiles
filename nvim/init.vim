@@ -6,6 +6,7 @@ set inccommand=split
 set list
 set number
 set showmatch
+set shiftwidth=2
 set tabstop=2
 set termguicolors
 set undodir=~/.config/nvim/undodir
@@ -54,6 +55,8 @@ let g:NERDDefaultAlign = 'left'
 
 " Autoformat
 autocmd BufWrite *.hs :Autoformat
+autocmd BufWrite *.cpp :Autoformat
+autocmd BufWrite *.hpp :Autoformat
 " Don't automatically indent on save, since vim's autoindent for haskell is buggy
 autocmd FileType haskell let b:autoformat_autoindent=0
 
