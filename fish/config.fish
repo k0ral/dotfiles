@@ -251,13 +251,13 @@ end
 #    cgdb -q $argv
 #end
 
-function ping
-    grc ping $argv
-end
-
 function ls
     #command ls --tabsize=0 --literal --color=auto --show-control-chars -p -h --group-directories-first -X $argv
     exa -g --group-directories-first $argv
+end
+
+function ping
+    grc ping $argv
 end
 
 function top
@@ -266,6 +266,10 @@ end
 
 function traceroute
     grc traceroute $argv
+end
+
+function vim
+    nvim $argv
 end
 # }}}
 
