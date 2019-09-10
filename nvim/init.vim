@@ -124,6 +124,11 @@ vmap <A-c> <plug>NERDCommenterToggle
 nnoremap <A-n> *
 nnoremap <A-p> #
 
+inoremap <Tab> <C-o>>>
+inoremap <S-Tab> <C-o><<
+nnoremap <Tab> >>
+nnoremap <S-Tab> <<
+
 nnoremap ; :
 " }}}
 
