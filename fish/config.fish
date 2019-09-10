@@ -338,6 +338,14 @@ end
 function suspend
     sys suspend
 end
+
+function scale_monitor
+    swaymsg output HDMI-A-2 scale $argv
+end
+
+function scale_laptop
+    swaymsg output eDP-1 scale $argv
+end
 # }}}
 
 # {{{ Functions
