@@ -78,7 +78,9 @@ nmap <C-d> dw
 imap <C-d> <C-o>dw
 nnoremap <C-e> <End>
 inoremap <C-e> <End>
+inoremap <C-f> <C-o>/
 nnoremap <C-f> /
+imap <C-h> :%s//g<Left><Left>
 nmap <C-h> :%s//g<Left><Left>
 nnoremap <C-m> %
 nmap <C-p> :Commands<CR>
@@ -86,6 +88,7 @@ nmap <C-q> :confirm qall<CR>
 imap <C-q> <C-o>:confirm qall<CR>
 nmap <C-s> :w<CR>
 imap <C-s> <C-o>:w<CR>
+vmap <C-s> <Esc>:w<CR>gv
 nmap <C-t> :Files<CR>
 imap <C-t> <C-o>:Files<CR>
 nnoremap <C-v> p
@@ -112,8 +115,12 @@ nnoremap <C-Right> e
 
 nmap <A-Del> :delete<CR>
 noremap <A-Left> <Home>
+inoremap <A-Left> <Home>
 noremap <A-Right> <End>
-map <A-c> <plug>NERDCommenterToggle
+inoremap <A-Right> <End>
+nmap <A-c> <plug>NERDCommenterToggle
+imap <A-c> <C-o><plug>NERDCommenterToggle
+vmap <A-c> <plug>NERDCommenterToggle
 nnoremap <A-n> *
 nnoremap <A-p> #
 
