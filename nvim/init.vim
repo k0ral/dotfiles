@@ -5,6 +5,7 @@ set hidden
 set inccommand=split
 set list
 set number
+set pastetoggle=<F12>
 set showmatch
 set shiftwidth=2
 set tabstop=2
