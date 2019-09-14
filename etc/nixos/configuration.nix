@@ -59,8 +59,14 @@
     driSupport = true;
     driSupport32Bit = true;
   };
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.package = pkgs.pulseaudioFull.override { gconfSupport = false; };
+  hardware.pulseaudio = {
+    enable = true;
+    support32Bit = true;
+    tcp.enable = true;
+    tcp.anonymousClients.allowAll = true;
+    zeroconf.discovery.enable = true;
+    zeroconf.publish.enable = true;
+  };
 
   i18n = {
   #   consoleFont = "Lat2-Terminus16";
