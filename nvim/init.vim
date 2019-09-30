@@ -81,7 +81,7 @@ nnoremap <C-e> <End>
 inoremap <C-e> <End>
 inoremap <C-f> <C-o>/
 nnoremap <C-f> /
-imap <C-h> :%s//g<Left><Left>
+imap <C-h> <C-o>:%s//g<Left><Left>
 nmap <C-h> :%s//g<Left><Left>
 nnoremap <C-m> %
 nmap <C-p> :Commands<CR>
