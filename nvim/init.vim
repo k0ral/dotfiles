@@ -1,6 +1,6 @@
 " {{{ Builtin options
 set expandtab
-set gdefault
+set foldmethod=marker
 set hidden
 set inccommand=split
 set list
