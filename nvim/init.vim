@@ -92,8 +92,8 @@ imap <C-s> <C-o>:w<CR>
 vmap <C-s> <Esc>:w<CR>gv
 nmap <C-t> :Files<CR>
 imap <C-t> <C-o>:Files<CR>
-nnoremap <C-v> p
-inoremap <C-v> <C-o>p
+nnoremap <C-v> P
+inoremap <C-v> <C-o>P
 nmap <C-w> :bdelete<CR>
 imap <C-w> <C-o>:bdelete<CR>
 nmap <C-y> :redo<CR>
@@ -115,6 +115,7 @@ inoremap <C-Right> <C-o>e
 nnoremap <C-Right> e
 
 nmap <A-Del> :delete<CR>
+imap <A-Del> <C-o>:delete<CR>
 noremap <A-Left> <Home>
 inoremap <A-Left> <Home>
 noremap <A-Right> <End>
