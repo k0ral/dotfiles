@@ -75,15 +75,17 @@ command! ConfigReload source $MYVIMRC
 
 " {{{ Key bindings
 nmap <C-b> :Buffers<CR>
+imap <C-b> <C-o>:Buffers<CR>
 nmap <C-d> dw
 imap <C-d> <C-o>dw
 nnoremap <C-e> <End>
 inoremap <C-e> <End>
-inoremap <C-f> <C-o>/
 nnoremap <C-f> /
-imap <C-h> <C-o>:%s//g<Left><Left>
+inoremap <C-f> <C-o>/
 nmap <C-h> :%s//g<Left><Left>
+imap <C-h> <C-o>:%s//g<Left><Left>
 nnoremap <C-m> %
+inoremap <C-m> <C-o>%
 nmap <C-p> :Commands<CR>
 nmap <C-q> :confirm qall<CR>
 imap <C-q> <C-o>:confirm qall<CR>
@@ -101,6 +103,7 @@ imap <C-y> <C-o>:redo<CR>
 nmap <C-z> :undo<CR>
 imap <C-z> <C-o>:undo<CR>
 nmap <C-Del> dw
+imap <C-Del> <C-o>dw
 nmap <C-PageDown> :bnext<CR>
 imap <C-PageDown> <C-o>:bnext<CR>
 nmap <C-PageUp> :bprev<CR>
@@ -124,7 +127,9 @@ nmap <A-c> <plug>NERDCommenterToggle
 imap <A-c> <C-o><plug>NERDCommenterToggle
 vmap <A-c> <plug>NERDCommenterToggle
 nnoremap <A-n> *
+inoremap <A-n> <C-o>*
 nnoremap <A-p> #
+inoremap <A-p> <C-o>#
 
 inoremap <Tab> <C-o>>>
 inoremap <S-Tab> <C-o><<
