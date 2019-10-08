@@ -85,7 +85,8 @@ inoremap <C-f> <C-o>/
 nmap <C-h> :%s//g<Left><Left>
 imap <C-h> <C-o>:%s//g<Left><Left>
 nnoremap <C-m> %
-inoremap <C-m> <C-o>%
+" Breaks Enter key
+"inoremap <C-m> <C-o>%
 nmap <C-p> :Commands<CR>
 nmap <C-q> :confirm qall<CR>
 imap <C-q> <C-o>:confirm qall<CR>
