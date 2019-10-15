@@ -6,6 +6,8 @@
     interactive = auto
 [core]
     editor = nvim +startinsert
+[commit]
+    verbose = true
 [push]
     default = simple
 [alias]
