@@ -18,6 +18,7 @@ let mapleader="\<SPACE>"
 
 " {{{ Plugins
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'airblade/vim-gitgutter'
 Plug 'chaoren/vim-motion'
 Plug 'Chiel92/vim-autoformat'
 Plug 'easymotion/vim-easymotion'
