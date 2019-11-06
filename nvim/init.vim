@@ -19,6 +19,7 @@ let mapleader="\<SPACE>"
 " {{{ Plugins
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'airblade/vim-gitgutter'
+Plug 'ayu-theme/ayu-vim'
 Plug 'chaoren/vim-motion'
 Plug 'Chiel92/vim-autoformat'
 Plug 'easymotion/vim-easymotion'
@@ -68,6 +69,10 @@ let g:rainbow_active = 1
 " Auto-pairs
 let g:AutoPairsShortcutToggle = ''
 let g:AutoPairsShortcutJump = ''
+
+" Colorscheme
+let ayucolor = "dark"
+colorscheme ayu
 
 " {{{ Commands
 command! ConfigOpen edit $MYVIMRC
