@@ -21,7 +21,7 @@ bind    index   \cn         next-new
 bind    index   <Space>     flag-message
 macro   index   q           '<change-folder>?<toggle-mailboxes>'
 macro   index   /           <search>~b
-macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+macro index,pager \co "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
 #       pgp         pgp menu
 #       postpone    postponed message recall menu
