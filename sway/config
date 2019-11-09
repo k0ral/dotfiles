@@ -3,6 +3,7 @@
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
+set $alt Mod1
 set $mod Mod4
 set $term alacritty
 set $shell /run/current-system/sw/bin/fish --private
@@ -38,9 +39,7 @@ output HDMI-A-2 position 1920,0
 #
 # Basics:
 #
-bindsym $mod+Return exec $term -e $shell
-exec $term -e $shell
-
+bindsym $mod+Return exec $term $shell
 bindsym $mod+F4 kill
 bindsym $mod+F5 reload
 bindsym $mod+F11 fullscreen
@@ -102,26 +101,39 @@ mode "music" {
 #
 # Move your focus around
 bindsym $mod+Tab focus next
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
 bindsym $mod+Shift+Tab focus prev
+bindsym $mod+Down focus down
+bindsym $mod+Left focus left
 
-bindsym $mod+Up focus output up
-bindsym $mod+Down focus output down
+bindsym $mod+$alt+Up focus output up
+bindsym $mod+$alt+Down focus output down
+bindsym $mod+$alt+Left focus output left
+bindsym $mod+$alt+Right focus output right
 
-# _move_ the focused window with the same, but add Shift
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+bindsym $mod+Shift+$alt+Down move window to output down
+bindsym $mod+Shift+$alt+Left move window to output left
+bindsym $mod+Shift+$alt+Right move window to output right
+bindsym $mod+Shift+$alt+Up move window to output up
+
+# Resizing
+bindsym $mod+Ctrl+Left resize shrink width
+bindsym $mod+Ctrl+Right resize grow width
+bindsym $mod+Ctrl+Down resize shrink height
+bindsym $mod+Ctrl+Up resize grow height
+
 #
 # Workspaces:
 #
-bindsym $mod+Left workspace prev_on_output
-bindsym $mod+Right workspace next_on_output
 bindsym $mod+Prior workspace prev_on_output
 bindsym $mod+Next workspace next_on_output
 
-# switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -132,7 +144,7 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
-# move focused container to workspace
+
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
 bindsym $mod+Shift+3 move container to workspace 3
@@ -152,6 +164,7 @@ bindsym $mod+Shift+0 move container to workspace 10
 # You can "split" the current object of your focus with
 # $mod+b or $mod+v, for horizontal and vertical splits
 # respectively.
+bindsym $mod+space layout toggle all
 #bindsym $mod+b splith
 #bindsym $mod+v splitv
 
@@ -254,8 +267,11 @@ client.unfocused $darkblue $black $blue $red $darkcyan
 default_border pixel 3
 focus_follows_mouse no
 font 'Fira Code'
-gaps 5 on
+gaps inner 5
 hide_edge_borders smart
-seamless_mouse off
 smart_gaps on
-workspace_layout auto left
+workspace_layout default
+
+exec $term $shell
+exec kanshi
+exec mako
