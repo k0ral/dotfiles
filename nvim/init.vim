@@ -1,4 +1,5 @@
 " {{{ Builtin options
+set cursorline
 set expandtab
 set foldmethod=marker
 set hidden
