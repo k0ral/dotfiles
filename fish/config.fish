@@ -1,64 +1,16 @@
-# {{{ Fuzzy-find history
-function reverse_history_search
-  history | fzf --tiebreak index | read -l command
-  if test $command
-    commandline -rb $command
-  end
-end
-
-function file_search
-  fzf | read -l filepath
-  if test $filepath
-    commandline -a (echo $filepath | string escape)
-  end
-end
-
-function cd_home
-  fd $HOME -type d | fzf | read -l directory
-  if test $directory
-    cd $directory
-  end
-end
-
-function fish_user_key_bindings
-  bind \cr reverse_history_search
-  bind \ct file_search
-  bind \ec cd_home
+# {{{ Fisher
+if not functions -q fisher
+    set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
+    curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
+    fish -c fisher
 end
 # }}}
 
 # {{{ Prompt
-function fish_prompt
-# Is it a remote session ?
-    if test -z (who -m)
-    else
-        set_color red
-        echo -n "[remotely] "
-    end
-
-    set_color $fish_color_cwd
-    echo -n (whoami)
-
-    set_color normal
-    echo -n '@'
-    set_color purple
-    echo -n (hostname)
-    set_color normal
-    echo -n ':'
-
-# Color writeable dirs green, read-only dirs red
-    if test -w "."
-        set_color green
-    else
-        set_color red
-    end
-    echo -n (prompt_pwd)
-    set_color normal
-
-    echo ''
-    set_color normal
-    echo -n '> '
-end
+set -g theme_display_user yes
+set -g theme_display_hostname yes
+set -g theme_newline_cursor yes
+set -g theme_use_abbreviated_branch_name yes
 # }}}
 
 # {{{ Aliases: custom options
