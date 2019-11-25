@@ -1348,6 +1348,7 @@ c.tabs.new_position.unrelated = 'next'
 ## Padding (in pixels) around text for tabs.
 ## Type: Padding
 # c.tabs.padding = {'top': 0, 'bottom': 0, 'left': 5, 'right': 5}
+c.tabs.padding = {'top': 5, 'bottom': 5, 'left': 5, 'right': 5}
 
 ## Shrink pinned tabs down to their contents.
 ## Type: Bool
