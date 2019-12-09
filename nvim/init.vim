@@ -20,11 +20,13 @@ let mapleader="\<SPACE>"
 " {{{ Plugins
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'airblade/vim-gitgutter'
+Plug 'ap/vim-buftabline'
 Plug 'ayu-theme/ayu-vim'
 Plug 'chaoren/vim-motion'
 Plug 'Chiel92/vim-autoformat'
 Plug 'easymotion/vim-easymotion'
 Plug 'inside/vim-search-pulse'
+Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
@@ -36,7 +38,6 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'LnL7/vim-nix'
 Plug 'RRethy/vim-illuminate'
 Plug 'scrooloose/nerdcommenter'
-Plug 'vim-airline/vim-airline'
 Plug 'vmchale/dhall-vim'
 Plug 'w0rp/ale'
 call plug#end()
@@ -51,8 +52,13 @@ nmap s <Plug>(easymotion-overwin-f)
 let g:undotree_SetFocusWhenToggle = 1
 nmap <A-z> :UndotreeToggle<CR>
 
-" Airline
-let g:airline#extensions#tabline#enabled = 1
+" Lightline
+set noshowmode
+let g:lightline = {
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'readonly', 'relativepath', 'modified' ] ]
+  \ } }
 
 " NERDCommenter
 let g:NERDDefaultAlign = 'left'
