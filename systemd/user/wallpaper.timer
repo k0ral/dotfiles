@@ -1,5 +1,5 @@
 [Unit]
-Description=Random wallpaper with feh
+Description=Random wallpaper
 
 [Timer]
 OnBootSec=1m

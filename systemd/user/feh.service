@@ -1,7 +1,0 @@
-[Unit]
-Description=Random wallpaper with feh
-
-[Service]
-Type=simple
-EnvironmentFile=-/home/koral/.config/systemd/user/environment
-ExecStart=/run/current-system/sw/bin/feh --randomize --recursive --bg-fill %h/images/wallpapers
