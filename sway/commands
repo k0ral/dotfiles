@@ -1,6 +1,15 @@
-layout auto left
+floating enable
+floating disable
+floating auto
+reload
 layout stacking
 layout tabbed
+layout splith
+layout splitv
+layout toggle all
 layout toggle split
 output eDP-1 disable
 output eDP-1 enable
+sticky disable
+sticky enable
+sticky toggle

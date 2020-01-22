@@ -168,7 +168,7 @@ bindsym $mod+space layout toggle all
 #bindsym $mod+b splith
 #bindsym $mod+v splitv
 
-bindsym $mod+Shift+p exec /bin/sh -c 'swaymsg $(cat ~/.config/sway/commands | dmenu -nb "#000033" -b -l 10 -p "swaymsg:")'
+bindsym $mod+Shift+p exec /bin/sh -c 'swaymsg $(sort ~/.config/sway/commands | dmenu -nb "#000033" -b -l 10 -p "swaymsg:")'
 
 # Toggle the current focus between tiling and floating mode
 bindsym $mod+f floating toggle
