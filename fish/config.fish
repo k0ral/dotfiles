@@ -204,7 +204,7 @@ function ls
 end
 
 function ping
-    grc ping $argv
+    prettyping --nolegend $argv
 end
 
 function top
@@ -226,10 +226,6 @@ end
 
 function openports
     s lsof -Pan -i tcp -i udp
-end
-
-function pg
-    mtr www.google.fr
 end
 
 function play
