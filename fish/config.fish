@@ -149,12 +149,8 @@ function k
     ps ux | sed 1d | fzf -m | awk '{print $2}' | xargs kill $argv
 end
 
-function l
-    ls -og --time-style=+ $argv
-end
-
 function ll
-    ls -l $argv
+    ls -l --icons $argv
 end
 
 function la
@@ -204,7 +200,6 @@ end
 #end
 
 function ls
-    #command ls --tabsize=0 --literal --color=auto --show-control-chars -p -h --group-directories-first -X $argv
     exa -g --group-directories-first $argv
 end
 
