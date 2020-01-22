@@ -1,6 +1,6 @@
 [user]
     name = koral
-    email = koral@mailoo.org
+    email = chahine.moreau@gmail.com
 [color]
     ui = auto # covers diff = true, status = auto, branch = auto
     interactive = auto
@@ -15,7 +15,13 @@
     ci = commit
     co = checkout
     ls = log --date=short --graph --pretty=format:'%Cred%h %C(bold blue)%cn%Creset %cd %C(yellow)%d %C(bold white)%s'
-    st = status
-    glog = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    st = ! tig status
+    #glog = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    glog = ! tig
+    unadd = reset HEAD
 [diff-so-fancy]
     stripLeadingSymbols = false
+[merge]
+    tool = nvimdiff
+[mergetool "nvimdiff"]
+    cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
