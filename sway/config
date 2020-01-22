@@ -5,7 +5,7 @@
 # Logo key. Use Mod1 for Alt.
 set $alt Mod1
 set $mod Mod4
-set $term alacritty
+set $term kitty
 set $shell /run/current-system/sw/bin/fish --private
 set $menu dmenu_run -nb '#000033' -b -l 10 -p 'Execute'
 
@@ -67,7 +67,7 @@ bindsym XF86AudioLowerVolume exec pamixer -d 4
 bindsym XF86AudioMute exec pamixer -t
 
 
-bindsym $mod+v mode "volume"; exec $term --class term_volume -e /bin/sh -c ncpamixer
+bindsym $mod+v mode "volume"; exec $term --class term_volume /bin/sh -c ncpamixer
 for_window [app_id="term_volume"] floating enable, sticky enable, resize set width 50 ppt height 50 ppt
 
 mode "volume" {
@@ -81,7 +81,7 @@ mode "volume" {
 }
 
 # Music mode
-bindsym $mod+m mode "music"; exec $term --class term_music -e /bin/sh -c ncmpcpp
+bindsym $mod+m mode "music"; exec $term --class term_music /bin/sh -c ncmpcpp
 for_window [app_id="term_music"] floating enable, sticky enable, resize set width 90 ppt height 90 ppt
 
 mode "music" {
