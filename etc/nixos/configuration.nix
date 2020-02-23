@@ -32,7 +32,6 @@
   environment.variables = {
     BROWSER="firefox";
     EDITOR="nvim";
-    KITTY_ENABLE_WAYLAND="1";
     MOZ_ENABLE_WAYLAND="1";
     QT_QPA_PLATFORM="wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION="1";
