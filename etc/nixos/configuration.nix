@@ -20,7 +20,7 @@
         graphicalPack = with pkgs; [ dmenu dzen2 keynav kitty qt5.qtwayland wallutils xorg.xev ]; # i3lock-fancy 
         haskellPack = with pkgs.haskellPackages; [ apply-refact brittany dhall doctest ghc happy haskell-ci hdevtools hlint stylish-haskell ]; # hakyll hasktags open-haddock haddocset hledger hindent ghc-mod summoner
         mediaPack = with pkgs; [ evince exiftool ffmpeg imagemagick jpegoptim lsdvd mediainfo mkvtoolnix-cli mpv pdf2svg rtv ];
-        netPack = with pkgs; [ aria2 arp-scan bluez bluez-tools elinks firefox-wayland googler iftop isync mcabber msmtp neomutt nload notmuch obexfs qutebrowser tcpdump tcpflow telnet w3m weechat wget ];
+        netPack = with pkgs; [ aria2 arp-scan bluez bluez-tools elinks firefox-wayland googler iftop isync mcabber msmtp neomutt nload notmuch obexfs tcpdump tcpflow telnet w3m weechat wget ];
         nixPack = with pkgs; [ cabal2nix cachix nix-du nix-top nox ];
         pythonPack = with pkgs.python3Packages; [ glances grip mps-youtube mutagen virtualenv youtube-dl ];
         systemPack = with pkgs; [ abduco acpi alsaUtils atop cpulimit htop light lsof man moreutils pciutils powertop progress ps_mem psmisc rfkill smartmontools udiskie usbutils ];
@@ -30,7 +30,7 @@
 
 
   environment.variables = {
-    BROWSER="qutebrowser";
+    BROWSER="firefox";
     EDITOR="nvim";
     KITTY_ENABLE_WAYLAND="1";
     MOZ_ENABLE_WAYLAND="1";
