@@ -35,6 +35,7 @@ Plug 'mbbill/undotree'
 Plug 'mhinz/vim-startify'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 Plug 'neovimhaskell/haskell-vim'
+Plug 'ntpeters/vim-better-whitespace'
 Plug 'LnL7/vim-nix'
 Plug 'RRethy/vim-illuminate'
 Plug 'scrooloose/nerdcommenter'
@@ -80,6 +81,12 @@ let g:AutoPairsShortcutJump = ''
 " Colorscheme
 let ayucolor = "dark"
 colorscheme ayu
+
+" Better whitespace
+let g:better_whitespace_enabled=1
+let g:strip_only_modified_lines=1
+let g:strip_whitespace_confirm=0
+let g:strip_whitespace_on_save=1
 
 " {{{ Commands
 command! ConfigOpen edit $MYVIMRC
