@@ -94,7 +94,22 @@
     set tabsize 2
   '';
   programs.sway.enable = true;
-  programs.sway.extraPackages = with pkgs; [ grim i3status-rust imv kanshi mako redshift-wayland slurp swaybg swayidle swaylock wdisplays wl-clipboard xwayland ];
+  programs.sway.extraPackages = with pkgs; [
+    clipman
+    grim
+    i3status-rust
+    imv
+    kanshi
+    mako
+    redshift-wayland
+    slurp
+    swaybg
+    swayidle
+    swaylock
+    wdisplays
+    wl-clipboard
+    xwayland
+  ];
   #programs.way-cooler.enable = true;
 
   services.acpid.enable = true;
