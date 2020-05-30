@@ -23,7 +23,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-buftabline'
 Plug 'ayu-theme/ayu-vim'
 Plug 'chaoren/vim-motion'
-Plug 'Chiel92/vim-autoformat'
 Plug 'easymotion/vim-easymotion'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
@@ -38,6 +37,7 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'LnL7/vim-nix'
 Plug 'RRethy/vim-illuminate'
+Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vmchale/dhall-vim'
 Plug 'w0rp/ale'
@@ -64,12 +64,18 @@ let g:lightline = {
 " NERDCommenter
 let g:NERDDefaultAlign = 'left'
 
-" Autoformat
-autocmd BufWrite *.hs :Autoformat
-autocmd BufWrite *.cpp :Autoformat
-autocmd BufWrite *.hpp :Autoformat
-" Don't automatically indent on save, since vim's autoindent for haskell is buggy
-autocmd FileType haskell let b:autoformat_autoindent=0
+" Neoformat
+autocmd BufWrite *.cpp :Neoformat
+autocmd BufWrite *.dhall :Neoformat
+autocmd BufWrite *.hpp :Neoformat
+autocmd BufWrite *.hs :Neoformat
+autocmd BufWrite *.java :Neoformat
+autocmd BufWrite *.json :Neoformat
+autocmd BufWrite *.nix :Neoformat
+autocmd BufWrite *.proto :Neoformat
+autocmd BufWrite *.py :Neoformat
+autocmd BufWrite *.sh :Neoformat
+autocmd BufWrite *.xml :Neoformat
 
 " Rainbow
 let g:rainbow_active = 1
