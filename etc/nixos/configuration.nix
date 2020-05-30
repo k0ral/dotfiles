@@ -68,11 +68,7 @@
     zeroconf.publish.enable = true;
   };
 
-  i18n = {
-  #   consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "us";
-    defaultLocale = "en_US.UTF-8";
-  };
+  i18n.defaultLocale = "en_US.UTF-8";
 
   networking.firewall.allowedTCPPorts = [ 873 6600 ];
   networking.enableIPv6 = true;
