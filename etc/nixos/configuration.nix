@@ -168,6 +168,19 @@
     };
   };
   services.smartd.enable = true;
+
+  services.syncthing = {
+    enable = true;
+    openDefaultPorts = true;
+    systemService = true;
+    declarative.folders = {
+      "/home/music" = {
+        id = "music";
+        type = "sendonly";
+      };
+    };
+  };
+
   services.udisks2.enable = true;
 
   system.autoUpgrade.enable = false;
