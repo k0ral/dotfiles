@@ -275,3 +275,4 @@ workspace_layout default
 exec $term $shell
 exec kanshi
 exec mako
+exec redshift -l 43.7:7.2
