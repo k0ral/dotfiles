@@ -108,8 +108,8 @@ nnoremap <C-e> <End>
 inoremap <C-e> <End>
 nnoremap <C-f> /
 inoremap <C-f> <C-o>/
-nmap <C-h> :%s//g<Left><Left>
-imap <C-h> <C-o>:%s//g<Left><Left>
+nmap <C-h> :%s///g<Left><Left><Left>
+imap <C-h> <C-o>:%s///g<Left><Left><Left>
 nnoremap <C-m> %
 " Breaks Enter key
 "inoremap <C-m> <C-o>%
