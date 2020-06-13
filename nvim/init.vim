@@ -29,6 +29,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
+Plug 'lervag/vimtex'
 Plug 'lifepillar/vim-solarized8'
 Plug 'luochen1990/rainbow'
 Plug 'mbbill/undotree'
