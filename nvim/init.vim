@@ -88,15 +88,17 @@ let g:AutoPairsShortcutJump = ''
 
 " Colorscheme
 set background=dark
+highlight Comment cterm=italic ctermfg=grey gui=italic guifg=#333333
+highlight CursorLine ctermbg=blue guibg=#000033
 highlight Normal ctermbg=black guibg=black
 highlight LineNr ctermbg=NONE guibg=NONE
 highlight SignColumn ctermbg=NONE guibg=NONE
-highlight Comment cterm=italic gui=italic
 
+autocmd ColorScheme * highlight Comment cterm=italic ctermfg=grey gui=italic guifg=#333333
+autocmd ColorScheme * highlight CursorLine ctermbg=blue guibg=#000033
 autocmd ColorScheme * highlight Normal ctermbg=black guibg=black
 autocmd ColorScheme * highlight LineNr ctermbg=NONE guibg=NONE
 autocmd ColorScheme * highlight SignColumn ctermbg=NONE guibg=NONE
-autocmd ColorScheme * highlight Comment cterm=italic gui=italic
 
 colorscheme solarized8_high
 
