@@ -5,6 +5,7 @@ set foldmethod=marker
 set hidden
 set inccommand=split
 set list
+set listchars=tab:▸\ ,trail:·
 set number
 set pastetoggle=<F12>
 set showmatch
@@ -99,7 +100,7 @@ autocmd ColorScheme * highlight Comment cterm=italic gui=italic
 colorscheme solarized8_high
 
 " Better whitespace
-let g:better_whitespace_enabled=1
+let g:better_whitespace_enabled=0
 let g:strip_only_modified_lines=1
 let g:strip_whitespace_confirm=0
 let g:strip_whitespace_on_save=1
