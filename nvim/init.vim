@@ -21,7 +21,6 @@ let mapleader="\<SPACE>"
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-buftabline'
-Plug 'ayu-theme/ayu-vim'
 Plug 'chaoren/vim-motion'
 Plug 'easymotion/vim-easymotion'
 Plug 'inside/vim-search-pulse'
@@ -29,6 +28,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
+Plug 'lifepillar/vim-solarized8'
 Plug 'luochen1990/rainbow'
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-startify'
@@ -85,8 +85,18 @@ let g:AutoPairsShortcutToggle = ''
 let g:AutoPairsShortcutJump = ''
 
 " Colorscheme
-let ayucolor = "dark"
-colorscheme ayu
+set background=dark
+highlight Normal ctermbg=black guibg=black
+highlight LineNr ctermbg=NONE guibg=NONE
+highlight SignColumn ctermbg=NONE guibg=NONE
+highlight Comment cterm=italic gui=italic
+
+autocmd ColorScheme * highlight Normal ctermbg=black guibg=black
+autocmd ColorScheme * highlight LineNr ctermbg=NONE guibg=NONE
+autocmd ColorScheme * highlight SignColumn ctermbg=NONE guibg=NONE
+autocmd ColorScheme * highlight Comment cterm=italic gui=italic
+
+colorscheme solarized8_high
 
 " Better whitespace
 let g:better_whitespace_enabled=1
