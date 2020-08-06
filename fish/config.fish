@@ -6,13 +6,6 @@ if not functions -q fisher
 end
 # }}}
 
-# {{{ Prompt
-set -g theme_display_user yes
-set -g theme_display_hostname yes
-set -g theme_newline_cursor yes
-set -g theme_use_abbreviated_branch_name yes
-# }}}
-
 # {{{ Aliases: custom options
 function chmod
     command chmod -c --preserve-root $argv
@@ -342,5 +335,7 @@ end
 # }}}
 
 set fish_greeting ''
+
+starship init fish | source
 
 eval (direnv hook fish)

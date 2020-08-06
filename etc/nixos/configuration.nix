@@ -34,6 +34,7 @@
       loop
       ncurses.dev
       ripgrep
+      starship
       tldr
       urlscan
       yank
