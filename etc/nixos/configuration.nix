@@ -102,11 +102,11 @@
       stylish-haskell
     ]; # open-haddock haddocset hledger stylish-cabal summoner
     mediaPack = with pkgs; [
-      evince
       exiftool
       ffmpeg
       imagemagick
       jpegoptim
+      llpp
       lsdvd
       mediainfo
       mkvtoolnix-cli
