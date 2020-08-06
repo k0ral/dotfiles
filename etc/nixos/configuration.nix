@@ -23,6 +23,7 @@
       vorbis-tools
     ];
     cliPack = with pkgs; [
+      direnv
       exa
       fd
       fish
@@ -306,6 +307,8 @@
     HandleHibernateKey=ignore
     HandleLidSwitch=ignore
   '';
+
+  services.lorri.enable = true;
 
   services.mpd = {
     enable = true;

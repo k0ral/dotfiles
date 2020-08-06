@@ -342,3 +342,5 @@ end
 # }}}
 
 set fish_greeting ''
+
+eval (direnv hook fish)
