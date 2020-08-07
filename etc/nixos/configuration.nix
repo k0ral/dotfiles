@@ -48,7 +48,6 @@
       git
       gitAndTools.diff-so-fancy
       gitAndTools.hub
-      gnumake
       graphviz
       icu
       jq
@@ -97,10 +96,10 @@
     haskellPack = with pkgs.haskellPackages; [
       apply-refact
       dhall
-      doctest
       hlint
       stylish-haskell
-    ]; # open-haddock haddocset hledger stylish-cabal summoner
+      # open-haddock haddocset hledger stylish-cabal
+    ];
     mediaPack = with pkgs; [
       exiftool
       ffmpeg
