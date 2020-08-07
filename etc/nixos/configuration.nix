@@ -333,19 +333,10 @@
     network.listenAddress = "any";
     startWhenNeeded = true;
   };
+
   services.openssh.enable = true;
   services.openssh.startWhenNeeded = true;
   services.privoxy.enable = true;
-
-  services.rsyncd = {
-    enable = true;
-    modules = {
-      music = {
-        path = "/home/music";
-        "read only" = "yes";
-      };
-    };
-  };
   services.smartd.enable = true;
 
   services.syncthing = {
