@@ -52,9 +52,6 @@ interval = 10
 format = "{power} {percentage}% {time}"
 
 [[block]]
-block = "uptime"
-
-[[block]]
 block = "time"
 interval = 60
 format = "%v %R"
