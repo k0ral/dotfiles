@@ -1,9 +1,7 @@
 self: super:
 
 {
-  bemenu = super.bemenu.override {
-    x11Support = false;
-  };
+  bemenu = super.bemenu.override { x11Support = false; };
 
   pulseaudio = super.pulseaudio.override {
     bluetoothSupport = true;
@@ -11,7 +9,5 @@ self: super:
     zeroconfSupport = true;
   };
 
-  ncmpcpp = super.ncmpcpp.override {
-    visualizerSupport = true;
-  };
+  ncmpcpp = super.ncmpcpp.override { visualizerSupport = true; };
 }

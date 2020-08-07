@@ -264,7 +264,6 @@
     wl-clipboard
     xwayland
   ];
-  #programs.way-cooler.enable = true;
 
   services.acpid.enable = true;
   services.acpid.handlers = {
