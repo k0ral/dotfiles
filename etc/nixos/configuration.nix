@@ -47,7 +47,7 @@
       crex
       git
       gitAndTools.diff-so-fancy
-      gitAndTools.hub
+      gitAndTools.gh
       graphviz
       icu
       jq
