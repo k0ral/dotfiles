@@ -23,14 +23,9 @@
   fonts.enableFontDir = true;
   fonts.enableGhostscriptFonts = true;
   fonts.fonts = with pkgs; [
-    corefonts # Micrsoft free fonts
-    fira-code
+    corefonts # Microsoft free fonts
     font-awesome
-    hack-font
-    hasklig
-    # inconsolata
-    iosevka
-    source-code-pro
+    nerdfonts
     unifont # some international languages
   ];
   fonts.fontconfig.defaultFonts.monospace = [ "Hack" ];

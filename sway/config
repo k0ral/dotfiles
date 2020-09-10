@@ -7,7 +7,7 @@ set $alt Mod1
 set $mod Mod4
 set $term kitty
 set $shell /run/current-system/sw/bin/fish --private
-set $menu bemenu-run --fn "firacode" --nb '#000033' -b -l 10 -p 'Execute'
+set $menu bemenu-run --fn "FiraCode Nerd Font 16" --nb '#000033' -b -l 10 -p 'Execute'
 
 ### Output configuration
 #
@@ -238,7 +238,7 @@ bindsym $mod+F12 mode $passthrough_mode
 bar {
     position top
     #font Hack 10
-    font FontAwesome 11, Hack 10
+    font 'FiraCode Nerd Font, Fira Code, FontAwesome, Hack' 12
     #separator_symbol " | "
     colors {
       background #000032
@@ -266,7 +266,7 @@ client.unfocused $darkblue $black $blue $red $darkcyan
 
 default_border pixel 3
 focus_follows_mouse no
-font 'Fira Code'
+font 'FiraCode Nerd Font 16'
 gaps inner 5
 hide_edge_borders smart
 smart_gaps on

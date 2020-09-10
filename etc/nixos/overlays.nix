@@ -10,4 +10,6 @@ self: super:
   };
 
   ncmpcpp = super.ncmpcpp.override { visualizerSupport = true; };
+
+  nerdfonts = super.nerdfonts.override { fonts = [ "FiraCode" ]; };
 }
