@@ -9,6 +9,15 @@ set $term kitty
 set $shell /run/current-system/sw/bin/fish --private
 set $menu bemenu-run --fn "FiraCode Nerd Font 16" --nb '#000033' -b -l 10 -p 'Execute'
 
+set $black #000000
+set $cyan #00ffff
+set $darkcyan #007777
+set $red #ff0000
+set $mred #700000
+set $blue #0000ff
+set $mblue #000077
+set $darkblue #000033
+
 ### Output configuration
 #
 #output * bg /nix/store/ls11aaz7ccfkq0kwh8kr27g4d4y7plgd-sway-0.15.2/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
@@ -249,15 +258,6 @@ bar {
     #status_command i3pystatus -c ~/.config/sway/statusbar.py
     status_command i3status-rs ~/.config/sway/statusbar.toml
 }
-
-set $black #000000
-set $cyan #00ffff
-set $darkcyan #007777
-set $red #ff0000
-set $mred #700000
-set $blue #0000ff
-set $mblue #000077
-set $darkblue #000033
 
 
 # client.<color_class> <border> <background> <text> <indicator> <child_border>
