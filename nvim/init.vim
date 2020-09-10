@@ -73,7 +73,7 @@ autocmd BufWrite *.hpp :Neoformat
 autocmd BufWrite *.hs :Neoformat
 autocmd BufWrite *.java :Neoformat
 autocmd BufWrite *.json :Neoformat
-autocmd BufWrite *.nix :Neoformat
+"autocmd BufWrite *.nix :Neoformat
 autocmd BufWrite *.proto :Neoformat
 autocmd BufWrite *.py :Neoformat
 autocmd BufWrite *.sh :Neoformat
