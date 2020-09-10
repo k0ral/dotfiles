@@ -194,19 +194,6 @@
     };
   };
 
-  systemd.user.services.mailsync = {
-    description = "Synchronize IMAP mails";
-    wantedBy = [ "default.target" ];
-
-    serviceConfig = {
-      ExecStart = [
-        "-${pkgs.isync}/bin/mbsync -a"
-        "-${pkgs.notmuch}/bin/notmuch new"
-      ];
-      Type = "oneshot";
-    };
-  };
-
   systemd.user.services.cleanup = {
     description = "$HOME clean-up";
     wantedBy = [ "default.target" ];
@@ -219,6 +206,20 @@
         "-${pkgs.coreutils}/bin/rm -d %h/Downloads %h/Desktop"
         #/run/current-system/sw/bin/detox -r /home/music
       ];
+    };
+  };
+
+  systemd.user.services.mailsync = {
+    description = "Synchronize IMAP mails";
+    wantedBy = [ "default.target" ];
+
+    serviceConfig = {
+      ExecStart = [
+        "-${pkgs.isync}/bin/mbsync -a -c %h/.config/mbsync/1.mbsyncrc"
+        "-${pkgs.isync}/bin/mbsync -a -c %h/.config/mbsync/2.mbsyncrc"
+        "-${pkgs.notmuch}/bin/notmuch new"
+      ];
+      Type = "oneshot";
     };
   };
 
