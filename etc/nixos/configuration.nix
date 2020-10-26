@@ -2,6 +2,7 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./system-packages.nix
+    ./systemd-user.nix
   ];
 
   boot.cleanTmpDir = true;
@@ -177,80 +178,6 @@
   services.udisks2.enable = true;
 
   system.autoUpgrade.enable = false;
-
-  systemd.user.services.backup = {
-    description = "Backup";
-    wantedBy = [ "default.target" ];
-
-    serviceConfig = {
-      ExecStart = [
-        "-${pkgs.git}/bin/git -C %h/.config push"
-        "-/bin/sh -c '${pkgs.notmuch}/bin/notmuch config list >| %h/.config/notmuch/config_all'"
-        "-${pkgs.nix}/bin/nix-shell -p borgbackup --run '/home/koral/.config/systemd/user/borg-wrapper create --remote-path=borg1 -x -C lzma \"17994@ch-s011.rsync.net:backup::{utcnow}-{hostname}\" %h/doc %h/feeds %h/images %h/papers %h/prog/archive %h/studies %h/.config %h/.mozilla %h/.task'"
-        "-${pkgs.nix}/bin/nix-shell -p borgbackup --run '/home/koral/.config/systemd/user/borg-wrapper prune --remote-path=borg1 -d 30 \"17994@ch-s011.rsync.net:backup\"'"
-      ];
-
-      Type = "oneshot";
-    };
-  };
-
-  systemd.user.services.cleanup = {
-    description = "$HOME clean-up";
-    wantedBy = [ "default.target" ];
-
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = [
-        "${pkgs.coreutils}/bin/chmod -R go-rwx %h/mail %h/papers %h/.gnupg"
-        "-${pkgs.coreutils}/bin/mv -u %h/Downloads/* %h/Desktop/* %h"
-        "-${pkgs.coreutils}/bin/rm -d %h/Downloads %h/Desktop"
-        #/run/current-system/sw/bin/detox -r /home/music
-      ];
-    };
-  };
-
-  systemd.user.services.mailsync = {
-    description = "Synchronize IMAP mails";
-    wantedBy = [ "default.target" ];
-
-    serviceConfig = {
-      ExecStart = [
-        "-${pkgs.isync}/bin/mbsync -a -c %h/.config/mbsync/1.mbsyncrc"
-        "-${pkgs.isync}/bin/mbsync -a -c %h/.config/mbsync/2.mbsyncrc"
-        "-${pkgs.notmuch}/bin/notmuch new"
-      ];
-      Type = "oneshot";
-    };
-  };
-
-  systemd.user.timers.backup = {
-    wantedBy = [ "timers.target" ];
-
-    timerConfig = {
-      Unit = "backup.service";
-      OnCalendar = "daily";
-    };
-  };
-
-  systemd.user.timers.mailsync = {
-    wantedBy = [ "timers.target" ];
-
-    timerConfig = {
-      Unit = "mailsync.service";
-      OnBootSec = "1min";
-      OnUnitActiveSec = "7min";
-    };
-  };
-
-  systemd.user.timers.cleanup = {
-    wantedBy = [ "timers.target" ];
-
-    timerConfig = {
-      Unit = "cleanup.service";
-      OnBootSec = "3h";
-      OnUnitActiveSec = "5h";
-    };
-  };
 
   time.timeZone = "Europe/Paris";
 

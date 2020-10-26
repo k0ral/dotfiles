@@ -117,20 +117,17 @@
     googler
     httpie
     iftop
-    isync
     ldns
     mcabber
     mps-youtube
-    msmtp
     ncat
-    neomutt
     nload
-    notmuch
     obexfs
     prettyping
     tcpdump
     tcpflow
     telnet
+    thunderbird
     w3m
     weechat
     wget
