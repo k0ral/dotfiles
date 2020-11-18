@@ -188,5 +188,7 @@ inoremap <S-Tab> <C-o><<
 nnoremap <Tab> >>
 nnoremap <S-Tab> <<
 
+vnoremap < <gv
+vnoremap > >gv
 " }}}
 
