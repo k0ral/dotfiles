@@ -121,6 +121,8 @@ command! ConfigReload source $MYVIMRC
 " {{{ Key bindings
 nmap <C-b> :Buffers<CR>
 imap <C-b> <C-o>:Buffers<CR>
+nnoremap <C-c> <Esc>
+inoremap <C-c> <Esc>
 nmap <C-d> dw
 imap <C-d> <C-o>dw
 nnoremap <C-e> <End>
