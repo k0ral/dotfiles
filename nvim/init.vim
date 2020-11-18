@@ -130,8 +130,8 @@ nnoremap <C-e> <End>
 inoremap <C-e> <End>
 nmap <C-f> :BLines<CR>
 imap <C-f> <C-o>:BLines<CR>
-nmap <C-h> :%s///g<Left><Left><Left>
-imap <C-h> <C-o>:%s///g<Left><Left><Left>
+nmap <C-h> :%s/<C-r><C-w>/<C-r><C-w>/g<Left><Left>
+imap <C-h> <C-o>:%s/<C-r><C-w>/<C-r><C-w>/g<Left><Left>
 nnoremap <C-m> %
 " Breaks Enter key
 "inoremap <C-m> <C-o>%
