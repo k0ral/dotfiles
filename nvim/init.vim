@@ -1,4 +1,5 @@
 " {{{ Builtin options
+set clipboard=unnamedplus
 set cursorline
 set expandtab
 set foldmethod=marker
