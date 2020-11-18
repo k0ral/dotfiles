@@ -128,8 +128,8 @@ nmap <C-d> dw
 imap <C-d> <C-o>dw
 nnoremap <C-e> <End>
 inoremap <C-e> <End>
-nnoremap <C-f> /
-inoremap <C-f> <C-o>/
+nmap <C-f> :BLines<CR>
+imap <C-f> <C-o>:BLines<CR>
 nmap <C-h> :%s///g<Left><Left><Left>
 imap <C-h> <C-o>:%s///g<Left><Left><Left>
 nnoremap <C-m> %
