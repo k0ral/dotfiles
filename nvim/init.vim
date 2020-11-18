@@ -176,6 +176,8 @@ inoremap <A-Right> <End>
 nmap <A-c> <plug>NERDCommenterToggle
 imap <A-c> <C-o><plug>NERDCommenterToggle
 vmap <A-c> <plug>NERDCommenterToggle
+nmap <A-h> :noh<CR>
+imap <A-h> <C-o>:noh<CR>
 nnoremap <A-n> *
 inoremap <A-n> <C-o>*
 nnoremap <A-p> #
