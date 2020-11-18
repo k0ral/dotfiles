@@ -67,6 +67,7 @@ let g:lightline = {
 
 " NERDCommenter
 let g:NERDDefaultAlign = 'left'
+let g:NERDSpaceDelims = 1
 
 " Neoformat
 autocmd BufWrite *.cpp :Neoformat
