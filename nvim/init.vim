@@ -155,8 +155,10 @@ nmap <C-Del> dw
 imap <C-Del> <C-o>dw
 nmap <C-PageDown> :bnext<CR>
 imap <C-PageDown> <C-o>:bnext<CR>
+vmap <C-PageDown> :bnext<CR>
 nmap <C-PageUp> :bprev<CR>
 imap <C-PageUp> <C-o>:bprev<CR>
+vmap <C-PageUp> :bprev<CR>
 inoremap <C-Down> <C-o>}
 nnoremap <C-Down> }
 vnoremap <C-Down> }
