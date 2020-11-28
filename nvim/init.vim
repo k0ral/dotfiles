@@ -193,5 +193,7 @@ nnoremap <S-Tab> <<
 
 vnoremap < <gv
 vnoremap > >gv
+vnoremap y ygv
+vnoremap y ygv
 " }}}
 
