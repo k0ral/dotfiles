@@ -56,7 +56,6 @@
     poppler_utils
     python3
     tig
-    wkhtmltopdf
     z3
 
     # Filesystem
