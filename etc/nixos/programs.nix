@@ -49,6 +49,7 @@
     neovim
     nixfmt
     nodejs
+    nodePackages.js-beautify
     openssl
     patchelf
     pup
