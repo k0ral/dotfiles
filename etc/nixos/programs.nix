@@ -60,6 +60,7 @@
 
     # Filesystem
     atool
+    bashmount
     borgbackup
     cryptsetup
     detox
