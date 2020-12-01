@@ -56,6 +56,7 @@
   networking.tcpcrypt.enable = true;
 
   nix.autoOptimiseStore = true;
+  nix.binaryCaches = [ "https://cache.nixos.org/" ];
   nix.nixPath =
     [ "nixpkgs=/home/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" ];
   nix.useSandbox = true;
