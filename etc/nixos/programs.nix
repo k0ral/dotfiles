@@ -22,6 +22,7 @@
     grc
     gron
     loop
+    navi
     ncurses.dev
     pueue
     ripgrep

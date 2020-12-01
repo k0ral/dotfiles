@@ -204,22 +204,10 @@ function top
     htop $argv
 end
 
-function traceroute
-    grc traceroute $argv
-end
-
 function vim
     nvim $argv
 end
 # }}}
-
-function listening-ports
-    sudo netstat -tlnp
-end
-
-function openports
-    s lsof -Pan -i tcp -i udp
-end
 
 function play
     mpv --hwdec=auto $argv
@@ -274,14 +262,6 @@ end
 function suspend
     sys suspend
 end
-
-function scale_monitor
-    swaymsg output HDMI-A-2 scale $argv
-end
-
-function scale_laptop
-    swaymsg output eDP-1 scale $argv
-end
 # }}}
 
 # {{{ Functions
@@ -303,17 +283,12 @@ function duration
     for i in $argv; ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 -sexagesimal $i | tr -d '\n'; echo " $i"; end
 end
 
-function hdmi
-    echo "> xrandr --output HDMI2 --auto"
-    xrandr --output HDMI2 --auto
+function framerate
+    for i in $argv; ffprobe -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=nw=1:nk=1 $i | tr -d '\n'; echo " $i"; end
 end
 
-function audio-hdmi
-    pactl set-card-profile 0 output:hdmi-stereo-extra1
-end
-
-function audio-jack
-    pactl set-card-profile 0 output:analog-stereo
+function resolution
+    for i in $argv; ffprobe -v error -select_streams v:0 -show_entries stream=height,width -of csv=s=x:p=0 $i | tr -d '\n'; echo " $i"; end
 end
 
 function fade
@@ -337,5 +312,6 @@ end
 set fish_greeting ''
 
 starship init fish | source
+navi widget fish | source
 
 eval (direnv hook fish)
