@@ -19,7 +19,6 @@
     fish
     fzf
     gcalcli
-    grc
     gron
     loop
     navi
