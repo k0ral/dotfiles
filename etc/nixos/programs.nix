@@ -107,7 +107,6 @@
     mpv
     okular
     pdf2svg
-    rtv
 
     # Network
     aria2
