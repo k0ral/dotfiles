@@ -52,8 +52,8 @@
     nodePackages.js-beautify
     openssl
     patchelf
-    pup
     poppler_utils
+    pup
     python3
     tig
     z3
@@ -131,6 +131,7 @@
     tcpflow
     telnet
     thunderbird
+    youtube-dl
     w3m
     weechat
     wget
@@ -145,7 +146,6 @@
     # Python
     python3Packages.grip
     python3Packages.mutagen
-    python3Packages.youtube-dl
 
     # System
     abduco
