@@ -22,8 +22,8 @@
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
   };
 
-  fonts.enableFontDir = true;
   fonts.enableGhostscriptFonts = true;
+  fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
     corefonts # Microsoft free fonts
     font-awesome
