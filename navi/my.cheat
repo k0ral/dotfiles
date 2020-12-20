@@ -85,7 +85,7 @@ ffprobe -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of def
 ffprobe -v error -select_streams v:0 -show_entries stream=height,width -of csv=s=x:p=0 <video_file>
 
 # List video files, sorted by exact duration
-ls -1 | loop "ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 -sexagesimal \$ITEM | tr -d '\n'; echo ' '\$ITEM" | sort -k1 -n
+ls -1 | loop -i 'ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 -sexagesimal "$ITEM" | tr -d "\n"; echo " $ITEM"' | sort -k1 -n
 
 
 % kubernetes
