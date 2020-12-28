@@ -1,15 +1,12 @@
 { config, pkgs, ... }: {
-  imports = [
-    ./hardware-configuration.nix
-    ./programs.nix
-    ./services.nix
-    ./systemd-user.nix
-  ];
+  imports = [ ./hardware-configuration.nix ./programs.nix ./services.nix ./systemd-user.nix ];
 
-  boot.cleanTmpDir = true;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = false;
-  boot.supportedFilesystems = [ "zfs" ];
+  boot = {
+    cleanTmpDir = true;
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = false;
+    supportedFilesystems = [ "zfs" ];
+  };
 
   console.keyMap = "us";
 
@@ -63,8 +60,7 @@
   nix.useSandbox = true;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.pulseaudio = true;
-  nixpkgs.overlays =
-    [ (import ./overlays.nix) (import /home/nixpkgs-wayland/default.nix) ];
+  nixpkgs.overlays = [ (import ./overlays.nix) (import /home/nixpkgs-wayland/default.nix) ];
 
   system.autoUpgrade.enable = false;
 
