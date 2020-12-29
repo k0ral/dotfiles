@@ -19,28 +19,43 @@
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
   };
 
-  fonts.enableGhostscriptFonts = true;
-  fonts.fontDir.enable = true;
-  fonts.fonts = with pkgs; [
-    corefonts # Microsoft free fonts
-    font-awesome
-    nerdfonts
-    unifont # some international languages
-  ];
-  fonts.fontconfig.defaultFonts.monospace = [ "Hack" ];
-
-  hardware.bluetooth.enable = true;
-  hardware.opengl = {
-    driSupport = true;
-    driSupport32Bit = true;
+  fonts = {
+    enableGhostscriptFonts = true;
+    fontDir.enable = true;
+    fonts = with pkgs; [
+      corefonts # Microsoft free fonts
+      # encode-sans
+      font-awesome
+      nerdfonts
+      # noto-fonts
+      # dejavu_fonts
+      # google-fonts
+      # liberation_ttf
+      # source-han-sans
+      # source-han-mono
+      # source-han-serif
+      ubuntu_font_family
+      unifont # some international languages
+    ];
+    fontconfig.defaultFonts.monospace = [ "Hack" ];
   };
-  hardware.pulseaudio = {
-    enable = true;
-    support32Bit = true;
-    tcp.enable = true;
-    tcp.anonymousClients.allowAll = true;
-    zeroconf.discovery.enable = true;
-    zeroconf.publish.enable = true;
+
+  hardware = {
+    bluetooth.enable = true;
+
+    opengl = {
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+
+    pulseaudio = {
+      enable = true;
+      support32Bit = true;
+      tcp.enable = true;
+      tcp.anonymousClients.allowAll = true;
+      zeroconf.discovery.enable = true;
+      zeroconf.publish.enable = true;
+    };
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
