@@ -75,7 +75,7 @@ function free
 end
 
 function grep
-    rg $argv
+    rg --hidden -g '!.git/' $argv
 end
 
 function egrep
