@@ -85,6 +85,7 @@
     createHome = true;
     extraGroups = [ "adbusers" "audio" "wheel" "sway" ];
     isNormalUser = true;
+    shell = pkgs.fish;
     uid = 1000;
   };
 }
