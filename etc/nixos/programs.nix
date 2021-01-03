@@ -37,6 +37,7 @@
     binutils
     cacert
     chromaprint
+    cookiecutter
     crex
     dhall-json
     git
