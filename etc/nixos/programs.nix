@@ -16,7 +16,6 @@
     direnv
     exa
     fd
-    fish
     fzf
     gcalcli
     gron
@@ -119,7 +118,6 @@
     firefox-wayland
     googler
     httpie
-    iftop
     ldns
     mcabber
     monolith
@@ -181,6 +179,8 @@
 
   programs = {
     adb.enable = true;
+    fish.enable = true;
+    iftop.enable = true;
     mosh.enable = true;
     mtr.enable = true;
     nano.nanorc = ''
