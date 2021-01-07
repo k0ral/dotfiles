@@ -184,6 +184,10 @@ function cd
 end
 
 # {{{ Aliases: alternative programs
+function find
+    fd $argv
+end
+
 function gcc
     colorgcc $argv
 end

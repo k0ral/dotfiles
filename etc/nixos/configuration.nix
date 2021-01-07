@@ -14,6 +14,7 @@
     BEMENU_BACKEND = "wayland";
     BROWSER = "firefox";
     EDITOR = "nvim";
+    FZF_DEFAULT_COMMAND = "fd --type f";
     MOZ_ENABLE_WAYLAND = "1";
     QT_QPA_PLATFORM = "wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
