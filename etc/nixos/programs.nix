@@ -48,7 +48,6 @@
     libxml2
     neovim
     nixfmt
-    nodejs
     nodePackages.js-beautify
     openssl
     patchelf
