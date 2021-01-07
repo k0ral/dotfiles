@@ -201,6 +201,7 @@
       swaylock
       wdisplays
       wl-clipboard
+      wlsunset
       xwayland
     ];
   };
