@@ -179,30 +179,30 @@
     vit
   ];
 
-  programs.adb.enable = true;
-  programs.mosh.enable = true;
-  programs.mtr.enable = true;
-  programs.nano.nanorc = ''
-    set nowrap
-    set tabstospaces
-    set tabsize 2
-  '';
-  programs.sway.enable = true;
-  programs.sway.extraPackages = with pkgs; [
-    clipman
-    grim
-    i3status-rust
-    imv
-    kanshi
-    mako
-    #redshift-wayland
-    slurp
-    swaybg
-    swayidle
-    swaylock
-    wdisplays
-    wl-clipboard
-    xwayland
-  ];
-
+  programs = {
+    adb.enable = true;
+    mosh.enable = true;
+    mtr.enable = true;
+    nano.nanorc = ''
+      set nowrap
+      set tabstospaces
+      set tabsize 2
+    '';
+    sway.enable = true;
+    sway.extraPackages = with pkgs; [
+      clipman
+      grim
+      i3status-rust
+      imv
+      kanshi
+      mako
+      slurp
+      swaybg
+      swayidle
+      swaylock
+      wdisplays
+      wl-clipboard
+      xwayland
+    ];
+  };
 }
