@@ -43,6 +43,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'RRethy/vim-illuminate'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-surround'
 Plug 'vmchale/dhall-vim'
 Plug 'w0rp/ale'
 call plug#end()
@@ -117,6 +118,8 @@ let g:tex_flavor = 'latex'
 " {{{ Commands
 command! ConfigOpen edit $MYVIMRC
 command! ConfigReload source $MYVIMRC
+command! SurroundChange execute "normal cs" . input("Change surrounding characters from: ") . input("Change surrounding characters to: ")
+command! SurroundDelete execute "normal ds" . input("Delete surrounding characters: ")
 " }}}
 
 " {{{ Key bindings
