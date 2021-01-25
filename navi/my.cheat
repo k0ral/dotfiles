@@ -15,38 +15,80 @@ git submodule update --init --recursive
 # Start service
 systemctl start <service_inactive>
 
+# Start user service
+systemctl --user start <service_user_inactive>
+
 # Stop service
 systemctl stop <service_active>
+
+# Stop user service
+systemctl --user stop <service_user_active>
 
 # Enable service
 systemctl enable <service_disabled>
 
+# Enable user service
+systemctl --user enable <service_user_disabled>
+
 # Disable service
 systemctl disable <service_enabled>
+
+# Disable user service
+systemctl --user disable <service_user_enabled>
 
 # Restart service
 systemctl restart <service>
 
+# Restart user service
+systemctl --user restart <service_user>
+
 # Reload service
 systemctl reload <service_active>
 
-# Service status
+# Reload user service
+systemctl --user reload <service_user_active>
+
+# Show service status
 systemctl status <service>
+
+# Show user service status
+systemctl --user status <service_user>
 
 # List running services
 systemctl list-units --type=service --state=running
 
+# List running user services
+systemctl --user list-units --type=service --state=running
+
 # List enabled services
 systemctl list-unit-files --type=service --state=enabled
 
+# List enabled user services
+systemctl --user list-unit-files --type=service --state=enabled
+
 # List disabled services
 systemctl list-unit-files --type=service --state=disabled
+
+# List disabled user services
+systemctl --user list-unit-files --type=service --state=disabled
+
+# Show service logs
+journalctl --unit <service>
+
+# Show user service logs
+journalctl --user-unit <service_user>
+
 
 $ service_inactive: systemctl list-units --type=service --state=inactive | awk '{print $1}' | grep .service | sed 's/.service$//'
 $ service_active: systemctl list-units --type=service --state=active | awk '{print $1}' | grep .service | sed 's/.service$//'
 $ service_enabled: systemctl list-unit-files --type=service --state=enabled | awk '{print $1}' | grep .service | sed 's/.service$//'
 $ service_disabled: systemctl list-unit-files --type=service --state=disabled | awk '{print $1}' | grep .service | sed 's/.service$//'
 $ service: systemctl list-units --type=service --all | awk '{print $1}' | grep .service | sed 's/.service$//'
+$ service_user: systemctl --user list-units --type=service --all | awk '{print $1}' | grep .service | sed 's/.service$//'
+$ service_user_inactive: systemctl --user list-units --type=service --state=inactive | awk '{print $1}' | grep .service | sed 's/.service$//'
+$ service_user_active: systemctl --user list-units --type=service --state=active | awk '{print $1}' | grep .service | sed 's/.service$//'
+$ service_user_enabled: systemctl --user list-unit-files --type=service --state=enabled | awk '{print $1}' | grep .service | sed 's/.service$//'
+$ service_user_disabled: systemctl --user list-unit-files --type=service --state=disabled | awk '{print $1}' | grep .service | sed 's/.service$//'
 
 
 % nix
