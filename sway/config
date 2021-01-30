@@ -96,6 +96,7 @@ for_window [app_id="term_music"] floating enable, sticky enable, resize set widt
 mode "music" {
   bindsym $mod+m [app_id="term_music"] kill, mode "default"
   bindsym Escape [app_id="term_music"] kill, mode "default"
+  bindsym q      [app_id="term_music"] kill, mode "default"
 
   bindsym XF86AudioRaiseVolume exec pamixer -i 4
   bindsym XF86AudioLowerVolume exec pamixer -d 4
