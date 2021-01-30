@@ -59,7 +59,7 @@ bindsym $mod+w exec ~/.config/sway/switch_window.sh
 bindsym $mod+Shift+q exit
 
 # Take screenshot
-bindsym $mod+Print exec swaygrab
+bindsym Print exec ~/.config/sway/capture-screen.sh
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
