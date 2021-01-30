@@ -270,7 +270,7 @@ font 'FiraCode Nerd Font 16'
 gaps inner 5
 hide_edge_borders smart
 smart_gaps on
-workspace_layout default
+workspace_layout tabbed
 
 exec $term $shell
 exec kanshi
