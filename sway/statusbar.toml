@@ -7,6 +7,16 @@ name = "solarized-dark"
 idle_bg = "#000033"
 
 [[block]]
+block = "bluetooth"
+mac = "CF:1C:E8:D7:D7:31"
+# label = " Mouse"
+
+[[block]]
+block = "bluetooth"
+mac = "51:24:00:0D:48:09"
+# label = " Keyboard"
+
+[[block]]
 block = "net"
 device = "enp58s0f1"
 ip = true
@@ -33,18 +43,18 @@ frequency = true
 
 [[block]]
 block = "temperature"
+collapsed = false
 interval = 10
-
-[[block]]
-block = "maildir"
-inboxes = ["/home/koral/mail/gmail-moreau/Inbox"]
-interval = 60
+format = "{average}°C"
+chip = "*-isa-*"
+# inputs = ["Core 0"]
 
 [[block]]
 block = "backlight"
 
 [[block]]
 block = "sound"
+driver = "pulseaudio"
 
 [[block]]
 block = "battery"
