@@ -40,7 +40,7 @@
     crex
     dhall-json
     git
-    gitAndTools.diff-so-fancy
+    gitAndTools.delta
     gitAndTools.gh
     graphviz
     icu

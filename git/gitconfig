@@ -6,7 +6,7 @@
     interactive = auto
 [core]
     editor = nvim +startinsert
-    pager = diff-so-fancy | less --tabs=4 -RFX
+    pager = delta
 [commit]
     verbose = true
 [push]
@@ -19,9 +19,16 @@
     #glog = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     glog = ! tig
     unadd = reset HEAD
-[diff-so-fancy]
-    stripLeadingSymbols = false
 [merge]
     tool = nvimdiff
 [mergetool "nvimdiff"]
     cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    features = side-by-side line-numbers decorations
+    whitespace-error-style = 22 reverse
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
