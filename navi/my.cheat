@@ -191,4 +191,7 @@ sudo lsof -Pan -i tcp -i udp
 # Limit CPU usage of process
 cpulimit --include-children --limit <n> --pid <pid>
 
+# Watch filesystem disk space usage
+watch -d -n1 df -h
+
 $ pid: (ps -o pid,%cpu,%mem,ni,cmd ax 2>/dev/null || ps -o pid,%cpu,%mem,ni,command) | sort -b -k3 -r | awk '{print $1, $2, $3, $4, $5}' | column -t --- --header-lines 1 --column 1
