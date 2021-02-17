@@ -1,0 +1,12 @@
+[directory]
+truncation_length = 0
+truncate_to_repo = false
+
+[hostname]
+ssh_only = false
+
+[username]
+show_always = true
+
+[git_status]
+disabled = true
