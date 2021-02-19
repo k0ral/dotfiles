@@ -12,7 +12,7 @@
 
   environment.variables = {
     BEMENU_BACKEND = "wayland";
-    BROWSER = "firefox";
+    BROWSER = "brave";
     EDITOR = "nvim";
     FZF_DEFAULT_COMMAND = "fd --type f";
     MOZ_ENABLE_WAYLAND = "1";

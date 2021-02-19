@@ -112,9 +112,9 @@
     arp-scan
     bluez
     bluez-tools
+    brave
     ddgr
     elinks
-    firefox-wayland
     googler
     httpie
     ldns
