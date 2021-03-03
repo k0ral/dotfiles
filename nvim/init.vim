@@ -26,6 +26,7 @@ Plug 'ap/vim-buftabline'
 Plug 'chaoren/vim-motion'
 Plug 'easymotion/vim-easymotion'
 Plug 'cespare/vim-toml'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
@@ -90,21 +91,11 @@ let g:rainbow_active = 1
 let g:AutoPairsShortcutToggle = ''
 let g:AutoPairsShortcutJump = ''
 
+
+
 " Colorscheme
 set background=dark
-highlight Comment cterm=italic ctermfg=grey gui=italic guifg=#333333
-highlight CursorLine ctermbg=blue guibg=#000033
-highlight Normal ctermbg=black guibg=black
-highlight LineNr ctermbg=NONE guibg=NONE
-highlight SignColumn ctermbg=NONE guibg=NONE
-
-autocmd ColorScheme * highlight Comment cterm=italic ctermfg=grey gui=italic guifg=#333333
-autocmd ColorScheme * highlight CursorLine ctermbg=blue guibg=#000033
-autocmd ColorScheme * highlight Normal ctermbg=black guibg=black
-autocmd ColorScheme * highlight LineNr ctermbg=NONE guibg=NONE
-autocmd ColorScheme * highlight SignColumn ctermbg=NONE guibg=NONE
-
-colorscheme solarized8_high
+colorscheme dracula
 
 " Better whitespace
 let g:better_whitespace_enabled=0
