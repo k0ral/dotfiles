@@ -26,7 +26,6 @@ Plug 'ap/vim-buftabline'
 Plug 'chaoren/vim-motion'
 Plug 'easymotion/vim-easymotion'
 Plug 'cespare/vim-toml'
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
@@ -47,6 +46,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'vmchale/dhall-vim'
 Plug 'w0rp/ale'
+Plug 'whatyouhide/vim-gotham'
 call plug#end()
 " }}}
 
@@ -62,6 +62,7 @@ nmap <A-z> :UndotreeToggle<CR>
 " Lightline
 set noshowmode
 let g:lightline = {
+  \ 'colorscheme': 'gotham',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'readonly', 'relativepath', 'modified' ] ]
@@ -95,7 +96,7 @@ let g:AutoPairsShortcutJump = ''
 
 " Colorscheme
 set background=dark
-colorscheme dracula
+colorscheme gotham
 
 " Better whitespace
 let g:better_whitespace_enabled=0
