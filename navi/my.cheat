@@ -174,13 +174,28 @@ swaymsg mode default
 swaymsg -t get_outputs
 
 
-% misc
+% wayland
+
+# Take a screenshot of a part of the screen
+grim -g (slurp) <file>.png
+
+# Take a screenshot of a part of the screen and put the output into the clipboard
+grim -g (slurp) - | wl-copy
+
+
+% pulseaudio
 
 # Send audio to HDMI
 pactl set-card-profile 0 output:hdmi-stereo-extra1
 
 # Send audio to Jack
 pactl set-card-profile 0 output:analog-stereo
+
+# Send audio to DisplayPort
+pactl set-card-profile 0 output:hdmi-stereo
+
+
+% misc
 
 # Show ports set to LISTENING
 sudo netstat -tlnp
