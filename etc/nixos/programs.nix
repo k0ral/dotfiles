@@ -172,6 +172,7 @@
     # Utils
     anki
     dict
+    unipicker
     taskwarrior
     vit
   ];

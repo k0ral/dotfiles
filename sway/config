@@ -55,6 +55,7 @@ bindsym $mod+F11 fullscreen
 bindsym $mod+r exec $menu
 bindsym $mod+l exec swaylock
 bindsym $mod+m exec ~/.config/mpd/play_menu.sh
+bindsym $mod+u exec unipicker --command "bemenu -p 'Pick unicode' --fn 'FiraCode Nerd Font 18' -l20" --copy-command wl-copy
 bindsym $mod+w exec ~/.config/sway/switch_window.sh
 bindsym $mod+Shift+q exit
 
