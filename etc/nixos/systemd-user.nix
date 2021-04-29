@@ -52,6 +52,21 @@
         ExecStart = "${exe} ${dataDir} --listen";
       };
     };
+
+    wallpaper =
+      let setrandom = pkgs.writeShellScriptBin "setrandom" ''
+            export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(${pkgs.procps}/bin/pgrep -f 'sway$').sock
+            #export SWAYSOCK="$(${pkgs.sway}/bin/sway --get-socketpath)"
+            ${pkgs.nix}/bin/nix-shell -p wallutils -p sway --run "setrandom -v /home/koral/images/wallpapers"
+          '';
+      in {
+        description = "Random wallpaper";
+        wantedBy = [ "default.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "-${setrandom}/bin/setrandom";
+        };
+      };
   };
 
   systemd.user.timers = {
@@ -72,6 +87,16 @@
         Unit = "cleanup.service";
         OnBootSec = "3h";
         OnUnitActiveSec = "5h";
+      };
+    };
+
+    wallpaper = {
+      wantedBy = [ "timers.target" ];
+
+      timerConfig = {
+        Unit = "wallpaper.service";
+        OnBootSec = "1m";
+        OnUnitActiveSec = "11m";
       };
     };
   };

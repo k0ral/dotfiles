@@ -1,9 +1,0 @@
-[Unit]
-Description=Random wallpaper
-
-[Timer]
-OnBootSec=1m
-OnUnitActiveSec=11m
-
-[Install]
-WantedBy=timers.target

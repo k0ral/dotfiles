@@ -1,7 +1,0 @@
-[Unit]
-Description=Random wallpaper
-
-[Service]
-Type=oneshot
-EnvironmentFile=-/home/koral/.config/systemd/user/environment
-ExecStart=-/home/koral/.config/systemd/user/setrandom-wrapper %h/images/wallpapers
