@@ -2,6 +2,7 @@
   environment.systemPackages = with pkgs; [
     # Audio
     beets
+    cava
     flac
     mpc_cli
     ncmpcpp

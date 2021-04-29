@@ -9,7 +9,5 @@ self: super:
     zeroconfSupport = true;
   };
 
-  ncmpcpp = super.ncmpcpp.override { visualizerSupport = true; };
-
   nerdfonts = super.nerdfonts.override { fonts = [ "FiraCode" ]; };
 }
