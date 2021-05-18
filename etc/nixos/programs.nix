@@ -87,6 +87,7 @@
     kitty
     # i3lock-fancy
     scrcpy
+    swappy
     wallutils
     xorg.xev
 
