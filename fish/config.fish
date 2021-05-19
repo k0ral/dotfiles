@@ -58,7 +58,6 @@ function rename
 end
 
 function df
-    # pydf $argv
     dfc $argv
 end
 
@@ -88,10 +87,6 @@ end
 
 function locate
     command locate -e $argv
-end
-
-function my_indent
-    indent -bad -bap -bbo -bc -nbfda -br -brs -cbi0 -cdb -cdw -ce -ncs -di4 -fca -hnl -i4 -ip4 -l120 -lp -nlps -npcs -nprs -npsl -saf -sai -saw -sbi4 -sc -nsob -ss -ts4 -nut $argv
 end
 
 function ncdu
@@ -130,7 +125,6 @@ function e
 end
 
 function E
-    set EDITOR "nvim"
     sudoedit $argv
 end
 
