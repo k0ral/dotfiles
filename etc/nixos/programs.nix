@@ -83,8 +83,10 @@
 
     # GUI
     bemenu
+    evolution
     keynav
     kitty
+    gnome3.adwaita-icon-theme
     # i3lock-fancy
     scrcpy
     swappy
@@ -130,7 +132,6 @@
     tcpdump
     tcpflow
     telnet
-    thunderbird
     youtube-dl
     w3m
     weechat

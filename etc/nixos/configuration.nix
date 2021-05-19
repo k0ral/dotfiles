@@ -78,6 +78,8 @@
   nixpkgs.config.pulseaudio = true;
   nixpkgs.overlays = [ (import ./overlays.nix) (import /home/nixpkgs-wayland/default.nix) ];
 
+  security.pam.services.sddm.enableGnomeKeyring = true;
+
   system.autoUpgrade.enable = false;
 
   time.timeZone = "Europe/Paris";

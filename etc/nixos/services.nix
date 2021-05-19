@@ -33,6 +33,12 @@
     servers = config.networking.nameservers;
   };
 
+  services.gnome3 = {
+    evolution-data-server.enable = true;
+    gnome-online-accounts.enable = true;
+    gnome-keyring.enable = true;
+  };
+
   services.journald.extraConfig = "SystemMaxUse=100M";
   services.logind.extraConfig = ''
     HandlePowerKey=ignore

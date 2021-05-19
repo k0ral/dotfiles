@@ -154,10 +154,6 @@ function lsa
     ls -a $argv
 end
 
-function m
-    neomutt $argv
-end
-
 function mk
     mkdir $argv
 end
