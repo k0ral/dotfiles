@@ -113,6 +113,10 @@ function tree
   command tree -CAFa -I '.hg|.svn|.git' --dirsfirst $argv
 end
 
+function watch
+  command watch -c $argv
+end
+
 function wget
     command wget -c $argv
 end
