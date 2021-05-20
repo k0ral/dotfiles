@@ -219,11 +219,7 @@ function splay
     mpv --no-audio $argv
 end
 
-function reco
-    sudo dhclient eth0
-end
 
-alias dlpage='wget -nd -pHEKk'
 
 function logsu
     journalctl --user-unit $argv
