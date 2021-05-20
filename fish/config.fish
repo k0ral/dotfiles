@@ -178,6 +178,10 @@ function cd
 end
 
 # {{{ Aliases: alternative programs
+function cat
+    bat $argv
+end
+
 function find
     fd $argv
 end
