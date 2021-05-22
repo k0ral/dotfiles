@@ -1,10 +1,4 @@
-icons = "awesome"
-
-[theme]
-name = "solarized-dark"
-
-[theme.overrides]
-idle_bg = "#000033"
+icons = "awesome5"
 
 [[block]]
 block = "bluetooth"
