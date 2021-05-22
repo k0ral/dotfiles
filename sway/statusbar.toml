@@ -1,14 +1,19 @@
 icons = "awesome5"
 
+# Mouse
 [[block]]
 block = "bluetooth"
 mac = "CF:1C:E8:D7:D7:31"
-# label = " Mouse"
 
+# Keyboard
 [[block]]
 block = "bluetooth"
-mac = "51:24:00:0D:48:09"
-# label = " Keyboard"
+mac = "C7:F1:C8:B9:CB:39"
+
+# Phone
+[[block]]
+block = "bluetooth"
+mac = "A4:50:46:77:72:9C"
 
 [[block]]
 block = "net"
