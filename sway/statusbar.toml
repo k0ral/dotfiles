@@ -18,33 +18,33 @@ mac = "A4:50:46:77:72:9C"
 [[block]]
 block = "net"
 device = "enp58s0f1"
-ip = true
+format = "{ip} {speed_down} {speed_up}"
 interval = 2
 
 [[block]]
 block = "net"
 device = "wlp59s0"
-bitrate = true
-ssid = true
-ip = true
+format = "{ssid} {signal_strength} {ip} {speed_down} {speed_up}"
 interval = 2
 
 [[block]]
 block = "disk_space"
+format = "{icon} {path} {available}"
 
 [[block]]
 block = "memory"
-format_mem = "{Mum}MB ({Mup}%)"
+format_mem = "{mem_used} ({mem_used_percents})"
 
 [[block]]
 block = "cpu"
-frequency = true
+interval = 3
+format = "{utilization} {frequency}"
 
 [[block]]
 block = "temperature"
 collapsed = false
 interval = 10
-format = "{average}°C"
+format = "{average}C"
 chip = "*-isa-*"
 # inputs = ["Core 0"]
 
@@ -58,10 +58,10 @@ driver = "pulseaudio"
 [[block]]
 block = "battery"
 interval = 10
-format = "{power} {percentage}% {time}"
+format = "{power} {percentage} {time}"
 
 [[block]]
 block = "time"
 interval = 60
-format = "%v %R"
+format = "%F %R"
 
