@@ -21,7 +21,6 @@ let mapleader="\<SPACE>"
 
 " {{{ Plugins
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-buftabline'
 Plug 'chaoren/vim-motion'
 Plug 'easymotion/vim-easymotion'
@@ -37,9 +36,11 @@ Plug 'LnL7/vim-nix'
 Plug 'luochen1990/rainbow'
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-startify'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'mhinz/vim-signify'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+Plug 'purescript-contrib/purescript-vim'
 Plug 'RRethy/vim-illuminate'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
