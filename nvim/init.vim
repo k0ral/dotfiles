@@ -73,17 +73,13 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDSpaceDelims = 1
 
 " Neoformat
-autocmd BufWrite *.cpp :Neoformat
-autocmd BufWrite *.dhall :Neoformat
-autocmd BufWrite *.hpp :Neoformat
-autocmd BufWrite *.hs :Neoformat
-autocmd BufWrite *.java :Neoformat
-autocmd BufWrite *.json :Neoformat
-"autocmd BufWrite *.nix :Neoformat
-autocmd BufWrite *.proto :Neoformat
-autocmd BufWrite *.py :Neoformat
-autocmd BufWrite *.sh :Neoformat
-autocmd BufWrite *.xml :Neoformat
+let g:neoformat_nix_nixfmt = {
+\ 'exe': 'nixfmt',
+\ 'args': ['-w 120'],
+\ 'stdin': 1,
+\ 'valid_exit_codes': [0],
+\ 'no_append': 1,
+\ }
 
 " Rainbow
 let g:rainbow_active = 1
