@@ -65,12 +65,13 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  networking.firewall.allowedTCPPorts = [ 873 6600 ];
-  networking.enableIPv6 = true;
-  networking.hostName = "mystix";
-  networking.nameservers = [ "2620:0:ccc::2" "2620:0:ccd::2" "2001:4860:4860::8888" "2001:4860:4860::8844" "87.98.175.85" ];
-  networking.networkmanager.enable = true;
-  networking.tcpcrypt.enable = true;
+  networking = {
+    firewall.allowedTCPPorts = [ 873 6600 ];
+    enableIPv6 = true;
+    hostId = "01ed4135";
+    hostName = "mystix";
+    networkmanager.enable = true;
+  };
 
   nix.autoOptimiseStore = true;
   nix.binaryCaches = [ "https://cache.nixos.org/" ];
