@@ -26,6 +26,7 @@
   '';
 
   fonts = {
+    enableDefaultFonts = true;
     enableGhostscriptFonts = true;
     fontDir.enable = true;
     fonts = with pkgs; [
@@ -34,9 +35,7 @@
       font-awesome
       nerdfonts
       # noto-fonts
-      # dejavu_fonts
       # google-fonts
-      # liberation_ttf
       # source-han-sans
       # source-han-mono
       # source-han-serif
