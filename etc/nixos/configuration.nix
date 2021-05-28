@@ -73,12 +73,18 @@
     networkmanager.enable = true;
   };
 
-  nix.autoOptimiseStore = true;
-  nix.binaryCaches = [ "https://cache.nixos.org/" ];
-  nix.nixPath =
-    [ "nixpkgs=/home/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" ];
-  nix.trustedUsers = [ "@wheel" ];
-  nix.useSandbox = true;
+  nix = {
+    autoOptimiseStore = true;
+    binaryCaches = [ "https://cache.nixos.org/" ];
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+    nixPath = [ "nixpkgs=/home/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" ];
+    package = pkgs.nixFlakes;
+    trustedUsers = [ "@wheel" ];
+    useSandbox = true;
+  };
+
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.pulseaudio = true;
   nixpkgs.overlays = [ (import ./overlays.nix) (import /home/nixpkgs-wayland/default.nix) ];
