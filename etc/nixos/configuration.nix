@@ -82,6 +82,11 @@
   nixpkgs.config.pulseaudio = true;
   nixpkgs.overlays = [ (import ./overlays.nix) (import /home/nixpkgs-wayland/default.nix) ];
 
+  powerManagement = {
+    cpuFreqGovernor = "powersave";
+    powertop.enable = true;
+  };
+
   security.pam.services.sddm.enableGnomeKeyring = true;
 
   system.autoUpgrade.enable = false;
