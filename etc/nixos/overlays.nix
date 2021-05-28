@@ -1,13 +1,11 @@
 self: super:
 
 {
-  bemenu = super.bemenu.override { x11Support = false; };
+  nerdfonts = super.nerdfonts.override { fonts = [ "FiraCode" ]; };
 
   pulseaudio = super.pulseaudio.override {
     bluetoothSupport = true;
     remoteControlSupport = true;
     zeroconfSupport = true;
   };
-
-  nerdfonts = super.nerdfonts.override { fonts = [ "FiraCode" ]; };
 }

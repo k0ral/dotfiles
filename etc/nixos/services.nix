@@ -47,31 +47,6 @@
     HandleLidSwitch=ignore
   '';
 
-  services.mpd = {
-    enable = true;
-    extraConfig = ''
-      metadata_to_use "artist,album,title,track,name,genre,date,composer,performer,disc,comment"
-      restore_paused "yes"
-      #replaygain "auto"
-
-      audio_output {
-        type     "pulse"
-        name     "MPD"
-        server   "127.0.0.1"
-      }
-
-      audio_output {
-        type                    "fifo"
-        name                    "my_fifo"
-        path                    "/tmp/mpd.fifo"
-        format                  "44100:16:2"
-      }
-    '';
-    musicDirectory = "/home/music";
-    network.listenAddress = "any";
-    startWhenNeeded = true;
-  };
-
   services.openssh.enable = true;
   services.openssh.startWhenNeeded = true;
   services.privoxy.enable = true;

@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-  imports = [ ./hardware-configuration.nix ./programs.nix ./services.nix ./systemd-user.nix ];
+  imports = [ ./hardware-configuration.nix ./programs.nix ./services.nix ];
 
   boot = {
     cleanTmpDir = true;
@@ -84,7 +84,7 @@
       dates = "daily";
       options = "--delete-older-than 10d";
     };
-    nixPath = [ "nixpkgs=/home/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" ];
+    nixPath = [ "nixpkgs=/home/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" "home-manager=/home/home-manager" ];
     package = pkgs.nixFlakes;
     trustedUsers = [ "@wheel" ];
     useSandbox = true;
@@ -92,7 +92,7 @@
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.pulseaudio = true;
-  nixpkgs.overlays = [ (import ./overlays.nix) (import /home/nixpkgs-wayland/default.nix) ];
+  nixpkgs.overlays = [ (import ./overlays.nix) ];
 
   powerManagement = {
     cpuFreqGovernor = "powersave";

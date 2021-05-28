@@ -1,0 +1,8 @@
+{
+  output eDP-1 disable
+  output DP-1 enable
+}
+
+{
+  output eDP-1 enable
+}
