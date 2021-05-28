@@ -3,6 +3,7 @@
 
   boot = {
     cleanTmpDir = true;
+    kernelModules = [ "coretemp" ];
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = false;
     supportedFilesystems = [ "zfs" ];
@@ -19,6 +20,10 @@
     QT_QPA_PLATFORM = "wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
   };
+
+  environment.etc."sysconfig/lm_sensors".text = ''
+    HWMON_MODULES="coretemp"
+  '';
 
   fonts = {
     enableGhostscriptFonts = true;
