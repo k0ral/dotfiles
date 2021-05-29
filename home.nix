@@ -68,6 +68,7 @@
 
   xdg.configFile = {
     "ack/ackrc".source = ./ack/ackrc;
+    "fish/config.fish".source = ./fish/config.fish;
     "git/gitconfig".source = ./git/gitconfig;
     "kanshi/config".source = ./kanshi/config;
     "nvim/init.vim".source = ./nvim/init.vim;
