@@ -8,6 +8,7 @@ set $mod Mod4
 set $term kitty
 set $shell /run/current-system/sw/bin/fish --private
 set $menu bemenu-run --fn "FiraCode Nerd Font 16" --nb '#000033' -b -l 10 -p 'Execute'
+set $lock swaylock --screenshots --clock --indicator --effect-blur 20x5 --effect-vignette 0.5:0.5 --grace 2 --fade-in 2
 
 set $black #000000
 set $cyan #00ffff
@@ -53,7 +54,7 @@ bindsym $mod+F4 kill
 bindsym $mod+F5 reload
 bindsym $mod+F11 fullscreen
 bindsym $mod+r exec $menu
-bindsym $mod+l exec swaylock
+bindsym $mod+l exec $lock
 bindsym $mod+m exec ~/.config/mpd/play_menu.sh
 bindsym $mod+u exec unipicker --command "bemenu -p 'Pick unicode' --fn 'FiraCode Nerd Font 18' -l20" --copy-command wl-copy
 bindsym $mod+w exec ~/.config/sway/switch_window.sh
