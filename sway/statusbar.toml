@@ -58,7 +58,7 @@ driver = "pulseaudio"
 [[block]]
 block = "battery"
 interval = 10
-format = "{power} {percentage} {time}"
+format = "{percentage} {time}"
 
 [[block]]
 block = "time"
