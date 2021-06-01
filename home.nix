@@ -44,6 +44,8 @@
     man.enable = true;
     mpv = import ./mpv.nix { inherit pkgs; };
     ncmpcpp = import ./ncmpcpp.nix { inherit pkgs; };
+    neovim.enable = true;
+    neovim.extraConfig = builtins.readFile ./nvim/init.vim;
     tmux = import ./tmux.nix { inherit pkgs; };
   };
 

@@ -41,7 +41,6 @@ with pkgs; [
   graphviz
   icu
   libxml2
-  neovim
   nixfmt
   nodePackages.js-beautify
   openssl
