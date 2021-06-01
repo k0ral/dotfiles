@@ -7,6 +7,8 @@
   home.sessionVariables.XDG_RUNTIME_DIR = "/run/user/$UID";
   home.stateVersion = "21.05";
 
+  news.display = "silent";
+
   nixpkgs.overlays = [ (self: super: {
     bemenu = super.bemenu.override { x11Support = false; };
     pihello = import ./pihello.nix { inherit self super; };
