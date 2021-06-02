@@ -93,10 +93,6 @@ function ncdu
     command ncdu --color dark $argv
 end
 
-function octave
-    command octave -q $argv
-end
-
 function pstree
     command pstree -p -T -a
 end
