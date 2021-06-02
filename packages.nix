@@ -1,6 +1,9 @@
 { pkgs ? import <nixpkgs> {} }:
 
 with pkgs; [
+  # Aliases
+  find-videos
+
   # Audio
   cava
   flac
