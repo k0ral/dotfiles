@@ -12,7 +12,7 @@
   nixpkgs.overlays = [ (self: super: {
     bemenu = super.bemenu.override { x11Support = false; };
     pihello = import ./pihello.nix { inherit self super; };
-    find-videos = super.writeScriptBin "find-videos" (builtins.readFile ./alias/find-videos);
+    find-videos = super.writeScriptBin "find-videos" (builtins.readFile ./alias/find-videos.sh);
   })];
 
   gtk = import ./gtk.nix { inherit pkgs; };
