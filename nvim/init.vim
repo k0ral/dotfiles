@@ -24,6 +24,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'ap/vim-buftabline'
 Plug 'chaoren/vim-motion'
 Plug 'easymotion/vim-easymotion'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'cespare/vim-toml'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
@@ -103,6 +104,19 @@ let g:strip_whitespace_on_save=1
 
 " VimTeX
 let g:tex_flavor = 'latex'
+
+" LSP
+let g:LanguageClient_rootMarkers = {
+  \ 'haskell': ['*.cabal', 'stack.yaml'],
+  \ 'rust': ['Cargo.toml'],
+  \ }
+
+let g:LanguageClient_serverCommands = {
+  \ 'go': ['gopls'],
+  \ 'python': ['python-language-server'],
+  \ 'rust': ['rls'],
+  \ }
+nmap <F5> <Plug>(lcn-menu)
 
 " {{{ Commands
 command! ConfigOpen edit $MYVIMRC
