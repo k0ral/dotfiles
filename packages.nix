@@ -167,9 +167,9 @@ with pkgs; [
   acpi
   alsaUtils
   atop
+  bpytop
   cpulimit
   docker
-  glances
   hdparm
   light
   lm_sensors

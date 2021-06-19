@@ -44,7 +44,6 @@
     gh.enable = true;
     gh.gitProtocol = "ssh";
     home-manager.enable = true;
-    htop = import ./htop.nix { inherit pkgs; };
     jq.enable = true;
     kitty.enable = true;
     kitty.extraConfig = builtins.readFile ./kitty/kitty.conf;
@@ -80,6 +79,7 @@
 
   xdg.configFile = {
     "ack/ackrc".source = ./ack/ackrc;
+    "bpytop/bpytop.conf".source = ./bpytop/bpytop.conf;
     "fish/config.fish".source = ./fish/config.fish;
     "git/gitconfig".source = ./git/gitconfig;
     "kanshi/config".source = ./kanshi/config;
