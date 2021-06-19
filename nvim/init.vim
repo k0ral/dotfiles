@@ -90,6 +90,9 @@ let g:rainbow_active = 1
 let g:AutoPairsShortcutToggle = ''
 let g:AutoPairsShortcutJump = ''
 
+" ALE
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
 
 
 " Colorscheme
