@@ -26,6 +26,7 @@ Plug 'chaoren/vim-motion'
 Plug 'easymotion/vim-easymotion'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'cespare/vim-toml'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
@@ -104,6 +105,8 @@ au BufNewFile,BufRead *.py set shiftwidth=2
 " Rust
 au BufNewFile,BufRead *.rs set shiftwidth=2
 
+" Go
+let g:go_def_mapping_enabled = 0
 
 " TeX
 let g:tex_flavor = 'latex'
