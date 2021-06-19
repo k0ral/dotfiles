@@ -94,18 +94,18 @@ let g:AutoPairsShortcutJump = ''
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 
+" {{{ Language specific
+" Haskell
+let g:haskell_indent_disable = 1
 
-" Colorscheme
-set background=dark
-colorscheme gotham
+" Python
+au BufNewFile,BufRead *.py set shiftwidth=2
 
-" Better whitespace
-let g:better_whitespace_enabled=0
-let g:strip_only_modified_lines=1
-let g:strip_whitespace_confirm=0
-let g:strip_whitespace_on_save=1
+" Rust
+au BufNewFile,BufRead *.rs set shiftwidth=2
 
-" VimTeX
+
+" TeX
 let g:tex_flavor = 'latex'
 
 " LSP
@@ -119,7 +119,11 @@ let g:LanguageClient_serverCommands = {
   \ 'python': ['python-language-server'],
   \ 'rust': ['rls'],
   \ }
-nmap <F5> <Plug>(lcn-menu)
+" }}}
+
+" Colorscheme
+set background=dark
+colorscheme gotham
 
 " {{{ Commands
 command! ConfigOpen edit $MYVIMRC
@@ -199,6 +203,8 @@ inoremap <Tab> <C-o>>>
 inoremap <S-Tab> <C-o><<
 nnoremap <Tab> >>
 nnoremap <S-Tab> <<
+
+nmap <F5> <Plug>(lcn-menu)
 
 vnoremap < <gv
 vnoremap > >gv
