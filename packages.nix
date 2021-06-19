@@ -2,7 +2,14 @@
 
 with pkgs; [
   # Aliases
+  cut-from
+  cut-to
   find-videos
+  fzf-git-branch
+  fzf-git-changeset
+  fzf-git-diff
+  fzf-git-tag
+  fzf-pid
 
   # Audio
   cava

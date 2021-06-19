@@ -12,7 +12,14 @@
   nixpkgs.overlays = [ (self: super: {
     bemenu = super.bemenu.override { x11Support = false; };
     pihello = import ./pihello.nix { inherit self super; };
+    cut-from = super.writeScriptBin "cut-from" (builtins.readFile ./alias/cut-from.sh);
+    cut-to = super.writeScriptBin "cut-to" (builtins.readFile ./alias/cut-to.sh);
     find-videos = super.writeScriptBin "find-videos" (builtins.readFile ./alias/find-videos.sh);
+    fzf-git-branch = super.writeScriptBin "fzf-git-branch" (builtins.readFile ./alias/fzf-git-branch.sh);
+    fzf-git-changeset = super.writeScriptBin "fzf-git-changeset" (builtins.readFile ./alias/fzf-git-changeset.sh);
+    fzf-git-diff = super.writeScriptBin "fzf-git-diff" (builtins.readFile ./alias/fzf-git-diff.sh);
+    fzf-git-tag = super.writeScriptBin "fzf-git-tag" (builtins.readFile ./alias/fzf-git-tag.sh);
+    fzf-pid = super.writeScriptBin "fzf-pid" (builtins.readFile ./alias/fzf-pid.sh);
   })];
 
   gtk = import ./gtk.nix { inherit pkgs; };

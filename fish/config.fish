@@ -259,48 +259,19 @@ end
 # }}}
 
 # {{{ Functions
-function bitrate
-    for i in $argv; ffprobe -v error -select_streams v:0 -show_entries stream=bit_rate -of default=nw=1:nk=1 -sexagesimal $i | tr -d '\n'; echo " $i"; end
+function up
+    for i in (seq 1 $argv)
+      cd ..
+    end
 end
+# }}}
 
-function cutFrom
-    echo "> ffmpeg -ss $argv[1] -i $argv[2] -acodec copy -vcodec copy new.$argv[2]"
-    ffmpeg -ss $argv[1] -i $argv[2] -acodec copy -vcodec copy new.$argv[2]
-end
-
-function cutTo
-    echo "> ffmpeg -i $argv[2] -acodec copy -vcodec copy -to $argv[1] new.$argv[2]"
-    ffmpeg -i $argv[2] -acodec copy -vcodec copy -to $argv[1] new.$argv[2]
-end
-
-function duration
-    for i in $argv; ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 -sexagesimal $i | tr -d '\n'; echo " $i"; end
-end
-
-function framerate
-    for i in $argv; ffprobe -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=nw=1:nk=1 $i | tr -d '\n'; echo " $i"; end
-end
-
-function resolution
-    for i in $argv; ffprobe -v error -select_streams v:0 -show_entries stream=height,width -of csv=s=x:p=0 $i | tr -d '\n'; echo " $i"; end
-end
-
-function fade
-    watch -n 90 amixer set Master 1-
-end
-
-function sbg
-    feh --randomize --recursive --bg-fill /home/koral/images/wallpapers
-end
-
-function u
-    echo "> wget -c (xclip -o | sed -e's/%\([0-9A-F][0-9A-F]\)/\\\\\x\1/g' | sed -r 's/\\\\(.)/\1/g')"
-    wget -c (xclip -o | sed -e's/%\([0-9A-F][0-9A-F]\)/\\\\\x\1/g' | sed -r 's/\\\\(.)/\1/g')
-end
-
-function uu
-    wget -c (perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' (xclip -o)) -O $argv
-end
+# {{{ Key bindings
+bind \cf '__fzf_search_current_dir'
+bind \cr '__fzf_search_history'
+bind \e\cv '__fzf_search_shell_variables'
+bind \e\cl '__fzf_search_git_log'
+bind \e\cs '__fzf_search_git_status'
 # }}}
 
 set fish_greeting ''
