@@ -193,7 +193,6 @@ with pkgs; [
   aspellDicts.en
   dict
   unipicker
-  taskwarrior
 
   # Wayland
   clipman
