@@ -33,6 +33,7 @@ with pkgs; [
   pihello
   pueue
   ripgrep
+  sd
   starship
   tldr
   # urlscan
