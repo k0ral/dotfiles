@@ -37,7 +37,7 @@
     broot.enable = true;
     command-not-found.enable = true;
     direnv.enable = true;
-    direnv.enableNixDirenvIntegration = true;
+    direnv.nix-direnv.enable = true;
     exa.enable = true;
     exa.enableAliases = true;
     fzf.enable = true;
