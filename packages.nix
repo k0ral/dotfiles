@@ -44,6 +44,7 @@ with pkgs; [
   binutils
   cacert
   chromaprint
+  gcc  # Only for neovim tree-sitter
   cookiecutter
   crex
   dhall-json
@@ -52,6 +53,7 @@ with pkgs; [
   graphviz
   icu
   libxml2
+  neovim
   nixfmt
   nodePackages.js-beautify
   openssl
@@ -59,6 +61,9 @@ with pkgs; [
   poppler_utils
   pup
   python3
+  python-language-server
+  rnix-lsp
+  rustPackages.rls
   shellcheck
   tig
   z3

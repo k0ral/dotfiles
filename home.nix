@@ -51,8 +51,6 @@
     man.enable = true;
     mpv = import ./mpv.nix { inherit pkgs; };
     ncmpcpp = import ./ncmpcpp.nix { inherit pkgs; };
-    neovim.enable = true;
-    neovim.extraConfig = builtins.readFile ./nvim/init.vim;
     tmux = import ./tmux.nix { inherit pkgs; };
   };
 
@@ -84,6 +82,8 @@
     "git/gitconfig".source = ./git/gitconfig;
     "kanshi/config".source = ./kanshi/config;
     "nvim/init.vim".source = ./nvim/init.vim;
+    "nvim/lua/main/init.lua".source = ./nvim/lua/main/init.lua;
+    "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     "stylish-haskell/config.yaml".source = ./stylish-haskell/config.yaml;
     "starship.toml".source = ./starship.toml;
     "sway/capture-screen.sh".source = ./sway/capture-screen.sh;

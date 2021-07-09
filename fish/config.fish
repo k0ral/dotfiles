@@ -182,10 +182,6 @@ function find
     fd $argv
 end
 
-function gcc
-    colorgcc $argv
-end
-
 #function gdb
 #    cgdb -q $argv
 #end
