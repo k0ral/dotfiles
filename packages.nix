@@ -90,7 +90,7 @@ with pkgs; [
   rsync
   sshfsFuse
   tree
-  # unrar
+  unrar
   unzip
   zip
 
