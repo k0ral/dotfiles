@@ -59,9 +59,7 @@ local lsp = require('lspconfig')
 lsp.gopls.setup {
   on_attach = require('completion').on_attach
 }
-lsp.pyls.setup {
-  cmd = { "python-language-server" };
-  root_dir = lsp.util.root_pattern('.git', fn.getcwd());
+lsp.pyright.setup {
   on_attach = require('completion').on_attach
 }
 lsp.rls.setup {
@@ -99,6 +97,13 @@ global.neoformat_nix_nixfmt = {
   valid_exit_codes = {0};
   no_append = true;
 }
+global.neoformat_python_black = {
+  exe = 'black';
+  args = {'-q', '--line-length 120', '-'};
+  stdin = true;
+}
+global.neoformat_enabled_python = {'black', 'isort'}
+
 
 -- NERDCommenter
 global.NERDDefaultAlign = 'left'

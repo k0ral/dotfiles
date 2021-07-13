@@ -61,7 +61,9 @@ with pkgs; [
   poppler_utils
   pup
   python3
-  python-language-server
+  python3Packages.black
+  python3Packages.isort
+  pyright
   rnix-lsp
   rustPackages.rls
   shellcheck
